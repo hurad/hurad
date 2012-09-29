@@ -1,0 +1,40 @@
+.cake-sql-log {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+table.cake-sql-log {
+    border-right: 0 none;
+    clear: both;
+    color: #333333;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.cake-sql-log td {
+    font-family: Monaco,Consolas,"Courier New",monospaced;
+    padding: 4px 8px;
+    text-align: left;
+}
+.cake-sql-log caption {
+    color: #464646;
+}
+table.cake-sql-log tr td {
+    border-bottom: 1px solid #DDDDDD;
+    padding: 6px;
+    text-align: left !important;
+    vertical-align: top;
+}
+table.cake-sql-log tr:nth-child(2n) {
+    background: none repeat scroll 0 0 #F9F9F9;
+}
+table.cake-sql-log th {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color -moz-use-text-color #555555;
+    border-color: -moz-use-text-color -moz-use-text-color #555555;
+    border-style: none none solid;
+    border-width: 0 0 2px;
+    padding: 4px;
+    text-align: left;    
+}

@@ -1,0 +1,110 @@
+#adminmenu, #adminmenu ul {
+    list-style-type: none;
+}
+#adminmenu li.widget {
+    /*    margin-bottom: 15px;*/
+}
+li.dashboard-widget {
+    margin-bottom: 15px;
+}
+li.comments-widget {
+    margin-bottom: 15px;
+}
+ul.menu {
+    border-color: #DFDFDF;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #FFF;
+}
+ul.dashboard-menu {
+    border-radius: 6px 6px 6px 6px;
+}
+ul.appearance-menu {
+    border-radius: 6px 6px 0px 0px;
+    border-bottom: none;
+}
+ul.posts-menu {
+    border-radius: 6px 6px 0px 0px;
+    border-bottom: none;
+}
+ul.links-menu, ul.pages-menu, ul.users-menu {
+    border-radius: 0px;
+    border-bottom: none;
+}
+ul.options-menu {
+    border-radius: 0px 0px 5px 5px;
+}
+ul.comments-menu {
+    border-radius: 0px 0px 5px 5px;
+}
+li.top-menu {
+    background: -moz-linear-gradient(center bottom, #F1F1F1, #ECECEC) repeat scroll 0 0 transparent;
+    height: 24px;
+    padding: 6px 0 0 8px;
+    cursor: pointer;
+}
+li.top-menu .arrow-def {
+    visibility: hidden;
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+
+}
+li.top-menu:hover .arrow-def {
+    visibility: visible;
+}
+li.active .arrow-def {
+    visibility: visible;
+}
+li.dashboard-top-menu {
+    border-radius: 5px 5px 0px 0px;
+    border-top: 1px solid #FEFEFE;
+}
+li.appearance-top-menu {
+    border-radius: 5px 5px 0px 0px;
+    border-top: 1px solid #FEFEFE;
+}
+li.options-top-menu {
+    border-radius: 0px 0px 4px 4px;
+    border-top: 1px solid #FEFEFE;
+}
+li.comments-top-menu {
+    border-radius: 0px 0px 4px 4px;
+    border-top: 1px solid #FEFEFE;    
+}
+li.links-top-menu, li.pages-top-menu, li.users-top-menu {
+    border-radius: 0px;
+    border-top: 1px solid #FEFEFE;
+}
+li.posts-top-menu {
+    border-radius: 5px 5px 0px 0px;
+    border-top: 1px solid #FEFEFE;
+}
+ul.menu li.sb {
+    display: none;
+}
+ul.submenu li:first-of-type {
+    border-top: 1px solid #DFDFDF;
+}
+ul.submenu li a {
+    color: #21759B;
+    line-height: 10px;
+    padding: 8px;
+    font-size: 11px;
+    display: block;
+}
+ul.submenu li a:hover {
+    color: #333333 !important;
+    background-color: #e8f5ff;
+}
+ul.submenu li:last-of-type a {
+    border-radius: 0px 0px 5px 5px;
+}
+.menu-img{
+    vertical-align: middle;
+}
+li.current a{
+    color: #333333 !important;
+    font-weight: bold;
+    background-color: #e8f5ff;
+}

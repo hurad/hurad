@@ -1,0 +1,491 @@
+html {
+    background-color: #F9F9F9;
+    height: 100%;
+}
+body {
+    color: #333333;
+    height: 100%;
+}
+body, textarea {
+    line-height: 1.4em;
+}
+body, td, textarea, input, select {
+    font-family: sans-serif;
+    font-size: 13px;
+}
+h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.67em 0;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0.83em 0;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    font-weight: bold;
+    margin: 1em 0;
+}
+h4 {
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1.33em 0;
+}
+h5 {
+    display: block;
+    font-size: 0.83em;
+    font-weight: bold;
+    margin: 1.67em 0;
+}
+h6 {
+    display: block;
+    font-size: 0.67em;
+    font-weight: bold;
+    margin: 2.33em 0;
+}
+a {
+    text-decoration: none;
+}
+code {
+    background: none repeat scroll 0 0 #EAEAEA;
+    font-size: 11px;
+    font-style: normal;
+    color: #000;
+    margin: 0 1px;
+    padding: 1px 3px;  
+    font-family: Consolas,Monaco,monospace;
+}
+textarea, input[type="text"], input[type="password"], input[type="file"], input[type="button"], input[type="submit"], input[type="reset"], select {
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #FFFFFF;
+    border-color: #DFDFDF;    
+}
+input[type="text"].form-error, input[type="password"].form-error{
+    border-color: #e26f6f !important;    
+}
+input[type="checkbox"], input[type="radio"] {
+    vertical-align: middle;
+}
+textarea, input, select {
+    margin: 1px;
+    padding: 3px;
+}
+blockquote{
+    font-size: 11px;
+}
+#wrap {
+    height: auto;
+    min-height: 100%;
+    width: 100%;
+}
+#wrap-body {
+    clear: left;
+    float: left;
+    margin-left: 0;
+    margin-right: -340px;
+    width: 100%;
+}
+#wrap-body-content {
+    margin-left: 0;
+    margin-right: 300px;
+}
+#container {
+    padding-bottom: 65px;
+    min-height: 100%;
+    height: 100%;
+}
+#container select {
+    font-size: 12px;
+    height: 2em;
+    padding: 2px;
+}
+#header {
+    width: 100%;
+    height: 46px;
+    background: -moz-linear-gradient(center bottom, #D7D7D7, #E4E4E4) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #C6C6C6;
+    color: #333333 !important;
+}
+#footer {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    clear: both;
+    margin-top: -61px;
+    background: -moz-linear-gradient(center bottom, #D7D7D7, #E4E4E4) repeat scroll 0 0 transparent;
+    color: #777777;
+    border-top: 1px solid #D1D1D1;
+}
+#footer p {
+    margin: 20px 0 0 10px;
+}
+#wrapper {
+    margin-left: 175px;
+    margin-right: 0;
+    clear: both;
+}
+#wrapper_login {
+    margin: 0;
+    clear: both;
+}
+#left-side {
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+.wrap {
+    margin: 0 15px 0 5px;
+}
+.wrap_login {
+    margin: 0 15px 0 15px;
+}
+.wrap h2 {
+    color: #464646;
+    font-family: arial;
+    font-style: normal;
+    padding: 14px 15px 3px 0;
+    font: 24px/35px arial;
+    margin: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#left-side .metabox-holder {
+    padding-top: 10px;
+}
+/*#titlediv {
+    border-color: #DFDFDF;
+    margin-bottom: 20px;
+    position: relative;
+}
+#titlewrap {
+    border: 0 none;
+    padding: 0;
+}
+#titlediv #title {
+    border-radius: 6px 6px 6px 6px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 1.7em;
+    line-height: 100%;
+    outline: medium none;
+    padding: 3px 4px;
+    width: 100%;
+    border-color: #DFDFDF;
+    background-color: #FFFFFF;
+}*/
+input[type="text"], input[type="password"], textarea {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*.placeholder {
+    color: #BBBBBB;
+}*/
+#poststuff .postarea {
+    border-color: #DFDFDF;
+    margin-bottom: 20px;
+}
+
+#right-side {
+    clear: left;
+    float: left;
+    list-style: none outside none;
+    margin: 15px 5px 15px -160px;
+    padding: 0;
+    position: relative;
+    width: 145px;
+}
+.clear {
+    clear: both;
+}
+
+.form-table {
+    border-collapse: collapse;
+    clear: both;
+    margin-bottom: -8px;
+    margin-top: 20px;
+    width: 100%;
+}
+.form-table th, .form-wrap label {
+    font-weight: normal;
+    color: #222222;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.form-table th {
+    padding: 0 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    width: 200px;
+}
+.form-table td {
+    font-size: 12px;
+    line-height: 20px;
+    margin-bottom: 9px;
+    padding: 0 10px 12px;
+}
+label {
+    cursor: pointer;
+}
+label, #your-profile label + a {
+    vertical-align: middle;
+}
+.description, .form-wrap p {
+    color: #666666;
+}
+p.help, p.description, span.description, .form-wrap p {
+    font-family: sans-serif;
+    font-size: 12px;
+    font-style: italic;
+}
+.submit {
+    border-color: #DFDFDF;
+    border-radius: 0 0 3px 3px;
+    margin: 5px 0;
+    padding: 1.5em 0;    
+}
+#createuser .form-field input {
+    width: 25em;
+}
+.form-field input, .form-field textarea {
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+}
+
+#debug-kit-toolbar {
+    top: 47px !important;
+}
+
+.postTitle{
+    font-size: 18px;
+}
+.postSlug{
+    font-size: 18px;
+}
+span.postSlug{
+    font-size: 13px;
+    color: #8e878e;
+}
+
+td.column-username img, td.column-author img{
+    float: left;
+    margin: 7px 10px 7px 0;
+    vertical-align: top;
+}
+#adminmenu a, .list-table a{
+    color: #21759B;
+}
+
+#user_info {
+    float: right;
+    font-size: 12px;
+    height: 46px;
+    line-height: 46px;
+    color: #777777;
+
+}
+#user_info p {
+    line-height: 46px;
+    margin: 0 15px 0 0;
+    padding: 0;
+}
+#user_info a:link, #user_info a:visited, #footer a:link, #footer a:visited {
+    color: #222222;
+    text-decoration: none !important;
+}
+#login {
+    margin: 7em auto;
+    width: 320px;
+}
+a.add_button{
+    border: 1px solid #DFDFDF;
+    font-size: 13px !important;
+    border-radius: 7px;
+    cursor: pointer;
+    background: -moz-linear-gradient(center bottom, #d1d1d1, #e0e0e0) repeat scroll 0 0 transparent;
+    color: #666666;
+    padding: 3px 8px;
+}
+a.add_button:active {
+    background: -moz-linear-gradient(center bottom, #e0e0e0, #d1d1d1) repeat scroll 0 0 transparent;
+    color: #111111;
+}
+a.add_button:hover {
+    border: 1px solid #BBBBBB;
+}
+button.add_button{
+    border: 1px solid #DFDFDF;
+    font-size: 12px !important;
+    border-radius: 7px;
+    cursor: pointer;
+    background: -moz-linear-gradient(center bottom, #d1d1d1, #e0e0e0) repeat scroll 0 0 transparent;
+    color: #666666;
+    padding: 2px 4px;
+    vertical-align: middle;
+}
+button.add_button:active {
+    background: -moz-linear-gradient(center bottom, #e0e0e0, #d1d1d1) repeat scroll 0 0 transparent;
+    color: #111111;
+}
+button.add_button:hover {
+    border: 1px solid #BBBBBB;
+}
+input.add_button{
+    border-radius: 7px;
+    cursor: pointer;
+    background: -moz-linear-gradient(center bottom, #d1d1d1, #e0e0e0) repeat scroll 0 0 transparent;
+    color: #666666;
+    padding: 3px 8px;
+}
+input.add_button:active {
+    background: -moz-linear-gradient(center bottom, #e0e0e0, #d1d1d1) repeat scroll 0 0 transparent;
+    color: #111111;
+}
+input.action_button{
+    border-radius: 7px;
+    cursor: pointer;
+    background: -moz-linear-gradient(center bottom, #dcdcdc, #e4e4e4) repeat scroll 0 0 transparent;
+    color: #666666;
+    padding: 2px 6px;
+    margin-left: 7px;
+}
+input.add_button:active {
+    background: -moz-linear-gradient(center bottom, #e4e4e4, #dcdcdc) repeat scroll 0 0 transparent;
+    color: #111111;
+}
+input.add_button:hover, input.action_button:hover{
+    border-color: #666666;
+}
+div.actions {
+    float: left;
+}
+.tablenav {
+    clear: both;
+    height: 30px;
+    margin: 6px 0 0 0;
+    vertical-align: middle;
+    display: inline;
+
+}
+
+
+input.postSlug {
+    /*    width: auto !important;*/
+    font-size: 12px;
+}
+input.postTitle {
+    width: 100% !important;
+}
+.form-field input {
+    width: 25em;
+}
+#LinkAdminAddForm .form-field input, #LinkAdminAddForm .form-field textarea {
+    width: 50em;
+}
+input#PostTags {
+    width: 100%;
+}
+.form-field p {
+    font-family: sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: #666666;
+
+}
+.date_published, .time_published {
+    display: block;
+}
+.label_published {
+    font-size: 12px;
+    color: #666666;
+}
+.akismet_notice {
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px;
+    border-radius: 5px;
+    background-color: #4AB915; 
+    color: #fff !important; 
+    font-weight: bold;
+    width: 26.3em;
+}
+.akismet_error {
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px;
+    border-radius: 5px;
+    background-color: #ff4e4e;   
+    color: #fff !important; 
+    font-weight: bold;
+    width: 26.3em;
+}
+.screen-reader-text, .screen-reader-text span {
+    height: 1px;
+    left: -1000em;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+}
+#current-theme {
+    margin: 1em 0 1.5em;
+}
+#current-theme img {
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+    margin-bottom: 1.5em;
+    margin-right: 1em;
+    width: 150px;
+    border-color: #999999;
+}
+table#availablethemes {
+    border-spacing: 0;
+    border-style: solid none;
+    border-width: 1px 0;
+    margin: 10px auto;
+    width: 100%;
+}
+#availablethemes, #availablethemes td {
+    border-color: #DDDDDD;
+}
+table#availablethemes td.bottom {
+    border-bottom: 0 none;
+}
+table#availablethemes td.right, table#availablethemes td.left {
+    border-left: 0 none;
+    border-right: 0 none;
+}
+td.available-theme {
+    margin: 0;
+    padding: 20px;
+    text-align: left;
+    vertical-align: top;
+    width: 240px;
+}
+.available-theme a.screenshot {
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    height: 180px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 240px;
+        background-color: #F1F1F1;
+    border-color: #DDDDDD;
+}
+.available-theme h3 {
+    margin: 15px 0 5px;
+}
+.available-theme img {
+    width: 240px;
+}
+table#availablethemes td {
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+}
