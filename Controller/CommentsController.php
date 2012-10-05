@@ -81,8 +81,8 @@ class CommentsController extends AppController {
 //                $email = new CakeEmail('gmail');
 //                $email->emailFormat('html');
 //                $email->template('add_comment');
-//                $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-//                $email->to('m.abdolirad@gmail.com');
+//                $email->from(array('info@hurad.org' => 'Hurad'));
+//                $email->to($this->request->data['Comment']['author_email']);
 //                $email->subject('Comment Submit');
 //                $email->send('Your comment submit in blog waiting to approve by admin.');
 //                $this->Session->setFlash(__('The comment has been saved'));
