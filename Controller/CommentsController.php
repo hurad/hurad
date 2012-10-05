@@ -13,6 +13,12 @@ class CommentsController extends AppController {
 
     var $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
     public $components = array('RequestHandler', 'Akismet');
+    public $paginate = array(
+        'limit' => 15,
+        'order' => array(
+            'Comment.created' => 'desc'
+        )
+    );
 
     public function beforeFilter() {
         parent::beforeFilter();
