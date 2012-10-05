@@ -11,7 +11,7 @@ App::uses('Formatting', 'Lib');
  */
 class CommentsController extends AppController {
 
-    var $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
+    public $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
     public $components = array('RequestHandler', 'Akismet');
     public $paginate = array(
         'limit' => 15,
