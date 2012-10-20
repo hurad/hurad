@@ -287,10 +287,10 @@ class UsersController extends AppController {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
-            $cookieData = array();
-            $cookieData['username'] = $this->request->data['User']['username'];
-            $cookieData['password'] = $this->request->data['User']['password'];
-            $this->Cookie->write($cookieKey, $cookieData, true, '+2 weeks');
+            $cookie = array();
+            $cookie['User']['username'] = $this->request->data['User']['username'];
+            $cookie['User']['password'] = $this->request->data['User']['password'];
+            $this->Cookie->write($cookieKey, $cookie['User'], TRUE, '+2 weeks');
         }
         unset($this->request->data['User']['remember_me']);
     }
