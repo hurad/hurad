@@ -19,7 +19,6 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('*');
-        $this->Cookie->name = 'Hurad';
         //$this->isAuthorized();
     }
 
@@ -283,7 +282,7 @@ class UsersController extends AppController {
      * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
      * @return void
      */
-    protected function _setCookie($options = array(), $cookieKey = 'User') {
+    protected function _setCookie($options = array(), $cookieKey = 'Auth.User') {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
