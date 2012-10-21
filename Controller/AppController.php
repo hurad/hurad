@@ -92,14 +92,14 @@ class AppController extends Controller {
 
     private function cookie_check() {
         $cookie = $this->Cookie->read('Auth.User');
-        if (!is_array($cookie) || is_array($this->Auth->user())) {
+        if (!is_array($cookie) || $this->Auth->user()) {
             return;
         }
         $user = $this->User->find('first', array(
             'fields' => array('User.username', 'User.password'),
             'conditions' => array(
-                'User.username' => $cookie['username'],
-                'User.password' => AuthComponent::password($cookie['password'])
+                'User.username' => $cookie['User']['username'],
+                'User.password' => AuthComponent::password($cookie['User']['password'])
             ),
             'recursive' => 0)
         );
