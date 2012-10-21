@@ -18,14 +18,15 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow();
         //$this->isAuthorized();
+        debug($this->Auth->user());
     }
 
     public function isAuthorized() {
         switch ($this->Auth->user('role')) {
             case 'admin':
-                $this->Auth->allow('*');
+                $this->Auth->allow();
                 break;
             case 'user':
                 $this->Auth->allow('index', 'profile', 'change_password', 'login', 'logout');
@@ -289,7 +290,7 @@ class UsersController extends AppController {
             $cookie = array();
             $cookie['User']['username'] = $this->request->data['User']['username'];
             $cookie['User']['password'] = $this->request->data['User']['password'];
-            $this->Cookie->write($cookieKey, $cookie['User'], TRUE, '+2 weeks');
+            $this->Cookie->write($cookieKey, $cookie, TRUE, '+2 weeks');
         }
         unset($this->request->data['User']['remember_me']);
     }
