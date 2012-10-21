@@ -47,12 +47,16 @@ class AppController extends Controller {
             'authorize' => array('Controller')
         )
     );
+    public $uses = array('User');
 
     public function beforeFilter() {
+        //Cookie Configuration
+        $this->Cookie->name = 'Hurad';
 
+        //Set default theme
         $this->theme = Configure::read('template');
-        //$this->bcheck();
-        $this->Auth->allow();
+        
+        $this->cookie_check();
 
         if (isset($this->params['admin'])) {
             $this->layout = 'admin';
@@ -74,7 +78,6 @@ class AppController extends Controller {
 
         $this->set('isadmin', $this->isAdmin());
 
-        //debug(Configure::read('options'));
         //Load Option model in all controller
         $this->options = Configure::read('options');
     }
@@ -87,16 +90,23 @@ class AppController extends Controller {
         return $admin;
     }
 
-    function bcheck() {
-        $cookie = $this->Cookie->read('Hurad_User');
-
-        if (!is_array($cookie) || $this->Auth->user())
+    private function cookie_check() {
+        $cookie = $this->Cookie->read('Auth.User');
+        if (!is_array($cookie) || is_array($this->Auth->user())) {
             return;
-
-        if ($this->Auth->login($cookie)) {
-            $this->Cookie->write('Hurad_User', $cookie, true, '+2 weeks');
+        }
+        $user = $this->User->find('first', array(
+            'fields' => array('User.username', 'User.password'),
+            'conditions' => array(
+                'User.username' => $cookie['username'],
+                'User.password' => AuthComponent::password($cookie['password'])
+            ),
+            'recursive' => 0)
+        );
+        if ($this->Auth->login($user)) {
+            $this->Cookie->write('Auth.User', $cookie, true, '+2 weeks');
         } else {
-            $this->Cookie->delete('Hurad_User');
+            $this->Cookie->delete('Auth.User');
         }
     }
 
