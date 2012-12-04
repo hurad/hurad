@@ -13,14 +13,10 @@ class UsersController extends AppController {
     public $components = array('Cookie', 'Session');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
 
-//    public $cookieName = 'Hurad_User';
-//    public $period = '+2 weeks';
-
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow();
         //$this->isAuthorized();
-        debug($this->Auth->user());
     }
 
     public function isAuthorized() {
@@ -123,7 +119,7 @@ class UsersController extends AppController {
     }
 
     public function admin_dashboard() {
-        $this->set('title_for_layout', __('Dashboard', true));
+        $this->set('title_for_layout', __('Dashboard'));
         $comments = ClassRegistry::init('Comment')->find('all', array(
             "fields" => "Comment.id, Comment.user_id, Comment.post_id, Comment.author, Comment.author_url, Comment.author_email, Comment.content, Comment.approved, Post.title",
             "order" => "Comment.created DESC",
@@ -137,7 +133,7 @@ class UsersController extends AppController {
      * @return void
      */
     public function admin_index() {
-        $this->set('title_for_layout', __('Users', true));
+        $this->set('title_for_layout', __('Users'));
         $this->User->recursive = 0;
         $this->set('users', $this->paginate());
     }
@@ -162,7 +158,7 @@ class UsersController extends AppController {
      * @return void
      */
     public function admin_add() {
-        $this->set('title_for_layout', __('Add new user', true));
+        $this->set('title_for_layout', __('Add new user'));
         if ($this->request->is('post')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
@@ -181,7 +177,7 @@ class UsersController extends AppController {
      * @return void
      */
     public function admin_profile($id = null) {
-        $this->set('title_for_layout', __('Profile', true));
+        $this->set('title_for_layout', __('Profile'));
         $this->User->id = $id;
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Invalid user'));
@@ -241,17 +237,6 @@ class UsersController extends AppController {
                         $this->redirect($this->Auth->redirect());
                     } else {
                         $this->Session->setFlash(__('Your username or password was incorrect.'), 'flash_error');
-                    }
-                } elseif (empty($this->request->data)) {
-                    $cookie = $this->Cookie->read('Hurad');
-                    if (!is_null($cookie)) {
-                        if ($this->Auth->login($cookie)) {
-                            //  Clear auth message, just in case we use it.
-                            $this->Session->delete('Message.auth');
-                            $this->redirect($this->Auth->redirect());
-                        } else { // Delete invalid Cookie
-                            $this->Cookie->delete($this->cookieName);
-                        }
                     }
                 }
             }
@@ -336,7 +321,7 @@ class UsersController extends AppController {
      */
     public function register() {
         $this->layout = "admin_login";
-        $this->set('title_for_layout', __('Register', true));
+        $this->set('title_for_layout', __('Register'));
         if ($this->request->is('post')) {
             $this->request->data['User']['role'] = Configure::read('General-default_role');
             $this->request->data['User']['activation_key'] = $this->_getActivationKey();
@@ -451,7 +436,7 @@ class UsersController extends AppController {
 //            $this->Email->from = Configure::read('Site.title') . ' '
 //                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 //            $this->Email->to = $user['User']['email'];
-//            $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password', true);
+//            $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password');
 //            $this->Email->template = 'forgot_password';
 
 
@@ -471,16 +456,16 @@ class UsersController extends AppController {
 
 
             if ($email->send()) {
-                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.', true), 'default', array('class' => 'success'));
+                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
                 $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('An error occurred. Please try again.', true), 'default', array('class' => 'error'));
+                $this->Session->setFlash(__('An error occurred. Please try again.'), 'default', array('class' => 'error'));
             }
         }
     }
 
     public function reset($key = null) {
-        //$this->set('title_for_layout', __('Reset Password', true));
+        //$this->set('title_for_layout', __('Reset Password'));
 
         if ($key == null) {
             $this->Session->setFlash(__('An error occurred.'));
@@ -527,9 +512,9 @@ class UsersController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->data['User']['action'];
+        $action = $this->request->data['User']['action'];
         $ids = array();
-        foreach ($this->data['User'] AS $id => $value) {
+        foreach ($this->request->data['User'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
