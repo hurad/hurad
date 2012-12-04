@@ -116,7 +116,7 @@ class MenusController extends AppController {
  * @return void
  */
 	public function admin_index() {
-                $this->set('title_for_layout', __('Menus', true));
+                $this->set('title_for_layout', __('Menus'));
 		$this->Menu->recursive = 0;
 		$this->set('menus', $this->paginate());
 	}
@@ -141,7 +141,7 @@ class MenusController extends AppController {
  * @return void
  */
 	public function admin_add() {
-            $this->set('title_for_layout', __('Add Menu', true));
+            $this->set('title_for_layout', __('Add Menu'));
 		if ($this->request->is('post')) {
 			$this->Menu->create();
 			if ($this->Menu->save($this->request->data)) {
@@ -160,7 +160,7 @@ class MenusController extends AppController {
  * @return void
  */
 	public function admin_edit($id = null) {
-                $this->set('title_for_layout', __('Edit Menu', true));
+                $this->set('title_for_layout', __('Edit Menu'));
 		$this->Menu->id = $id;
 		if (!$this->Menu->exists()) {
 			throw new NotFoundException(__('Invalid menu'));
