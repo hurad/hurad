@@ -120,7 +120,7 @@ class LinkcatsController extends AppController {
      * @return void
      */
     public function admin_index() {
-        $this->set('title_for_layout', __('Link Categories', true));
+        $this->set('title_for_layout', __('Link Categories'));
         $this->Linkcat->recursive = 0;
         $this->set('linkcats', $this->paginate('Linkcat', array('Linkcat.type' => 'link_category')));
     }
@@ -145,7 +145,7 @@ class LinkcatsController extends AppController {
      * @return void
      */
     public function admin_add() {
-        $this->set('title_for_layout', __('Add New Link Category', true));
+        $this->set('title_for_layout', __('Add New Link Category'));
         if ($this->request->is('post')) {
             $this->Linkcat->create();
             $this->request->data['Linkcat']['type'] = 'link_category';
@@ -165,7 +165,7 @@ class LinkcatsController extends AppController {
      * @return void
      */
     public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Link Category', true));
+        $this->set('title_for_layout', __('Edit Link Category'));
         $this->Linkcat->id = $id;
         if (!$this->Linkcat->exists()) {
             throw new NotFoundException(__('Invalid link category'));
@@ -206,9 +206,9 @@ class LinkcatsController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->data['Linkcat']['action'];
+        $action = $this->request->data['Linkcat']['action'];
         $ids = array();
-        foreach ($this->data['Linkcat'] AS $id => $value) {
+        foreach ($this->request->data['Linkcat'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
