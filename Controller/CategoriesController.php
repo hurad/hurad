@@ -143,7 +143,7 @@ class CategoriesController extends AppController {
      * @return void
      */
     public function admin_index() {
-        $this->set('title_for_layout', __('Categories', true));
+        $this->set('title_for_layout', __('Categories'));
 
         $categories = $this->Category->find('all', array('order' => 'Category.lft ASC', 'contain' => false));
         $treelist = $this->Category->generateTreeList(null, null, null, '_');
@@ -177,7 +177,7 @@ class CategoriesController extends AppController {
      * @return void
      */
     public function admin_add() {
-        $this->set('title_for_layout', __('Add New Category', true));
+        $this->set('title_for_layout', __('Add New Category'));
         if ($this->request->is('post')) {
             $this->Category->create();
             //$this->request->data['Category']['parent_id'] = $this->ModelName->getInsertID();
@@ -200,7 +200,7 @@ class CategoriesController extends AppController {
      * @return void
      */
     public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Category', true));
+        $this->set('title_for_layout', __('Edit Category'));
         $this->Category->id = $id;
         if (!$this->Category->exists()) {
             throw new NotFoundException(__('Invalid category'));
