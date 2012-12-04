@@ -145,6 +145,30 @@ class AdminLayoutHelper extends AppHelper {
         }
     }
 
+    public function currentUser($info = 'username') {
+        $cu = $this->_View->getVar('current_user');
+        if (!$cu) {
+            return FALSE;
+        }
+        switch ($info) {
+            case 'username':
+                if (isset($cu['User'])) {
+                    return $cu['User']['username'];
+                } else {
+                    return $cu['username'];
+                }
+                break;
+                
+            case 'id':
+                if (isset($cu['User'])) {
+                    return $cu['User']['id'];
+                } else {
+                    return $cu['id'];
+                }
+                break;
+        }
+    }
+
 }
 
 ?>
