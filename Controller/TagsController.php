@@ -119,7 +119,7 @@ class TagsController extends AppController {
      * @return void
      */
     public function admin_index() {
-        $this->set('title_for_layout', __('Tags', true));
+        $this->set('title_for_layout', __('Tags'));
         $this->Tag->recursive = 0;
         $this->set('tags', $this->paginate());
     }
@@ -144,7 +144,7 @@ class TagsController extends AppController {
      * @return void
      */
     public function admin_add() {
-        $this->set('title_for_layout', __('Add Tag', true));
+        $this->set('title_for_layout', __('Add Tag'));
         if ($this->request->is('post')) {
             if ($this->request->data['Tag']['slug']) {
                 $this->request->data['Tag']['slug'] = strtolower(Inflector::slug($this->request->data['Tag']['slug'], '-'));
@@ -166,7 +166,7 @@ class TagsController extends AppController {
      * @return void
      */
     public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Tag', true));
+        $this->set('title_for_layout', __('Edit Tag'));
         $this->Tag->id = $id;
         if (!$this->Tag->exists()) {
             throw new NotFoundException(__('Invalid tag'));
@@ -209,9 +209,9 @@ class TagsController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->data['Tag']['action'];
+        $action = $this->request->data['Tag']['action'];
         $ids = array();
-        foreach ($this->data['Tag'] AS $id => $value) {
+        foreach ($this->request->data['Tag'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
