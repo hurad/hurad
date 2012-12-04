@@ -71,7 +71,8 @@ class AppController extends Controller {
         //Set url var in all view
         $this->set('url', $this->request->url);
 
-        $this->set('controller', $this->params['controller']);
+        //Set current controller
+        $this->set('controller', $this->request->params['controller']);
 
         //Set user_cookie var in all view
         $this->set('user_cookie', $this->Cookie->read('Hurad_User'));
