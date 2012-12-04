@@ -183,11 +183,11 @@ class PostsController extends AppController {
      */
     public function admin_index($type = 'post') {
         if ($type == 'post') {
-            $this->set('title_for_layout', __('Posts', true));
+            $this->set('title_for_layout', __('Posts'));
             $this->Post->recursive = 0;
             $this->set('posts', $this->paginate('Post', array('Post.type' => $type)));
         } elseif ($type == 'page') {
-            $this->set('title_for_layout', __('Pages', true));
+            $this->set('title_for_layout', __('Pages'));
             $this->Post->recursive = 0;
             $this->set('posts', $this->paginate('Post', array('Post.type' => $type)));
         } else {
@@ -217,7 +217,7 @@ class PostsController extends AppController {
      */
     public function admin_add($type = 'post') {
         if ($type == 'post') {
-            $this->set('title_for_layout', __('Add Post', true));
+            $this->set('title_for_layout', __('Add Post'));
 
             if ($this->request->is('post')) {
                 // get the tags from the text data
@@ -244,7 +244,7 @@ class PostsController extends AppController {
             $this->set(compact('categories'));
             $this->render('admin_add');
         } elseif ($type == 'page') {
-            $this->set('title_for_layout', __('Add Page', true));
+            $this->set('title_for_layout', __('Add Page'));
             if ($this->request->is('post')) {
                 $this->request->data['Post']['type'] = 'page';
                 $this->Post->create();
@@ -272,7 +272,7 @@ class PostsController extends AppController {
      * @return void
      */
     public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Post', true));
+        $this->set('title_for_layout', __('Edit Post'));
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
                 if (empty($this->request->data['Post']['tags'])) {
@@ -293,7 +293,7 @@ class PostsController extends AppController {
                         $tag = $this->Post->Tag->save(array('name' => $_tag, 'slug' => $_tag));
                         $tag['Tag']['id'] = $this->Post->Tag->id;
                         if (!$tag) {
-                            $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag), true), 'success');
+                            $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag)), 'success');
                         }
                     }
                     if ($tag) {
@@ -306,11 +306,11 @@ class PostsController extends AppController {
 
             // save the data
             $this->Post->create();
-            if ($this->Post->save($this->data)) {
-                $this->Session->setFlash(__('The Post has been saved.', true));
+            if ($this->Post->save($this->request->data)) {
+                $this->Session->setFlash(__('The Post has been saved.'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The Post could not be saved. Please, try again.', true));
+                $this->Session->setFlash(__('The Post could not be saved. Please, try again.'));
             }
         }
         if (empty($this->request->data)) {
@@ -371,7 +371,7 @@ class PostsController extends AppController {
                     $tag = $this->Post->Tag->save(array('name' => $tagName, 'slug' => $tagSlug));
                     $tag['Tag']['id'] = $this->Post->Tag->id;
                     if (!$tag) {
-                        $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag), true), 'flash_notice');
+                        $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag)), 'flash_notice');
                     }
                 }
                 if ($tag) {
@@ -399,9 +399,9 @@ class PostsController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->data['Post']['action'];
+        $action = $this->request->data['Post']['action'];
         $ids = array();
-        foreach ($this->data['Post'] AS $id => $value) {
+        foreach ($this->request->data['Post'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
