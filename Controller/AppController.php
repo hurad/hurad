@@ -97,7 +97,7 @@ class AppController extends Controller {
             return;
         }
         $user = $this->User->find('first', array(
-            'fields' => array('User.username', 'User.password'),
+            'fields' => array('User.username', 'User.password', 'User.role'),
             'conditions' => array(
                 'User.username' => $cookie['User']['username'],
                 'User.password' => AuthComponent::password($cookie['User']['password'])
