@@ -153,7 +153,7 @@ class CommentsController extends AppController {
      * @return void
      */
     public function admin_index() {
-        $this->set('title_for_layout', __('Comments', true));
+        $this->set('title_for_layout', __('Comments'));
         $this->Comment->recursive = 0;
         $this->set('comments', $this->paginate());
     }
@@ -355,9 +355,9 @@ class CommentsController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->data['Comment']['action'];
+        $action = $this->request->data['Comment']['action'];
         $ids = array();
-        foreach ($this->data['Comment'] AS $id => $value) {
+        foreach ($this->request->data['Comment'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
