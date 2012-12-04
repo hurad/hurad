@@ -128,7 +128,7 @@ class LinksController extends AppController {
      * @return void
      */
     public function admin_index() {
-        $this->set('title_for_layout', __('Links', true));
+        $this->set('title_for_layout', __('Links'));
         $this->Link->recursive = 0;
         $this->set('links', $this->paginate(array('Linkcat.type' => 'link_category')));
     }
@@ -182,7 +182,7 @@ class LinksController extends AppController {
      * @return void
      */
     public function admin_add() {
-        $this->set('title_for_layout', __('Add New Link', true));
+        $this->set('title_for_layout', __('Add New Link'));
         if ($this->request->is('post')) {
             $this->Link->create();
             if ($this->Link->save($this->request->data)) {
@@ -206,7 +206,7 @@ class LinksController extends AppController {
      * @return void
      */
     public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Link', true));
+        $this->set('title_for_layout', __('Edit Link'));
         $this->Link->id = $id;
         if (!$this->Link->exists()) {
             throw new NotFoundException(__('Invalid link'));
@@ -252,9 +252,9 @@ class LinksController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->data['Link']['action'];
+        $action = $this->request->data['Link']['action'];
         $ids = array();
-        foreach ($this->data['Link'] AS $id => $value) {
+        foreach ($this->request->data['Link'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
