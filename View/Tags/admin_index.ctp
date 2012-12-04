@@ -89,7 +89,7 @@ echo $this->Form->create('Tag', array('url' =>
         echo $this->Form->input('Tag.action', array(
             'label' => false,
             'options' => array(
-                'delete' => __('Delete', true),
+                'delete' => __('Delete'),
             ),
             'empty' => __('Bulk Actions'),
         ));
