@@ -1,4 +1,4 @@
-<?php $this->Html->css('list-table', null, array('inline' => false)); ?>
+<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
 
 <h2><?php echo $title_for_layout; ?></h2>
 <?php
