@@ -1,4 +1,5 @@
-<?php $this->Html->css('list-table', null, array('inline' => false)); ?>
+<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
+
 <h2>
     <?php echo $title_for_layout; ?>
     <?php echo $this->Html->link(__('Add New'), '/admin/tags/add', array('class' => 'add_button')); ?>
