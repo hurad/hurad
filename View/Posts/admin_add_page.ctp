@@ -1,4 +1,7 @@
+<?php $this->Html->css('admin-side-widget', null, array('inline' => false)); ?>
+
 <h2><?php echo $title_for_layout; ?></h2>
+
 <?php
 echo $this->Form->create('Post', array(
     'inputDefaults' => array(
@@ -9,7 +12,7 @@ echo $this->Form->create('Post', array(
 ?>
 <div id="poststuff" class="metabox-holder">
     <?php echo $this->Form->input('id'); ?>
-    <div id="side-info-column" class="inner-sidebar">
+    <div id="admin-side-column">
         <div id="side-sortables">
             <ul id="side-column">
                 <li class="side-widget">
