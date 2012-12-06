@@ -24,7 +24,6 @@ Router::connect('/:slug', array('controller' => 'posts', 'action' => 'view'), ar
  * Pages
  */
 Router::connect('/pages', array('controller' => 'posts', 'action' => 'index', 'admin' => FALSE, 'page'));
-Router::connect('/admin/pages', array('controller' => 'posts', 'action' => 'index', 'admin' => TRUE, 'page'));
 Router::connect('/admin/pages/add', array('controller' => 'posts', 'action' => 'add', 'admin' => TRUE, 'page'));
 
 /**
