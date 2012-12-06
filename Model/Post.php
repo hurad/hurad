@@ -124,28 +124,13 @@ class Post extends AppModel {
         return $post;
     }
 
-    public function count_posts($type = 'post') {
-        if ($type == NULL) {
-            return FALSE;
-        } elseif ($type == 'post') {
-            $published = $this->find('count', array(
-                'conditions' => array(
-                    'Post.status' => 'publish',
-                    'Post.type' => 'post'
+    public function count_posts() {
+        $published = $this->find('count', array(
+            'conditions' => array(
+                'Post.status' => 'publish',
+                'Post.type' => 'post')
                 )
-                    )
-            );
-        } elseif ($type == 'page') {
-            $published = $this->find('count', array(
-                'conditions' => array(
-                    'Post.status' => 'publish',
-                    'Post.type' => 'page'
-                )
-                    )
-            );
-        } else {
-            return FALSE;
-        }
+        );
         return $published;
     }
 
