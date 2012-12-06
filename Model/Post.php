@@ -124,6 +124,11 @@ class Post extends AppModel {
         return $post;
     }
 
+    /**
+     * Count all posts.
+     *
+     * @return intiger Number of all post published.
+     */
     public function count_posts() {
         $published = $this->find('count', array(
             'conditions' => array(
