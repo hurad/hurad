@@ -108,6 +108,12 @@ class Post extends AppModel {
         ),
     );
 
+    /**
+     * Get first post.
+     *
+     * @param intiger $post_id Post ID
+     * @return array
+     */
     public function get_post($post_id) {
         $post = $this->find('first', array(
             "fields" => 'Post.id, Post.user_id',
