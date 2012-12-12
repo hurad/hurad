@@ -10,7 +10,7 @@ $trashpages = ClassRegistry::init('Page')->count_pages('trash');
 ?>
 <div class="table-filter-search">
     <div class="filter">
-        <ul class="subsubsub">
+        <ul class="sub-filter">
             <li>
                 <?php
                 if ($url == "admin/pages" || $url == "admin/pages/filter") {
