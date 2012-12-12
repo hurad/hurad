@@ -51,6 +51,7 @@ h6 {
 }
 a {
     text-decoration: none;
+    color: #21759B;
 }
 code {
     background: none repeat scroll 0 0 #EAEAEA;
@@ -476,7 +477,7 @@ td.available-theme {
     margin-bottom: 10px;
     overflow: hidden;
     width: 240px;
-        background-color: #F1F1F1;
+    background-color: #F1F1F1;
     border-color: #DDDDDD;
 }
 .available-theme h3 {
@@ -488,4 +489,42 @@ td.available-theme {
 table#availablethemes td {
     border-style: none solid solid;
     border-width: 0 1px 1px;
+}
+.filter{
+    float: left;
+}
+.sub-filter {
+    font-size: 11px;
+    list-style: none outside none;
+    margin: 8px 0 5px;
+    padding: 0;
+    white-space: nowrap;
+}
+.sub-filter li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+.sub-filter a.current {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    font-weight: bold;
+    color: #000000;
+}
+.sub-filter a {
+    line-height: 2;
+    padding: 0.2em;
+    text-decoration: none;
+}
+.search-box{
+    float: right;
+}
+.table-filter-search {
+    height: 30px;
+    margin: 6px 0 0;
+    vertical-align: middle;
+}
+.count {
+    color: #999999;
+    font-weight: normal;
 }
