@@ -6,9 +6,9 @@
         <?php echo $this->Html->css(array('reset', 'main', 'color-gray', 'admin-menu', 'error')); ?>
         <?php echo $this->fetch('css'); ?>
         <?php
+        echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
             'jquery-1.6.3.min',
-            'thickbox/thickbox',
             'password-strength-meter',
             'user-profile',
             'ckeditor/ckeditor',
@@ -18,7 +18,8 @@
             'slug',
             'sidebar-menu',
             'theme-preview',
-            'jquery-ui-1.8.23.custom.min'
+            'jquery-ui-1.8.23.custom.min',
+            'pages'
                 )
         );
         ?>
