@@ -30,7 +30,7 @@ class AdminLayoutHelper extends AppHelper {
      * @var array
      * @access public
      */
-    public $helpers = array('Html');
+    public $helpers = array('Html', 'Js');
 
     public function postStatus($value) {
         if ($value == 'publish') {
@@ -158,7 +158,7 @@ class AdminLayoutHelper extends AppHelper {
                     return $cu['username'];
                 }
                 break;
-                
+
             case 'id':
                 if (isset($cu['User'])) {
                     return $cu['User']['id'];
@@ -167,6 +167,20 @@ class AdminLayoutHelper extends AppHelper {
                 }
                 break;
         }
+    }
+
+    public function jsVar() {
+        $hurad = array();
+        $hurad['basePath'] = Router::url('/');
+        $hurad['params'] = array(
+            'controller' => $this->params['controller'],
+            'action' => $this->params['action'],
+            'named' => $this->params['named'],
+        );
+        if (is_array(Configure::read('Js'))) {
+            $hurad = Set::merge($hurad, Configure::read('Js'));
+        }
+        return $this->Html->scriptBlock('var Hurad = ' . $this->Js->object($hurad) . ';');
     }
 
 }
