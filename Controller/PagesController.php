@@ -1,82 +1,305 @@
 <?php
-/**
- * Static content controller.
- *
- * This file will render views from views/pages/
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
 
 App::uses('AppController', 'Controller');
 
 /**
- * Static content controller
+ * Posts Controller
  *
- * Override this controller by placing a copy in controllers directory of an application
- *
- * @package       app.Controller
- * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
+ * @property Post $Post
  */
 class PagesController extends AppController {
 
-/**
- * Controller name
- *
- * @var string
- */
-	public $name = 'Pages';
+    public $helpers = array('Post', 'Comment', 'Text');
+    public $components = array('RequestHandler');
+    public $paginate = array(
+        'conditions' => array(
+            'Page.status' => array('publish', 'draft'),
+            'Page.type' => 'page'
+        ),
+        'limit' => 25,
+        'order' => array(
+            'Page.created' => 'desc'
+        )
+    );
 
-/**
- * Default helper
- *
- * @var array
- */
-	public $helpers = array('Html', 'Session');
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Auth->allow('*');
+        //$this->isAuthorized();
+    }
 
-/**
- * This controller does not use a model
- *
- * @var array
- */
-	public $uses = array();
+    public function isAuthorized() {
+        switch ($this->Auth->user('role')) {
+            case 'admin':
+                $this->Auth->allow();
+                break;
+            case 'editor':
+                $this->Auth->allow('admin_index', 'admin_add', 'admin_edit', 'index', 'view');
+                break;
+            case 'user':
+                $this->Auth->allow('index', 'view');
+                break;
+            default :
+                $this->Auth->allow('index', 'view');
+                break;
+        }
+    }
 
-/**
- * Displays a view
- *
- * @param mixed What page to display
- * @return void
- */
-	public function display() {
-		$path = func_get_args();
+    /**
+     * index method
+     *
+     * @return void
+     */
+    public function index() {
+        if ($this->RequestHandler->isRss()) {
+            $posts = $this->Post->find('all', array('limit' => 20, 'order' => 'Post.created DESC'));
+            return $this->set(compact('posts'));
+        } else {
+            //$this->Post->recursive = 0;
+            $this->paginate = array(
+                'conditions' => array('Post.type' => 'post'),
+                'contain' => array('Category', 'User', 'Tag', 'Comment'),
+                'order' => array(
+                    'Post.created' => 'desc'
+                )
+            );
+            $this->set('posts', $this->paginate('Post'));
+        }
+    }
 
-		$count = count($path);
-		if (!$count) {
-			$this->redirect('/');
-		}
-		$page = $subpage = $title_for_layout = null;
+    public function pageIndex() {
+        //$pages = $this->Post->generateTreeList(array('type' => 'page'));
+        //debug($this->request->named['sort']);
+        $pages = $this->Post->find('threaded', array(
+            'conditions' => array('Post.type' => 'page'),
+            'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
+                //'limit' => $this->request->named['limit'],
+                )
+        );
 
-		if (!empty($path[0])) {
-			$page = $path[0];
-		}
-		if (!empty($path[1])) {
-			$subpage = $path[1];
-		}
-		if (!empty($path[$count - 1])) {
-			$title_for_layout = Inflector::humanize($path[$count - 1]);
-		}
-		$this->set(compact('page', 'subpage', 'title_for_layout'));
-		$this->render(implode('/', $path));
-	}
+        if (!empty($this->request->params['requested'])) {
+//            foreach ($listpage as $id => $slug) {
+//                $pages[$id]['path'] = $slug;
+//                //$i++;
+//            }
+            //debug($pages);
+            return $pages;
+        } else {
+            $this->set(compact($pages));
+        }
+    }
+
+    /**
+     * view method
+     *
+     * @param string $id
+     * @return void
+     */
+    public function view($slug = null) {
+        $this->Page->slug = $slug;
+//        if (!$this->Post->exists()) {
+//            throw new NotFoundException(__('Invalid post'));
+//        }
+//        $this->set('post', $this->Post->read(null, $id));
+        if (is_null($slug) && !$this->Page->exists()) {
+//            $this->Session->setFlash(__('Your post not exist.'));
+//            $this->redirect(array('action' => 'index'));
+            throw new NotFoundException(__('Invalid page'));
+        } else {
+            $this->set('page', $this->Page->findBySlug($slug));
+        }
+    }
+
+    /**
+     * admin_index method
+     *
+     * @return void
+     */
+    public function admin_index() {
+        $this->set('title_for_layout', __('Pages'));
+        $this->Page->recursive = 0;
+        if (isset($this->request->params['named']['q'])) {
+            App::uses('Sanitize', 'Utility');
+            $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Page']['conditions']['OR'] = array(
+                'Page.title LIKE' => '%' . $q . '%',
+            );
+        }
+        $this->set('pages', $this->paginate('Page'));
+    }
+
+    /**
+     * admin_add method
+     *
+     * @return void
+     */
+    public function admin_add() {
+        $this->set('title_for_layout', __('Add Page'));
+        if ($this->request->is('post')) {
+            $this->request->data['Page']['type'] = 'page';
+            $this->request->data['Page']['user_id'] = $this->Auth->user('id');
+            $this->Page->create();
+            if ($this->Page->save($this->request->data)) {
+                $this->Session->setFlash(__('The page has been saved'), 'flash_notice');
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'flash_error');
+            }
+        }
+        $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page'), null, null, '_');
+        $this->set(compact('parentPages'));
+    }
+
+    /**
+     * admin_edit method
+     *
+     * @param string $id
+     * @return void
+     */
+    public function admin_edit($id = null) {
+        $this->set('title_for_layout', __('Edit Page'));
+        if (!empty($this->request->data)) {
+            if ($this->request->is('post') || $this->request->is('put')) {
+                $this->request->data['Page']['type'] = 'page';
+                $this->request->data['Page']['user_id'] = $this->Auth->user('id');
+
+                // save the data
+                $this->Page->create();
+                if ($this->Page->save($this->request->data)) {
+                    $this->Session->setFlash(__('The Page has been saved.'), 'flash_notice');
+                    $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('The Page could not be saved. Please, try again.'), 'flash_error');
+                }
+            }
+        } elseif (empty($this->request->data)) {
+            $this->request->data = $this->Page->read(null, $id);
+        }
+
+        $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page'), null, null, '_');
+        $this->set(compact('parentPages'));
+    }
+
+    /**
+     * admin_delete method
+     *
+     * @param string $id
+     * @return void
+     */
+    public function admin_delete($id = null) {
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        $this->Page->id = $id;
+        if (!$this->Page->exists()) {
+            throw new NotFoundException(__('Invalid page'));
+            $this->redirect(array('action' => 'index'));
+        }
+        if ($this->Page->delete()) {
+            $this->Session->setFlash(__('Page deleted.'), 'flash_notice');
+            $this->redirect(array('action' => 'index'));
+        }
+        $this->Session->setFlash(__('Page was not deleted.'), 'flash_error');
+        $this->redirect(array('action' => 'index'));
+    }
+
+    /**
+     * admin_filter method
+     *
+     * @param string $action
+     * @return void
+     */
+    public function admin_filter($action = null) {
+        $this->Page->recursive = 0;
+        $this->paginate = array();
+        $this->paginate['limit'] = 25;
+        switch ($action) {
+            case 'publish':
+                $this->set('title_for_layout', __('Pages Published'));
+                $this->paginate['conditions'] = array(
+                    'Page.status' => 'publish',
+                    'Page.type' => 'page'
+                );
+                break;
+
+            case 'draft':
+                $this->set('title_for_layout', __('Draft Pages'));
+                $this->paginate['conditions'] = array(
+                    'Page.status' => 'draft',
+                    'Page.type' => 'page'
+                );
+                break;
+
+            case 'trash':
+                $this->set('title_for_layout', __('Pages'));
+                $this->paginate['conditions'] = array(
+                    'Page.status' => 'trash',
+                    'Page.type' => 'page'
+                );
+                break;
+
+            default:
+                $this->set('title_for_layout', __('Pages'));
+                $this->paginate['conditions'] = array(
+                    'Page.status' => array('publish', 'draft'),
+                    'Page.type' => 'page'
+                );
+                break;
+        }
+
+        $this->paginate['order'] = array('Page.created' => 'desc');
+        $this->set('pages', $this->paginate('Page'));
+        $this->render('admin_index');
+    }
+
+    public function admin_process() {
+        $this->autoRender = false;
+        $action = $this->request->data['Page']['action'];
+        $ids = array();
+        foreach ($this->request->data['Page'] AS $id => $value) {
+            if ($id != 'action' && $value['id'] == 1) {
+                $ids[] = $id;
+            }
+        }
+
+        if (count($ids) == 0) {
+            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->redirect(array('action' => 'index'));
+        } elseif ($action == null) {
+            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->redirect(array('action' => 'index'));
+        }
+
+        switch ($action) {
+            case 'delete':
+                if ($this->Page->deleteAll(array('Page.id' => $ids), true, true)) {
+                    $this->Session->setFlash(__('Posts deleted.'), 'flash_notice');
+                }
+                break;
+
+            case 'publish':
+                if ($this->Page->updateAll(array('Page.status' => "'publish'"), array('Page.id' => $ids))) {
+                    $this->Session->setFlash(__('Pages published'), 'flash_notice');
+                }
+                break;
+
+            case 'draft':
+                if ($this->Page->updateAll(array('Page.status' => "'draft'"), array('Page.id' => $ids))) {
+                    $this->Session->setFlash(__('Pages drafted'), 'flash_notice');
+                }
+                break;
+
+            case 'trash':
+                if ($this->Page->updateAll(array('Page.status' => "'trash'"), array('Page.id' => $ids))) {
+                    $this->Session->setFlash(__('Pages move to trash'), 'flash_notice');
+                }
+                break;
+
+            default:
+                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                break;
+        }
+        $this->redirect(array('action' => 'index'));
+    }
+
 }
