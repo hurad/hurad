@@ -231,7 +231,7 @@ class PostsController extends AppController {
                 $this->Session->setFlash(__('The post has been saved'), 'notice');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The post could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'flash_error');
             }
         }
         $categories = $this->Post->Category->generateTreeList(null, null, null, '_');
