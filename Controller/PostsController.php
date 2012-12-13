@@ -196,7 +196,7 @@ class PostsController extends AppController {
                         $tag = $this->Post->Tag->save(array('name' => $_tag, 'slug' => $_tag));
                         $tag['Tag']['id'] = $this->Post->Tag->id;
                         if (!$tag) {
-                            $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag)), 'success');
+                            $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag)), 'flash_error');
                         }
                     }
                     if ($tag) {
