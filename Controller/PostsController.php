@@ -280,7 +280,7 @@ class PostsController extends AppController {
             // save the data
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__('The Post has been saved.'));
+                $this->Session->setFlash(__('The Post has been saved.'), 'flash_notice');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The Post could not be saved. Please, try again.'));
