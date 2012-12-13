@@ -12,6 +12,10 @@ class PostsController extends AppController {
     public $helpers = array('Post', 'Comment', 'Text');
     public $components = array('RequestHandler');
     public $paginate = array(
+        'conditions' => array(
+            'Post.status' => array('publish', 'draft'),
+            'Post.type' => 'post'
+        ),
         'limit' => 5,
         'order' => array(
             'Post.created' => 'desc'
