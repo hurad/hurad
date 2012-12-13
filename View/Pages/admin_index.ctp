@@ -4,9 +4,7 @@
 
 <div class="table-filter-search">
     <?php echo $this->element('admin/pages_filter'); ?>
-    <div class="search-box">
-        <?php echo $this->element('admin/search_pages'); ?>
-    </div>
+    <?php echo $this->element('admin/search_pages'); ?>
 </div>
 
 
