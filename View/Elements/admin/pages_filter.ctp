@@ -1,3 +1,9 @@
+<?php
+$allpages = ClassRegistry::init('Page')->count_pages();
+$publishpages = ClassRegistry::init('Page')->count_pages('publish');
+$draftpages = ClassRegistry::init('Page')->count_pages('draft');
+$trashpages = ClassRegistry::init('Page')->count_pages('trash');
+?>
 <div class="filter">
     <ul class="sub-filter">
         <li>
