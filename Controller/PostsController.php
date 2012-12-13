@@ -211,53 +211,31 @@ class PostsController extends AppController {
      * @return void
      */
     public function admin_add($type = 'post') {
-        if ($type == 'post') {
-            $this->set('title_for_layout', __('Add Post'));
+        $this->set('title_for_layout', __('Add Post'));
 
-            if ($this->request->is('post')) {
-                // get the tags from the text data
-                if ($this->request->data['Post']['tags']) {
-                    //$this->request->data['Post']['id'] = $id;
-                    //add code
-                    $this->_saveTags();
-                }
-
-                $this->request->data['Post']['type'] = 'post';
-                $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-
-                // prevent the current tags from being deleted
-                $this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
-                $this->Post->create();
-                if ($this->Post->save($this->request->data)) {
-                    $this->Session->setFlash(__('The post has been saved'), 'notice');
-                    $this->redirect(array('action' => 'index'));
-                } else {
-                    $this->Session->setFlash(__('The post could not be saved. Please, try again.'));
-                }
+        if ($this->request->is('post')) {
+            // get the tags from the text data
+            if ($this->request->data['Post']['tags']) {
+                //$this->request->data['Post']['id'] = $id;
+                //add code
+                $this->_saveTags();
             }
-            $categories = $this->Post->Category->generateTreeList(null, null, null, '_');
-            $this->set(compact('categories'));
-            $this->render('admin_add');
-        } elseif ($type == 'page') {
-            $this->set('title_for_layout', __('Add Page'));
-            if ($this->request->is('post')) {
-                $this->request->data['Post']['type'] = 'page';
-                $this->Post->create();
-                if ($this->Post->save($this->request->data)) {
-                    $this->Session->setFlash(__('The post has been saved'), 'notice');
-                    $this->redirect(array('action' => 'index'));
-                } else {
-                    $this->Session->setFlash(__('The post could not be saved. Please, try again.'));
-                }
+
+            $this->request->data['Post']['type'] = 'post';
+            $this->request->data['Post']['user_id'] = $this->Auth->user('id');
+
+            // prevent the current tags from being deleted
+            $this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
+            $this->Post->create();
+            if ($this->Post->save($this->request->data)) {
+                $this->Session->setFlash(__('The post has been saved'), 'notice');
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The post could not be saved. Please, try again.'));
             }
-            $parentPages = $this->Post->generateTreeList(array('Post.type' => 'page'), null, null, '_');
-            //debug($parentPages);
-            $this->set(compact('parentPages'));
-            $this->render('admin_add_page');
-        } else {
-            $this->Session->setFlash(__('Invalid post type'), 'error');
-            $this->redirect(array('action' => 'index'));
         }
+        $categories = $this->Post->Category->generateTreeList(null, null, null, '_');
+        $this->set(compact('categories'));
     }
 
     /**
