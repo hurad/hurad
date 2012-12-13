@@ -2,12 +2,6 @@
 
 <h2><?php echo $title_for_layout; ?></h2>
 
-<?php
-$allpages = ClassRegistry::init('Page')->count_pages();
-$publishpages = ClassRegistry::init('Page')->count_pages('publish');
-$draftpages = ClassRegistry::init('Page')->count_pages('draft');
-$trashpages = ClassRegistry::init('Page')->count_pages('trash');
-?>
 <div class="table-filter-search">
     <?php echo $this->element('admin/pages_filter'); ?>
     <div class="search-box">
