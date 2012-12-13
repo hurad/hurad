@@ -158,7 +158,7 @@ class PostsController extends AppController {
             $this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__('The post has been saved'), 'notice');
+                $this->Session->setFlash(__('The post has been saved'), 'flash_notice');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'flash_error');
