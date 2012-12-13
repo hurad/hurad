@@ -337,6 +337,12 @@ class PostsController extends AppController {
                 }
                 break;
 
+            case 'trash':
+                if ($this->Post->updateAll(array('Post.status' => "'trash'"), array('Post.id' => $ids))) {
+                    $this->Session->setFlash(__('Posts move to trash'), 'flash_notice');
+                }
+                break;
+
             default:
                 $this->Session->setFlash(__('An error occurred.'), 'flash_error');
                 break;
