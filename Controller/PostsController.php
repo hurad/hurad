@@ -16,7 +16,7 @@ class PostsController extends AppController {
             'Post.status' => array('publish', 'draft'),
             'Post.type' => 'post'
         ),
-        'limit' => 5,
+        'limit' => 25,
         'order' => array(
             'Post.created' => 'desc'
         )
