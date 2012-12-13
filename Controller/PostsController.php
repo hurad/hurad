@@ -185,19 +185,10 @@ class PostsController extends AppController {
      *
      * @return void
      */
-    public function admin_index($type = 'post') {
-        if ($type == 'post') {
-            $this->set('title_for_layout', __('Posts'));
-            $this->Post->recursive = 0;
-            $this->set('posts', $this->paginate('Post', array('Post.type' => $type)));
-        } elseif ($type == 'page') {
-            $this->set('title_for_layout', __('Pages'));
-            $this->Post->recursive = 0;
-            $this->set('posts', $this->paginate('Post', array('Post.type' => $type)));
-        } else {
-            $this->Session->setFlash(__('Invalid post type'), 'flash_error');
-            $this->redirect(array('action' => 'index'));
-        }
+    public function admin_index() {
+        $this->set('title_for_layout', __('Posts'));
+        $this->Post->recursive = 0;
+        $this->set('posts', $this->paginate('Post'));
     }
 
     /**
