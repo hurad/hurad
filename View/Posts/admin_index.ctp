@@ -97,6 +97,7 @@ echo $this->Form->create('Post', array('url' =>
                 'publish' => __('Publish'),
                 'draft' => __('Draft'),
                 'delete' => __('Delete'),
+                'trash' => __('Move to Trash'),
             ),
             'empty' => __('Bulk Actions'),
         ));
