@@ -2,6 +2,11 @@
 
 <h2><?php echo $title_for_layout; ?></h2>
 
+<div class="table-filter-search">
+    <?php echo $this->element('admin/posts_filter'); ?>
+    <?php echo $this->element('admin/posts_search'); ?>
+</div>
+
 <?php
 echo $this->Form->create('Post', array('url' =>
     array('admin' => TRUE, 'controller' => 'posts', 'action' => 'process'),
