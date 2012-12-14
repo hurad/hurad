@@ -21,14 +21,14 @@
     <li class="widget posts-widget">
         <ul class="menu posts-menu">
             <?php $posts_menu = array("admin/posts", "admin/posts/add", "admin/categories", "admin/tags", "admin/tags/add"); ?>
-            <li class="top-menu posts-top-menu <?php if (in_array($url, $posts_menu)) echo 'active'; ?>">
+            <li class="top-menu posts-top-menu <?php if (in_array($url, $posts_menu) || stripos($url, 'admin/posts/filter') !== FALSE) echo 'active'; ?>">
                 <?php echo $this->Html->image('pin.png', array('alt' => 'Posts', 'class' => 'menu-img')); ?>
                 <?php echo __("Posts"); ?>
                 <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
             </li>
-            <li class="sb" <?php if (in_array($url, $posts_menu)) echo 'style="display: list-item;"'; ?>>
+            <li class="sb" <?php if (in_array($url, $posts_menu) || stripos($url, 'admin/posts/filter') !== FALSE) echo 'style="display: list-item;"'; ?>>
                 <ul class="submenu">
-                    <li <?php if ($url == 'admin/posts') echo 'class="current"'; ?>>
+                    <li <?php if ($url == 'admin/posts' || stripos($url, 'admin/posts/filter') !== FALSE) echo 'class="current"'; ?>>
                         <?php echo $this->Html->link(__('Posts'), '/admin/posts'); ?>
                     </li>
                     <li <?php if ($url == 'admin/posts/add') echo 'class="current"'; ?>>
