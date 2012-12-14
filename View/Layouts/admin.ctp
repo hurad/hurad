@@ -17,7 +17,6 @@
             'common',
             'slug',
             'sidebar-menu',
-            'theme-preview',
             'jquery-ui-1.8.23.custom.min',
                 )
         );
