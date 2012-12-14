@@ -1,23 +1,17 @@
 language: php
 
 php:
-#  - 5.2
   - 5.3
   - 5.4
 
 env:
   - DB=mysql
   - DB=sqlite
-#  - DB=pgsql
 
 before_script:
   - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp ; cd cakephp ; git checkout -qf 2.2.0"
   - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE hurad_test;'; fi"
-#  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE hurad_test;' -U postgres; fi"
-#  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA Hurad_test;' -U postgres -d Hurad_test; fi"
-#  - cp Config/settings.yml.install Config/settings.yml
-#  - cp Config/croogo.php.install Config/croogo.php
   - set +H
   - echo "<?php
     class DATABASE_CONFIG {
@@ -27,16 +21,6 @@ before_script:
         'host' => '0.0.0.0',
         'login' => 'travis'
       ),
-#      'pgsql' => array(
-#        'datasource' => 'Database/Postgres',
-#        'host' => '127.0.0.1',
-#        'login' => 'postgres',
-#        'database' => 'hurad_test',
-#        'schema' => array(
-#          'default' => 'public',
-#          'test' => 'hurad_test',
-#        )
-#      ),
       'sqlite' => array(
         'datasource' => 'Database/Sqlite',
         'database' => array(
