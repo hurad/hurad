@@ -311,6 +311,55 @@ class PostsController extends AppController {
         }
     }
 
+    /**
+     * admin_filter method
+     *
+     * @param string $action
+     * @return void
+     */
+    public function admin_filter($action = null) {
+        $this->Post->recursive = 0;
+        $this->paginate = array();
+        $this->paginate['limit'] = 25;
+        switch ($action) {
+            case 'publish':
+                $this->set('title_for_layout', __('Posts Published'));
+                $this->paginate['conditions'] = array(
+                    'Post.status' => 'publish',
+                    'Post.type' => 'post'
+                );
+                break;
+
+            case 'draft':
+                $this->set('title_for_layout', __('Draft Posts'));
+                $this->paginate['conditions'] = array(
+                    'Post.status' => 'draft',
+                    'Post.type' => 'post'
+                );
+                break;
+
+            case 'trash':
+                $this->set('title_for_layout', __('Posts'));
+                $this->paginate['conditions'] = array(
+                    'Post.status' => 'trash',
+                    'Post.type' => 'post'
+                );
+                break;
+
+            default:
+                $this->set('title_for_layout', __('Posts'));
+                $this->paginate['conditions'] = array(
+                    'Post.status' => array('publish', 'draft'),
+                    'Post.type' => 'post'
+                );
+                break;
+        }
+
+        $this->paginate['order'] = array('Post.created' => 'desc');
+        $this->set('posts', $this->paginate('Post'));
+        $this->render('admin_index');
+    }
+
     public function admin_process() {
         $this->autoRender = false;
         $action = $this->request->data['Post']['action'];
