@@ -118,6 +118,17 @@ class PostsController extends AppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Posts'));
         $this->Post->recursive = 0;
+        if (isset($this->request->params['named']['q'])) {
+            App::uses('Sanitize', 'Utility');
+            $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Post']['limit'] = 25;
+            $this->paginate['Post']['order'] = array('Post.created' => 'desc');
+            $this->paginate['Post']['conditions'] = array(
+                'Post.status' => array('publish', 'draft'),
+                'Post.type' => 'post',
+                'Post.title LIKE' => '%' . $q . '%',
+            );
+        }
         $this->set('posts', $this->paginate('Post'));
     }
 
