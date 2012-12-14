@@ -73,14 +73,14 @@
     <li class="widget pages-widget">
         <ul class="menu pages-menu">
             <?php $pages_menu = array("admin/pages", "admin/pages/add"); ?>
-            <li class="top-menu pages-top-menu <?php if (in_array($url, $pages_menu)) echo 'active'; ?>">
+            <li class="top-menu pages-top-menu <?php if (in_array($url, $pages_menu) || stripos($url, 'admin/pages/filter') !== FALSE) echo 'active'; ?>">
                 <?php echo $this->Html->image('report-paper.png', array('alt' => 'Pages', 'class' => 'menu-img')); ?>
                 <?php echo __("Pages"); ?>
                 <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
             </li>
-            <li class="sb" <?php if (in_array($url, $pages_menu)) echo 'style="display: list-item;"'; ?>>
+            <li class="sb" <?php if (in_array($url, $pages_menu) || stripos($url, 'admin/pages/filter') !== FALSE) echo 'style="display: list-item;"'; ?>>
                 <ul class="submenu">
-                    <li <?php if ($url == 'admin/pages') echo 'class="current"'; ?>>
+                    <li <?php if ($url == 'admin/pages' || stripos($url, 'admin/pages/filter') !== FALSE) echo 'class="current"'; ?>>
                         <?php echo $this->Html->link(__('All Pages'), '/admin/pages'); ?>
                     </li>
                     <li <?php if ($url == 'admin/pages/add') echo 'class="current"'; ?>>
