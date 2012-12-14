@@ -7,7 +7,6 @@
     <?php echo $this->element('admin/pages_search'); ?>
 </div>
 
-
 <?php
 echo $this->Form->create('Page', array('url' =>
     array('admin' => TRUE, 'controller' => 'pages', 'action' => 'process'),
