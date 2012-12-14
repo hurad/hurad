@@ -121,6 +121,7 @@ class PagesController extends AppController {
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Page']['limit'] = 25;
             $this->paginate['Page']['conditions'] = array(
                 'Page.type' => 'page',
                 'Page.title LIKE' => '%' . $q . '%',
