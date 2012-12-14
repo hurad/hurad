@@ -162,7 +162,7 @@ class Post extends AppModel {
                 $published = $this->find('count', array(
                     'conditions' => array(
                         'Post.status' => 'trash',
-                        'post.type' => 'post')
+                        'Post.type' => 'post')
                         )
                 );
                 break;
