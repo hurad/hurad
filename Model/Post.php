@@ -127,15 +127,49 @@ class Post extends AppModel {
     /**
      * Count all posts.
      *
-     * @return intiger Number of all post published.
+     * @return intiger Number of all posts in specify type.
      */
-    public function count_posts() {
-        $published = $this->find('count', array(
-            'conditions' => array(
-                'Post.status' => 'publish',
-                'Post.type' => 'post')
-                )
-        );
+    public function count_posts($status = 'all') {
+        switch ($status) {
+            case 'all':
+                $published = $this->find('count', array(
+                    'conditions' => array(
+                        'Post.status' => array('publish', 'draft'),
+                        'Post.type' => 'post')
+                        )
+                );
+                break;
+
+            case 'publish':
+                $published = $this->find('count', array(
+                    'conditions' => array(
+                        'Post.status' => 'publish',
+                        'Post.type' => 'post')
+                        )
+                );
+                break;
+
+            case 'draft':
+                $published = $this->find('count', array(
+                    'conditions' => array(
+                        'Post.status' => 'draft',
+                        'Post.type' => 'post')
+                        )
+                );
+                break;
+
+            case 'trash':
+                $published = $this->find('count', array(
+                    'conditions' => array(
+                        'Post.status' => 'trash',
+                        'post.type' => 'post')
+                        )
+                );
+                break;
+
+            default:
+                break;
+        }
         return $published;
     }
 
