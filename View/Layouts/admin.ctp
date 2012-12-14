@@ -19,11 +19,10 @@
             'sidebar-menu',
             'theme-preview',
             'jquery-ui-1.8.23.custom.min',
-            'pages'
                 )
         );
         ?>
-        <?php echo $this->fetch('script'); ?>
+        <?php echo $this->fetch('headerScript'); ?>
         <?php echo $this->Js->writeBuffer(); ?>
     </head>
     <body>
