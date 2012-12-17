@@ -52,10 +52,10 @@ class AppController extends Controller {
     public function beforeFilter() {
         //Cookie Configuration
         $this->Cookie->name = 'Hurad';
-        
+
         //Set default theme
         $this->theme = Configure::read('template');
-        
+
         $this->cookie_check();
 
         if (isset($this->request->params['admin'])) {
@@ -97,7 +97,7 @@ class AppController extends Controller {
             return;
         }
         $user = $this->User->find('first', array(
-            'fields' => array('User.username', 'User.password', 'User.role'),
+            'fields' => array('User.username', 'User.password', 'User.role', 'User.email', 'User.url'),
             'conditions' => array(
                 'User.username' => $cookie['User']['username'],
                 'User.password' => AuthComponent::password($cookie['User']['password'])
@@ -107,7 +107,7 @@ class AppController extends Controller {
         if ($this->Auth->login($user['User'])) {
             $this->Cookie->write('Auth.User', $cookie, true, '+2 weeks');
         } else {
-            $this->Cookie->delete('Auth.User');       
+            $this->Cookie->delete('Auth.User');
         }
     }
 
