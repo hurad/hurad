@@ -85,7 +85,7 @@ class Page extends AppModel {
     public function count_pages($status = 'all') {
         switch ($status) {
             case 'all':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Page.status' => array('publish', 'draft'),
                         'Page.type' => 'page')
@@ -94,7 +94,7 @@ class Page extends AppModel {
                 break;
 
             case 'publish':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Page.status' => 'publish',
                         'Page.type' => 'page')
@@ -103,7 +103,7 @@ class Page extends AppModel {
                 break;
 
             case 'draft':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Page.status' => 'draft',
                         'Page.type' => 'page')
@@ -112,7 +112,7 @@ class Page extends AppModel {
                 break;
 
             case 'trash':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Page.status' => 'trash',
                         'Page.type' => 'page')
@@ -123,7 +123,7 @@ class Page extends AppModel {
             default:
                 break;
         }
-        return $published;
+        return $num;
     }
 
 }
