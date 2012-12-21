@@ -132,7 +132,7 @@ class Post extends AppModel {
     public function count_posts($status = 'all') {
         switch ($status) {
             case 'all':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Post.status' => array('publish', 'draft'),
                         'Post.type' => 'post')
@@ -141,7 +141,7 @@ class Post extends AppModel {
                 break;
 
             case 'publish':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Post.status' => 'publish',
                         'Post.type' => 'post')
@@ -150,7 +150,7 @@ class Post extends AppModel {
                 break;
 
             case 'draft':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Post.status' => 'draft',
                         'Post.type' => 'post')
@@ -159,7 +159,7 @@ class Post extends AppModel {
                 break;
 
             case 'trash':
-                $published = $this->find('count', array(
+                $num = $this->find('count', array(
                     'conditions' => array(
                         'Post.status' => 'trash',
                         'Post.type' => 'post')
@@ -170,7 +170,7 @@ class Post extends AppModel {
             default:
                 break;
         }
-        return $published;
+        return $num;
     }
 
 }
