@@ -80,7 +80,9 @@ class Page extends AppModel {
     /**
      * Count all pages.
      *
-     * @return intiger Number of all pages published.
+     * @param string $status Page status
+     * 
+     * @return intiger Number of all pages in specify status.
      */
     public function count_pages($status = 'all') {
         switch ($status) {
