@@ -7,7 +7,7 @@ $(document).ready(function()
 
         });
 
-        if(Hurad.params.action == "admin_index"){
+        if(Hurad.params.action == "admin_index" || Hurad.params.action == "admin_filter"){
             $('a[href$="'+Hurad.params.controller+'"]').parent().addClass("current"); 
         }
         else if(Hurad.params.action == "admin_add"){
@@ -15,7 +15,7 @@ $(document).ready(function()
         }
         else if(Hurad.params.action == "admin_prefix"){
             $('a[href$="'+Hurad.params.pass+'"]').parent().addClass("current");
-        } 
+        }
         
         $('li.current').parents('li.sb').css("display", "list-item");
         $('li.current').parents('ul.menu').find( ".top-menu" ).addClass("active");
