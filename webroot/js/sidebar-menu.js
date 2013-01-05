@@ -1,10 +1,10 @@
 $(document).ready(function()
     {
         $('li.top-menu').click(function() {
-            
-            $( this ).toggleClass( "active" ).toggleClass( "active2" );
-            $( this ).parents( ".menu:first" ).find( ".sb" ).slideToggle('normal');
 
+            $( this ).toggleClass( "active" );
+            $(this).next().slideToggle('300');
+            
         });
 
         if(Hurad.params.action == "admin_index" || Hurad.params.action == "admin_filter"){
@@ -20,8 +20,3 @@ $(document).ready(function()
         $('li.current').parents('li.sb').css("display", "list-item");
         $('li.current').parents('ul.menu').find( ".top-menu" ).addClass("active");
     });
-
-
-
-
-    
