@@ -16,6 +16,9 @@ $(document).ready(function()
         else if(Hurad.params.action == "admin_prefix"){
             $('a[href$="'+Hurad.params.pass+'"]').parent().addClass("current");
         }
+        else if(Hurad.params.action == "admin_dashboard"){
+            $('a[href$="admin"]').parent().addClass("current");
+        }
         
         $('li.current').parents('li.sb').css("display", "list-item");
         $('li.current').parents('ul.menu').find( ".top-menu" ).addClass("active");
