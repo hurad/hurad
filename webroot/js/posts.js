@@ -23,7 +23,7 @@ Posts.documentReady = function() {
  */
 Posts.search = function() {
 
-    $('#PostAdminIndexForm, #PostAdminFilterForm').submit(function() {
+    $('#AdminSearchForm').submit(function() {
         var q='';
 		
         //query string
