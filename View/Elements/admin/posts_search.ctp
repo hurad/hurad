@@ -10,7 +10,8 @@
         'inputDefaults' => array(
             'label' => false,
             'div' => FALSE,
-        )
+        ),
+        'id' => 'AdminSearchForm'
     ));
     echo $this->Form->input('Post.q', array('value' => $query));
     echo $this->Form->submit(__('Search'), array('div' => false));
