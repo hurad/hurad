@@ -10,7 +10,7 @@
 
 <?php
 echo $this->Form->create('Post', array('url' =>
-    array('admin' => TRUE, 'controller' => 'posts', 'action' => 'process'),
+    array('admin' => TRUE, 'action' => 'process'),
     'inputDefaults' =>
     array('label' => false, 'div' => false)));
 ?>
