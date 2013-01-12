@@ -27,7 +27,7 @@ ul.posts-menu {
     border-radius: 6px 6px 0px 0px;
     border-bottom: none;
 }
-ul.links-menu, ul.pages-menu, ul.users-menu {
+ul.links-menu, ul.pages-menu, ul.users-menu, ul.plugins-menu {
     border-radius: 0px;
     border-bottom: none;
 }
@@ -72,7 +72,7 @@ li.comments-top-menu {
     border-radius: 0px 0px 4px 4px;
     border-top: 1px solid #FEFEFE;    
 }
-li.links-top-menu, li.pages-top-menu, li.users-top-menu {
+li.links-top-menu, li.pages-top-menu, li.users-top-menu, li.plugins-top-menu {
     border-radius: 0px;
     border-top: 1px solid #FEFEFE;
 }
