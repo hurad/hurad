@@ -23,66 +23,14 @@ class PostHelper extends AppHelper {
         $this->post = $post;
     }
 
-//    public function the_post() {
-//        if ($this->view == 'index' && $this->view_path == 'Posts') {
-//            $this->posts = $this->_View->getVar('posts');
-//            return $this->posts;
-//        } else {
-//            return FALSE;
-//        }
-//    }
-
     protected function init_post() {
-        if ($this->view == 'view' && $this->view_path == 'Posts') {
-            $this->post = $this->_View->getVar('post');
+        if ($this->view_path == 'Posts') {
+            if ($this->view == 'view' || $this->view == 'viewByid') {
+                $this->post = $this->_View->getVar('post');
+            }
         } else {
             return FALSE;
         }
-    }
-
-    public function the_category($separator = ', ') {
-
-        $cat = array();
-        foreach ($this->post['Category'] as $category) {
-            $cat[] = '<a href="http://localhost/hurad/category/' . $category['slug'] . '" title="' . __('View all posts in') . ' ' . $category['name'] . '" rel="category">' . $category['name'] . '</a>';
-        }
-        if ($separator == '') {
-            $separator = ', ';
-        }
-        echo implode($separator, $cat);
-    }
-
-    public function tag($separator = ', ') {
-        $term = array();
-        foreach ($this->post['Tag'] as $tag) {
-            $term[] = '<a href="http://localhost/hurad/tag/' . $tag['slug'] . '" title="' . __('View all posts in') . ' ' . $tag['name'] . '" rel="tag">' . $tag['name'] . '</a>';
-        }
-
-        echo implode($separator, $term);
-    }
-
-    /**
-     * Retrieve full permalink for current post.
-     *
-     * @since 0.1
-     *
-     * @return string
-     */
-    public function get_permalink() {
-        if ($this->post['Post']['type'] == 'post') {
-            return $this->Html->url(Configure::read('General-site_url') . "/" . $this->post['Post']['slug']);
-        } elseif ($this->post['Post']['type'] == 'page') {
-            return $this->Html->url(Configure::read('General-site_url') . "/pages/" . $this->post['Post']['slug']);
-        }
-    }
-
-    /**
-     * Display the permalink for the current post.
-     *
-     * @since 0.1
-     */
-    public function the_permalink() {
-        echo $this->get_permalink();
     }
 
     /**
@@ -174,6 +122,70 @@ class PostHelper extends AppHelper {
         return $this->post['Post']['title'];
     }
 
+    public function the_category($separator = ', ') {
+
+        $cat = array();
+        foreach ($this->post['Category'] as $category) {
+            $cat[] = '<a href="http://localhost/hurad/category/' . $category['slug'] . '" title="' . __('View all posts in') . ' ' . $category['name'] . '" rel="category">' . $category['name'] . '</a>';
+        }
+        if ($separator == '') {
+            $separator = ', ';
+        }
+        echo implode($separator, $cat);
+    }
+
+    public function tag($separator = ', ') {
+        $term = array();
+        foreach ($this->post['Tag'] as $tag) {
+            $term[] = '<a href="http://localhost/hurad/tag/' . $tag['slug'] . '" title="' . __('View all posts in') . ' ' . $tag['name'] . '" rel="tag">' . $tag['name'] . '</a>';
+        }
+
+        echo implode($separator, $term);
+    }
+
+    /**
+     * Retrieve full permalink for current post.
+     *
+     * @since 0.1
+     *
+     * @return string
+     */
+    public function get_permalink() {
+        $year = $this->Time->format('Y', $this->post['Post']['created']);
+        $month = $this->Time->format('m', $this->post['Post']['created']);
+        $day = $this->Time->format('d', $this->post['Post']['created']);
+        if ($this->post['Post']['type'] == 'post') {
+            switch (Configure::read('Permalink-common')) {
+                case 'default':
+                    return $this->Html->url(Configure::read('General-site_url') . "/p/" . $this->post['Post']['id']);
+                    break;
+                case 'day_name':
+                    return $this->Html->url(Configure::read('General-site_url') . "/" . $year . "/" . $month . "/" . $day . "/" . $this->post['Post']['slug']);
+                    break;
+                case 'month_name':
+                    return $this->Html->url(Configure::read('General-site_url') . "/" . $year . "/" . $month . "/" . $this->post['Post']['slug']);
+                    break;
+                default:
+                    break;
+            }
+        } elseif ($this->post['Post']['type'] == 'page') {
+            if (Configure::read('Permalink-common') == 'default') {
+                return $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['id']);
+            } else {
+                return $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['slug']);
+            }
+        }
+    }
+
+    /**
+     * Display the permalink for the current post.
+     *
+     * @since 0.1
+     */
+    public function the_permalink() {
+        echo $this->get_permalink();
+    }
+
     /**
      * Display the post excerpt.
      *
@@ -205,6 +217,55 @@ class PostHelper extends AppHelper {
      */
     function has_excerpt() {
         return (!empty($this->post['Post']['excerpt']) );
+    }
+
+    /**
+     * Display the classes for the post div.
+     *
+     * @since 1.0
+     *
+     * @param string|array $class One or more classes to add to the class list.
+     */
+    function post_class($class = '') {
+        // Separates classes with a single space, collates classes for post DIV
+        echo 'class="' . join(' ', $this->get_post_class($class)) . '"';
+    }
+
+    /**
+     * Retrieve the classes for the post div as an array.
+     *
+     * The class names are add are many. If the post is a sticky, then the 'sticky'
+     * class name. The class 'hentry' is always added to each post. All classes are 
+     * passed through the filter, 'post_class' with the list of classes, followed 
+     * by $class parameter value.
+     *
+     * @since 1.0
+     *
+     * @param string|array $class One or more classes to add to the class list.
+     * @return array Array of classes.
+     */
+    function get_post_class($class = '') {
+
+        $classes = array();
+
+        $classes[] = 'post-' . $this->post['Post']['id'];
+        if (!Functions::is_admin())
+            $classes[] = $this->post['Post']['type'];
+        $classes[] = 'type-' . $this->post['Post']['type'];
+        $classes[] = 'status-' . $this->post['Post']['status'];
+
+        // hentry for hAtom compliance
+        $classes[] = 'hentry';
+
+        if (!empty($class)) {
+            if (!is_array($class))
+                $class = preg_split('#\s+#', $class);
+            $classes = array_merge($classes, $class);
+        }
+
+        $classes = array_map('Formatting::esc_attr', $classes);
+
+        return $classes;
     }
 
     /**
