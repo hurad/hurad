@@ -1,6 +1,6 @@
 <?php foreach ($posts as $post): ?>
     <?php $this->Post->setPost($post); ?>
-    <article id="post-<?php $this->Post->the_ID(); ?>" class="post-<?php $this->Post->the_ID(); ?> post type-post status-publish format-standard hentry category-motion-design tag-home tag-motion-design post clearfix ">
+    <article id="post-<?php $this->Post->the_ID(); ?>" <?php $this->Post->post_class(); ?>>
 
         <time datetime="<?php $this->Post->the_date('Y-m-d H:i:s'); ?>" class="post-date"><?php $this->Post->the_date(); ?></time>
         <h1 class="post-title"><a href="<?php $this->Post->the_permalink(); ?>" title="<?php printf(__( 'Permalink to %s' ), $this->Post->the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php $this->Post->the_title(); ?></a></h1>
