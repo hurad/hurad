@@ -110,6 +110,16 @@ class PostsController extends AppController {
         }
     }
 
+    public function viewByid($id = null) {
+        $this->Post->id = $id;
+        if (is_null($id) && !$this->Post->exists()) {
+            throw new NotFoundException(__('Invalid post'));
+        }
+
+        $this->set('post', $this->Post->read(null, $id));
+        $this->render('view');
+    }
+
     /**
      * admin_index method
      *
