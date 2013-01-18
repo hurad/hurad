@@ -12,7 +12,6 @@
             'ckeditor/ckeditor',
             'modernizr.custom.39710',
             'form',
-            'common',
             'sidebar-menu',
             'jquery-ui-1.8.23.custom.min',
                 )
