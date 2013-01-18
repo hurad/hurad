@@ -1,4 +1,4 @@
-<?php echo $this->Html->docType('html5'); ?>
+<?php echo $this->Html->docType(); ?>
 <html lang="en-US" dir="ltr">
     <head>
         <title><?php echo $title_for_layout; ?> &#8212; <?php echo __('Huard'); ?></title>
