@@ -3,7 +3,6 @@
 /**
  * Default Hurad routes.
  */
-
 Router::parseExtensions('json', 'rss');
 
 /**
@@ -18,13 +17,46 @@ Router::connect('/admin', array('controller' => 'users', 'action' => 'dashboard'
  * Posts
  */
 Router::connect('/', array('controller' => 'posts', 'action' => 'index', 'admin' => FALSE));
-Router::connect('/:slug', array('controller' => 'posts', 'action' => 'view'), array('pass' => array('slug')));
+
+/**
+ * Posts permalink
+ */
+if (Configure::read('Permalink-common') == 'default') {
+    Router::connect('/p/:id', array('controller' => 'posts', 'action' => 'viewByid'), array('pass' => array('id')));
+} elseif (Configure::read('Permalink-common') == 'day_name') {
+    Router::connect(
+            '/:year/:month/:day/:slug', array('controller' => 'posts', 'action' => 'view'), array(
+        'year' => '[12][0-9]{3}',
+        'month' => '0[1-9]|1[012]',
+        'day' => '0[1-9]|[12][0-9]|3[01]',
+        'pass' => array('slug')
+            )
+    );
+} elseif (Configure::read('Permalink-common') == 'month_name') {
+    Router::connect(
+            '/:year/:month/:slug', array('controller' => 'posts', 'action' => 'view'), array(
+        'year' => '[12][0-9]{3}',
+        'month' => '0[1-9]|1[012]',
+        'pass' => array('slug')
+            )
+    );
+} else {
+    Router::connect('/:slug', array('controller' => 'posts', 'action' => 'view'), array('pass' => array('slug')));
+}
 
 /**
  * Pages
  */
-Router::connect('/pages', array('controller' => 'posts', 'action' => 'index', 'admin' => FALSE, 'page'));
+Router::connect('/pages', array('controller' => 'pages', 'action' => 'index', 'admin' => FALSE));
 
+/**
+ * Pages permalink
+ */
+if (Configure::read('Permalink-common') == 'default') {
+    Router::connect('/page/:id', array('controller' => 'pages', 'action' => 'viewByid'), array('pass' => array('id')));
+} else {
+    Router::connect('/page/:slug', array('controller' => 'pages', 'action' => 'view'), array('pass' => array('slug')));
+}
 /**
  * Comments
  */
