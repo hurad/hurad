@@ -1,176 +1,180 @@
-<ul id="adminmenu">
-    <li class="widget dashboard-widget">
-        <ul class="menu dashboard-menu">
-            <?php $dashboard_menu = array("admin"); ?>
-            <li class="top-menu dashboard-top-menu <?php if (in_array($url, $dashboard_menu)) echo 'active'; ?>">
-                <?php echo $this->Html->image('home.png', array('alt' => 'Links', 'class' => 'menu-img')); ?>
-                <?php echo __("Dashboard"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($url, $dashboard_menu)) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
+<?php
 
-                    <li <?php if ($url == 'admin') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Home'), '/admin'); ?>
-                    </li>
-
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget posts-widget">
-        <ul class="menu posts-menu">
-            <?php $posts_menu = array("admin/posts", "admin/posts/add", "admin/categories", "admin/tags", "admin/tags/add"); ?>
-            <li class="top-menu posts-top-menu <?php if (in_array($url, $posts_menu) || stripos($url, 'admin/posts/filter') !== FALSE) echo 'active'; ?>">
-                <?php echo $this->Html->image('pin.png', array('alt' => 'Posts', 'class' => 'menu-img')); ?>
-                <?php echo __("Posts"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($url, $posts_menu) || stripos($url, 'admin/posts/filter') !== FALSE) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/posts' || stripos($url, 'admin/posts/filter') !== FALSE) echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Posts'), '/admin/posts'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/posts/add') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Add New'), '/admin/posts/add'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/categories') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Categories'), '/admin/categories'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/tags') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Tags'), '/admin/tags'); ?>
-                    </li>                                  
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget links-widget">
-        <ul class="menu links-menu">
-            <?php $links_menu = array("links", "linkcats"); ?>
-            <li class="top-menu links-top-menu <?php if (in_array($controller, $links_menu)) echo 'active'; ?>">
-                <?php echo $this->Html->image('chain.png', array('alt' => 'Links', 'class' => 'menu-img')); ?>
-                <?php echo __("Links"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($controller, $links_menu)) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/links') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('All Links'), '/admin/links'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/links/add') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Add Link'), '/admin/links/add'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/linkcats') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Link Categories'), '/admin/linkcats'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/linkcats/add') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Add Link Categories'), '/admin/linkcats/add'); ?>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget pages-widget">
-        <ul class="menu pages-menu">
-            <?php $pages_menu = array("admin/pages", "admin/pages/add"); ?>
-            <li class="top-menu pages-top-menu <?php if (in_array($url, $pages_menu) || stripos($url, 'admin/pages/filter') !== FALSE) echo 'active'; ?>">
-                <?php echo $this->Html->image('report-paper.png', array('alt' => 'Pages', 'class' => 'menu-img')); ?>
-                <?php echo __("Pages"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($url, $pages_menu) || stripos($url, 'admin/pages/filter') !== FALSE) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/pages' || stripos($url, 'admin/pages/filter') !== FALSE) echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('All Pages'), '/admin/pages'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/pages/add') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Add New'), '/admin/pages/add'); ?>
-                    </li>  
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget comments-widget">
-        <ul class="menu comments-menu">
-            <?php $comments_menu = array("comments"); ?>
-            <li class="top-menu comments-top-menu <?php if (in_array($controller, $comments_menu)) echo 'active'; ?>">
-                <?php echo $this->Html->image('sticky-notes-pin.png', array('alt' => 'Links', 'class' => 'menu-img')); ?>
-                <?php echo __("Comments"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($controller, $comments_menu)) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/comments') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('All Comments'), '/admin/comments'); ?>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget appearance-widget">
-        <ul class="menu appearance-menu">
-            <?php $appearance_menu = array("menus", "themes"); ?>
-            <li class="top-menu appearance-top-menu <?php if (in_array($controller, $appearance_menu)) echo 'active'; ?>">
-                <?php echo $this->Html->image('application-blog.png', array('alt' => 'Appearance', 'class' => 'menu-img')); ?>
-                <?php echo __("Appearance"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($controller, $appearance_menu)) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/themes') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Themes'), '/admin/themes'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/menus') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('All Menus'), '/admin/menus'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/menus/add') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Add Menu'), '/admin/menus/add'); ?>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget users-widget">
-        <ul class="menu users-menu">
-            <?php $users_menu = array("users"); ?>
-            <li class="top-menu users-top-menu <?php if (in_array($controller, $users_menu)) echo 'active'; ?>">
-                <?php echo $this->Html->image('users.png', array('alt' => 'Links', 'class' => 'menu-img')); ?>
-                <?php echo __("Users"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($controller, $users_menu)) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/users') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('All Users'), '/admin/users'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/users/add') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Add New'), '/admin/users/add'); ?>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="widget options-widget">
-        <ul class="menu options-menu">
-            <?php $options_menu = array("options"); ?>
-            <li class="top-menu options-top-menu <?php if (in_array($controller, $options_menu)) echo 'active'; ?>">
-                <?php echo $this->Html->image('toolbox.png', array('alt' => 'Links', 'class' => 'menu-img')); ?>
-                <?php echo __("Options"); ?>
-                <?php echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def')); ?>
-            </li>
-            <li class="sb" <?php if (in_array($controller, $options_menu)) echo 'style="display: list-item;"'; ?>>
-                <ul class="submenu">
-                    <li <?php if ($url == 'admin/options/prefix/general') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('General'), '/admin/options/prefix/general'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/options/prefix/comment') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Comment'), '/admin/options/prefix/comment'); ?>
-                    </li>
-                    <li <?php if ($url == 'admin/options/prefix/permalink') echo 'class="current"'; ?>>
-                        <?php echo $this->Html->link(__('Permalinks'), '/admin/options/prefix/permalink'); ?>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-</ul>
+HrNav::add('dashboard', array(
+    'title' => __('Dashboard'),
+    'url' => '#',
+    'img' => 'home.png',
+    'weight' => 1,
+    'child' => array(
+        'home' => array(
+            'title' => __('Home'),
+            'url' => '/admin',
+            'weight' => 1,
+        ),
+    ),
+));
+HrNav::add('posts', array(
+    'title' => __('Posts'),
+    'url' => '#',
+    'img' => 'pin.png',
+    'weight' => 2,
+    'child' => array(
+        'posts' => array(
+            'title' => __('Posts'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'posts', 'action' => 'index'),
+            'weight' => 1,
+        ),
+        'add_new' => array(
+            'title' => __('Add New'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'posts', 'action' => 'add'),
+            'weight' => 2,
+        ),
+        'categories' => array(
+            'title' => __('Categories'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'categories', 'action' => 'index'),
+            'weight' => 3,
+        ),
+        'tags' => array(
+            'title' => __('Tags'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'tags', 'action' => 'index'),
+            'weight' => 4,
+        ),
+    ),
+));
+HrNav::add('links', array(
+    'title' => __('Links'),
+    'url' => '#',
+    'img' => 'chain.png',
+    'weight' => 3,
+    'child' => array(
+        'all_links' => array(
+            'title' => __('All Links'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'links', 'action' => 'index'),
+            'weight' => 1,
+        ),
+        'add_link' => array(
+            'title' => __('Add Link'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'links', 'action' => 'add'),
+            'weight' => 2,
+        ),
+        'link_categories' => array(
+            'title' => __('Link Categories'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'linkcats', 'action' => 'index'),
+            'weight' => 3,
+        ),
+        'add_link_categories' => array(
+            'title' => __('Add Link Categories'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'linkcats', 'action' => 'add'),
+            'weight' => 4,
+        ),
+    ),
+));
+HrNav::add('pages', array(
+    'title' => __('Pages'),
+    'url' => '#',
+    'img' => 'report-paper.png',
+    'weight' => 4,
+    'child' => array(
+        'all_pages' => array(
+            'title' => __('All Pages'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'pages', 'action' => 'index'),
+            'weight' => 1,
+        ),
+        'add_new' => array(
+            'title' => __('Add New'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'pages', 'action' => 'add'),
+            'weight' => 2,
+        ),
+    ),
+));
+HrNav::add('comments', array(
+    'title' => __('Comments'),
+    'url' => '#',
+    'img' => 'sticky-notes-pin.png',
+    'weight' => 5,
+    'child' => array(
+        'all_comments' => array(
+            'title' => __('All Comments'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'comments', 'action' => 'index'),
+            'weight' => 1,
+        ),
+    ),
+));
+HrNav::add('appearance', array(
+    'title' => __('Appearance'),
+    'url' => '#',
+    'img' => 'application-blog.png',
+    'weight' => 6,
+    'child' => array(
+        'themes' => array(
+            'title' => __('Themes'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'themes', 'action' => 'index'),
+            'weight' => 1,
+        ),
+        'all_menus' => array(
+            'title' => __('All Menus'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'menus', 'action' => 'index'),
+            'weight' => 2,
+        ),
+        'add_menu' => array(
+            'title' => __('Add Menu'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'menus', 'action' => 'add'),
+            'weight' => 3,
+        ),
+    ),
+));
+HrNav::add('plugins', array(
+    'title' => __('Plugins'),
+    'url' => '#',
+    'img' => 'plug.png',
+    'weight' => 7,
+    'child' => array(
+        'plugins' => array(
+            'title' => __('Plugins'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'plugins', 'action' => 'index'),
+            'weight' => 1,
+        ),
+    ),
+));
+HrNav::add('users', array(
+    'title' => __('Users'),
+    'url' => '#',
+    'img' => 'users.png',
+    'weight' => 8,
+    'child' => array(
+        'all_users' => array(
+            'title' => __('All Users'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'index'),
+            'weight' => 1,
+        ),
+        'add_new' => array(
+            'title' => __('Add New'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'add'),
+            'weight' => 2,
+        ),
+    ),
+));
+HrNav::add('options', array(
+    'title' => __('Options'),
+    'url' => '#',
+    'img' => 'toolbox.png',
+    'weight' => 9,
+    'child' => array(
+        'general' => array(
+            'title' => __('General'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', 'general'),
+            'weight' => 1,
+        ),
+        'comment' => array(
+            'title' => __('Comment'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', 'comment'),
+            'weight' => 2,
+        ),
+        'permalink' => array(
+            'title' => __('Permalinks'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', 'permalink'),
+            'weight' => 3,
+        ),
+    ),
+));
+echo $this->AdminLayout->adminMenus(HrNav::items());
