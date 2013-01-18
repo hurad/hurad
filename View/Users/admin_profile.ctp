@@ -1,4 +1,5 @@
 <?php $this->Html->css('pass-strength', null, array('inline' => FALSE)); ?>
+<?php echo $this->Html->script(array('users.profile', 'password-strength-meter'), array('block' => 'headerScript')); ?>
 
 <h2><?php echo $title_for_layout; ?></h2>
 <?php
