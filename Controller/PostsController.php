@@ -57,7 +57,10 @@ class PostsController extends AppController {
         } else {
             //$this->Post->recursive = 0;
             $this->paginate = array(
-                'conditions' => array('Post.type' => 'post'),
+                'conditions' => array(
+                    'Post.status' => array('publish'),
+                    'Post.type' => 'post'
+                ),
                 'contain' => array('Category', 'User', 'Tag', 'Comment'),
                 'order' => array(
                     'Post.created' => 'desc'
