@@ -13,7 +13,6 @@
             'modernizr.custom.39710',
             'form',
             'common',
-            'slug',
             'sidebar-menu',
             'jquery-ui-1.8.23.custom.min',
                 )
