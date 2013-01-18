@@ -9,7 +9,7 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-    public $helpers = array('Post', 'Comment', 'Text');
+    public $helpers = array('Page', 'Comment', 'Text');
     public $components = array('RequestHandler');
     public $paginate = array(
         'conditions' => array(
@@ -52,18 +52,18 @@ class PagesController extends AppController {
      */
     public function index() {
         if ($this->RequestHandler->isRss()) {
-            $posts = $this->Post->find('all', array('limit' => 20, 'order' => 'Post.created DESC'));
-            return $this->set(compact('posts'));
+            $posts = $this->Page->find('all', array('limit' => 20, 'order' => 'Page.created DESC'));
+            return $this->set(compact('pages'));
         } else {
             //$this->Post->recursive = 0;
             $this->paginate = array(
-                'conditions' => array('Post.type' => 'post'),
-                'contain' => array('Category', 'User', 'Tag', 'Comment'),
+                'conditions' => array('Page.type' => 'page'),
+                'contain' => array('User', 'Comment'),
                 'order' => array(
-                    'Post.created' => 'desc'
+                    'Page.created' => 'desc'
                 )
             );
-            $this->set('posts', $this->paginate('Post'));
+            $this->set('pages', $this->paginate('Page'));
         }
     }
 
