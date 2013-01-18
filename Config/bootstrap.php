@@ -142,7 +142,7 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
-CakePlugin::loadAll();
+CakePlugin::load(array('HabtmCounterCache', 'DebugKit'));
 
 /**
  * You can attach event listeners to the request lifecyle as Dispatcher Filter . By Default CakePHP bundles two filters:
@@ -161,8 +161,8 @@ CakePlugin::loadAll();
  * ));
  */
 Configure::write('Dispatcher.filters', array(
-	'AssetDispatcher',
-	'CacheDispatcher'
+    'AssetDispatcher',
+    'CacheDispatcher'
 ));
 
 /**
@@ -170,14 +170,14 @@ Configure::write('Dispatcher.filters', array(
  */
 App::uses('CakeLog', 'Log');
 CakeLog::config('debug', array(
-	'engine' => 'FileLog',
-	'types' => array('notice', 'info', 'debug'),
-	'file' => 'debug',
+    'engine' => 'FileLog',
+    'types' => array('notice', 'info', 'debug'),
+    'file' => 'debug',
 ));
 CakeLog::config('error', array(
-	'engine' => 'FileLog',
-	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
-	'file' => 'error',
+    'engine' => 'FileLog',
+    'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+    'file' => 'error',
 ));
 
 
@@ -190,8 +190,10 @@ $options = ClassRegistry::init('Option')->find('all', array(
         'Option.value',
     )
         ));
-foreach ($options AS $option) {    
-    $_options[$option['Option']['name']] = $option['Option']['value']; 
+foreach ($options AS $option) {
+    $_options[$option['Option']['name']] = $option['Option']['value'];
     Configure::write($option['Option']['name'], $option['Option']['value']);
 }
 Configure::write('options', $_options);
+
+require APP . 'Config' . DS . 'Hurad' . DS . 'bootstrap.php';
