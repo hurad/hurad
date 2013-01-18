@@ -1,4 +1,4 @@
-<article id="post-<?php $this->Post->the_ID(); ?>" class="post-<?php $this->Post->the_ID(); ?> post type-post status-publish format-standard hentry category-motion-design tag-home tag-motion-design post clearfix ">
+<article id="post-<?php $this->Post->the_ID(); ?>" <?php $this->Post->post_class(); ?>>
 
     <time datetime="<?php echo h($post['Post']['created']); ?>" class="post-date" pubdate><?php echo $this->Time->format('F jS, Y', $post['Post']['created'], null, Configure::read('General-timezone')); ?></time>
     <h1 class="post-title"><?php echo $this->Html->link($this->Post->get_the_title(), $this->Post->get_permalink()); ?></h1>
