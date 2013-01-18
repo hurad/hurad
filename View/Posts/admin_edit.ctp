@@ -1,3 +1,5 @@
+<?php echo $this->Html->script('slug', array('block' => 'headerScript')); ?>
+
 <h2><?php echo $title_for_layout; ?></h2>
 <?php
 echo $this->Form->create('Post', array(
@@ -34,8 +36,8 @@ echo $this->Form->create('Post', array(
                                         <?php
                                         echo $this->Form->input('created', array(
                                             'type' => 'date',
-                                            'dateFormat' => 'MDY',                                            
-                                            'class' =>'date_select')
+                                            'dateFormat' => 'MDY',
+                                            'class' => 'date_select')
                                         );
                                         ?>
                                     </span>
@@ -45,7 +47,7 @@ echo $this->Form->create('Post', array(
                                         echo $this->Form->input('created', array(
                                             'type' => 'time',
                                             'timeFormat' => 12,
-                                            'class' =>'time_select')
+                                            'class' => 'time_select')
                                         );
                                         ?>
                                     </span>                                    
