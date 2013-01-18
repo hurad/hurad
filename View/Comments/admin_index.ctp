@@ -1,4 +1,6 @@
 <?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
+<?php echo $this->Html->script('checkbox', array('block' => 'headerScript')); ?>
+
 <h2><?php echo $title_for_layout; ?></h2>
 
 <?php
