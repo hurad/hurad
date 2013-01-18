@@ -75,7 +75,7 @@ echo $this->Form->create('User', array(
     try{convertEntities(commonL10n);}catch(e){};
     var pwsL10n = {
         empty: "<?php echo __('Strength indicator') ?>",
-        short: "<?php echo __('Very weak') ?>",
+        shortly: "<?php echo __('Very weak') ?>",
         bad: "<?php echo __('Weak') ?>",
         good: "<?php echo __('Medium') ?>",
         strong: "<?php echo __('Strong') ?>",
