@@ -1,4 +1,5 @@
 <?php $this->Html->css('admin-side-widget', null, array('inline' => false)); ?>
+<?php echo $this->Html->script('slug', array('block' => 'headerScript')); ?>
 
 <h2><?php echo $title_for_layout; ?></h2>
 <?php
