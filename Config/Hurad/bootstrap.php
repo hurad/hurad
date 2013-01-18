@@ -2,6 +2,8 @@
 
 App::uses('Functions', 'Lib');
 App::uses('Formatting', 'Lib');
+App::uses('HrNav', 'Lib');
+App::uses('HrPlugin', 'Lib');
 /**
  * Plugins
  */
