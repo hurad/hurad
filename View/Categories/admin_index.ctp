@@ -1,4 +1,6 @@
 <?php $this->Html->css('list-table', null, array('inline' => false)); ?>
+<?php echo $this->Html->script('checkbox', array('block' => 'headerScript')); ?>
+
 <h2>
     <?php echo $title_for_layout; ?>
     <?php echo $this->Html->link(__('Add New'), '/admin/categories/add', array('class' => 'add_button')); ?>
