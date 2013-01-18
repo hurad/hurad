@@ -18,6 +18,14 @@ class CommentHelper extends AppHelper {
     public $post = array();
 
     /**
+     * Current Page
+     *
+     * @var array
+     * @access public
+     */
+    public $page = array();
+
+    /**
      * Current Comment
      *
      * @var array
@@ -34,16 +42,26 @@ class CommentHelper extends AppHelper {
     public $current_user = array();
 
     /**
+     * Current controller
+     *
+     * @var string
+     * @access public
+     */
+    public $view_path = null;
+
+    /**
      * Other helpers used by this helper
      *
      * @var array
      * @access public
      */
-    public $helpers = array('Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post');
+    public $helpers = array('Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page');
 
     public function __construct(View $View, $settings = array()) {
         parent::__construct($View, $settings);
+        $this->view_path = $this->_View->viewPath;
         $this->post = $this->_View->getVar('post');
+        $this->page = $this->_View->getVar('page');
         $this->current_user = $this->_View->getVar('current_user');
         //debug($this->current_user);
     }
@@ -189,6 +207,60 @@ class CommentHelper extends AppHelper {
      */
     public function get_comment_author_email() {
         return $this->comment['author_email'];
+    }
+
+    /**
+     * Display the html email link to the author of the current comment.
+     *
+     * Care should be taken to protect the email address and assure that email
+     * harvesters do not capture your commentors' email address. Most assume that
+     * their email address will not appear in raw form on the blog. Doing so will
+     * enable anyone, including those that people don't want to get the email
+     * address and use it for their own means good and bad.
+     *
+     * @since 1.0.0
+     * @uses get_comment_author_email_link() For generating the link
+     *
+     * @param string $linktext The text to display instead of the comment author's email address
+     * @param string $before The text or HTML to display before the email link.
+     * @param string $after The text or HTML to display after the email link.
+     */
+    public function comment_author_email_link($linktext = '', $before = '', $after = '') {
+        if ($link = $this->get_comment_author_email_link($linktext, $before, $after)) {
+            echo $link;
+        }
+    }
+
+    /**
+     * Return the html email link to the author of the current comment.
+     *
+     * Care should be taken to protect the email address and assure that email
+     * harvesters do not capture your commentors' email address. Most assume that
+     * their email address will not appear in raw form on the blog. Doing so will
+     * enable anyone, including those that people don't want to get the email
+     * address and use it for their own means good and bad.
+     *
+     * @since 1.0.0
+     * @uses get_comment_author_email() for the display of the comment author's email
+     *
+     * @param string $linktext The text to display instead of the comment author's email address
+     * @param string $before The text or HTML to display before the email link.
+     * @param string $after The text or HTML to display after the email link.
+     */
+    public function get_comment_author_email_link($linktext = '', $before = '', $after = '') {
+        if ($this->get_comment_author_email()) {
+            if ($linktext != '') {
+                $display = $linktext;
+            } else {
+                $display = $this->get_comment_author_email();
+            }
+            $return = $before;
+            $return .= $this->Html->link($display, 'mailto:' . $this->get_comment_author_email());
+            $return .= $after;
+            return $return;
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -387,60 +459,6 @@ class CommentHelper extends AppHelper {
     }
 
     /**
-     * Display the html email link to the author of the current comment.
-     *
-     * Care should be taken to protect the email address and assure that email
-     * harvesters do not capture your commentors' email address. Most assume that
-     * their email address will not appear in raw form on the blog. Doing so will
-     * enable anyone, including those that people don't want to get the email
-     * address and use it for their own means good and bad.
-     *
-     * @since 1.0.0
-     * @uses get_comment_author_email_link() For generating the link
-     *
-     * @param string $linktext The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     */
-    public function comment_author_email_link($linktext = '', $before = '', $after = '') {
-        if ($link = $this->get_comment_author_email_link($linktext, $before, $after)) {
-            echo $link;
-        }
-    }
-
-    /**
-     * Return the html email link to the author of the current comment.
-     *
-     * Care should be taken to protect the email address and assure that email
-     * harvesters do not capture your commentors' email address. Most assume that
-     * their email address will not appear in raw form on the blog. Doing so will
-     * enable anyone, including those that people don't want to get the email
-     * address and use it for their own means good and bad.
-     *
-     * @since 1.0.0
-     * @uses get_comment_author_email() for the display of the comment author's email
-     *
-     * @param string $linktext The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     */
-    public function get_comment_author_email_link($linktext = '', $before = '', $after = '') {
-        if ($this->get_comment_author_email()) {
-            if ($linktext != '') {
-                $display = $linktext;
-            } else {
-                $display = $this->get_comment_author_email();
-            }
-            $return = $before;
-            $return .= $this->Html->link($display, 'mailto:' . $this->get_comment_author_email());
-            $return .= $after;
-            return $return;
-        } else {
-            return '';
-        }
-    }
-
-    /**
      * Retrieve the excerpt of the current comment.
      *
      * Will cut each word and only output the first 20 words with '...' at the end.
@@ -508,7 +526,11 @@ class CommentHelper extends AppHelper {
      * @return int The number of comments a post has
      */
     function get_comments_number() {
-        return $this->Post->post['Post']['comment_count'];
+        if ($this->view_path == 'Posts') {
+            return $this->Post->post['Post']['comment_count'];
+        } elseif ($this->view_path == 'Pages') {
+            return $this->Page->page['Page']['comment_count'];
+        }
     }
 
     /**
@@ -567,8 +589,13 @@ class CommentHelper extends AppHelper {
      * @return bool True if the comments are open
      */
     function comments_open() {
-        $open = ( 'open' == $this->post['Post']['comment_status'] );
-        return $open;
+        if ($this->view_path == 'Posts') {
+            $open = ( 'open' == $this->post['Post']['comment_status'] );
+            return $open;
+        } elseif ($this->view_path == 'Pages') {
+            $open = ( 'open' == $this->page['Page']['comment_status'] );
+            return $open;
+        }
     }
 
     /**
@@ -608,7 +635,11 @@ class CommentHelper extends AppHelper {
         echo '<a href="';
 
         if (0 == $number) {
-            echo $this->Post->get_permalink() . '#respond';
+            if ($this->view_path == 'Posts') {
+                echo $this->Post->get_permalink() . '#respond';
+            } elseif ($this->view_path == 'Pages') {
+                echo $this->Page->get_permalink() . '#respond';
+            }
             echo '"';
         } else {
             $this->comments_link();
@@ -618,7 +649,11 @@ class CommentHelper extends AppHelper {
         if (!empty($css_class)) {
             echo ' class="' . $css_class . '" ';
         }
-        $title = $this->Post->the_title_attribute(array('echo' => 0));
+        if ($this->view_path == 'Posts') {
+            $title = $this->Post->the_title_attribute(array('echo' => 0));
+        } elseif ($this->view_path == 'Pages') {
+            $title = $this->Page->the_title_attribute(array('echo' => 0));
+        }
 
         echo ' title="' . sprintf(__('Comment on %s'), $title) . '">';
         $this->comments_number($zero, $one, $more);
@@ -727,9 +762,14 @@ class CommentHelper extends AppHelper {
     }
 
     protected function _comment_list() {
+        if ($this->view_path == 'Posts') {
+            $comments = $this->post['Comment'];
+        } elseif ($this->view_path == 'Pages') {
+            $comments = $this->page['Comment'];
+        }
         echo '<h4 class = "comment-title">' . $this->post['Post']['comment_count'] . ' Comment</h4>';
         echo '<ol class = "commentlist">';
-        foreach ($this->post['Comment'] as $comment) {
+        foreach ($comments as $comment) {
             $this->setComment($comment);
             echo '<li id = "comment-' . $this->get_comment_ID() . '" class = "comment even thread-even depth-1">';
             echo '<p class = "comment-author">';
