@@ -9,8 +9,6 @@
         echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
             'jquery-1.6.3.min',
-            'password-strength-meter',
-            'user-profile',
             'ckeditor/ckeditor',
             'modernizr.custom.39710',
             'form',
