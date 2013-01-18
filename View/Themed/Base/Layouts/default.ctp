@@ -8,17 +8,11 @@
 
         <?php echo $this->Html->css(array('style', 'media-queries')); ?>
 
-        <!-- respond.js (add media query support for IE) -->
-        <!--[if lt IE 9]>
-                <script src="http://www.truethemes.org/demo/wp-content/themes/base/js/respond.js"></script>
-        <![endif]-->
-
         <!-- html5.js (HTML5 Shiv for IE) -->
         <!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 
-        <!-- wp_header -->
         <?php echo $this->Html->script(array('theme.script')); ?> 
 
 
@@ -61,7 +55,7 @@
 
 
                     <?php echo $this->fetch('content'); ?>
-
+                    
 
                 </div>
                 <!-- /#content -->
