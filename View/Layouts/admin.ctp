@@ -1,7 +1,7 @@
 <?php echo $this->Html->docType('html5'); ?>
 <html lang="en-US" dir="ltr">
     <head>
-        <title><?php echo $title_for_layout; ?></title>
+        <title><?php echo $title_for_layout; ?> &#8212; <?php echo __('Huard'); ?></title>
         <?php echo $this->Html->charset(); ?>
         <?php echo $this->Html->css(array('reset', 'main', 'color-gray', 'admin-menu', 'error')); ?>
         <?php echo $this->fetch('css'); ?>
