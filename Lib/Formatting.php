@@ -1,7 +1,6 @@
 <?php
 
 App::import('Vendor', 'kses');
-App::import('Lib', 'Functions');
 
 /**
  * Description of Formatting
@@ -80,7 +79,7 @@ class Formatting {
         }
 
         if (!is_array($protocols))
-            $protocols = allowed_protocols();
+            $protocols = Functions::allowed_protocols();
         if (kses_bad_protocol($url, $protocols) != $url)
             return '';
 
@@ -224,7 +223,7 @@ class Formatting {
      * $quote_style can be set to ENT_COMPAT to decode " entities,
      * or ENT_QUOTES to do both " and '. Default is ENT_NOQUOTES where no quotes are decoded.
      *
-     * @since 2.8
+     * @since 1.0
      *
      * @param string $string The text which is to be decoded.
      * @param mixed $quote_style Optional. Converts double quotes if set to ENT_COMPAT, both single and double if set to ENT_QUOTES or none if set to ENT_NOQUOTES. Also compatible with old _wp_specialchars() values; converting single quotes if set to 'single', double if set to 'double' or both if otherwise set. Default is ENT_NOQUOTES.
@@ -285,7 +284,7 @@ class Formatting {
      * e.g. $subject = '%0%0%0DDD', $search ='%0D', $result ='' rather than the '%0%0DD' that
      * str_replace would return
      *
-     * @since 2.8.1
+     * @since 1.0
      * @access private
      *
      * @param string|array $search
@@ -316,7 +315,7 @@ class Formatting {
      *
      * @todo Expand to support the full range of CDATA that a class attribute can contain.
      *
-     * @since 0.1
+     * @since 1.0
      *
      * @param string $class The classname to be sanitized
      * @param string $fallback Optional. The value to return if the sanitization end's up as an empty string.
@@ -337,5 +336,3 @@ class Formatting {
     }
 
 }
-
-?>
