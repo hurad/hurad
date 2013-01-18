@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Functions', 'Lib');
+App::uses('Formatting', 'Lib');
 /**
  * Plugins
  */
