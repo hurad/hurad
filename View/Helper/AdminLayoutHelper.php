@@ -175,12 +175,48 @@ class AdminLayoutHelper extends AppHelper {
         $hurad['params'] = array(
             'controller' => $this->params['controller'],
             'action' => $this->params['action'],
+            'pass' => $this->params['pass'],
             'named' => $this->params['named'],
         );
         if (is_array(Configure::read('Js'))) {
             $hurad = Set::merge($hurad, Configure::read('Js'));
         }
         return $this->Html->scriptBlock('var Hurad = ' . $this->Js->object($hurad) . ';');
+    }
+
+    public function adminMenus($options = array()) {
+        //Absolute menu weight value
+        foreach ($options as $key => $value) {
+            $options[$key]['weight'] = abs($options[$key]['weight']);
+        }
+        $menuSorted = Set::sort($options, '{[a-z]+}.weight', 'asc');
+        echo $this->Html->tag('ul', null, array('id' => 'adminmenu'));
+        foreach ($menuSorted as $value => $val) {
+            echo $this->Html->tag('li', null, array('class' => 'widget ' . $value . '-widget'));
+            echo $this->Html->tag('ul', null, array('class' => 'menu ' . $value . '-menu'));
+            echo $this->Html->tag('li', null, array('class' => 'top-menu ' . $value . '-top-menu'));
+            echo $this->Html->image($val['img'], array('class' => 'menu-img'));
+            echo ' ' . $val['title'];
+            echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def'));
+            echo '</li>';
+            if ($val['child'] && is_array($val['child'])) {
+                //Absolute child weight value
+                foreach ($val['child'] as $key => $value) {
+                    $val['child'][$key]['weight'] = abs($val['child'][$key]['weight']);
+                }
+                $childSorted = Set::sort($val['child'], '{[a-z]+}.weight', 'asc');
+                echo $this->Html->tag('li', null, array('class' => 'sb'));
+                echo $this->Html->tag('ul', null, array('class' => 'submenu'));
+                foreach ($childSorted as $key => $value) {
+                    echo $this->Html->tag('li', $this->Html->link($value['title'], $value['url']));
+                }
+                echo '</ul>';
+                echo '</li>';
+            }
+            echo '</ul>';
+            echo '</li>';
+        }
+        echo '</ul>';
     }
 
 }
