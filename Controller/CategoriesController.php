@@ -9,7 +9,6 @@ App::uses('AppController', 'Controller');
  */
 class CategoriesController extends AppController {
 
-    public $helpers = array('Utils.Tree');
     public $paginate = array(
         'limit' => 5,
         'order' => array(
