@@ -90,6 +90,8 @@ echo $this->Form->create('Comment', array('url' =>
                 'approve' => __('Approve'),
                 'disapprove' => __('Disapprove'),
                 'delete' => __('Delete'),
+                'spam' => __('Spam'),
+                'trash' => __('Move to trash'),
             ),
             'empty' => __('Bulk Actions'),
         ));
