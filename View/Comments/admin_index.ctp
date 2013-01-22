@@ -3,6 +3,10 @@
 
 <h2><?php echo $title_for_layout; ?></h2>
 
+<div class="table-filter-search">
+    <?php echo $this->element('admin/Comments/filter'); ?>
+</div>
+
 <?php
 echo $this->Form->create('Comment', array('url' =>
     array('admin' => TRUE, 'controller' => 'comments', 'action' => 'process'),
