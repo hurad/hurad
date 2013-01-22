@@ -2,7 +2,6 @@
 
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
-App::uses('Formatting', 'Lib');
 
 /**
  * Comments Controller
