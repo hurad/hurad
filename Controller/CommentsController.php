@@ -451,6 +451,18 @@ class CommentsController extends AppController {
                 }
                 break;
 
+            case 'spam':
+                if ($this->Comment->updateAll(array('Comment.approved' => 'spam'), array('Comment.id' => $ids))) {
+                    $this->Session->setFlash(__('Comments marked as spam.'), 'notice');
+                }
+                break;
+
+            case 'trash':
+                if ($this->Comment->updateAll(array('Comment.approved' => 'trash'), array('Comment.id' => $ids))) {
+                    $this->Session->setFlash(__('Comments move to trash.'), 'notice');
+                }
+                break;
+
             default:
                 $this->Session->setFlash(__('An error occurred.'), 'error');
                 break;
