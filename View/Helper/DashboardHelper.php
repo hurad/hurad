@@ -134,7 +134,7 @@ class DashboardHelper extends AppHelper {
         $num_tags = ClassRegistry::init('Tag')->count_tags();
         $num_all_comment = ClassRegistry::init('Comment')->count_comments('all');
         $num_approved_comment = ClassRegistry::init('Comment')->count_comments('approved');
-        $num_pending_comment = ClassRegistry::init('Comment')->count_comments('pending');
+        $num_pending_comment = ClassRegistry::init('Comment')->count_comments('moderated');
         $num_spam_comment = ClassRegistry::init('Comment')->count_comments('spam');
         ?>
         <div class="table table_content">
