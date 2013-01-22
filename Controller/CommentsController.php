@@ -90,11 +90,6 @@ class CommentsController extends AppController {
                 $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
             }
         }
-        $parentComments = $this->Comment->ParentComment->find('list');
-        $posts = $this->Comment->Post->find('list');
-        $users = $this->Comment->User->find('list');
-        $this->set(compact('parentComments', 'posts', 'users'));
-        print_r($this->Session->read());
     }
 
     /**
