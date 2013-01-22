@@ -1,5 +1,5 @@
 <?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
-<?php echo $this->Html->script('checkbox', array('block' => 'headerScript')); ?>
+<?php echo $this->Html->script(array('checkbox', 'admin/Comments/comments'), array('block' => 'headerScript')); ?>
 
 <h2><?php echo $title_for_layout; ?></h2>
 
