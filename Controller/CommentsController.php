@@ -72,6 +72,7 @@ class CommentsController extends AppController {
             $this->Comment->create();
             $this->request->data['Comment']['author_ip'] = CakeRequest::clientIp();
             $this->request->data['Comment']['agent'] = env('HTTP_USER_AGENT');
+            $this->request->data['Comment']['approved'] = 0;
 
             $format = new Formatting();
             $this->request->data['Comment']['author_url'] = $format->esc_url($this->request->data['Comment']['author_url']);
