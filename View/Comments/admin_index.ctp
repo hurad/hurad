@@ -5,6 +5,7 @@
 
 <div class="table-filter-search">
     <?php echo $this->element('admin/Comments/filter'); ?>
+    <?php echo $this->element('admin/Comments/search'); ?>
 </div>
 
 <?php
