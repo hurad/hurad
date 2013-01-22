@@ -155,6 +155,16 @@ class CommentsController extends AppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Comments'));
         $this->Comment->recursive = 0;
+        if (isset($this->request->params['named']['q'])) {
+            App::uses('Sanitize', 'Utility');
+            $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Comment']['limit'] = 25;
+            $this->paginate['Comment']['order'] = array('Comment.created' => 'desc');
+            $this->paginate['Comment']['conditions'] = array(
+                'Comment.approved' => array(0, 1),
+                'Comment.content LIKE' => '%' . $q . '%',
+            );
+        }
         $this->set('comments', $this->paginate());
     }
 
