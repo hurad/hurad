@@ -100,6 +100,11 @@ class Comment extends AppModel {
                 array('Comment.approved' => 'spam')
                     )
             );
+        } elseif ($type == 'trash') {
+            $comments = $this->find('count', array('conditions' =>
+                array('Comment.approved' => 'trash')
+                    )
+            );
         } else {
             return FALSE;
         }
