@@ -4,8 +4,8 @@
 <h2><?php echo $title_for_layout; ?></h2>
 
 <div class="table-filter-search">
-    <?php echo $this->element('admin/posts_filter'); ?>
-    <?php echo $this->element('admin/posts_search'); ?>
+    <?php echo $this->element('admin/Posts/filter'); ?>
+    <?php echo $this->element('admin/Posts/search'); ?>
 </div>
 
 <?php
