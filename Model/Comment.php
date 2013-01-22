@@ -90,7 +90,7 @@ class Comment extends AppModel {
                 array('Comment.approved' => 1)
                     )
             );
-        } elseif ($type == 'pending') {
+        } elseif ($type == 'moderated') {
             $comments = $this->find('count', array('conditions' =>
                 array('Comment.approved' => 0)
                     )
