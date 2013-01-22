@@ -34,13 +34,6 @@ class Comment extends AppModel {
      * @var array
      */
     public $belongsTo = array(
-        'ParentComment' => array(
-            'className' => 'Comment',
-            'foreignKey' => 'parent_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        ),
         'Post' => array(
             'className' => 'Post',
             'foreignKey' => 'post_id',
