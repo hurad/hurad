@@ -8,12 +8,12 @@
         <?php
         echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
-            'jquery-1.6.3.min',
+            'admin/jquery-1.6.3.min',
             'ckeditor/ckeditor',
-            'modernizr.custom.39710',
+            'admin/modernizr.custom.39710',
             'form',
             'sidebar-menu',
-            'jquery-ui-1.8.23.custom.min',
+            'admin/jquery-ui-1.8.23.custom.min',
                 )
         );
         ?>
