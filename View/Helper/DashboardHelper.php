@@ -10,40 +10,13 @@ class DashboardHelper extends AppHelper {
     public $helpers = array('Comment', 'Gravatar', 'Js', 'Html', 'Link');
 
     public function dashboard_recent_comments() {
-
-//global $wpdb;
-        // Select all comment types and filter out spam later for better query performance.
         $comments = $this->_View->viewVars['comments'];
-        //$start = 0;
-//        $widgets = get_option('dashboard_widget_options');
-//        $total_items = isset($widgets['dashboard_recent_comments']) && isset($widgets['dashboard_recent_comments']['items']) ? absint($widgets['dashboard_recent_comments']['items']) : 5;
-//
-//        $comments_query = array('number' => $total_items * 5, 'offset' => 0);
-//        if (!current_user_can('edit_posts'))
-//            $comments_query['status'] = 'approve';
-//        while (count($comments) < $total_items && $possible = get_comments($comments_query)) {
-//            foreach ($possible as $comment) {
-//                if (!current_user_can('read_post', $comment->comment_post_ID))
-//                    continue;
-//                $comments[] = $comment;
-//                if (count($comments) == $total_items)
-//                    break 2;
-//            }
-//            $comments_query['offset'] += $comments_query['number'];
-//            $comments_query['number'] = $total_items * 10;
-//        }
 
         if ($comments) {
             echo '<div id="the-comment-list" class="list:comment">';
             foreach ($comments as $comment)
                 $this->_dashboard_recent_comments_row($comment);
             echo '</div>';
-
-//            if (current_user_can('edit_posts'))
-//                _get_list_table('WP_Comments_List_Table')->views();
-//
-//            wp_comment_reply(-1, false, 'dashboard', false);
-//            wp_comment_trashnotice();
         } else {
             echo '<p>' . __('No comments yet.') . '</p>';
         }
