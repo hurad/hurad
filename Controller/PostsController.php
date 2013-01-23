@@ -123,6 +123,24 @@ class PostsController extends AppController {
         $this->render('view');
     }
 
+    public function admin_listByauthor($userId = null) {
+        $this->set('title_for_layout', __('Posts'));
+        $this->Post->user_id = $userId;
+        if (is_null($userId) && !$this->Post->exists()) {
+            throw new NotFoundException(__('Invalid author'));
+        }
+        $this->Post->recursive = 0;
+        $this->paginate['Post']['limit'] = 25;
+        $this->paginate['Post']['order'] = array('Post.created' => 'desc');
+        $this->paginate['Post']['conditions'] = array(
+            'Post.status' => array('publish', 'draft'),
+            'Post.type' => 'post',
+            'Post.user_id' => $userId,
+        );
+        $this->set('posts', $this->paginate());
+        $this->render('admin_index');
+    }
+
     /**
      * admin_index method
      *
