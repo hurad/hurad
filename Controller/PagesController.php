@@ -205,6 +205,24 @@ class PagesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
+    public function admin_listByauthor($userId = null) {
+        $this->set('title_for_layout', __('Pages'));
+        $this->Page->user_id = $userId;
+        if (is_null($userId) && !$this->Page->exists()) {
+            throw new NotFoundException(__('Invalid author'));
+        }
+        $this->Page->recursive = 0;
+        $this->paginate['Page']['limit'] = 25;
+        $this->paginate['Page']['order'] = array('Page.created' => 'desc');
+        $this->paginate['Page']['conditions'] = array(
+            'Page.status' => array('publish', 'draft'),
+            'Page.type' => 'page',
+            'Page.user_id' => $userId,
+        );
+        $this->set('pages', $this->paginate());
+        $this->render('admin_index');
+    }
+
     /**
      * admin_filter method
      *
