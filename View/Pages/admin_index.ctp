@@ -57,7 +57,7 @@ echo $this->Form->create('Page', array('url' =>
                 </div>
             </td>
             <td class="column-author">
-                <?php echo $this->Html->link($page['User']['username'], array('controller' => 'users', 'action' => 'view', $page['User']['id'])); ?>
+                <?php echo $this->Html->link($page['User']['username'], array('controller' => 'pages', 'action' => 'listByauthor', $page['User']['id'])); ?>
             </td>
             <td class="column-status">
                 <?php echo $this->AdminLayout->postStatus($page['Page']['status']); ?>&nbsp;
