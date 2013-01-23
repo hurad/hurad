@@ -146,20 +146,6 @@ class PostsController extends AppController {
     }
 
     /**
-     * admin_view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function admin_view($id = null) {
-        $this->Post->id = $id;
-        if (!$this->Post->exists()) {
-            throw new NotFoundException(__('Invalid post'));
-        }
-        $this->set('post', $this->Post->read(null, $id));
-    }
-
-    /**
      * admin_add method
      *
      * @return void
