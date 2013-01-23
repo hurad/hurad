@@ -1,12 +1,4 @@
 <?php
-App::uses('Formatting', 'Lib');
-//App::import('Lib', 'Functions');
-
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of DashboardHelper
