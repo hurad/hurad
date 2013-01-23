@@ -138,86 +138,94 @@ class DashboardHelper extends AppHelper {
         $num_spam_comment = ClassRegistry::init('Comment')->count_comments('spam');
         ?>
         <div class="table table_content">
-            <p class="sub">Content</p>
+            <p class="sub"><?php echo __('Content'); ?></p>
             <table>
                 <tbody>
                     <tr class="first">
                         <td class="first b b-posts">
-                            <a href="edit.php"><?php echo $num_posts; ?></a>
+                            <?php echo $this->Html->link($num_posts, array('controller' => 'posts', 'action' => 'index')); ?>
                         </td>
                         <td class="t posts">
-                            <a href="edit.php">Post</a>
+                            <?php echo $this->Html->link(__('Post'), array('controller' => 'posts', 'action' => 'index')); ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="first b b_pages">
-                            <a href="edit.php?post_type=page"><?php echo $num_pages; ?></a>
+                            <?php echo $this->Html->link($num_pages, array('controller' => 'pages', 'action' => 'index')); ?>
                         </td>
                         <td class="t pages">
-                            <a href="edit.php?post_type=page">Page</a>
+                            <?php echo $this->Html->link(__('Page'), array('controller' => 'pages', 'action' => 'index')); ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="first b b-cats">
-                            <a href="edit-tags.php?taxonomy=category"><?php echo $num_cats; ?></a>
+                            <?php echo $this->Html->link($num_cats, array('controller' => 'categories', 'action' => 'index')); ?>
                         </td>
                         <td class="t cats">
-                            <a href="edit-tags.php?taxonomy=category">Category</a>
+                            <?php echo $this->Html->link(__('Category'), array('controller' => 'categories', 'action' => 'index')); ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="first b b-tags">
-                            <a href="edit-tags.php"><?php echo $num_tags; ?></a>
+                            <?php echo $this->Html->link($num_tags, array('controller' => 'tags', 'action' => 'index')); ?>
                         </td>
                         <td class="t tags">
-                            <a href="edit-tags.php">Tags</a>
+                            <?php echo $this->Html->link(__('Tags'), array('controller' => 'tags', 'action' => 'index')); ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="table table_discussion">
-            <p class="sub">Discussion</p>
+            <p class="sub"><?php echo __('Discussion'); ?></p>
             <table>
                 <tbody>
                     <tr class="first">
                         <td class="b b-comments">
-                            <a href="edit-comments.php">
-                                <span class="total-count"><?php echo $num_all_comment; ?></span>
-                            </a>
+                            <?php
+                            echo $this->Html->link(
+                                    $this->Html->tag('span', $num_all_comment, array('class' => 'total-count')), array('controller' => 'comments', 'action' => 'index'), array('escape' => FALSE)
+                            );
+                            ?>
                         </td>
                         <td class="last t comments">
-                            <a href="edit-comments.php">Comments</a>
+                            <?php echo $this->Html->link(__('Comments'), array('controller' => 'comments', 'action' => 'index')); ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="b b_approved">
-                            <a href="edit-comments.php?comment_status=approved">
-                                <span class="approved-count"><?php echo $num_approved_comment; ?></span>
-                            </a>
+                            <?php
+                            echo $this->Html->link(
+                                    $this->Html->tag('span', $num_approved_comment, array('class' => 'approved-count')), array('controller' => 'comments', 'action' => 'filter', 'approved'), array('escape' => FALSE)
+                            );
+                            ?>
                         </td>
                         <td class="last t">
-                            <a href="edit-comments.php?comment_status=approved" class="approved">Approved</a>
+                            <?php echo $this->Html->link(__('Approved'), array('controller' => 'comments', 'action' => 'filter', 'approved'), array('class' => 'approved')); ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="b b-waiting">
-                            <a href="edit-comments.php?comment_status=moderated">
-                                <span class="pending-count"><?php echo $num_pending_comment; ?></span>
-                            </a>
+                            <?php
+                            echo $this->Html->link(
+                                    $this->Html->tag('span', $num_pending_comment, array('class' => 'pending-count')), array('controller' => 'comments', 'action' => 'filter', 'moderated'), array('escape' => FALSE)
+                            );
+                            ?>
                         </td>
                         <td class="last t">
-                            <a href="edit-comments.php?comment_status=moderated" class="waiting">Pending</a>
+                            <?php echo $this->Html->link(__('Pending'), array('controller' => 'comments', 'action' => 'filter', 'moderated'), array('class' => 'waiting')); ?>
                         </td>
                     </tr>
                     <tr>
                         <td class="b b-spam">
-                            <a href="edit-comments.php?comment_status=spam">
-                                <span class="spam-count"><?php echo $num_spam_comment; ?></span>
-                            </a>
+                            <?php
+                            echo $this->Html->link(
+                                    $this->Html->tag('span', $num_spam_comment, array('class' => 'spam-count')), array('controller' => 'comments', 'action' => 'filter', 'spam'), array('escape' => FALSE)
+                            );
+                            ?>
                         </td>
                         <td class="last t">
-                            <a href="edit-comments.php?comment_status=spam" class="spam">Spam</a>
+                            <?php echo $this->Html->link(__('Spam'), array('controller' => 'comments', 'action' => 'filter', 'spam'), array('class' => 'spam')); ?>
                         </td>
                     </tr>
                 </tbody>
