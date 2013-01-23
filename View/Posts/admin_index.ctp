@@ -58,7 +58,7 @@ echo $this->Form->create('Post', array('url' =>
                 </div>
             </td>
             <td class="column-author">
-                <?php echo $this->Html->link($post['User']['username'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?>
+                <?php echo $this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $post['User']['id'])); ?>
             </td>
             <td class="column-status">
                 <?php echo $this->AdminLayout->postStatus($post['Post']['status']); ?>&nbsp;
