@@ -437,7 +437,7 @@ class CommentsController extends AppController {
 
             case 'disapprove':
                 if ($this->Comment->updateAll(array('Comment.approved' => '0'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments disapproved'), 'flash_notice');
+                    $this->Session->setFlash(__('Comments unapproved'), 'flash_notice');
                 }
                 break;
 
