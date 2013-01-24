@@ -448,13 +448,13 @@ class CommentsController extends AppController {
                 break;
 
             case 'spam':
-                if ($this->Comment->updateAll(array('Comment.approved' => 'spam'), array('Comment.id' => $ids))) {
+                if ($this->Comment->updateAll(array('Comment.approved' => '"spam"'), array('Comment.id' => $ids))) {
                     $this->Session->setFlash(__('Comments marked as spam.'), 'flash_notice');
                 }
                 break;
 
             case 'trash':
-                if ($this->Comment->updateAll(array('Comment.approved' => 'trash'), array('Comment.id' => $ids))) {
+                if ($this->Comment->updateAll(array('Comment.approved' => '"trash"'), array('Comment.id' => $ids))) {
                     $this->Session->setFlash(__('Comments move to trash.'), 'flash_notice');
                 }
                 break;
