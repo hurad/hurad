@@ -421,46 +421,46 @@ class CommentsController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'error');
+            $this->Session->setFlash(__('No items selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'error');
+            $this->Session->setFlash(__('No action selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Comment->deleteAll(array('Comment.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Comments deleted.'), 'notice');
+                    $this->Session->setFlash(__('Comments deleted.'), 'flash_notice');
                 }
                 break;
 
             case 'approve':
                 if ($this->Comment->updateAll(array('Comment.approved' => '1'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments approved'), 'notice');
+                    $this->Session->setFlash(__('Comments approved'), 'flash_notice');
                 }
                 break;
 
             case 'disapprove':
                 if ($this->Comment->updateAll(array('Comment.approved' => '0'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments disapproved'), 'notice');
+                    $this->Session->setFlash(__('Comments disapproved'), 'flash_notice');
                 }
                 break;
 
             case 'spam':
                 if ($this->Comment->updateAll(array('Comment.approved' => 'spam'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments marked as spam.'), 'notice');
+                    $this->Session->setFlash(__('Comments marked as spam.'), 'flash_notice');
                 }
                 break;
 
             case 'trash':
                 if ($this->Comment->updateAll(array('Comment.approved' => 'trash'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments move to trash.'), 'notice');
+                    $this->Session->setFlash(__('Comments move to trash.'), 'flash_notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
                 break;
         }
         $this->redirect(array('action' => 'index'));
