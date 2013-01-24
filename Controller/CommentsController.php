@@ -429,12 +429,6 @@ class CommentsController extends AppController {
         }
 
         switch ($action) {
-            case 'delete':
-                if ($this->Comment->deleteAll(array('Comment.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Comments deleted.'), 'flash_notice');
-                }
-                break;
-
             case 'approve':
                 if ($this->Comment->updateAll(array('Comment.approved' => '1'), array('Comment.id' => $ids))) {
                     $this->Session->setFlash(__('Comments approved'), 'flash_notice');
