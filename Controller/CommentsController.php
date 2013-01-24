@@ -289,33 +289,20 @@ class CommentsController extends AppController {
      * @return void
      */
     public function admin_approve($id = null) {
+        $this->autoRender = FALSE;
+        $this->Comment->id = $id;
+        if (!$this->Comment->exists()) {
+            throw new NotFoundException(__('Invalid comment'));
+        }
+        $data = array('id' => $id, 'approved' => '1');
         if ($this->RequestHandler->isAjax()) {
-            $this->autoRender = FALSE;
-            $this->Comment->id = $id;
-            if (!$this->Comment->exists()) {
-                throw new NotFoundException(__('Invalid comment'));
-            }
-            $data = array('id' => $id, 'approved' => '1');
-
-            if ($this->Comment->save($data)) {
-                //$this->Session->setFlash(__('Comment approved.'), 'notice');
-                //$this->redirect(array('action' => 'index'));
-            } else {
-//                $this->Session->setFlash(__('Comment not approved please try again.'), 'error');
-//                $this->redirect(array('action' => 'index'));
-            }
+            $this->Comment->save($data);
         } else {
-            $this->Comment->id = $id;
-            if (!$this->Comment->exists()) {
-                throw new NotFoundException(__('Invalid comment'));
-            }
-            $data = array('id' => $id, 'approved' => '1');
-
             if ($this->Comment->save($data)) {
-                $this->Session->setFlash(__('Comment approved.'), 'notice');
+                $this->Session->setFlash(__('Comment approved.'), 'flash_notice');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Comment not approved please try again.'), 'error');
+                $this->Session->setFlash(__('Comment not approved please try again.'), 'flash_error');
                 $this->redirect(array('action' => 'index'));
             }
         }
