@@ -8,7 +8,7 @@
         <?php
         echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
-            'admin/jquery-1.6.3.min',
+            'admin/jquery-1.9.0.min',
             'ckeditor/ckeditor',
             'admin/modernizr.custom.39710',
             'form',
