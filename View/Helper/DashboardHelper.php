@@ -46,26 +46,16 @@ class DashboardHelper extends AppHelper {
                 <p class="row-actions">
                     <span class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>>
                         <?php
-                        echo $this->Js->link(__('Approve'), array('controller' => 'comments', 'action' => 'admin_approve', $this->Comment->get_comment_ID()), array(
-                            //'update' => '#the-comment-list',
-                            'success' => '
-                                $(\'#comment-' . $this->Comment->get_comment_ID() . '\').removeClass("unapproved",{duration:10000}).addClass("approved", {duration:10000});
-                                $(\'#comment-' . $this->Comment->get_comment_ID() . ' span.approve\').css("display", "none",{duration:10000});
-                                $(\'#comment-' . $this->Comment->get_comment_ID() . ' span.unapprove\').css("display", "",{duration:10000});
-                                $(\'#dashboard_right_now\').load(location.href + " #dashboard_right_now .portlet-header, #dashboard_right_now .portlet-content");'
+                        echo $this->Js->link(__('Approve'), array('controller' => 'comments', 'action' => 'action', 'approved', $this->Comment->get_comment_ID()), array(
+                            'success' => 'comApprove(' . $this->Comment->get_comment_ID() . ')'
                                 )
                         );
                         ?>
                     </span>
                     <span class="unapprove" <?php echo ($comment['Comment']['approved']) ? 'style=""' : 'style="display: none;"'; ?>>
                         <?php
-                        echo $this->Js->link(__('Unapprove'), array('controller' => 'comments', 'action' => 'admin_disapprove', $this->Comment->get_comment_ID()), array(
-                            //'update' => '#the-comment-list',
-                            'success' => '
-                                $(\'#comment-' . $this->Comment->get_comment_ID() . '\').removeClass("approved",{duration:10000}).addClass("unapproved",{duration:10000});
-                                $(\'#comment-' . $this->Comment->get_comment_ID() . ' span.unapprove\').css("display", "none",{duration:10000});
-                                $(\'#comment-' . $this->Comment->get_comment_ID() . ' span.approve\').css("display", "",{duration:10000});
-                                $(\'#dashboard_right_now\').load(location.href + " #dashboard_right_now .portlet-header, #dashboard_right_now .portlet-content");'
+                        echo $this->Js->link(__('Unapprove'), array('controller' => 'comments', 'action' => 'action', 'disapproved', $this->Comment->get_comment_ID()), array(
+                            'success' => 'comUnapprove(' . $this->Comment->get_comment_ID() . ')'
                                 )
                         );
                         ?>
