@@ -47,7 +47,7 @@ class DashboardHelper extends AppHelper {
                     <span class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>>
                         <?php
                         echo $this->Js->link(__('Approve'), array('controller' => 'comments', 'action' => 'action', 'approved', $this->Comment->get_comment_ID()), array(
-                            'success' => 'comApprove(' . $this->Comment->get_comment_ID() . ')'
+                            'success' => 'cApprove(' . $this->Comment->get_comment_ID() . ')'
                                 )
                         );
                         ?>
@@ -55,7 +55,7 @@ class DashboardHelper extends AppHelper {
                     <span class="unapprove" <?php echo ($comment['Comment']['approved']) ? 'style=""' : 'style="display: none;"'; ?>>
                         <?php
                         echo $this->Js->link(__('Unapprove'), array('controller' => 'comments', 'action' => 'action', 'disapproved', $this->Comment->get_comment_ID()), array(
-                            'success' => 'comUnapprove(' . $this->Comment->get_comment_ID() . ')'
+                            'success' => 'cUnapprove(' . $this->Comment->get_comment_ID() . ')'
                                 )
                         );
                         ?>
@@ -70,11 +70,21 @@ class DashboardHelper extends AppHelper {
                     </span>
                     <span class="spam">
                         |
-                        <a class="delete:the-comment-list:comment-3::spam=1 vim-s vim-destructive" title="Mark this comment as spam" href="comment.php?action=spamcomment&p=1&c=3&_wpnonce=9b8bfb7464">Spam</a>
+                        <?php
+                        echo $this->Js->link(__('Spam'), array('controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->get_comment_ID()), array(
+                            'success' => 'cSpam(' . $this->Comment->get_comment_ID() . ')'
+                                )
+                        );
+                        ?>
                     </span>
                     <span class="trash">
                         |
-                        <a class="delete:the-comment-list:comment-3::trash=1 delete vim-d vim-destructive" title="Move this comment to the trash" href="comment.php?action=trashcomment&p=1&c=3&_wpnonce=9b8bfb7464">Trash</a>
+                        <?php
+                        echo $this->Js->link(__('Trash'), array('controller' => 'comments', 'action' => 'action', 'trash', $this->Comment->get_comment_ID()), array(
+                            'success' => 'cTrash(' . $this->Comment->get_comment_ID() . ')'
+                                )
+                        );
+                        ?>
                     </span>
                 </p>
             </div>
