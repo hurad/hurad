@@ -274,7 +274,12 @@ class PagesController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->request->data['Page']['action'];
+        $action = NULL;
+        if ($this->request->data['Page']['action']['top']) {
+            $action = $this->request->data['Page']['action']['top'];
+        } elseif ($this->request->data['Page']['action']['bot']) {
+            $action = $this->request->data['Page']['action']['bot'];
+        }
         $ids = array();
         foreach ($this->request->data['Page'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
