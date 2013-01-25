@@ -15,6 +15,40 @@ echo $this->Form->create('Post', array('url' =>
     array('label' => false, 'div' => false)));
 ?>
 
+<div class="tablenav">
+    <div class="actions">
+        <?php
+        echo $this->Form->input('Post.action', array(
+            'label' => false,
+            'options' => array(
+                'publish' => __('Publish'),
+                'draft' => __('Draft'),
+                'delete' => __('Delete'),
+                'trash' => __('Move to Trash'),
+            ),
+            'empty' => __('Bulk Actions'),
+        ));
+        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
+        ?>
+    </div>
+    <div class="paging">
+        <?php
+        if ($this->Paginator->numbers()) {
+            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
+            echo $this->Paginator->numbers(array('separator' => ''));
+            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
+        }
+        ?>
+    </div>
+    <div class="pageing_counter">
+        <?php
+        echo $this->Paginator->counter(array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        ));
+        ?>	
+    </div>
+</div>
+
 <table class="list-table">
     <thead>
         <tr>
@@ -94,6 +128,7 @@ echo $this->Form->create('Post', array('url' =>
         </tr>
     </tfoot>
 </table>
+
 <div class="tablenav">
     <div class="actions">
         <?php
