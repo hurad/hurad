@@ -13,6 +13,9 @@ class CommentsController extends AppController {
     public $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
     public $components = array('RequestHandler', 'Akismet');
     public $paginate = array(
+        'conditions' => array(
+            'Comment.approved' => array(0, 1),
+        ),
         'limit' => 15,
         'order' => array(
             'Comment.created' => 'desc'
