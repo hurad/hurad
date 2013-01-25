@@ -285,69 +285,6 @@ class CommentsController extends AppController {
         $this->set(compact('urls'));
     }
 
-    /**
-     * approve method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function admin_approve($id = null) {
-        $this->autoRender = FALSE;
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        $data = array('id' => $id, 'approved' => '1');
-        if ($this->RequestHandler->isAjax()) {
-            $this->Comment->save($data);
-        } else {
-            if ($this->Comment->save($data)) {
-                $this->Session->setFlash(__('Comment approved.'), 'flash_notice');
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('Comment not approved please try again.'), 'flash_error');
-                $this->redirect(array('action' => 'index'));
-            }
-        }
-    }
-
-    /**
-     * disapprove method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function admin_disapprove($id = null) {
-        if ($this->RequestHandler->isAjax()) {
-            $this->autoRender = FALSE;
-            $this->Comment->id = $id;
-            if (!$this->Comment->exists()) {
-                throw new NotFoundException(__('Invalid comment'));
-            }
-            $data = array('id' => $id, 'approved' => '0');
-
-            if ($this->Comment->save($data)) {
-                //
-            } else {
-                //
-            }
-        } else {
-            $this->Comment->id = $id;
-            if (!$this->Comment->exists()) {
-                throw new NotFoundException(__('Invalid comment'));
-            }
-            $data = array('id' => $id, 'approved' => '0');
-
-            if ($this->Comment->save($data)) {
-                $this->Session->setFlash(__('Comment disapproved.'), 'notice');
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('Comment not disapproved please try again.'), 'error');
-                $this->redirect(array('action' => 'index'));
-            }
-        }
-    }
-
     public function admin_action($action = null, $id = null) {
         $this->autoRender = FALSE;
         $this->Comment->id = $id;
