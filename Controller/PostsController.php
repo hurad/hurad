@@ -379,7 +379,12 @@ class PostsController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->request->data['Post']['action'];
+        $action = NULL;
+        if ($this->request->data['Post']['action']['top']) {
+            $action = $this->request->data['Post']['action']['top'];
+        }  elseif ($this->request->data['Post']['action']['bot']) {
+            $action = $this->request->data['Post']['action']['bot'];
+        }
         $ids = array();
         foreach ($this->request->data['Post'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
