@@ -255,3 +255,24 @@ div.inside {
 .ui-icon-plusthick {
     background-position: -32px -128px;
 }
+.trash-undo-inside, .spam-undo-inside {
+    line-height: 16px;
+    margin: 1px 8px 1px 0;
+}
+tr.undo, #the-comment-list div.undo {
+    background-color: #f4f4f4;
+}
+#the-comment-list div.undo {
+    border-top-color: #dfdfdf;
+    border-top-style: solid;
+    border-top-width: 1px;
+    margin: 0px;
+    padding: 3px 8px;
+    font-size: 11px;
+}
+.spam-undo-inside .avatar, .trash-undo-inside .avatar {
+    height: 20px;
+    width: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
