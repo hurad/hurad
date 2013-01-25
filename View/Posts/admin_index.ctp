@@ -18,7 +18,7 @@ echo $this->Form->create('Post', array('url' =>
 <div class="tablenav">
     <div class="actions">
         <?php
-        echo $this->Form->input('Post.action', array(
+        echo $this->Form->input('Post.action.top', array(
             'label' => false,
             'options' => array(
                 'publish' => __('Publish'),
@@ -132,7 +132,7 @@ echo $this->Form->create('Post', array('url' =>
 <div class="tablenav">
     <div class="actions">
         <?php
-        echo $this->Form->input('Post.action', array(
+        echo $this->Form->input('Post.action.bot', array(
             'label' => false,
             'options' => array(
                 'publish' => __('Publish'),
