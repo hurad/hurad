@@ -7,6 +7,18 @@
 </h2>
 
 <div class="tablenav">
+    <div class="actions">
+        <?php
+        echo $this->Form->input('Tag.action.top', array(
+            'label' => false,
+            'options' => array(
+                'delete' => __('Delete'),
+            ),
+            'empty' => __('Bulk Actions'),
+        ));
+        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
+        ?>
+    </div>
     <div class="paging">
         <?php
         if ($this->Paginator->numbers()) {
@@ -16,14 +28,14 @@
         }
         ?>
     </div>
+    <div class="pageing_counter">
+        <?php
+        echo $this->Paginator->counter(array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        ));
+        ?>	
+    </div>
 </div>
-
-<?php
-echo $this->Form->create('Tag', array('url' =>
-    array('admin' => TRUE, 'controller' => 'tags', 'action' => 'process'),
-    'inputDefaults' =>
-    array('label' => false, 'div' => false)));
-?>
 
 <table class="list-table">
     <thead>
@@ -88,7 +100,7 @@ echo $this->Form->create('Tag', array('url' =>
 <div class="tablenav">
     <div class="actions">
         <?php
-        echo $this->Form->input('Tag.action', array(
+        echo $this->Form->input('Tag.action.bot', array(
             'label' => false,
             'options' => array(
                 'delete' => __('Delete'),
