@@ -50,10 +50,13 @@ echo $this->Form->create('Comment', array('url' =>
                     </span>
                     <span class="action-edit">
                         <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'edit', $this->Comment->get_comment_ID())); ?> | 
-                    </span>                 
-                    <span class="action-delete">
-                        <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'delete', $this->Comment->get_comment_ID()), null, __('Are you sure you want to delete # %s?', $this->Comment->get_comment_ID())); ?>
                     </span>
+                    <span class="action-spam">
+                        <?php echo $this->Html->link(__('Spam'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->get_comment_ID())); ?> | 
+                    </span>  
+                    <span class="action-trash">
+                        <?php echo $this->Html->link(__('Trash'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'action', 'trash', $this->Comment->get_comment_ID())); ?> | 
+                    </span> 
                 </div>
             </td>
             <td class="column-name">
