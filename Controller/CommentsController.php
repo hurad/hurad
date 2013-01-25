@@ -345,6 +345,53 @@ class CommentsController extends AppController {
         }
     }
 
+    public function admin_action($action = null, $id = null) {
+        $this->autoRender = FALSE;
+        $this->Comment->id = $id;
+        if (is_null($action)) {
+            return FALSE;
+        } elseif (!$this->Comment->exists()) {
+            throw new NotFoundException(__('Invalid comment'));
+        }
+        switch ($action) {
+            case 'approved':
+                $data = array('id' => $id, 'approved' => '1');
+                $msg = __('Comment approved.');
+                $err = __('Comment not approved please try again.');
+                break;
+            case 'disapproved':
+                $data = array('id' => $id, 'approved' => '0');
+                $msg = __('Comment unapproved.');
+                $err = __('Comment not disapproved please try again.');
+                break;
+            case 'spam':
+                $data = array('id' => $id, 'approved' => 'spam');
+                $msg = __('Comment spam.');
+                $err = __('Comment not spam please try again.');
+                break;
+            case 'trash':
+                $data = array('id' => $id, 'approved' => 'trash');
+                $msg = __('Comment move to trash.');
+                $err = __('Comment not move to trash please try again.');
+                break;
+            default:
+                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                break;
+        }
+
+        if ($this->RequestHandler->isAjax()) {
+            $this->Comment->save($data);
+        } else {
+            if ($this->Comment->save($data)) {
+                $this->Session->setFlash($msg, 'flash_notice');
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash($err, 'flash_error');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+    }
+
     /**
      * admin_filter method
      *
