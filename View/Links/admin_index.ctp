@@ -10,6 +10,39 @@ echo $this->Form->create('Link', array('url' =>
     array('label' => false, 'div' => false)));
 ?>
 
+<div class="tablenav">
+    <div class="actions">
+        <?php
+        echo $this->Form->input('Link.action.top', array(
+            'label' => false,
+            'options' => array(
+                'visible' => __('Visible'),
+                'invisible' => __('Invisible'),
+                'delete' => __('Delete'),
+            ),
+            'empty' => __('Bulk Actions'),
+        ));
+        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
+        ?>
+    </div>
+    <div class="paging">
+        <?php
+        if ($this->Paginator->numbers()) {
+            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
+            echo $this->Paginator->numbers(array('separator' => ''));
+            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
+        }
+        ?>
+    </div>
+    <div class="pageing_counter">
+        <?php
+        echo $this->Paginator->counter(array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        ));
+        ?>	
+    </div>
+</div>
+
 <table class="list-table">
     <thead>
         <tr>
@@ -56,7 +89,7 @@ echo $this->Form->create('Link', array('url' =>
                 <?php echo $this->Html->link($this->AdminLayout->linkUrl($link['Link']['url']), $link['Link']['url'], array('target' => '_blank', 'title' => __('Visit %s', $link['Link']['name']))); ?>&nbsp;
             </td>
             <td class="column-menu">
-                <?php echo $this->Html->link(h($link['Menu']['name']), array('admin' => TRUE, 'controller' => 'links', 'action' => 'catIndex', $link['Menu']['id'])); ?>&nbsp;
+                <?php echo $this->Html->link(h($link['Menu']['name']), array('admin' => TRUE, 'controller' => 'links', 'action' => 'indexBymenu', $link['Menu']['id'])); ?>&nbsp;
             </td>
             <td class="column-visible">
                 <?php echo $this->AdminLayout->linkVisible($link['Link']['visible']); ?>&nbsp;
@@ -92,7 +125,7 @@ echo $this->Form->create('Link', array('url' =>
 <div class="tablenav">
     <div class="actions">
         <?php
-        echo $this->Form->input('Link.action', array(
+        echo $this->Form->input('Link.action.bot', array(
             'label' => false,
             'options' => array(
                 'visible' => __('Visible'),
