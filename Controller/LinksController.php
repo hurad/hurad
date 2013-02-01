@@ -133,33 +133,18 @@ class LinksController extends AppController {
         $this->set('links', $this->paginate(array('Linkcat.type' => 'link_category')));
     }
 
-    public function admin_catIndex($menu_id) {
-
-        if (!$menu_id) {
-            $this->redirect(array(
-                'admin' => TRUE,
-                'controller' => 'menus',
-                'action' => 'index',
-            ));
+    public function admin_indexBymenu($menu_id) {
+        $this->Link->Menu->id = $menu_id;
+        if (!$this->Link->Menu->exists()) {
+            throw new NotFoundException(__('Invalid menu'));
         }
 
+        $this->Link->Menu->recursive = 0;
         $menu = $this->Link->Menu->findById($menu_id);
 
-        if (!isset($menu['Menu']['id'])) {
-            $this->redirect(array(
-                'admin' => TRUE,
-                'controller' => 'menus',
-                'action' => 'index',
-            ));
-        }
-
         $this->set('title_for_layout', sprintf(__('Links: %s'), $menu['Menu']['name']));
-
-        $this->Link->recursive = 0;
-
         $this->set('links', $this->paginate('Link', array('Link.menu_id' => $menu_id)));
-
-        $this->set(compact('menu'));
+        $this->render('admin_index');
     }
 
     /**
