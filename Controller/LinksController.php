@@ -252,7 +252,12 @@ class LinksController extends AppController {
 
     public function admin_process() {
         $this->autoRender = false;
-        $action = $this->request->data['Link']['action'];
+        $action = NULL;
+        if ($this->request->data['Link']['action']['top']) {
+            $action = $this->request->data['Link']['action']['top'];
+        } elseif ($this->request->data['Link']['action']['bot']) {
+            $action = $this->request->data['Link']['action']['bot'];
+        }
         $ids = array();
         foreach ($this->request->data['Link'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
