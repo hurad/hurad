@@ -33,8 +33,8 @@ echo $this->Form->create('User', array('url' =>
             <td class="column-name">
                 <?php echo h($menu['Menu']['name']); ?>
                 <div class="row-actions">
-                    <span class="action-add_link">
-                        <?php echo $this->Html->link(__('Add Link'), array('admin' => TRUE, 'controller' => 'links', 'action' => 'add', $menu['Menu']['id'])); ?> | 
+                    <span class="action-view_links">
+                        <?php echo $this->Html->link(__('View Links'), array('admin' => TRUE, 'controller' => 'links', 'action' => 'indexBymenu', $menu['Menu']['id'])); ?> | 
                     </span>                 
                     <span class="action-edit">
                         <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'menus', 'action' => 'edit', $menu['Menu']['id'])); ?> |
