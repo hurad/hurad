@@ -22,6 +22,9 @@ echo $this->Form->create('User', array('url' =>
             <th id="slug" class="column-slug column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
             </th>
+            <th id="link_count" class="column-link_count column-manage" scope="col">
+                <?php echo $this->Paginator->sort('link_count', __('Link Count')); ?>
+            </th>
             <th id="description" class="column-description column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('description', __('Description')); ?>
             </th>
@@ -45,6 +48,7 @@ echo $this->Form->create('User', array('url' =>
                 </div>
             </td>
             <td class="column-slug"><?php echo h($menu['Menu']['slug']); ?>&nbsp;</td>
+            <td class="column-link_count"><?php echo h($menu['Menu']['link_count']); ?>&nbsp;</td>
             <td class="column-description"><?php echo h($menu['Menu']['description']); ?>&nbsp;</td>
         </tr>
     <?php endforeach; ?>
@@ -58,6 +62,9 @@ echo $this->Form->create('User', array('url' =>
             </th>
             <th class="column-slug column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
+            </th>
+            <th id="link_count" class="column-link_count column-manage" scope="col">
+                <?php echo $this->Paginator->sort('link_count', __('Link Count')); ?>
             </th>
             <th class="column-description column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('description', __('Description')); ?>
