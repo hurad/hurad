@@ -9,11 +9,11 @@
         echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
             'admin/jquery-1.9.0.min',
+            'admin/jquery-ui-1.10.0.custom.min',
             'ckeditor/ckeditor',
             'admin/modernizr.custom.39710',
             'form',
             'sidebar-menu',
-            'admin/jquery-ui-1.8.23.custom.min',
                 )
         );
         ?>
