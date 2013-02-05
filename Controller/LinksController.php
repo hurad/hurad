@@ -276,34 +276,34 @@ class LinksController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'error');
+            $this->Session->setFlash(__('No items selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'error');
+            $this->Session->setFlash(__('No action selected.'), 'flash_error');
             $this->redirect($this->referer());
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Link->deleteAll(array('Link.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Links deleted.'), 'notice');
+                    $this->Session->setFlash(__('Links deleted.'), 'flash_notice');
                 }
                 break;
 
             case 'visible':
                 if ($this->Link->updateAll(array('Link.visible' => "'Y'"), array('Link.id' => $ids))) {
-                    $this->Session->setFlash(__('Links visible'), 'notice');
+                    $this->Session->setFlash(__('Links visible'), 'flash_notice');
                 }
                 break;
 
             case 'invisible':
                 if ($this->Link->updateAll(array('Link.visible' => "'N'"), array('Link.id' => $ids))) {
-                    $this->Session->setFlash(__('Links invisible'), 'notice');
+                    $this->Session->setFlash(__('Links invisible'), 'flash_notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
                 break;
         }
         $this->redirect($this->referer());
