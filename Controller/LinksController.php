@@ -166,22 +166,48 @@ class LinksController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
-        $this->set('title_for_layout', __('Add New Link'));
-        if ($this->request->is('post')) {
-            $this->Link->create();
-            if ($this->Link->save($this->request->data)) {
-                $this->Session->setFlash(__('The link has been saved'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+    public function admin_add($menu_id = NULL) {
+        if (is_null($menu_id)) {
+            $this->set('title_for_layout', __('Add New Link'));
+            if ($this->request->is('post')) {
+                $this->Link->create();
+                if ($this->Link->save($this->request->data)) {
+                    $this->Session->setFlash(__('The link has been saved'));
+                    $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+                }
             }
+            //$parentLinks = $this->Link->generateTreeList("Link.menu_id = '{$menu_id}'", null, null, '&nbsp;&nbsp;|- ');
+            $linkcats = $this->Link->Linkcat->find('list', array(
+                'conditions' => array('Linkcat.type' => 'link_category'),
+                    ));
+            $this->set(compact('linkcats', 'menu_id'));
+        } else {
+            $this->Link->Menu->id = $menu_id;
+            if (!$this->Link->Menu->exists()) {
+                throw new NotFoundException(__('Invaluid menu'));
+            }
+            $this->Link->Menu->recursive = 0;
+            $menu = $this->Link->Menu->findById($menu_id);
+
+            $this->set('title_for_layout', sprintf(__('Add New Link to: %s'), $menu['Menu']['name']));
+            if ($this->request->is('post')) {
+                $this->Link->create();
+                if ($this->Link->save($this->request->data)) {
+                    $this->Session->setFlash(__('The link has been saved'));
+                    $this->redirect(array('action' => 'indexBymenu', $menu_id));
+                } else {
+                    $this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+                }
+            }
+            $linkcats = $this->Link->Menu->find('list', array(
+                'conditions' => array(
+                    'Menu.id' => $menu_id
+                ),
+                    ));
+            $this->set(compact('linkcats', 'menu_id'));
         }
-        //$parentLinks = $this->Link->generateTreeList("Link.menu_id = '{$menu_id}'", null, null, '&nbsp;&nbsp;|- ');
-        $linkcats = $this->Link->Linkcat->find('list', array(
-            'conditions' => array('Linkcat.type' => 'link_category'),
-                ));
-        $this->set(compact('linkcats', 'menu_id'));
     }
 
     /**
