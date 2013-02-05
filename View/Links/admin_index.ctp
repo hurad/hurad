@@ -74,7 +74,7 @@ echo $this->Form->create('Link', array('url' =>
             <td class="column-name">
                 <?php echo $this->Html->link(h($link['Link']['name']), array('admin' => TRUE, 'controller' => 'links', 'action' => 'edit', $link['Link']['id']), array('title' => __('Edit "%s"', $link['Link']['name']))); ?>
                 <div class="row-actions">
-                    <span class="action-view">
+                    <span class="action-visit_link">
                         <?php echo $this->Html->link(__('Visit Link'), $link['Link']['url'], array('target' => '_blank')); ?> | 
                     </span>
                     <span class="action-edit">
