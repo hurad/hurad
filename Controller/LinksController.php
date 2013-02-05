@@ -215,7 +215,7 @@ class LinksController extends AppController {
      * @param string $id
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = NULL) {
         $this->set('title_for_layout', __('Edit Link'));
         $this->Link->id = $id;
         if (!$this->Link->exists()) {
@@ -223,10 +223,10 @@ class LinksController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Link->save($this->request->data)) {
-                $this->Session->setFlash(__('The link has been saved'), 'notice');
+                $this->Session->setFlash(__('The link has been saved'), 'flash_notice');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'notice');
+                $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'flash_error');
             }
         } else {
             $this->request->data = $this->Link->read(null, $id);
