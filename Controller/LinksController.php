@@ -244,7 +244,7 @@ class LinksController extends AppController {
      * @param string $id
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = NULL) {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -253,10 +253,10 @@ class LinksController extends AppController {
             throw new NotFoundException(__('Invalid link'));
         }
         if ($this->Link->delete()) {
-            $this->Session->setFlash(__('Link deleted'));
+            $this->Session->setFlash(__('Link deleted'), 'flash_notice');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Link was not deleted'));
+        $this->Session->setFlash(__('Link was not deleted'), 'flash_error');
         $this->redirect(array('action' => 'index'));
     }
 
