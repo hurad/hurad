@@ -178,7 +178,6 @@ class LinksController extends AppController {
                     $this->Session->setFlash(__('The link could not be saved. Please, try again.'));
                 }
             }
-            //$parentLinks = $this->Link->generateTreeList("Link.menu_id = '{$menu_id}'", null, null, '&nbsp;&nbsp;|- ');
             $linkcats = $this->Link->Linkcat->find('list', array(
                 'conditions' => array('Linkcat.type' => 'link_category'),
                     ));
