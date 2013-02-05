@@ -172,10 +172,10 @@ class LinksController extends AppController {
             if ($this->request->is('post')) {
                 $this->Link->create();
                 if ($this->Link->save($this->request->data)) {
-                    $this->Session->setFlash(__('The link has been saved'));
+                    $this->Session->setFlash(__('The link has been saved'), 'flash_notice');
                     $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+                    $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'flash_error');
                 }
             }
             $linkcats = $this->Link->Linkcat->find('list', array(
@@ -194,10 +194,10 @@ class LinksController extends AppController {
             if ($this->request->is('post')) {
                 $this->Link->create();
                 if ($this->Link->save($this->request->data)) {
-                    $this->Session->setFlash(__('The link has been saved'));
+                    $this->Session->setFlash(__('The link has been saved', 'flash_notice'));
                     $this->redirect(array('action' => 'indexBymenu', $menu_id));
                 } else {
-                    $this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+                    $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'flash_error');
                 }
             }
             $linkcats = $this->Link->Menu->find('list', array(
