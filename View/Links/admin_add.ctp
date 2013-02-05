@@ -65,7 +65,7 @@ echo $this->Form->create('Link', array(
             <th scope="row"><?php echo $this->Form->label('rating', __('Rating')); ?></th>
             <td>
                 <?php
-                echo $this->Form->input('field', array(
+                echo $this->Form->input('rating', array(
                     'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
                     'empty' => __('(Choose one)')
                 ));
