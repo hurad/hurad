@@ -1,10 +1,17 @@
-<?php $this->Html->css('list-table', null, array('inline' => false)); ?>
+<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => false)); ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
 <h2>
     <?php echo $title_for_layout; ?>
     <?php echo $this->Html->link(__('Add New'), '/admin/categories/add', array('class' => 'add_button')); ?>
 </h2>
+
+<?php
+echo $this->Form->create('Category', array('url' =>
+    array('admin' => TRUE, 'action' => 'process'),
+    'inputDefaults' =>
+    array('label' => false, 'div' => false)));
+?>
 
 <div class="tablenav">
     <div class="actions">
