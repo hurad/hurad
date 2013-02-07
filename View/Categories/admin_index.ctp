@@ -6,6 +6,37 @@
     <?php echo $this->Html->link(__('Add New'), '/admin/categories/add', array('class' => 'add_button')); ?>
 </h2>
 
+<div class="tablenav">
+    <div class="actions">
+        <?php
+        echo $this->Form->input('Category.action.top', array(
+            'label' => false,
+            'options' => array(
+                'delete' => __('Delete'),
+            ),
+            'empty' => __('Bulk Actions'),
+        ));
+        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
+        ?>
+    </div>
+    <div class="paging">
+        <?php
+        if ($this->Paginator->numbers()) {
+            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
+            echo $this->Paginator->numbers(array('separator' => ''));
+            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
+        }
+        ?>
+    </div>
+    <div class="pageing_counter">
+        <?php
+        echo $this->Paginator->counter(array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        ));
+        ?>	
+    </div>
+</div>
+
 <table class="list-table">
     <thead>
         <tr>
@@ -13,10 +44,10 @@
                 <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
             </th>
             <th id="name" class="column-name column-manage check-column" scope="col">
-                <?php echo __('Name'); ?>
+                <?php echo $this->Paginator->sort('name', __('Name')); ?>
             </th>
             <th id="parentName">
-                <?php echo __('Slug'); ?>
+                <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
             </th>
             <th id="slug" class="column-slug column-manage check-column" scope="col">
                 <?php echo __('Description'); ?>
@@ -26,7 +57,6 @@
             </th>
         </tr>
     </thead>
-    <?php //debug($categories); ?>
     <?php foreach ($categories AS $i => $category): ?>
         <?php //echo $i.'<br>'; ?>
         <tr id="<?php echo h($category['Category']['id']); ?>" class="menu-<?php echo h($category['Category']['id']); ?>">
@@ -74,4 +104,33 @@
     </tfoot>
 </table>
 
-
+<div class="tablenav">
+    <div class="actions">
+        <?php
+        echo $this->Form->input('Category.action.bot', array(
+            'label' => false,
+            'options' => array(
+                'delete' => __('Delete'),
+            ),
+            'empty' => __('Bulk Actions'),
+        ));
+        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
+        ?>
+    </div>
+    <div class="paging">
+        <?php
+        if ($this->Paginator->numbers()) {
+            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
+            echo $this->Paginator->numbers(array('separator' => ''));
+            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
+        }
+        ?>
+    </div>
+    <div class="pageing_counter">
+        <?php
+        echo $this->Paginator->counter(array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        ));
+        ?>	
+    </div>
+</div>
