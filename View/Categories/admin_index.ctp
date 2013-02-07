@@ -57,10 +57,10 @@ echo $this->Form->create('Category', array('url' =>
                 <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
             </th>
             <th id="slug" class="column-slug column-manage check-column" scope="col">
-                <?php echo __('Description'); ?>
+                <?php echo $this->Paginator->sort('description', __('Description')); ?>
             </th>
             <th id="slug" class="column-slug column-manage check-column" scope="col">
-                <?php echo __('Posts'); ?>
+                <?php echo $this->Paginator->sort('post_count', __('Posts')); ?>
             </th>
         </tr>
     </thead>
@@ -92,21 +92,21 @@ echo $this->Form->create('Category', array('url' =>
     <?php endforeach; ?>
     <tfoot>
         <tr>
-            <th class="column-cb column-manage check-column" scope="col">
+            <th id="cb" class="column-cb column-manage check-column" scope="col">
                 <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
             </th>
-            <th class="column-name column-manage check-column" scope="col">
-                <?php echo __('Name'); ?>
+            <th id="name" class="column-name column-manage check-column" scope="col">
+                <?php echo $this->Paginator->sort('name', __('Name')); ?>
             </th>
-            <th class="column-name column-manage check-column">
-                <?php echo __('Slug'); ?>
+            <th id="parentName">
+                <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
             </th>
-            <th class="column-slug column-manage check-column" scope="col">
-                <?php echo __('Description'); ?>
+            <th id="slug" class="column-slug column-manage check-column" scope="col">
+                <?php echo $this->Paginator->sort('description', __('Description')); ?>
             </th>
-            <th class="column-slug column-manage check-column" scope="col">
-                <?php echo __('Posts'); ?>
-            </th>    
+            <th id="slug" class="column-slug column-manage check-column" scope="col">
+                <?php echo $this->Paginator->sort('post_count', __('Posts')); ?>
+            </th>
         </tr>
     </tfoot>
 </table>
