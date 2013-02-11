@@ -84,6 +84,45 @@ class Category extends AppModel {
         )
     );
 
+    public function afterSave($created) {
+        parent::afterSave($created);
+        $action = $this->request->params['action'];
+        if ($action == 'admin_add' || $action == 'admin_edit') {
+            $path = $this->getPath($this->data['Category']['id']);
+            $path_num = count($path) - 1;
+
+            if ($path_num > 0) {
+                $under = "";
+                for ($i = 0; $i < $path_num; $i++) {
+                    $under .= "_";
+                }
+                $path_field = $under . $this->data['Category']['name'];
+            } elseif ($path_num == 0) {
+                $path_field = $this->data['Category']['name'];
+            }
+            $this->updateAll(
+                    array('Category.path' => "'$path_field'"), array('Category.id' => $this->data['Category']['id'])
+            );
+        }
+        if ($action == 'admin_process') {
+            $path = $this->getPath($this->data['Category']['id']);
+            $path_num = count($path) - 1;
+            $category = $this->findById($this->data['Category']['id']);
+            if ($path_num > 0) {
+                $under = "";
+                for ($i = 0; $i < $path_num; $i++) {
+                    $under .= "_";
+                }
+                $path_field = $under . $category['Category']['name'];
+            } elseif ($path_num == 0) {
+                $path_field = $category['Category']['name'];
+            }
+            $this->updateAll(
+                    array('Category.path' => "'$path_field'"), array('Category.id' => $this->data['Category']['id'])
+            );
+        }
+    }
+
     public function count_cats() {
 
         $cats = $this->find('count');
