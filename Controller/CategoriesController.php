@@ -240,4 +240,44 @@ class CategoriesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
+    public function admin_process() {
+        $this->autoRender = false;
+        $action = NULL;
+        if ($this->request->data['Category']['action']['top']) {
+            $action = $this->request->data['Category']['action']['top'];
+        } elseif ($this->request->data['Category']['action']['bot']) {
+            $action = $this->request->data['Category']['action']['bot'];
+        }
+        $ids = array();
+        foreach ($this->request->data['Category'] AS $id => $value) {
+            if ($id != 'action' && $value['id'] == 1) {
+                $ids[] = $id;
+            }
+        }
+
+        if (count($ids) == 0) {
+            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->redirect(array('action' => 'index'));
+        } elseif ($action == null) {
+            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->redirect(array('action' => 'index'));
+        }
+
+        switch ($action) {
+            case 'delete':
+                foreach ($ids as $value) {
+                    $this->Category->removeFromTree($value);
+                }
+                // if ($this->Category->deleteAll(array('Category.id' => $ids), true, true)) {
+                $this->Session->setFlash(__('Categories deleted.'), 'flash_notice');
+                //}
+                break;
+
+            default:
+                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                break;
+        }
+        $this->redirect(array('action' => 'index'));
+    }
+
 }
