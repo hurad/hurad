@@ -61,6 +61,9 @@ echo $this->Form->create('Post', array('url' =>
             <th id="author" class="column-author column-manage" scope="col">
                 <?php echo $this->Paginator->sort('User.username', 'Author'); ?>
             </th>
+            <th id="author" class="column-categories column-manage" scope="col">
+                <?php echo $this->Paginator->sort('Category.name', 'Categories'); ?>
+            </th>
             <th id="status" class="column-status column-manage" scope="col">
                 <?php echo $this->Paginator->sort('status'); ?>
             </th>
@@ -94,6 +97,9 @@ echo $this->Form->create('Post', array('url' =>
             <td class="column-author">
                 <?php echo $this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $post['User']['id'])); ?>
             </td>
+            <td class="column-categories">
+                <?php echo $this->AdminLayout->the_category($post['Category']); ?>&nbsp;
+            </td>
             <td class="column-status">
                 <?php echo $this->AdminLayout->postStatus($post['Post']['status']); ?>&nbsp;
             </td>
@@ -115,6 +121,9 @@ echo $this->Form->create('Post', array('url' =>
             </th>
             <th id="author" class="column-author column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('User.username', 'Author'); ?>
+            </th>
+            <th id="author" class="column-categories column-manage" scope="col">
+                <?php echo $this->Paginator->sort('Category.name', 'Categories'); ?>
             </th>
             <th id="status" class="column-status column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('status'); ?>
