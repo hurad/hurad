@@ -129,7 +129,7 @@ class PostsController extends AppController {
         if (is_null($userId) && !$this->Post->exists()) {
             throw new NotFoundException(__('Invalid author'));
         }
-        $this->Post->recursive = 0;
+        $this->Post->recursive = 1;
         $this->paginate['Post']['limit'] = 25;
         $this->paginate['Post']['order'] = array('Post.created' => 'desc');
         $this->paginate['Post']['conditions'] = array(
@@ -148,7 +148,7 @@ class PostsController extends AppController {
      */
     public function admin_index() {
         $this->set('title_for_layout', __('Posts'));
-        $this->Post->recursive = 0;
+        $this->Post->recursive = 1;
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
@@ -382,7 +382,7 @@ class PostsController extends AppController {
         $action = NULL;
         if ($this->request->data['Post']['action']['top']) {
             $action = $this->request->data['Post']['action']['top'];
-        }  elseif ($this->request->data['Post']['action']['bot']) {
+        } elseif ($this->request->data['Post']['action']['bot']) {
             $action = $this->request->data['Post']['action']['bot'];
         }
         $ids = array();
