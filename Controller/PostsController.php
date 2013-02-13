@@ -141,6 +141,28 @@ class PostsController extends AppController {
         $this->render('admin_index');
     }
 
+    public function admin_listBycategory($categoryId = null) {
+        $this->set('title_for_layout', __('Posts'));
+        $this->Post->Category->id = $categoryId;
+        if (is_null($categoryId) || !$this->Post->Category->exists()) {
+            throw new NotFoundException(__('Invalid category'));
+        }
+        $this->paginate = array(
+            'Post' => array(
+                'limit' => 25,
+                'order' => array('Post.created' => 'desc'),
+                'conditions' => array(
+                    'Post.status' => array('publish', 'draft'),
+                    'Post.type' => 'post',
+                    'CategoriesPost.category_id' => $categoryId,
+                )
+            )
+        );
+        $this->Post->bindModel(array('hasOne' => array('CategoriesPost')), false);
+        $this->set('posts', $this->paginate());
+        $this->render('admin_index');
+    }
+
     /**
      * admin_index method
      *
