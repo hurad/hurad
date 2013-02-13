@@ -87,7 +87,7 @@ echo $this->Form->create('Category', array('url' =>
                 <?php echo h($category['Category']['description']); ?>&nbsp;
             </td>
             <td class="column-post_count">
-                <?php echo h($category['Category']['post_count']); ?>&nbsp;
+                <?php echo $this->Html->link($category['Category']['post_count'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBycategory', $category['Category']['id'])); ?>
             </td>
         </tr>
     <?php endforeach; ?>
