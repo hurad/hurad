@@ -130,12 +130,16 @@ class PostsController extends AppController {
             throw new NotFoundException(__('Invalid author'));
         }
         $this->Post->recursive = 1;
-        $this->paginate['Post']['limit'] = 25;
-        $this->paginate['Post']['order'] = array('Post.created' => 'desc');
-        $this->paginate['Post']['conditions'] = array(
-            'Post.status' => array('publish', 'draft'),
-            'Post.type' => 'post',
-            'Post.user_id' => $userId,
+        $this->paginate = array(
+            'Post' => array(
+                'limit' => 25,
+                'order' => array('Post.created' => 'DESC'),
+                'conditions' => array(
+                    'Post.status' => array('publish', 'draft'),
+                    'Post.type' => 'post',
+                    'Post.user_id' => $userId,
+                )
+            )
         );
         $this->set('posts', $this->paginate());
         $this->render('admin_index');
