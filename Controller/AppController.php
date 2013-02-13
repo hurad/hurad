@@ -84,6 +84,9 @@ class AppController extends Controller {
 
         //Load Option model in all controller
         $this->options = Configure::read('options');
+
+        //Use request in model
+        $this->{$this->modelClass}->request = $this->request;
     }
 
     private function isAdmin() {
