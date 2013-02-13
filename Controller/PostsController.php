@@ -125,8 +125,8 @@ class PostsController extends AppController {
 
     public function admin_listByauthor($userId = null) {
         $this->set('title_for_layout', __('Posts'));
-        $this->Post->user_id = $userId;
-        if (is_null($userId) && !$this->Post->exists()) {
+        $this->Post->User->id = $userId;
+        if (is_null($userId) || !$this->Post->User->exists()) {
             throw new NotFoundException(__('Invalid author'));
         }
         $this->Post->recursive = 1;
