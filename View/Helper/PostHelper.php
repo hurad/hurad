@@ -123,10 +123,13 @@ class PostHelper extends AppHelper {
     }
 
     public function the_category($separator = ', ') {
-
         $cat = array();
         foreach ($this->post['Category'] as $category) {
-            $cat[] = '<a href="http://localhost/hurad/category/' . $category['slug'] . '" title="' . __('View all posts in') . ' ' . $category['name'] . '" rel="category">' . $category['name'] . '</a>';
+            if (isset($this->request->params['admin'])) {
+                $cat[] = $this->Html->link($category['name'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBycategory', $category['id']), array('title' => __('View all posts in %s', $category['name']), 'rel' => 'category'));
+            } else {
+                $cat[] = '<a href="http://localhost/hurad/category/' . $category['slug'] . '" title="' . __('View all posts in') . ' ' . $category['name'] . '" rel="category">' . $category['name'] . '</a>';
+            }
         }
         if ($separator == '') {
             $separator = ', ';
