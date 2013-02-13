@@ -361,7 +361,7 @@ class PostsController extends AppController {
      * @return void
      */
     public function admin_filter($action = null) {
-        $this->Post->recursive = 0;
+        $this->Post->recursive = 1;
         $this->paginate = array();
         $this->paginate['limit'] = 25;
         switch ($action) {
