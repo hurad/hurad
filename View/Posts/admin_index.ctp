@@ -76,6 +76,7 @@ echo $this->Form->create('Post', array('url' =>
         </tr>
     </thead>
     <?php foreach ($posts as $post): ?>
+        <?php $this->Post->setPost($post); ?>
         <tr id="<?php echo h($post['Post']['id']); ?>" class="post-<?php echo h($post['Post']['id']); ?>">
             <td class="check-column" scope="row">
                 <?php echo $this->Form->checkbox('Post.' . $post['Post']['id'] . '.id'); ?>
@@ -98,7 +99,7 @@ echo $this->Form->create('Post', array('url' =>
                 <?php echo $this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $post['User']['id'])); ?>
             </td>
             <td class="column-categories">
-                <?php echo $this->AdminLayout->the_category($post['Category']); ?>&nbsp;
+                <?php echo $this->Post->the_category(); ?>&nbsp;
             </td>
             <td class="column-status">
                 <?php echo $this->AdminLayout->postStatus($post['Post']['status']); ?>&nbsp;
