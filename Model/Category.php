@@ -84,6 +84,35 @@ class Category extends AppModel {
         )
     );
 
+    public function beforeDelete($cascade = true) {
+        parent::beforeDelete($cascade);
+        $action = $this->request->params['action'];
+        if ($action == 'admin_delete') {
+            $cat = $this->find('first', array(
+                'conditions' => array('Category.id' => $this->request->params['pass'][0])
+                    ));
+            if (count($cat['Post']) > 0) {
+                foreach ($cat['Post'] as $key => $value) {
+                    $this->query("DELETE FROM `categories_posts` WHERE `categories_posts`.`post_id` = " . $value['id']);
+                    $this->query("INSERT INTO `categories_posts` (`category_id`, `post_id`) VALUES ('37', '" . $value['id'] . "');");
+                }
+            }
+            $post_count = $this->find('count', array(
+                'joins' => array(
+                    array('table' => 'categories_posts',
+                        'alias' => 'CategoriesPost',
+                        'type' => 'INNER',
+                        'conditions' => array(
+                            'CategoriesPost.category_id' => 37,
+                        )
+                    )
+                ),
+                'group' => 'post_id'
+                    ));
+            $this->query("UPDATE `categories` SET `post_count` = '" . $post_count . "' WHERE `categories`.`id` =37;");
+        }
+    }
+
     public function afterSave($created) {
         parent::afterSave($created);
         $action = $this->request->params['action'];
