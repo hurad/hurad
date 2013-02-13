@@ -65,9 +65,10 @@ echo $this->Form->create('Category', array('url' =>
         </tr>
     </thead>
     <?php foreach ($categories AS $i => $category): ?>
-        <?php //echo $i.'<br>'; ?>
-        <tr id="<?php echo h($category['Category']['id']); ?>" class="menu-<?php echo h($category['Category']['id']); ?>">
-            <td class="check-column" scope="row"><input type=checkbox name=checkbox[<?php echo h($category['Category']['id']); ?>] value=<?php echo h($category['Category']['id']); ?>></td>
+        <tr id="<?php echo h($category['Category']['id']); ?>" class="category-<?php echo h($category['Category']['id']); ?>">
+            <td class="check-column" scope="row">
+                <?php echo $this->Form->checkbox('Category.' . $category['Category']['id'] . '.id'); ?>
+            </td>
             <td class="column-name">
                 <?php echo $this->Html->link($category['Category']['path'], array('admin' => TRUE, 'controller' => 'categories', 'action' => 'edit', $category['Category']['id'])); ?>
                 <div class="row-actions">
