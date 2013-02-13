@@ -220,5 +220,3 @@ class AdminLayoutHelper extends AppHelper {
     }
 
 }
-
-?>
