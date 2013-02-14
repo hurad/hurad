@@ -142,3 +142,11 @@ echo $this->Form->create('Category', array('url' =>
         ?>	
     </div>
 </div>
+
+<div class="form-wrap">
+    <p>
+        <strong><?php echo __('Note:'); ?></strong>
+        <br>
+        <?php echo __('Deleting a category does not delete the posts in that category. Instead, posts that were only assigned to the deleted category are set to the category <strong>Uncategorized</strong>.'); ?>
+    </p>
+</div>
