@@ -7,7 +7,7 @@ $(document).ready(function()
             
         });
 
-        if(Hurad.params.action == "admin_index" || Hurad.params.action == "admin_filter"){
+        if(Hurad.params.action == "admin_index" || Hurad.params.action == "admin_filter" || Hurad.params.action == "admin_listBycategory" || Hurad.params.action == "admin_listByauthor"){
             $('a[href$="'+Hurad.params.controller+'"]').parent().addClass("current"); 
         }
         else if(Hurad.params.action == "admin_add"){
