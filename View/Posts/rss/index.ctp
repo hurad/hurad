@@ -18,16 +18,8 @@ $this->set('channel', array(
 ));
 
 foreach ($posts as $post) {
-    $postTime = strtotime($post['Post']['created']);
+    $this->Post->setPost($post);
 
-    $postLink = array(
-        'controller' => 'posts',
-        'action' => 'view',
-        'year' => date('Y', $postTime),
-        'month' => date('m', $postTime),
-        'day' => date('d', $postTime),
-        $post['Post']['id']);
-    // $post['Post']['slug']);
     // You should import Sanitize
     // This is the part where we clean the body text for output as the description 
     // of the rss item, this needs to have only text to make sure the feed validates
@@ -38,10 +30,12 @@ foreach ($posts as $post) {
 
     echo $this->Rss->item(array(), array(
         'title' => $post['Post']['title'],
-        'link' => $postLink,
-        'guid' => array('url' => $postLink, 'isPermaLink' => 'true'),
+        'link' => $this->Post->get_permalink(),
+        'guid' => array('url' => $this->Post->get_permalink(), 'isPermaLink' => 'true'),
         'description' => $bodyText,
-        //'dc:author' => $post['Post']['user_id'],
-        'pubDate' => $post['Post']['created']));
+        'dc:author' => $post['User']['username'],
+        'pubDate' => $this->Time->toRSS($post['Post']['created'])
+            )
+    );
 }
 ?>
