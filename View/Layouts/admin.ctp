@@ -13,7 +13,7 @@
             'ckeditor/ckeditor',
             'admin/modernizr.custom.39710',
             'form',
-            'sidebar-menu',
+            'admin/sidebar-menu',
                 )
         );
         ?>
