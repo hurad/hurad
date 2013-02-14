@@ -140,7 +140,11 @@ class PostHelper extends AppHelper {
     public function tag($separator = ', ') {
         $term = array();
         foreach ($this->post['Tag'] as $tag) {
-            $term[] = '<a href="http://localhost/hurad/tag/' . $tag['slug'] . '" title="' . __('View all posts in') . ' ' . $tag['name'] . '" rel="tag">' . $tag['name'] . '</a>';
+            if (isset($this->request->params['admin'])) {
+                $term[] = $this->Html->link($tag['name'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBytag', $tag['id']), array('title' => __('View all posts in %s', $tag['name']), 'rel' => 'tag'));
+            } else {
+                $term[] = '<a href="http://localhost/hurad/tag/' . $tag['slug'] . '" title="' . __('View all posts in') . ' ' . $tag['name'] . '" rel="tag">' . $tag['name'] . '</a>';
+            }
         }
 
         echo implode($separator, $term);
