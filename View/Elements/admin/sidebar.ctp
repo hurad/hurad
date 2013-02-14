@@ -35,7 +35,7 @@ HrNav::add('posts', array(
             'weight' => 3,
         ),
         'tags' => array(
-            'title' => __('Tags'),
+            'title' => __('Post Tags'),
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'tags', 'action' => 'index'),
             'weight' => 4,
         ),
@@ -48,12 +48,12 @@ HrNav::add('links', array(
     'weight' => 3,
     'child' => array(
         'all_links' => array(
-            'title' => __('All Links'),
+            'title' => __('Links'),
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'links', 'action' => 'index'),
             'weight' => 1,
         ),
         'add_link' => array(
-            'title' => __('Add Link'),
+            'title' => __('Add New'),
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'links', 'action' => 'add'),
             'weight' => 2,
         ),
@@ -61,11 +61,6 @@ HrNav::add('links', array(
             'title' => __('Link Categories'),
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'linkcats', 'action' => 'index'),
             'weight' => 3,
-        ),
-        'add_link_categories' => array(
-            'title' => __('Add Link Categories'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'linkcats', 'action' => 'add'),
-            'weight' => 4,
         ),
     ),
 ));
