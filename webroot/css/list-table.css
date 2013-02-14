@@ -81,3 +81,7 @@ th a.desc:after {
 tbody tr:hover .row-actions{
     visibility: visible;
 }
+.form-wrap {
+    margin: 10px 0;
+    width: 97%;
+}
