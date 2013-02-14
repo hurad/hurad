@@ -1,7 +1,11 @@
 <?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
-<h2><?php echo $title_for_layout; ?></h2>
+<h2>
+    <?php echo $title_for_layout; ?>
+    <?php echo $this->Html->link(__('Add New'), '/admin/linkcats/add', array('class' => 'add_button')); ?>
+</h2>
+
 <?php
 echo $this->Form->create('Linkcat', array('url' =>
     array('admin' => TRUE, 'controller' => 'linkcats', 'action' => 'process'),
