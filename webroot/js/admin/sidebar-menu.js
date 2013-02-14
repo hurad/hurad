@@ -11,6 +11,9 @@ $(document).ready(function()
             $('a[href$="'+Hurad.params.controller+'"]').parent().addClass("current"); 
         }
         else if(Hurad.params.action == "admin_add"){
+            if(Hurad.params.controller == "linkcats" || Hurad.params.controller == "categories" || Hurad.params.controller == "tags"){
+                $('a[href$="'+Hurad.params.controller+'"]').parent().addClass("current"); 
+            }
             $('a[href$="'+Hurad.params.controller+'/add"]').parent().addClass("current"); 
         }
         else if(Hurad.params.action == "admin_prefix"){
