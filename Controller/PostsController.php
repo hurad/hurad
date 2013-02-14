@@ -167,6 +167,28 @@ class PostsController extends AppController {
         $this->render('admin_index');
     }
 
+    public function admin_listBytag($tagId = null) {
+        $this->set('title_for_layout', __('Posts'));
+        $this->Post->Tag->id = $tagId;
+        if (is_null($tagId) || !$this->Post->Tag->exists()) {
+            throw new NotFoundException(__('Invalid tag'));
+        }
+        $this->paginate = array(
+            'Post' => array(
+                'limit' => 25,
+                'order' => array('Post.created' => 'desc'),
+                'conditions' => array(
+                    'Post.status' => array('publish', 'draft'),
+                    'Post.type' => 'post',
+                    'PostsTag.tag_id' => $tagId,
+                )
+            )
+        );
+        $this->Post->bindModel(array('hasOne' => array('PostsTag')), false);
+        $this->set('posts', $this->paginate());
+        $this->render('admin_index');
+    }
+
     /**
      * admin_index method
      *
