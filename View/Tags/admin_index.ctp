@@ -6,6 +6,13 @@
     <?php echo $this->Html->link(__('Add New'), '/admin/tags/add', array('class' => 'add_button')); ?>
 </h2>
 
+<?php
+echo $this->Form->create('Tag', array('url' =>
+    array('admin' => TRUE, 'controller' => 'tags', 'action' => 'process'),
+    'inputDefaults' =>
+    array('label' => false, 'div' => false)));
+?>
+
 <div class="tablenav">
     <div class="actions">
         <?php
@@ -52,6 +59,9 @@
             <th id="description" class="column-description column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('description', __('Description')); ?>
             </th>
+            <th id="post_count" class="column-post_count column-manage check-column" scope="col">
+                <?php echo $this->Paginator->sort('post_count', __('Posts')); ?>
+            </th>
         </tr>
     </thead>
     <?php foreach ($tags AS $tag): ?>
@@ -77,6 +87,9 @@
             <td class="column-description">
                 <?php echo h($tag['Tag']['description']); ?>&nbsp;
             </td>
+            <td class="column-post_count">
+                <?php echo h($tag['Tag']['post_count']); ?>&nbsp;
+            </td>
         </tr>
     <?php endforeach; ?>
     <tfoot>
@@ -92,6 +105,9 @@
             </th>
             <th class="column-description column-manage check-column" scope="col">
                 <?php echo $this->Paginator->sort('description', __('Description')); ?>
+            </th>
+            <th id="post_count" class="column-post_count column-manage check-column" scope="col">
+                <?php echo $this->Paginator->sort('post_count', __('Posts')); ?>
             </th>
         </tr>
     </tfoot>
