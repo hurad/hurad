@@ -1,8 +1,8 @@
 <?php
-$allposts = ClassRegistry::init('Post')->count_posts();
-$publishposts = ClassRegistry::init('Post')->count_posts('publish');
-$draftposts = ClassRegistry::init('Post')->count_posts('draft');
-$trashposts = ClassRegistry::init('Post')->count_posts('trash');
+$allposts = ClassRegistry::init('Post')->countPosts();
+$publishposts = ClassRegistry::init('Post')->countPosts('publish');
+$draftposts = ClassRegistry::init('Post')->countPosts('draft');
+$trashposts = ClassRegistry::init('Post')->countPosts('trash');
 ?>
 <div class="filter">
     <ul class="sub-filter">
