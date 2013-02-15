@@ -60,9 +60,8 @@ class PostsController extends AppController {
                     'Post.type' => 'post',)
                     )
             );
-            return $this->set(compact('posts'));
+            $this->set(compact('posts'));
         } else {
-            //$this->Post->recursive = 0;
             $this->paginate = array(
                 'conditions' => array(
                     'Post.status' => array('publish'),
