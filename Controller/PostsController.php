@@ -52,7 +52,14 @@ class PostsController extends AppController {
      */
     public function index() {
         if ($this->RequestHandler->isRss()) {
-            $posts = $this->Post->find('all', array('limit' => 20, 'order' => 'Post.created DESC'));
+            $posts = $this->Post->find('all', array(
+                'limit' => 20,
+                'order' => 'Post.created DESC',
+                'conditions' => array(
+                    'Post.status' => 'publish',
+                    'Post.type' => 'post',)
+                    )
+            );
             return $this->set(compact('posts'));
         } else {
             //$this->Post->recursive = 0;
