@@ -1,4 +1,4 @@
-<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
+<?php $this->Html->css(array('admin/list-table', 'admin/paging', 'admin/Tags/tags'), null, array('inline' => FALSE)); ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
 <h2>
@@ -26,90 +26,122 @@ echo $this->Form->create('Tag', array('url' =>
         echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
         ?>
     </div>
-    <div class="paging">
-        <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
-        }
-        ?>
-    </div>
-    <div class="pageing_counter">
-        <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
-        ));
-        ?>	
-    </div>
+    <?php echo $this->element('admin/paginator'); ?>
 </div>
 
 <table class="list-table">
     <thead>
-        <tr>
-            <th id="cb" class="column-cb column-manage check-column" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th id="name" class="column-name column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('name', __('Name')); ?>
-            </th>
-            <th id="slug">
-                <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
-            </th>
-            <th id="description" class="column-description column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('description', __('Description')); ?>
-            </th>
-            <th id="post_count" class="column-post_count column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('post_count', __('Posts')); ?>
-            </th>
-        </tr>
+        <?php
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb check-column column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('name', __('Name')) => array(
+                    'id' => 'name',
+                    'class' => 'column-name column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('description', __('Description')) => array(
+                    'id' => 'description',
+                    'class' => 'column-description column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('slug', __('Slug')) => array(
+                    'id' => 'slug',
+                    'class' => 'column-slug column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('post_count', __('Posts')) => array(
+                    'id' => 'posts',
+                    'class' => 'column-posts column-manage',
+                    'scope' => 'col'
+                )
+            )
+        ));
+        ?>
     </thead>
     <?php foreach ($tags AS $tag): ?>
-        <tr id="<?php echo h($tag['Tag']['id']); ?>" class="menu-<?php echo h($tag['Tag']['id']); ?>">
-            <td class="check-column" scope="row"><?php echo $this->Form->checkbox('Tag.' . $tag['Tag']['id'] . '.id'); ?></td>
-            <td class="column-name">
-                <?php echo h($tag['Tag']['name']); ?>
-                <div class="row-actions">
-                    <span class="action-view">
-                        <?php echo $this->Html->link(__('View'), array('action' => 'view', $tag['Tag']['id'])); ?> | 
-                    </span>
-                    <span class="action-edit">
-                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'Tags', 'action' => 'edit', $tag['Tag']['id'])); ?> | 
-                    </span>                 
-                    <span class="action-delete">
-                        <?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $tag['Tag']['id']), null, __('Are you sure you want to delete %s?', $tag['Tag']['name'])); ?>
-                    </span>
-                </div>
-            </td>           
-            <td class="column-slug">
-                <?php echo h($tag['Tag']['slug']); ?>
-            </td>
-            <td class="column-description">
-                <?php echo h($tag['Tag']['description']); ?>&nbsp;
-            </td>
-            <td class="column-post_count">
-                <?php echo h($tag['Tag']['post_count']); ?>&nbsp;
-            </td>
-        </tr>
+        <?php
+        echo $this->Html->tableCells(array(
+            array(
+                array($this->Form->checkbox('Tag.' . $tag['Tag']['id'] . '.id'),
+                    array(
+                        'class' => 'check-column',
+                        'scope' => 'row')
+                ),
+                array($this->Html->link('<strong>' . h($tag['Tag']['name']) . '</strong>', array('action' => 'edit', $tag['Tag']['id']), array('title' => __('Edit “%s”', $tag['Tag']['name']), 'escape' => FALSE)) . $this->element('admin/Tags/row_actions', array('tag' => $tag)),
+                    array(
+                        'class' => 'column-name'
+                    )
+                ),
+                array(h($tag['Tag']['description']),
+                    array(
+                        'class' => 'column-description'
+                    )
+                ),
+                array(h($tag['Tag']['slug']),
+                    array(
+                        'class' => 'column-slug'
+                    )
+                ),
+                array($this->Html->link($tag['Tag']['post_count'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBytag', $tag['Tag']['id'])),
+                    array(
+                        'class' => 'column-posts'
+                    )
+                )
+            ),
+                ), array(
+            'id' => 'tag-' . $tag['Tag']['id']
+                ), array(
+            'id' => 'tag-' . $tag['Tag']['id'],
+            'class' => 'alternate'
+                )
+        );
+        ?>
     <?php endforeach; ?>
     <tfoot>
-        <tr>
-            <th id="cb" class="column-cb column-manage check-column" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th class="column-name column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('name', __('Name')); ?>
-            </th>
-            <th class="column-slug column-manage check-column">
-                <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
-            </th>
-            <th class="column-description column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('description', __('Description')); ?>
-            </th>
-            <th id="post_count" class="column-post_count column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('post_count', __('Posts')); ?>
-            </th>
-        </tr>
+        <?php
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb check-column column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('name', __('Name')) => array(
+                    'id' => 'name',
+                    'class' => 'column-name column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('description', __('Description')) => array(
+                    'id' => 'description',
+                    'class' => 'column-description column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('slug', __('Slug')) => array(
+                    'id' => 'slug',
+                    'class' => 'column-slug column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('post_count', __('Posts')) => array(
+                    'id' => 'posts',
+                    'class' => 'column-posts column-manage',
+                    'scope' => 'col'
+                )
+            )
+        ));
+        ?>
     </tfoot>
 </table>
 
@@ -126,20 +158,5 @@ echo $this->Form->create('Tag', array('url' =>
         echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
         ?>
     </div>
-    <div class="paging">
-        <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
-        }
-        ?>
-    </div>
-    <div class="pageing_counter">
-        <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
-        ));
-        ?>	
-    </div>
+    <?php echo $this->element('admin/paginator'); ?>
 </div>
