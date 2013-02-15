@@ -1,4 +1,4 @@
-<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
+<?php $this->Html->css(array('admin/list-table', 'admin/paging', 'admin/Posts/posts'), null, array('inline' => FALSE)); ?>
 <?php $this->Html->script(array('admin/Posts/posts', 'admin/checkbox'), array('block' => 'headerScript')); ?>
 
 <h2><?php echo $title_for_layout; ?></h2>
@@ -41,7 +41,7 @@ echo $this->Form->create('Post', array('url' =>
             array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
-                    'class' => 'column-cb column-manage',
+                    'class' => 'column-cb check-column column-manage',
                     'scope' => 'col'
                 )
             ),
@@ -70,8 +70,8 @@ echo $this->Form->create('Post', array('url' =>
                 )
             ),
             array($this->Paginator->sort('comment_count', __('Comments')) => array(
-                    'id' => 'comment_count',
-                    'class' => 'column-comment_count column-manage',
+                    'id' => 'comments',
+                    'class' => 'column-comments column-manage',
                     'scope' => 'col'
                 )
             ),
@@ -94,7 +94,7 @@ echo $this->Form->create('Post', array('url' =>
                         'class' => 'check-column',
                         'scope' => 'row')
                 ),
-                array($this->Html->link(h($post['Post']['title']), array('action' => 'edit', $post['Post']['id']), array('title' => __('Edit “%s”', $post['Post']['title']))) . $this->element('admin/Posts/row_actions', array('post' => $post)),
+                array($this->Html->link('<strong>' . h($post['Post']['title']) . '</strong>', array('action' => 'edit', $post['Post']['id']), array('title' => __('Edit “%s”', $post['Post']['title']), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
                     array(
                         'class' => 'column-title'
                     )
@@ -116,20 +116,20 @@ echo $this->Form->create('Post', array('url' =>
                 ),
                 array($post['Post']['comment_count'],
                     array(
-                        'class' => 'column-comment_count'
+                        'class' => 'column-comments'
                     )
                 ),
-                array($this->Html->tag('abbr', $post['Post']['created'], array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
+                array($this->Html->tag('abbr', $this->Post->get_the_date(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
                     array(
-                        'class' => 'column-comment_count'
+                        'class' => 'column-date'
                     )
                 )
             ),
                 ), array(
+            'id' => 'post-' . $post['Post']['id']
+                ), array(
             'id' => 'post-' . $post['Post']['id'],
             'class' => 'alternate'
-                ), array(
-            'id' => 'post-' . $post['Post']['id']
                 )
         );
         ?>
@@ -140,7 +140,7 @@ echo $this->Form->create('Post', array('url' =>
             array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
-                    'class' => 'column-cb column-manage',
+                    'class' => 'column-cb check-column column-manage',
                     'scope' => 'col'
                 )
             ),
@@ -169,8 +169,8 @@ echo $this->Form->create('Post', array('url' =>
                 )
             ),
             array($this->Paginator->sort('comment_count', __('Comments')) => array(
-                    'id' => 'comment_count',
-                    'class' => 'column-comment_count column-manage',
+                    'id' => 'comments',
+                    'class' => 'column-comments column-manage',
                     'scope' => 'col'
                 )
             ),
