@@ -129,7 +129,8 @@ class Post extends AppModel {
      *
      * @return intiger Number of all posts in specify type.
      */
-    public function count_posts($status = 'all') {
+    public function countPosts($status = 'all') {
+        $this->unbindModel(array('hasOne' => array('CategoriesPost', 'PostsTag')));
         switch ($status) {
             case 'all':
                 $num = $this->find('count', array(
