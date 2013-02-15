@@ -94,7 +94,7 @@ echo $this->Form->create('Post', array('url' =>
                         'class' => 'check-column',
                         'scope' => 'row')
                 ),
-                array($this->Html->link(h($post['Post']['title']), array('action' => 'edit', $post['Post']['id'])) . $this->element('admin/Posts/row_actions', array('post' => $post)),
+                array($this->Html->link(h($post['Post']['title']), array('action' => 'edit', $post['Post']['id']), array('title' => __('Edit “%s”', $post['Post']['title']))) . $this->element('admin/Posts/row_actions', array('post' => $post)),
                     array(
                         'class' => 'column-title'
                     )
