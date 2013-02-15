@@ -31,112 +31,157 @@ echo $this->Form->create('Post', array('url' =>
         echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
         ?>
     </div>
-    <div class="paging">
-        <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
-        }
-        ?>
-    </div>
-    <div class="pageing_counter">
-        <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
-        ));
-        ?>	
-    </div>
+    <?php echo $this->element('admin/paginator'); ?>
 </div>
 
 <table class="list-table">
     <thead>
-        <tr>
-            <th id="cb" class="column-cb column-manage" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th id="title" class="column-title column-manage" scope="col">
-                <?php echo $this->Paginator->sort('title', __('Title')); ?>
-            </th>
-            <th id="author" class="column-author column-manage" scope="col">
-                <?php echo $this->Paginator->sort('User.username', __('Author')); ?>
-            </th>
-            <th id="categories" class="column-categories column-manage" scope="col">
-                <?php echo $this->Paginator->sort('Category.name', __('Categories')); ?>
-            </th>
-            <th id="tags" class="column-tags column-manage" scope="col">
-                <?php echo $this->Paginator->sort('Tag.name', __('Tags')); ?>
-            </th>
-            <th id="comment_count" class="column-comment_count column-manage" scope="col">
-                <?php echo $this->Paginator->sort('comment_count', __('Comments')); ?>
-            </th>
-            <th id="date" class="column-date column-manage" scope="col">
-                <?php echo $this->Paginator->sort('created', __('Date')); ?>
-            </th>
-        </tr>
+        <?php
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('title', __('Title')) => array(
+                    'id' => 'title',
+                    'class' => 'column-title column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('User.username', __('Author')) => array(
+                    'id' => 'author',
+                    'class' => 'column-author column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('Category.name', __('Categories')) => array(
+                    'id' => 'categories',
+                    'class' => 'column-categories column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('Tag.name', __('Tags')) => array(
+                    'id' => 'tags',
+                    'class' => 'column-tags column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('comment_count', __('Comments')) => array(
+                    'id' => 'comment_count',
+                    'class' => 'column-comment_count column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('created', __('Date')) => array(
+                    'id' => 'date',
+                    'class' => 'column-date column-manage',
+                    'scope' => 'col'
+                )
+            )
+        ));
+        ?>
     </thead>
     <?php foreach ($posts as $post): ?>
         <?php $this->Post->setPost($post); ?>
-        <tr id="<?php echo h($post['Post']['id']); ?>" class="post-<?php echo h($post['Post']['id']); ?>">
-            <td class="check-column" scope="row">
-                <?php echo $this->Form->checkbox('Post.' . $post['Post']['id'] . '.id'); ?>
-            </td>
-            <td class="column-title">
-                <?php echo $this->Html->link(h($post['Post']['title']), array('action' => 'edit', $post['Post']['id'])); ?>&nbsp;
-                <div class="row-actions">
-                    <span class="action-view">
-                        <?php echo $this->Html->link(__('View'), array('action' => 'view', $post['Post']['id'])); ?> | 
-                    </span>
-                    <span class="action-edit">
-                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'posts', 'action' => 'edit', $post['Post']['id'])); ?> | 
-                    </span>                 
-                    <span class="action-delete">
-                        <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'action' => 'delete', $post['Post']['id']), null, __('Are you sure you want to delete # %s?', $post['Post']['id'])); ?>
-                    </span>
-                </div>
-            </td>
-            <td class="column-author">
-                <?php echo $this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $post['User']['id'])); ?>
-            </td>
-            <td class="column-categories">
-                <?php $this->Post->the_category(); ?>&nbsp;
-            </td>
-            <td class="column-tags">
-                <?php $this->Post->tag(); ?>
-            </td>
-            <td class="column-comment_count">
-                <?php echo h($post['Post']['comment_count']); ?>
-            </td>
-            <td class="column-date">
-                <abbr title="<?php echo h($post['Post']['created']); ?>"><?php echo h($post['Post']['created']); ?></abbr><br>
-                <?php echo $this->AdminLayout->postStatus($post['Post']['status']); ?>
-            </td>
-        </tr>
+        <?php
+        echo $this->Html->tableCells(array(
+            array(
+                array($this->Form->checkbox('Post.' . $post['Post']['id'] . '.id'),
+                    array(
+                        'class' => 'check-column',
+                        'scope' => 'row')
+                ),
+                array($this->Html->link(h($post['Post']['title']), array('action' => 'edit', $post['Post']['id'])) . $this->element('admin/Posts/row_actions', array('post' => $post)),
+                    array(
+                        'class' => 'column-title'
+                    )
+                ),
+                array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $post['User']['id'])),
+                    array(
+                        'class' => 'column-author'
+                    )
+                ),
+                array($this->Post->the_category('', FALSE),
+                    array(
+                        'class' => 'column-categories'
+                    )
+                ),
+                array($this->Post->tag('', FALSE),
+                    array(
+                        'class' => 'column-tags'
+                    )
+                ),
+                array($post['Post']['comment_count'],
+                    array(
+                        'class' => 'column-comment_count'
+                    )
+                ),
+                array($this->Html->tag('abbr', $post['Post']['created'], array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
+                    array(
+                        'class' => 'column-comment_count'
+                    )
+                )
+            ),
+                ), array(
+            'id' => 'post-' . $post['Post']['id'],
+            'class' => 'alternate'
+                ), array(
+            'id' => 'post-' . $post['Post']['id']
+                )
+        );
+        ?>
     <?php endforeach; ?>
     <tfoot>
-        <tr>
-            <th id="cb" class="column-cb column-manage" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th id="title" class="column-title column-manage" scope="col">
-                <?php echo $this->Paginator->sort('title', __('Title')); ?>
-            </th>
-            <th id="author" class="column-author column-manage" scope="col">
-                <?php echo $this->Paginator->sort('User.username', __('Author')); ?>
-            </th>
-            <th id="categories" class="column-categories column-manage" scope="col">
-                <?php echo $this->Paginator->sort('Category.name', __('Categories')); ?>
-            </th>
-            <th id="tags" class="column-tags column-manage" scope="col">
-                <?php echo $this->Paginator->sort('Tag.name', __('Tags')); ?>
-            </th>
-            <th id="comment_count" class="column-comment_count column-manage" scope="col">
-                <?php echo $this->Paginator->sort('comment_count', __('Comments')); ?>
-            </th>
-            <th id="date" class="column-date column-manage" scope="col">
-                <?php echo $this->Paginator->sort('created', __('Date')); ?>
-            </th>
-        </tr>
+        <?php
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('title', __('Title')) => array(
+                    'id' => 'title',
+                    'class' => 'column-title column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('User.username', __('Author')) => array(
+                    'id' => 'author',
+                    'class' => 'column-author column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('Category.name', __('Categories')) => array(
+                    'id' => 'categories',
+                    'class' => 'column-categories column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('Tag.name', __('Tags')) => array(
+                    'id' => 'tags',
+                    'class' => 'column-tags column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('comment_count', __('Comments')) => array(
+                    'id' => 'comment_count',
+                    'class' => 'column-comment_count column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('created', __('Date')) => array(
+                    'id' => 'date',
+                    'class' => 'column-date column-manage',
+                    'scope' => 'col'
+                )
+            )
+        ));
+        ?>
     </tfoot>
 </table>
 
@@ -156,21 +201,6 @@ echo $this->Form->create('Post', array('url' =>
         echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
         ?>
     </div>
-    <div class="paging">
-        <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
-        }
-        ?>
-    </div>
-    <div class="pageing_counter">
-        <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
-        ));
-        ?>	
-    </div>
+    <?php echo $this->element('admin/paginator'); ?>
 </div>
 
