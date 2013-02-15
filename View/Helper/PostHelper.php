@@ -122,7 +122,7 @@ class PostHelper extends AppHelper {
         return $this->post['Post']['title'];
     }
 
-    public function the_category($separator = ', ') {
+    public function the_category($separator = ', ', $echo = true) {
         $cat = array();
         foreach ($this->post['Category'] as $category) {
             if (isset($this->request->params['admin'])) {
@@ -134,10 +134,14 @@ class PostHelper extends AppHelper {
         if ($separator == '') {
             $separator = ', ';
         }
-        echo implode($separator, $cat);
+        if ($echo) {
+            echo implode($separator, $cat);
+        } else {
+            return implode($separator, $cat);
+        }
     }
 
-    public function tag($separator = ', ') {
+    public function tag($separator = ', ', $echo = true) {
         $term = array();
         foreach ($this->post['Tag'] as $tag) {
             if (isset($this->request->params['admin'])) {
@@ -146,8 +150,14 @@ class PostHelper extends AppHelper {
                 $term[] = '<a href="http://localhost/hurad/tag/' . $tag['slug'] . '" title="' . __('View all posts in') . ' ' . $tag['name'] . '" rel="tag">' . $tag['name'] . '</a>';
             }
         }
-
-        echo implode($separator, $term);
+        if ($separator == '') {
+            $separator = ', ';
+        }
+        if ($echo) {
+            echo implode($separator, $term);
+        } else {
+            return implode($separator, $term);
+        }
     }
 
     /**
