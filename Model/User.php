@@ -93,10 +93,9 @@ class User extends AppModel {
         )
     );
 
-    public function beforeValidate() {
-        $n = $this->parseURI();
-
-        if ($n[1] === 'admin' && $n[3] === 'profile') {
+    public function beforeValidate($options = array()) {
+        parent::beforeValidate($options);
+        if ($this->request->params['action'] == 'admin_profile') {
             if ($this->data['User']['password'] == "" && $this->data['User']['confirm_password'] == "") {
                 unset($this->data['User']['password']);
                 unset($this->data['User']['confirm_password']);
@@ -104,11 +103,11 @@ class User extends AppModel {
         }
     }
 
-    public function beforeSave() {
+    public function beforeSave($options = array()) {
+        parent::beforeSave($options);
         if (isset($this->data['User']['password'])) {
             $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
         }
-        return true;
     }
 
     function checkPasswords() {
@@ -119,7 +118,7 @@ class User extends AppModel {
         }
     }
 
-    public function get_userdata($user_id) {
+    function get_userdata($user_id) {
         $user = $this->find('first', array(
             "fields" => 'User.id, User.nickname',
             "conditions" => array('User.id' => $user_id),
