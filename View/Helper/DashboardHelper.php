@@ -93,7 +93,7 @@ class DashboardHelper extends AppHelper {
     }
 
     public function dashboard_right_now() {
-        $num_posts = ClassRegistry::init('Post')->count_posts();
+        $num_posts = ClassRegistry::init('Post')->countPosts();
         $num_pages = ClassRegistry::init('Page')->count_pages();
         $num_cats = ClassRegistry::init('Category')->count_cats();
         $num_tags = ClassRegistry::init('Tag')->count_tags();
