@@ -9,8 +9,9 @@ App::uses('AppController', 'Controller');
  */
 class TagsController extends AppController {
 
+    public $components = array('RequestHandler');
     public $paginate = array(
-        'limit' => 5,
+        'limit' => 25,
         'order' => array(
             'Tag.created' => 'desc'
         )
@@ -29,8 +30,21 @@ class TagsController extends AppController {
      * @return void
      */
     public function index() {
-        $this->Tag->recursive = 0;
-        $this->set('tags', $this->paginate());
+        if ($this->RequestHandler->isAjax()) {
+            Configure::write('debug', 0);
+            $this->autoRender = false;
+            $tags = $this->Tag->find('all', array('conditions' => array('Tag.name LIKE' => '%' . $_GET['term'] . '%')));
+            $i = 0;
+            foreach ($tags as $tag) {
+                $response[$i]['value'] = $tag['Tag']['name'];
+                $response[$i]['label'] = $tag['Tag']['name'];
+                $i++;
+            }
+            echo json_encode($response);
+        } else {
+            $this->Tag->recursive = 0;
+            $this->set('tags', $this->paginate());
+        }
     }
 
     /**
@@ -228,7 +242,7 @@ class TagsController extends AppController {
                 $this->Session->setFlash(__('An error occurred.'), 'error');
                 break;
         }
-        
+
         $this->redirect(array('action' => 'index'));
     }
 
