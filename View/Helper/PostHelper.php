@@ -1,14 +1,42 @@
 <?php
 
+App::uses('AppHelper', 'View/Helper');
+
 class PostHelper extends AppHelper {
 
-    public $helpers = array('Html', 'Time');
+    /**
+     * Other helpers used by this helper.
+     *
+     * @var array
+     * @access public
+     */
+    public $helpers = array('Html', 'Time', 'General', 'Link', 'Hook');
+
+    /**
+     * Current post array.
+     *
+     * @var array
+     * @access public
+     */
     public $post = array();
-    public $posts = array();
+
+    /**
+     * Current view file.
+     *
+     * @var string
+     * @access public
+     */
     public $view = null;
+
+    /**
+     * Current view directory.
+     *
+     * @var string
+     * @access public
+     */
     public $view_path = null;
 
-    public function __construct(View $View, $settings = array()) {
+    public function __construct(\View $View, $settings = array()) {
         parent::__construct($View, $settings);
         $this->init();
         $this->init_post();
@@ -21,12 +49,14 @@ class PostHelper extends AppHelper {
 
     public function setPost($post) {
         $this->post = $post;
+        $this->General->post = $post;
+        $this->Link->post = $post;
     }
 
     protected function init_post() {
         if ($this->view_path == 'Posts') {
             if ($this->view == 'view' || $this->view == 'viewByid') {
-                $this->post = $this->_View->getVar('post');
+                $this->Link->post = $this->General->post = $this->post = $this->_View->getVar('post');
             }
         } else {
             return FALSE;
@@ -36,7 +66,7 @@ class PostHelper extends AppHelper {
     /**
      * Display the ID of the current item in the Hurad Loop.
      *
-     * @since 0.1
+     * @since 1.0.0
      */
     public function the_ID() {
         echo $this->get_the_ID();
@@ -45,7 +75,7 @@ class PostHelper extends AppHelper {
     /**
      * Retrieve the ID of the current item in the Hurad Loop.
      *
-     * @since 0.1
+     * @since 1.0.0
      * @uses $post
      * 
      * @return int
@@ -57,7 +87,7 @@ class PostHelper extends AppHelper {
     /**
      * Display or retrieve the current post title with optional content.
      *
-     * @since 0.1
+     * @since 1.0.0
      *
      * @param string $before Optional. Content to prepend to the title.
      * @param string $after Optional. Content to append to the title.
@@ -88,7 +118,7 @@ class PostHelper extends AppHelper {
      * is passed to the user or displayed. The default
      * as with {@link the_title()}, is to display the title.
      *
-     * @since 0.
+     * @since 1.0.0
      *
      * @param string|array $args Optional. Override the defaults.
      * @return string|null Null on failure or display. String when echo is false.
@@ -114,12 +144,151 @@ class PostHelper extends AppHelper {
     /**
      * Retrieve post title.
      *
-     * @since 0.1
+     * @since 1.0.0
      *
      * @return string
      */
     public function get_the_title() {
-        return $this->post['Post']['title'];
+        $title = isset($this->post['Post']['title']) ? $this->post['Post']['title'] : '';
+        return $this->Hook->apply_filters('the_title', $title);
+    }
+
+    /**
+     * Display the post content.
+     *
+     * @since 1.0.0
+     *
+     * @param string $more_link_text Optional. Content for when there is more text.
+     */
+    function the_content($more_link_text = null) {
+        $content = $this->get_the_content($more_link_text);
+        $content = $this->Hook->apply_filters('the_content', $content);
+        $content = str_replace(']]>', ']]&gt;', $content);
+        echo $content;
+    }
+
+    /**
+     * Retrieve the post content.
+     *
+     * @since 1.0.0
+     *
+     * @param string $more_link_text Optional. Content for when there is more text.
+     * @return string
+     */
+    function get_the_content($more_link_text = null) {
+        if (null === $more_link_text) {
+            $more_link_text = __('(more...)');
+        }
+        $more = FALSE;
+        $output = '';
+        $hasTeaser = false;
+        $content = $this->post['Post']['content'];
+        if (preg_match('/<!--more(.*?)?-->/', $content, $matches)) {
+            $more = TRUE;
+            $content = explode($matches[0], $content, 2);
+            if (!empty($matches[1]) && !empty($more_link_text)) {
+                $more_link_text = strip_tags(kses_no_null(trim($matches[1])));
+            }
+            $hasTeaser = true;
+        } else {
+            $content = array($content);
+        }
+        $teaser = $content[0];
+        $output .= $teaser;
+        if (count($content) > 1) {
+            if ($more && $this->view == 'view') {
+                $output .= '<span id="more-' . $this->get_the_ID() . '"></span>' . $content[1];
+            } else {
+                if (!empty($more_link_text)) {
+                    $output .= $this->Hook->apply_filters('the_content_more_link', ' <a href="' . $this->get_permalink() . "#more-{$this->get_the_ID()}\" class=\"more-link\">$more_link_text</a>", $more_link_text);
+                }
+                $output = Formatting::force_balance_tags($output);
+            }
+        }
+        return $output;
+    }
+
+    /**
+     * Display the post excerpt.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'the_excerpt' hook on post excerpt.
+     */
+    function the_excerpt() {
+        echo $this->Hook->apply_filters('the_excerpt', $this->get_the_excerpt());
+    }
+
+    /**
+     * Retrieve the post excerpt.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
+    function get_the_excerpt() {
+        return $this->Hook->apply_filters('get_the_excerpt', $this->post['Post']['excerpt']);
+    }
+
+    /**
+     * Whether post has excerpt.
+     *
+     * @since 1.0.0
+     *
+     * @return bool
+     */
+    function has_excerpt() {
+        return (!empty($this->post['Post']['excerpt']) );
+    }
+
+    /**
+     * Display the classes for the post div.
+     *
+     * @since 1.0.0
+     *
+     * @param string|array $class One or more classes to add to the class list.
+     */
+    function post_class($class = '') {
+        // Separates classes with a single space, collates classes for post DIV
+        echo 'class="' . join(' ', $this->get_post_class($class)) . '"';
+    }
+
+    /**
+     * Retrieve the classes for the post div as an array.
+     *
+     * The class names are add are many. If the post is a sticky, then the 'sticky'
+     * class name. The class 'hentry' is always added to each post. All classes are 
+     * passed through the filter, 'post_class' with the list of classes, followed 
+     * by $class parameter value.
+     *
+     * @since 1.0.0
+     *
+     * @param string|array $class One or more classes to add to the class list.
+     * @return array Array of classes.
+     */
+    function get_post_class($class = '') {
+
+        $classes = array();
+
+        $classes[] = 'post-' . $this->post['Post']['id'];
+        if (!Functions::is_admin()) {
+            $classes[] = $this->post['Post']['type'];
+        }
+        $classes[] = 'type-' . $this->post['Post']['type'];
+        $classes[] = 'status-' . $this->post['Post']['status'];
+
+        // hentry for hAtom compliance
+        $classes[] = 'hentry';
+
+        if (!empty($class)) {
+            if (!is_array($class)) {
+                $class = preg_split('#\s+#', $class);
+            }
+            $classes = array_merge($classes, $class);
+        }
+
+        $classes = array_map('Formatting::esc_attr', $classes);
+
+        return $this->Hook->apply_filters('post_class', $classes, $class);
     }
 
     public function the_category($separator = ', ', $echo = true) {
@@ -161,128 +330,23 @@ class PostHelper extends AppHelper {
     }
 
     /**
+     * Display the permalink for the current post.
+     *
+     * @since 1.0.0
+     */
+    public function the_permalink() {
+        $this->Link->the_permalink();
+    }
+
+    /**
      * Retrieve full permalink for current post.
      *
-     * @since 0.1
+     * @since 1.0.0
      *
      * @return string
      */
     public function get_permalink() {
-        $year = $this->Time->format('Y', $this->post['Post']['created']);
-        $month = $this->Time->format('m', $this->post['Post']['created']);
-        $day = $this->Time->format('d', $this->post['Post']['created']);
-        if ($this->post['Post']['type'] == 'post') {
-            switch (Configure::read('Permalink-common')) {
-                case 'default':
-                    return $this->Html->url(Configure::read('General-site_url') . "/p/" . $this->post['Post']['id']);
-                    break;
-                case 'day_name':
-                    return $this->Html->url(Configure::read('General-site_url') . "/" . $year . "/" . $month . "/" . $day . "/" . $this->post['Post']['slug']);
-                    break;
-                case 'month_name':
-                    return $this->Html->url(Configure::read('General-site_url') . "/" . $year . "/" . $month . "/" . $this->post['Post']['slug']);
-                    break;
-                default:
-                    break;
-            }
-        } elseif ($this->post['Post']['type'] == 'page') {
-            if (Configure::read('Permalink-common') == 'default') {
-                return $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['id']);
-            } else {
-                return $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['slug']);
-            }
-        }
-    }
-
-    /**
-     * Display the permalink for the current post.
-     *
-     * @since 0.1
-     */
-    public function the_permalink() {
-        echo $this->get_permalink();
-    }
-
-    /**
-     * Display the post excerpt.
-     *
-     * @since 0.1
-     * @uses get_the_excerpt() Echos Result
-     */
-    function the_excerpt() {
-        echo $this->get_the_excerpt();
-    }
-
-    /**
-     * Retrieve the post excerpt.
-     *
-     * @since 0.1
-     * @uses $post
-     * 
-     * @return string
-     */
-    function get_the_excerpt() {
-        return $this->post['Post']['excerpt'];
-    }
-
-    /**
-     * Whether post has excerpt.
-     *
-     * @since 0.1
-     *
-     * @return bool
-     */
-    function has_excerpt() {
-        return (!empty($this->post['Post']['excerpt']) );
-    }
-
-    /**
-     * Display the classes for the post div.
-     *
-     * @since 1.0
-     *
-     * @param string|array $class One or more classes to add to the class list.
-     */
-    function post_class($class = '') {
-        // Separates classes with a single space, collates classes for post DIV
-        echo 'class="' . join(' ', $this->get_post_class($class)) . '"';
-    }
-
-    /**
-     * Retrieve the classes for the post div as an array.
-     *
-     * The class names are add are many. If the post is a sticky, then the 'sticky'
-     * class name. The class 'hentry' is always added to each post. All classes are 
-     * passed through the filter, 'post_class' with the list of classes, followed 
-     * by $class parameter value.
-     *
-     * @since 1.0
-     *
-     * @param string|array $class One or more classes to add to the class list.
-     * @return array Array of classes.
-     */
-    function get_post_class($class = '') {
-
-        $classes = array();
-
-        $classes[] = 'post-' . $this->post['Post']['id'];
-        if (!Functions::is_admin())
-            $classes[] = $this->post['Post']['type'];
-        $classes[] = 'type-' . $this->post['Post']['type'];
-        $classes[] = 'status-' . $this->post['Post']['status'];
-
-        // hentry for hAtom compliance
-        $classes[] = 'hentry';
-
-        if (!empty($class)) {
-            if (!is_array($class))
-                $class = preg_split('#\s+#', $class);
-            $classes = array_merge($classes, $class);
-        }
-
-        $classes = array_map('Formatting::esc_attr', $classes);
-
-        return $classes;
+        return $this->Link->get_permalink();
     }
 
     /**
@@ -297,46 +361,31 @@ class PostHelper extends AppHelper {
      * HTML output can be filtered with 'the_date'.
      * Date string output can be filtered with 'get_the_date'.
      *
-     * @since 0.1
+     * @since 1.0.0
      * @uses get_the_date()
-     * @param string $format Optional. PHP date format defaults to the date_format option if not specified.
+     * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
      * @param string $before Optional. Output before the date.
      * @param string $after Optional. Output after the date.
      * @param bool $echo Optional, default is display. Whether to echo the date or return it.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function the_date($format = '', $before = '', $after = '', $echo = true) {
-        $the_date = '';
-
-        $the_date .= $before;
-        $the_date .= $this->get_the_date($format);
-        $the_date .= $after;
-
-        if ($echo)
-            echo $the_date;
-        else
-            return $the_date;
+    function the_date($d = '', $before = '', $after = '', $echo = true) {
+        $this->General->the_date($d = '', $before = '', $after = '', $echo = true);
     }
 
     /**
      * Retrieve the date the current $post was written.
      *
      * Unlike the_date() this function will always return the date.
+     * Modify output with 'get_the_date' filter.
      *
-     * @since 0.1
+     * @since 1.0.0
      *
-     * @param string $format Optional. PHP date format defaults to the date_format option if not specified.
+     * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function get_the_date($format = '') {
-        $the_date = '';
-
-        if ('' == $format)
-            $the_date .= $this->Time->format(Configure::read('General-date_format'), $this->post['Post']['created'], null, Configure::read('General-timezone'));
-        else
-            $the_date .= $this->Time->format($format, $this->post['Post']['created'], null, Configure::read('General-timezone'));
-
-        return $the_date;
+    function get_the_date($d = '') {
+        return $this->General->get_the_date($d = '');
     }
 
     public function list_pages($args = '') {
@@ -454,5 +503,3 @@ class PostHelper extends AppHelper {
     }
 
 }
-
-?>
