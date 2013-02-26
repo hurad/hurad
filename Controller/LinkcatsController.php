@@ -171,7 +171,7 @@ class LinkcatsController extends AppController {
             throw new NotFoundException(__('Invalid link category'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->linkcat->save($this->request->data)) {
+            if ($this->Linkcat->save($this->request->data)) {
                 $this->Session->setFlash(__('The link category has been saved'), 'notice');
                 $this->redirect(array('action' => 'index'));
             } else {
