@@ -50,12 +50,20 @@ class CommentHelper extends AppHelper {
     public $view_path = null;
 
     /**
+     * User model object
+     *
+     * @var object
+     * @access public
+     */
+    public $MUser = null;
+
+    /**
      * Other helpers used by this helper
      *
      * @var array
      * @access public
      */
-    public $helpers = array('Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page');
+    public $helpers = array('Hook', 'Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page');
 
     public function __construct(View $View, $settings = array()) {
         parent::__construct($View, $settings);
@@ -63,11 +71,48 @@ class CommentHelper extends AppHelper {
         $this->post = $this->_View->getVar('post');
         $this->page = $this->_View->getVar('page');
         $this->current_user = $this->_View->getVar('current_user');
-        //debug($this->current_user);
+        $this->MUser = & ClassRegistry::getObject('User');
     }
 
     public function setComment($comment) {
         $this->comment = $comment;
+    }
+
+    /**
+     * Retrieve the author of the current comment.
+     *
+     * If the comment has an empty comment_author field, then 'Anonymous' person is
+     * assumed.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'get_comment_author' hook on the comment author
+     *
+     * @return string The comment author
+     */
+    public function get_comment_author() {
+        if (empty($this->comment['author'])) {
+            if (!empty($this->comment['user_id'])) {
+                $user = $this->MUser->getUserData($this->comment['user_id']);
+                $author = $user['username'];
+            } else {
+                $author = __('Anonymous');
+            }
+        } else {
+            $author = $this->comment['author'];
+        }
+        return $this->Hook->apply_filters('get_comment_author', $author);
+    }
+
+    /**
+     * Displays the author of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'comment_author' on comment author before displaying
+     *
+     */
+    public function comment_author() {
+        $author = $this->Hook->apply_filters('comment_author', $this->get_comment_author());
+        echo $author;
     }
 
     /**
@@ -149,36 +194,6 @@ class CommentHelper extends AppHelper {
      */
     public function comment_date($format) {
         echo $this->get_comment_date($format);
-    }
-
-    /**
-     * Displays the author of the current comment.
-     *
-     * @since 0.1
-     * @uses get_comment_author() Retrieves the comment author
-     */
-    public function comment_author() {
-        echo $this->get_comment_author();
-    }
-
-    /**
-     * Retrieve the author of the current comment.
-     *
-     * If the comment has an empty comment_author field, then 'Anonymous' person is
-     * assumed.
-     *
-     * @since 0.1
-     * @uses $comment
-     *
-     * @return string The comment author
-     */
-    public function get_comment_author() {
-        if (empty($this->comment['author'])) {
-            $author = __('Anonymous');
-        } else {
-            $author = $this->comment['author'];
-        }
-        return $author;
     }
 
     /**
