@@ -1,0 +1,32 @@
+.paging {
+    line-height: 25px;
+    margin-bottom: 15px;
+    float: right;
+}
+.paging span.current, .paging span.disabled {
+    border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
+    padding: 3px 6px;
+    text-decoration: none;
+    background: none repeat scroll 0 0 #DFDFDF;
+    border-color: #D3D3D3;
+    margin-right: 4px;
+}
+.paging span a {
+    background: -moz-linear-gradient(center bottom, #F0F0F0, #E0E0E0) repeat scroll 0 0 transparent;
+    border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
+    padding: 3px 6px;
+    text-decoration: none;
+    border-color: #D3D3D3;
+    margin-right: 4px;
+    font-weight: bold;
+    color: #21759B;
+}
+div.pageing_counter {
+    padding-right: 8px;
+    padding-top: 4px;
+    font-style:  italic;
+    font-size: 11px;
+    float: right;
+}
