@@ -1,0 +1,14 @@
+{
+    "name": "Hello World",
+    "description": "Hello World plugin",
+
+    "author": "Mohammad Abdoli Rad",
+    "authorEmail": "m.abdolirad@gmail.com",
+    "authorUrl": "http://magzilla.org",
+
+    "dependencies": {
+        "plugins": [
+
+        ]
+    }
+}
