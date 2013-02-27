@@ -1,0 +1,12 @@
+.column-author, .column-categories, .column-tags {
+    width: 15%;
+}
+.column-comments {
+    width: 6.5em;
+}
+.column-date {
+    width: 10%;
+}
+td.column-comments {
+    text-align: center;
+}
