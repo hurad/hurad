@@ -48,7 +48,7 @@ class Post extends AppModel {
             'className' => 'Comment',
             'foreignKey' => 'post_id',
             'dependent' => false,
-            'conditions' => '',
+            'conditions' => array('Comment.approved' => 1),
             'fields' => '',
             'order' => '',
             'limit' => '',
@@ -114,9 +114,8 @@ class Post extends AppModel {
      * @param intiger $post_id Post ID
      * @return array
      */
-    public function get_post($post_id) {
+    public function getPost($post_id) {
         $post = $this->find('first', array(
-            "fields" => 'Post.id, Post.user_id',
             "conditions" => array('Post.id' => $post_id),
             "recursive" => 0
                 )
