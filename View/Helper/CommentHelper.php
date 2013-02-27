@@ -270,6 +270,49 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieves the HTML link of the url of the author of the current comment.
+     *
+     * $linktext parameter is only used if the URL does not exist for the comment
+     * author. If the URL does exist then the URL will be used and the $linktext
+     * will be ignored.
+     *
+     * Encapsulate the HTML link between the $before and $after. So it will appear
+     * in the order of $before, link, and finally $after.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls the 'get_comment_author_url_link' on the complete HTML before returning.
+     *
+     * @param string $linktext The text to display instead of the comment author's email address
+     * @param string $before The text or HTML to display before the email link.
+     * @param string $after The text or HTML to display after the email link.
+     * @return string The HTML link between the $before and $after parameters
+     */
+    function get_comment_author_url_link($linktext = '', $before = '', $after = '') {
+        $url = $this->get_comment_author_url();
+        $display = ($linktext != '') ? $linktext : $url;
+        $display = str_replace('http://www.', '', $display);
+        $display = str_replace('http://', '', $display);
+        if ('/' == substr($display, -1))
+            $display = substr($display, 0, -1);
+        $return = $before . $this->Html->link($display, $url, array('rel' => 'external')) . $after;
+        return $this->Hook->apply_filters('get_comment_author_url_link', $return);
+    }
+
+    /**
+     * Displays the HTML link of the url of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @see get_comment_author_url_link() Echoes result
+     *
+     * @param string $linktext The text to display instead of the comment author's email address
+     * @param string $before The text or HTML to display before the email link.
+     * @param string $after The text or HTML to display after the email link.
+     */
+    function comment_author_url_link($linktext = '', $before = '', $after = '') {
+        echo $this->get_comment_author_url_link($linktext, $before, $after);
+    }
+
+    /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1
@@ -348,49 +391,6 @@ class CommentHelper extends AppHelper {
      */
     public function comment_date($format) {
         echo $this->get_comment_date($format);
-    }
-
-    /**
-     * Retrieves the HTML link of the url of the author of the current comment.
-     *
-     * $linktext parameter is only used if the URL does not exist for the comment
-     * author. If the URL does exist then the URL will be used and the $linktext
-     * will be ignored.
-     *
-     * Encapsulate the HTML link between the $before and $after. So it will appear
-     * in the order of $before, link, and finally $after.
-     *
-     * @since 0.1
-     * @uses get_comment_author_url
-     *
-     * @param string $linktext The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     * @return string The HTML link between the $before and $after parameters
-     */
-    function get_comment_author_url_link($linktext = '', $before = '', $after = '') {
-        $url = $this->get_comment_author_url();
-        $display = ($linktext != '') ? $linktext : $url;
-        $display = str_replace('http://www.', '', $display);
-        $display = str_replace('http://', '', $display);
-        if ('/' == substr($display, -1))
-            $display = substr($display, 0, -1);
-        $return = $before . $this->Html->link($display, $url, array('rel' => 'external')) . $after;
-        return $return;
-    }
-
-    /**
-     * Displays the HTML link of the url of the author of the current comment.
-     *
-     * @since 0.1
-     * @see get_comment_author_url_link() Echoes result
-     *
-     * @param string $linktext The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     */
-    function comment_author_url_link($linktext = '', $before = '', $after = '') {
-        echo $this->get_comment_author_url_link($linktext, $before, $after);
     }
 
     /**
