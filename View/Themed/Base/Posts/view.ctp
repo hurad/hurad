@@ -1,7 +1,7 @@
 <article id="post-<?php $this->Post->the_ID(); ?>" <?php $this->Post->post_class(); ?>>
 
-    <time datetime="<?php echo h($post['Post']['created']); ?>" class="post-date" pubdate><?php echo $this->Time->format('F jS, Y', $post['Post']['created'], null, Configure::read('General-timezone')); ?></time>
-    <h1 class="post-title"><?php echo $this->Html->link($this->Post->get_the_title(), $this->Post->get_permalink()); ?></h1>
+    <time datetime="<?php $this->Post->the_date('Y-m-d H:i:s'); ?>" class="post-date"><?php $this->Post->the_date(); ?></time>
+    <h1 class="post-title"><a href="<?php $this->Post->the_permalink(); ?>" title="<?php printf(__('Permalink to %s'), $this->Post->the_title_attribute('echo=0')); ?>" rel="bookmark"><?php $this->Post->the_title(); ?></a></h1>
     <p class="post-meta"> 
         <span class="post-author"><?php echo $this->Html->link(h($post['User']['username']), array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?></span>
         <span class="post-category"><?php $this->Post->the_category(); ?></span>
@@ -9,7 +9,7 @@
         <span class="post-comment"><?php $this->Comment->comments_popup_link(__('Leave a comment'), __('1 Comment'), __('% Comments')); ?></span>
     </p>
 
-    <?php echo $post['Post']['content']; ?>
+    <?php $this->Post->the_content(); ?>
 
 </article>
 
