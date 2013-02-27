@@ -100,7 +100,7 @@ class CommentHelper extends AppHelper {
         if (empty($this->comment['author'])) {
             if (!empty($this->comment['user_id'])) {
                 $user = $this->MUser->getUserData($this->comment['user_id']);
-                $author = $user['username'];
+                $author = $user['User']['username'];
             } else {
                 $author = __('Anonymous');
             }
@@ -356,10 +356,10 @@ class CommentHelper extends AppHelper {
         if ($this->comment['user_id'] > 0 && $user = $this->MUser->getUserData($this->comment['user_id'])) {
             // For all registered users, 'byuser'
             $classes[] = 'byuser';
-            $classes[] = 'comment-author-' . Formatting::sanitize_html_class($user['nickname'], $this->comment['user_id']);
+            $classes[] = 'comment-author-' . Formatting::sanitize_html_class($user['User']['nickname'], $this->comment['user_id']);
             // For comment authors who are the author of the post
             if ($post = $this->MPost->getPost($this->comment['post_id'])) {
-                if ($this->comment['user_id'] === $post['user_id'])
+                if ($this->comment['user_id'] === $post['Post']['user_id'])
                     $classes[] = 'bypostauthor';
             }
         }
@@ -401,7 +401,7 @@ class CommentHelper extends AppHelper {
 
         $classes = array_map('Formatting::esc_attr', $classes);
 
-        return $this->Hook->apply_filters('comment_class', $classes, $class, $comment_id, $post_id);
+        return $this->Hook->apply_filters('comment_class', $classes, $class);
     }
 
     /**
