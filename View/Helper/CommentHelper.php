@@ -108,11 +108,39 @@ class CommentHelper extends AppHelper {
      *
      * @since 1.0.0
      * @uses apply_filters() Calls 'comment_author' on comment author before displaying
-     *
      */
     public function comment_author() {
         $author = $this->Hook->apply_filters('comment_author', $this->get_comment_author());
         echo $author;
+    }
+
+    /**
+     * Retrieve the email of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls the 'get_comment_author_email' hook on the comment author email
+     *
+     * @param int $comment_ID The ID of the comment for which to get the author's email. Optional.
+     * @return string The current comment author's email
+     */
+    function get_comment_author_email() {
+        return $this->Hook->apply_filters('get_comment_author_email', $this->comment['author_email']);
+    }
+
+    /**
+     * Display the email of the author of the current global $comment.
+     *
+     * Care should be taken to protect the email address and assure that email
+     * harvesters do not capture your commentors' email address. Most assume that
+     * their email address will not appear in raw form on the blog. Doing so will
+     * enable anyone, including those that people don't want to get the email
+     * address and use it for their own means good and bad.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'author_email' hook on the author email
+     */
+    public function comment_author_email() {
+        echo $this->Hook->apply_filters('author_email', $this->get_comment_author_email());
     }
 
     /**
@@ -194,34 +222,6 @@ class CommentHelper extends AppHelper {
      */
     public function comment_date($format) {
         echo $this->get_comment_date($format);
-    }
-
-    /**
-     * Display the email of the author of the current comment.
-     *
-     * Care should be taken to protect the email address and assure that email
-     * harvesters do not capture your commentors' email address. Most assume that
-     * their email address will not appear in raw form on the blog. Doing so will
-     * enable anyone, including those that people don't want to get the email
-     * address and use it for their own means good and bad.
-     *
-     * @since 0.1
-     * @uses get_comment_author_email() Retrieves the comment author's email.
-     */
-    public function comment_author_email() {
-        echo $this->get_comment_author_email();
-    }
-
-    /**
-     * Retrieve the email of the author of the current comment.
-     *
-     * @since 0.1
-     * @uses $comment
-     *
-     * @return string The current comment author's email
-     */
-    public function get_comment_author_email() {
-        return $this->comment['author_email'];
     }
 
     /**
