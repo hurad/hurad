@@ -442,6 +442,46 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieve the excerpt of the current comment.
+     *
+     * Will cut each word and only output the first 20 words with '...' at the end.
+     * If the word count is less than 20, then no truncating is done and no '...'
+     * will appear.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'get_comment_excerpt' on truncated comment
+     *
+     * @return string The maybe truncated comment with 20 words or less
+     */
+    function get_comment_excerpt() {
+        $comment_text = strip_tags($this->comment['content']);
+        $blah = explode(' ', $comment_text);
+        if (count($blah) > 20) {
+            $k = 20;
+            $use_dotdotdot = 1;
+        } else {
+            $k = count($blah);
+            $use_dotdotdot = 0;
+        }
+        $excerpt = '';
+        for ($i = 0; $i < $k; $i++) {
+            $excerpt .= $blah[$i] . ' ';
+        }
+        $excerpt .= ($use_dotdotdot) ? '...' : '';
+        return $this->Hook->apply_filters('get_comment_excerpt', $excerpt);
+    }
+
+    /**
+     * Display the excerpt of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'comment_excerpt' hook before displaying excerpt
+     */
+    function comment_excerpt() {
+        echo $this->Hook->apply_filters('comment_excerpt', $this->get_comment_excerpt());
+    }
+
+    /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1
@@ -513,43 +553,6 @@ class CommentHelper extends AppHelper {
             return 'trash';
         else
             return false;
-    }
-
-    /**
-     * Retrieve the excerpt of the current comment.
-     *
-     * Will cut each word and only output the first 20 words with '...' at the end.
-     * If the word count is less than 20, then no truncating is done and no '...'
-     * will appear.
-     *
-     * @since 1.0.0
-     *
-     * @return string The maybe truncated comment with 20 words or less
-     */
-    public function get_comment_excerpt() {
-        $comment_text = strip_tags($this->comment['content']);
-        $blah = explode(' ', $comment_text);
-        if (count($blah) > 20) {
-            $use_dotdotdot = 1;
-        } else {
-            $use_dotdotdot = 0;
-        }
-        if ($use_dotdotdot) {
-            return $this->Text->truncate($this->comment['content'], 20);
-        } else {
-            return $this->comment['content'];
-        }
-    }
-
-    /**
-     * Display the excerpt of the current comment.
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    public function comment_excerpt() {
-        echo $this->get_comment_excerpt();
     }
 
     /**
