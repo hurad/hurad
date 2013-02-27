@@ -484,19 +484,19 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the comment id of the current comment.
      *
-     * @since 0.1
-     * @uses $comment
+     * @since 1.0.0
+     * @uses apply_filters() Calls the 'get_comment_ID' hook for the comment ID
      *
      * @return int The comment ID
      */
     public function get_comment_ID() {
-        return $this->comment['id'];
+        return $this->Hook->apply_filters('get_comment_ID', $this->comment['id']);
     }
 
     /**
      * Displays the comment id of the current comment.
      *
-     * @since 0.1
+     * @since 1.0.0
      * @see get_comment_ID() Echoes Result
      */
     public function comment_ID() {
