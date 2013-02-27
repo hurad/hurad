@@ -821,7 +821,7 @@ class CommentHelper extends AppHelper {
         echo '<ol class = "commentlist">';
         foreach ($comments as $comment) {
             $this->setComment($comment);
-            echo '<li id = "comment-' . $this->get_comment_ID() . '" class = "comment even thread-even depth-1">';
+            echo '<li id = "comment-' . $this->get_comment_ID() . '" ' . $this->comment_class('', FALSE) . '>';
             echo '<p class = "comment-author">';
             echo $this->Gravatar->image($this->get_comment_author_email(), array('size' => '48', 'default' => 'mm'));
             echo '<cite>';
