@@ -1,4 +1,5 @@
-<?php echo $this->Html->script('slug', array('block' => 'headerScript')); ?>
+<?php $this->Html->css('admin-side-widget', null, array('inline' => false)); ?>
+<?php echo $this->Html->script(array('slug', 'admin/Posts/post_tags'), array('block' => 'headerScript')); ?>
 
 <h2><?php echo $title_for_layout; ?></h2>
 <?php
@@ -11,7 +12,7 @@ echo $this->Form->create('Post', array(
 ?>
 <div id="poststuff" class="metabox-holder">
     <?php echo $this->Form->input('id'); ?>
-    <div id="side-info-column" class="inner-sidebar">
+    <div id="admin-side-column">
         <div id="side-sortables">
             <ul id="side-column">
                 <li class="side-widget">
@@ -110,32 +111,22 @@ echo $this->Form->create('Post', array(
         <div id="wrap-body-content">
             <?php echo $this->Form->input('id'); ?>
             <table class="form-table">
-                <tbody><tr class="form-field form-required">
-                        <th scope="row"><?php echo $this->Form->label('title', 'Title'); ?> <span class="description"><?php echo __("(Required)"); ?></span></th>
+                <tbody><tr class="form-field form-required">                   
                         <td><?php echo $this->Form->input('title', array('type' => 'text', 'class' => 'postTitle')); ?></td>
                     </tr>
                     <tr class="form-field form-required">
-                        <th scope="row"><?php echo $this->Form->label('slug', 'Slug'); ?> <span class="description"><?php echo __("(Required)"); ?></span></th>
-                        <td><?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'postSlug')); ?></td>
+                        <td>
+                            <p style="display: inline;"><?php echo Configure::read('General-site_url') . '/'; ?></p>
+                            <?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'postSlug')); ?>
+                            <?php echo $this->Form->button(__('Edit'), array('id' => 'perma_edit', 'type' => 'button', 'class' => 'add_button')); ?>
+                        </td>
                     </tr>
                     <tr class="form-field">
-                        <th scope="row"><?php echo $this->Form->label('content', 'Content'); ?></th>
-                        <td><?php echo $this->Form->input('content'); ?></td>
-                <script type="text/javascript">
-                    //<![CDATA[
-
-                    CKEDITOR.replace( 'data[Post][content]',
-                    {
-                        customConfig : 'ckeditor_config.js'
-                    });
-
-                    //]]>
-                </script>
-                </tr>
-                <tr class="form-field">
-                    <th scope="row"><?php echo $this->Form->label('excerpt', 'Excerpt'); ?></th>
-                    <td><?php echo $this->Form->input('excerpt'); ?></td>
-                </tr>
+                        <td><?php echo $this->Form->input('content', array('class' => 'editor')); ?></td>
+                    </tr>
+                    <tr class="form-field">
+                        <td><?php echo $this->Form->input('excerpt'); ?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
