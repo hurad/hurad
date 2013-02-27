@@ -413,6 +413,35 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieve the comment date of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'get_comment_date' hook with the formatted date and the $d parameter respectively
+     * @uses $comment
+     *
+     * @param string $d The format of the date (defaults to user's config)
+     * @return string The comment's date
+     */
+    public function get_comment_date($d = '') {
+        if ('' == $d)
+            $date = $this->Time->format(Configure::read('General-date_format'), $this->comment['created'], null, Configure::read('General-timezone'));
+        else
+            $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
+        return $this->Hook->apply_filters('get_comment_date', $date, $d);
+    }
+
+    /**
+     * Display the comment date of the current comment.
+     *
+     * @since 1.0.0
+     *
+     * @param string $d The format of the date (defaults to user's config)
+     */
+    public function comment_date($d = '') {
+        echo $this->get_comment_date($d);
+    }
+
+    /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1
@@ -461,36 +490,6 @@ class CommentHelper extends AppHelper {
             $time = $this->Time->format($format, $this->comment['created'], null, Configure::read('General-timezone'));
         }
         return $time;
-    }
-
-    /**
-     * Retrieve the comment date of the current comment.
-     *
-     * @since 0.1
-     * @uses $comment
-     *
-     * @param string $format The format of the date (defaults to user's config)
-     * @return string The comment's date
-     */
-    function get_comment_date($format = '') {
-        if ('' == $format) {
-            $date = $this->Time->format(Configure::read('General-date_format'), $this->comment['created'], null, Configure::read('General-timezone'));
-        } else {
-            $date = $this->Time->format($format, $this->comment['created'], null, Configure::read('General-timezone'));
-        }
-        return $date;
-    }
-
-    /**
-     * Display the comment date of the current comment.
-     *
-     * @since 0.1
-     *
-     * @param string $d The format of the date (defaults to user's config)
-     * @param int $comment_ID The ID of the comment for which to print the date. Optional.
-     */
-    public function comment_date($format) {
-        echo $this->get_comment_date($format);
     }
 
     /**
