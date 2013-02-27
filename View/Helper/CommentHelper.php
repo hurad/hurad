@@ -195,6 +195,83 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieve the html link to the url of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'get_comment_author_link' hook on the complete link HTML or author
+     *
+     * @return string Comment Author name or HTML link for author's URL
+     */
+    public function get_comment_author_link() {
+        /** @todo Only call these functions when they are needed. Include in if... else blocks */
+        $url = $this->get_comment_author_url();
+        $author = $this->get_comment_author();
+
+        if (empty($url) || 'http://' == $url)
+            $return = $author;
+        else
+            $return = $this->Html->link('Enter', $url, array('class' => 'url', 'rel' => 'external nofollow'));
+        return $this->Hook->apply_filters('get_comment_author_link', $return);
+    }
+
+    /**
+     * Display the html link to the url of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @see get_comment_author_link() Echoes result
+     */
+    public function comment_author_link() {
+        echo $this->get_comment_author_link();
+    }
+
+    /**
+     * Retrieve the IP address of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters()
+     *
+     * @return string The comment author's IP address.
+     */
+    public function get_comment_author_IP() {
+        return $this->Hook->apply_filters('get_comment_author_IP', $this->comment['author_ip']);
+    }
+
+    /**
+     * Display the IP address of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @see get_comment_author_IP() Echoes Result
+     */
+    public function comment_author_IP() {
+        echo $this->get_comment_author_IP();
+    }
+
+    /**
+     * Retrieve the url of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'get_comment_author_url' hook on the comment author's URL
+     *
+     * @return string
+     */
+    function get_comment_author_url() {
+        $url = ('http://' == $this->comment['author_url']) ? '' : $this->comment['author_url'];
+        $url = Formatting::esc_url($url, array('http', 'https'));
+        return $this->Hook->apply_filters('get_comment_author_url', $url);
+    }
+
+    /**
+     * Display the url of the author of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters()
+     * @uses get_comment_author_url() Retrieves the comment author's URL
+     */
+    function comment_author_url() {
+        echo $this->Hook->apply_filters('comment_url', $this->get_comment_author_url());
+    }
+
+    /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1
@@ -273,50 +350,6 @@ class CommentHelper extends AppHelper {
      */
     public function comment_date($format) {
         echo $this->get_comment_date($format);
-    }
-
-    /**
-     * Display the IP address of the author of the current comment.
-     *
-     * @since 0.1
-     * @see get_comment_author_IP() Echoes Result
-     */
-    public function comment_author_IP() {
-        echo $this->get_comment_author_IP();
-    }
-
-    /**
-     * Retrieve the IP address of the author of the current comment.
-     *
-     * @since 0.1
-     * @uses $comment
-     *
-     * @return string The comment author's IP address.
-     */
-    public function get_comment_author_IP() {
-        return $this->comment['author_ip'];
-    }
-
-    /**
-     * Display the url of the author of the current comment.
-     *
-     * @since 0.1
-     * @uses get_comment_author_url() Retrieves the comment author's URL
-     */
-    public function comment_author_url() {
-        echo $this->get_comment_author_url();
-    }
-
-    /**
-     * Retrieve the url of the author of the current comment.
-     *
-     * @since 0.1
-     * @uses $comment
-     *
-     * @return string
-     */
-    public function get_comment_author_url() {
-        return $this->comment['author_url'];
     }
 
     /**
