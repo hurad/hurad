@@ -10,7 +10,7 @@ body, textarea {
     line-height: 1.4em;
 }
 body, td, textarea, input, select {
-    font-family: sans-serif;
+    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
     font-size: 13px;
 }
 h1 {
@@ -525,4 +525,49 @@ table#availablethemes td {
 .count {
     color: #999999;
     font-weight: normal;
+}
+
+ul.ui-autocomplete{
+    width:250px;
+    background-color:white;
+    border:1px solid gray;
+    margin-left:3px;
+    margin-top:-4px;
+    font-family:Helvetica, Arial,sans-serif;
+}
+
+ul.ui-autocomplete li{
+    list-style:none;
+    border-top:1px solid white;
+    border-left:1px solid white;
+    margin:0;
+}
+
+ul.ui-autocomplete li:first-child{
+    border-top:none;
+}
+
+ul.ui-autocomplete li:last-child{
+    border-bottom:none;
+}
+
+ul.ui-autocomplete li a{
+    border:none !important;
+    text-decoration:none !important;
+    padding:2px;
+    display:block;
+    color:black;
+}
+ul.ui-autocomplete li img{
+    margin-right:4px;
+}
+ul.ui-autocomplete li span{
+}
+
+#ui-active-menuitem{
+    background-color:#efefef;
+    cursor:pointer;
+}
+.ui-helper-hidden-accessible {
+    display: none;
 }
