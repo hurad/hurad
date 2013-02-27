@@ -138,7 +138,7 @@ class CommentHelper extends AppHelper {
      * @param int $comment_ID The ID of the comment for which to get the author's email. Optional.
      * @return string The current comment author's email
      */
-    function get_comment_author_email() {
+    public function get_comment_author_email() {
         return $this->Hook->apply_filters('get_comment_author_email', $this->comment['author_email']);
     }
 
@@ -269,7 +269,7 @@ class CommentHelper extends AppHelper {
      *
      * @return string
      */
-    function get_comment_author_url() {
+    public function get_comment_author_url() {
         $url = ('http://' == $this->comment['author_url']) ? '' : $this->comment['author_url'];
         $url = Formatting::esc_url($url, array('http', 'https'));
         return $this->Hook->apply_filters('get_comment_author_url', $url);
@@ -282,7 +282,7 @@ class CommentHelper extends AppHelper {
      * @uses apply_filters()
      * @uses get_comment_author_url() Retrieves the comment author's URL
      */
-    function comment_author_url() {
+    public function comment_author_url() {
         echo $this->Hook->apply_filters('comment_url', $this->get_comment_author_url());
     }
 
@@ -304,7 +304,7 @@ class CommentHelper extends AppHelper {
      * @param string $after The text or HTML to display after the email link.
      * @return string The HTML link between the $before and $after parameters
      */
-    function get_comment_author_url_link($linktext = '', $before = '', $after = '') {
+    public function get_comment_author_url_link($linktext = '', $before = '', $after = '') {
         $url = $this->get_comment_author_url();
         $display = ($linktext != '') ? $linktext : $url;
         $display = str_replace('http://www.', '', $display);
@@ -325,7 +325,7 @@ class CommentHelper extends AppHelper {
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
      */
-    function comment_author_url_link($linktext = '', $before = '', $after = '') {
+    public function comment_author_url_link($linktext = '', $before = '', $after = '') {
         echo $this->get_comment_author_url_link($linktext, $before, $after);
     }
 
@@ -337,7 +337,7 @@ class CommentHelper extends AppHelper {
      * @param string|array $class One or more classes to add to the class list
      * @param bool $echo Whether comment_class should echo or return
      */
-    function comment_class($class = '', $echo = true) {
+    public function comment_class($class = '', $echo = true) {
         // Separates classes with a single space, collates classes for comment DIV
         $class = 'class="' . join(' ', $this->get_comment_class($class)) . '"';
         if ($echo)
@@ -354,7 +354,7 @@ class CommentHelper extends AppHelper {
      * @param string|array $class One or more classes to add to the class list
      * @return array Array of classes
      */
-    function get_comment_class($class = '') {
+    public function get_comment_class($class = '') {
         $classes = array();
 
         // Get the comment type (comment, trackback),
@@ -453,7 +453,7 @@ class CommentHelper extends AppHelper {
      *
      * @return string The maybe truncated comment with 20 words or less
      */
-    function get_comment_excerpt() {
+    public function get_comment_excerpt() {
         $comment_text = strip_tags($this->comment['content']);
         $blah = explode(' ', $comment_text);
         if (count($blah) > 20) {
@@ -477,7 +477,7 @@ class CommentHelper extends AppHelper {
      * @since 1.0.0
      * @uses apply_filters() Calls 'comment_excerpt' hook before displaying excerpt
      */
-    function comment_excerpt() {
+    public function comment_excerpt() {
         echo $this->Hook->apply_filters('comment_excerpt', $this->get_comment_excerpt());
     }
 
