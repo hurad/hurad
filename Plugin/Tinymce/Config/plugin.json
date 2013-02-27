@@ -1,0 +1,14 @@
+{
+    "name": "TinyMCE",
+    "description": "TinyMCE Plugin",
+
+    "author": "Mohammad Abdoli Rad",
+    "authorEmail": "m.abdolirad@gmail.com",
+    "authorUrl": "http://magzilla.org",
+
+    "dependencies": {
+        "plugins": [
+
+    ]
+    }
+}
