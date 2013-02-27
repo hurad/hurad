@@ -144,6 +144,57 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Display the html email link to the author of the current comment.
+     *
+     * Care should be taken to protect the email address and assure that email
+     * harvesters do not capture your commentors' email address. Most assume that
+     * their email address will not appear in raw form on the blog. Doing so will
+     * enable anyone, including those that people don't want to get the email
+     * address and use it for their own means good and bad.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'comment_email' hook for the display of the comment author's email
+     * @uses get_comment_author_email_link() For generating the link
+     *
+     * @param string $linktext The text to display instead of the comment author's email address
+     * @param string $before The text or HTML to display before the email link.
+     * @param string $after The text or HTML to display after the email link.
+     */
+    public function comment_author_email_link($linktext = '', $before = '', $after = '') {
+        if ($link = $this->get_comment_author_email_link($linktext, $before, $after))
+            echo $link;
+    }
+
+    /**
+     * Return the html email link to the author of the current comment.
+     *
+     * Care should be taken to protect the email address and assure that email
+     * harvesters do not capture your commentors' email address. Most assume that
+     * their email address will not appear in raw form on the blog. Doing so will
+     * enable anyone, including those that people don't want to get the email
+     * address and use it for their own means good and bad.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'comment_email' hook for the display of the comment author's email
+     *
+     * @param string $linktext The text to display instead of the comment author's email address
+     * @param string $before The text or HTML to display before the email link.
+     * @param string $after The text or HTML to display after the email link.
+     */
+    public function get_comment_author_email_link($linktext = '', $before = '', $after = '') {
+        $email = $this->Hook->apply_filters('comment_email', $this->comment['author_email']);
+        if ((!empty($email)) && ($email != '@')) {
+            $display = ($linktext != '') ? $linktext : $email;
+            $return = $before;
+            $return .= $this->Html->link($display, 'mailto:' . $email);
+            $return .= $after;
+            return $return;
+        } else {
+            return '';
+        }
+    }
+
+    /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1
@@ -222,60 +273,6 @@ class CommentHelper extends AppHelper {
      */
     public function comment_date($format) {
         echo $this->get_comment_date($format);
-    }
-
-    /**
-     * Display the html email link to the author of the current comment.
-     *
-     * Care should be taken to protect the email address and assure that email
-     * harvesters do not capture your commentors' email address. Most assume that
-     * their email address will not appear in raw form on the blog. Doing so will
-     * enable anyone, including those that people don't want to get the email
-     * address and use it for their own means good and bad.
-     *
-     * @since 1.0.0
-     * @uses get_comment_author_email_link() For generating the link
-     *
-     * @param string $linktext The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     */
-    public function comment_author_email_link($linktext = '', $before = '', $after = '') {
-        if ($link = $this->get_comment_author_email_link($linktext, $before, $after)) {
-            echo $link;
-        }
-    }
-
-    /**
-     * Return the html email link to the author of the current comment.
-     *
-     * Care should be taken to protect the email address and assure that email
-     * harvesters do not capture your commentors' email address. Most assume that
-     * their email address will not appear in raw form on the blog. Doing so will
-     * enable anyone, including those that people don't want to get the email
-     * address and use it for their own means good and bad.
-     *
-     * @since 1.0.0
-     * @uses get_comment_author_email() for the display of the comment author's email
-     *
-     * @param string $linktext The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     */
-    public function get_comment_author_email_link($linktext = '', $before = '', $after = '') {
-        if ($this->get_comment_author_email()) {
-            if ($linktext != '') {
-                $display = $linktext;
-            } else {
-                $display = $this->get_comment_author_email();
-            }
-            $return = $before;
-            $return .= $this->Html->link($display, 'mailto:' . $this->get_comment_author_email());
-            $return .= $after;
-            return $return;
-        } else {
-            return '';
-        }
     }
 
     /**
