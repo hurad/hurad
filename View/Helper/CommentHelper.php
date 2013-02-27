@@ -56,6 +56,14 @@ class CommentHelper extends AppHelper {
     public $MUser = null;
 
     /**
+     * Post model object
+     *
+     * @var object
+     * @access public
+     */
+    public $MPost = null;
+
+    /**
      * Other helpers used by this helper
      *
      * @var array
@@ -70,6 +78,7 @@ class CommentHelper extends AppHelper {
         $this->page = $this->_View->getVar('page');
         $this->current_user = $this->_View->getVar('current_user');
         $this->MUser = & ClassRegistry::getObject('User');
+        $this->MPost = & ClassRegistry::getObject('Post');
     }
 
     public function setComment($comment) {
@@ -313,6 +322,89 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Generates semantic classes for each comment element
+     *
+     * @since 1.0.0
+     *
+     * @param string|array $class One or more classes to add to the class list
+     * @param bool $echo Whether comment_class should echo or return
+     */
+    function comment_class($class = '', $echo = true) {
+        // Separates classes with a single space, collates classes for comment DIV
+        $class = 'class="' . join(' ', $this->get_comment_class($class)) . '"';
+        if ($echo)
+            echo $class;
+        else
+            return $class;
+    }
+
+    /**
+     * Returns the classes for the comment div as an array
+     *
+     * @since 1.0.0
+     *
+     * @param string|array $class One or more classes to add to the class list
+     * @return array Array of classes
+     */
+    function get_comment_class($class = '') {
+        $classes = array();
+
+        // Get the comment type (comment, trackback),
+        $classes[] = 'comment';
+
+        // If the comment author has an id (registered), then print the log in name
+        if ($this->comment['user_id'] > 0 && $user = $this->MUser->getUserData($this->comment['user_id'])) {
+            // For all registered users, 'byuser'
+            $classes[] = 'byuser';
+            $classes[] = 'comment-author-' . Formatting::sanitize_html_class($user['nickname'], $this->comment['user_id']);
+            // For comment authors who are the author of the post
+            if ($post = $this->MPost->getPost($this->comment['post_id'])) {
+                if ($this->comment['user_id'] === $post['user_id'])
+                    $classes[] = 'bypostauthor';
+            }
+        }
+
+        if (empty($comment_alt))
+            $comment_alt = 0;
+        if (empty($comment_depth))
+            $comment_depth = 1;
+        if (empty($comment_thread_alt))
+            $comment_thread_alt = 0;
+
+        if ($comment_alt % 2) {
+            $classes[] = 'odd';
+            $classes[] = 'alt';
+        } else {
+            $classes[] = 'even';
+        }
+
+        $comment_alt++;
+
+        // Alt for top-level comments
+        if (1 == $comment_depth) {
+            if ($comment_thread_alt % 2) {
+                $classes[] = 'thread-odd';
+                $classes[] = 'thread-alt';
+            } else {
+                $classes[] = 'thread-even';
+            }
+            $comment_thread_alt++;
+        }
+
+        $classes[] = "depth-$comment_depth";
+
+        if (!empty($class)) {
+            if (!is_array($class))
+                $class = preg_split('#\s+#', $class);
+            $classes = array_merge($classes, $class);
+        }
+
+        $classes = array_map('Formatting::esc_attr', $classes);
+
+        return $this->Hook->apply_filters('comment_class', $classes, $class, $comment_id, $post_id);
+    }
+
+    /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1
@@ -391,91 +483,6 @@ class CommentHelper extends AppHelper {
      */
     public function comment_date($format) {
         echo $this->get_comment_date($format);
-    }
-
-    /**
-     * Generates semantic classes for each comment element
-     *
-     * @since 1.0.0
-     *
-     * @param string|array $class One or more classes to add to the class list
-     * @param bool $echo Whether comment_class should echo or return
-     */
-    function comment_class($class = '', $echo = true) {
-        // Separates classes with a single space, collates classes for comment DIV
-        $class = 'class="' . join(' ', $this->get_comment_class($class)) . '"';
-        if ($echo)
-            echo $class;
-        else
-            return $class;
-    }
-
-    /**
-     * Returns the classes for the comment div as an array
-     *
-     * @since 1.0.0
-     *
-     * @param string|array $class One or more classes to add to the class list
-     * @return array Array of classes
-     */
-    function get_comment_class($class = '') {
-        global $comment_alt, $comment_depth, $comment_thread_alt;
-
-        $classes = array();
-
-        // Comment type,
-        $classes[] = 'comment';
-
-        // If the comment author has an id (registered), then print the log in name
-        if ($this->comment['user_id'] > 0 && $user = ClassRegistry::init('User')->get_userdata($this->comment['user_id'])) {
-            // For all registered users, 'byuser'
-            $classes[] = 'byuser';
-            $classes[] = 'comment-author-' . Formatting::sanitize_html_class($user['User']['nickname'], $this->comment['user_id']);
-            // For comment authors who are the author of the post
-            if ($post = ClassRegistry::init('Post')->get_post($this->comment['post_id'])) {
-                if ($this->comment['user_id'] === $post['Post']['user_id'])
-                    $classes[] = 'bypostauthor';
-            }
-        }
-
-        if (empty($comment_alt))
-            $comment_alt = 0;
-        if (empty($comment_depth))
-            $comment_depth = 1;
-        if (empty($comment_thread_alt))
-            $comment_thread_alt = 0;
-
-        if ($comment_alt % 2) {
-            $classes[] = 'odd';
-            $classes[] = 'alt';
-        } else {
-            $classes[] = 'even';
-        }
-
-        $comment_alt++;
-
-        // Alt for top-level comments
-        if (1 == $comment_depth) {
-            if ($comment_thread_alt % 2) {
-                $classes[] = 'thread-odd';
-                $classes[] = 'thread-alt';
-            } else {
-                $classes[] = 'thread-even';
-            }
-            $comment_thread_alt++;
-        }
-
-        $classes[] = "depth-$comment_depth";
-
-        if (!empty($class)) {
-            if (!is_array($class))
-                $class = preg_split('#\s+#', $class);
-            $classes = array_merge($classes, $class);
-        }
-
-        $classes = array_map('Formatting::esc_attr', $classes);
-//debug($classes);
-        return $classes;
     }
 
     /**
