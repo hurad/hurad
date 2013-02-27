@@ -118,9 +118,8 @@ class User extends AppModel {
         }
     }
 
-    function get_userdata($user_id) {
+    public function getUserData($user_id) {
         $user = $this->find('first', array(
-            "fields" => 'User.id, User.nickname',
             "conditions" => array('User.id' => $user_id),
             "recursive" => 0
                 )
