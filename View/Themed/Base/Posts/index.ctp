@@ -11,12 +11,10 @@
             <span class="post-comment"><?php $this->Comment->comments_popup_link(__('Leave a comment'), __('1 Comment'), __('% Comments')); ?></span>
         </p>
 
-        <?php echo $post['Post']['content']; ?>
+        <?php $this->Post->the_content('Read More ...'); ?>
 
     </article>
 <?php endforeach; ?>                   
 
 
-<div class="pagenav clearfix"> <span class="number current">1</span>  <a href="http://www.truethemes.org/demo/page/2" class="number">2</a>  <a href="http://www.truethemes.org/demo/page/3" class="number">3</a>  <a href="http://www.truethemes.org/demo/page/4" class="number">4</a>  <a href="http://www.truethemes.org/demo/page/5" class="number">5</a>  <a href="http://www.truethemes.org/demo/page/6" class="number">6</a>  <a href="http://www.truethemes.org/demo/page/7" class="number">7</a>  <a href="http://www.truethemes.org/demo/page/8" class="number">8</a> <a href="http://www.truethemes.org/demo/page/10" title="&raquo;" class="number">&raquo;</a></div> 
-
-Post
+<div class="pagenav clearfix"> <span class="number current">1</span>  <a href="http://www.truethemes.org/demo/page/2" class="number">2</a>  <a href="http://www.truethemes.org/demo/page/3" class="number">3</a>  <a href="http://www.truethemes.org/demo/page/4" class="number">4</a>  <a href="http://www.truethemes.org/demo/page/5" class="number">5</a>  <a href="http://www.truethemes.org/demo/page/6" class="number">6</a>  <a href="http://www.truethemes.org/demo/page/7" class="number">7</a>  <a href="http://www.truethemes.org/demo/page/8" class="number">8</a> <a href="http://www.truethemes.org/demo/page/10" title="&raquo;" class="number">&raquo;</a></div>
