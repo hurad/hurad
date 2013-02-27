@@ -1,7 +1,5 @@
 <?php
 
-App::uses('Formatting', 'Lib');
-
 /**
  * Description of CommentHelper
  *
