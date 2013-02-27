@@ -64,6 +64,14 @@ class CommentHelper extends AppHelper {
     public $MPost = null;
 
     /**
+     * Comment alt count
+     *
+     * @var object
+     * @access public
+     */
+    public $comment_alt = null;
+
+    /**
      * Other helpers used by this helper
      *
      * @var array
@@ -364,21 +372,21 @@ class CommentHelper extends AppHelper {
             }
         }
 
-        if (empty($comment_alt))
-            $comment_alt = 0;
+        if (empty($this->comment_alt))
+            $this->comment_alt = 0;
         if (empty($comment_depth))
             $comment_depth = 1;
         if (empty($comment_thread_alt))
             $comment_thread_alt = 0;
 
-        if ($comment_alt % 2) {
+        if ($this->comment_alt % 2) {
             $classes[] = 'odd';
             $classes[] = 'alt';
         } else {
             $classes[] = 'even';
         }
 
-        $comment_alt++;
+        $this->comment_alt++;
 
         // Alt for top-level comments
         if (1 == $comment_depth) {
