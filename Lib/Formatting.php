@@ -1740,6 +1740,24 @@ class Formatting {
     }
 
     /**
+     * Formats text for the HTML editor.
+     *
+     * Unless $output is empty it will pass through htmlspecialchars before the
+     * 'htmledit_pre' filter is applied.
+     *
+     * @since 1.0.0
+     *
+     * @param string $output The text to be formatted.
+     * @return string Formatted text after filter applied.
+     */
+    function hr_htmledit_pre($output) {
+        if (!empty($output))
+            $output = htmlspecialchars($output, ENT_NOQUOTES); // convert only < > &
+
+        return $this->HuradHook->apply_filters('htmledit_pre', $output);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
