@@ -1019,6 +1019,21 @@ class Formatting {
     }
 
     /**
+     * Normalize EOL characters and strip duplicate whitespace.
+     *
+     * @since 1.0.0
+     *
+     * @param string $str The string to normalize.
+     * @return string The normalized string.
+     */
+    public function normalize_whitespace($str) {
+        $str = trim($str);
+        $str = str_replace("\r", "\n", $str);
+        $str = preg_replace(array('/\n+/', '/[ \t]+/'), array("\n", ' '), $str);
+        return $str;
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -1130,6 +1145,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
