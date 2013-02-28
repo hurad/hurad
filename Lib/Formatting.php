@@ -1961,6 +1961,36 @@ class Formatting {
     }
 
     /**
+     * Convert lone less than signs.
+     *
+     * KSES already converts lone greater than signs.
+     *
+     * @uses hr_pre_kses_less_than_callback in the callback function.
+     * @since 1.0.0
+     *
+     * @param string $text Text to be converted.
+     * @return string Converted text.
+     */
+    public function hr_pre_kses_less_than($text) {
+        return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'Formatting::hr_pre_kses_less_than_callback', $text);
+    }
+
+    /**
+     * Callback function used by preg_replace.
+     *
+     * @uses esc_html to format the $matches text.
+     * @since 1.0.0
+     *
+     * @param array $matches Populated by matches to preg_replace.
+     * @return string The text returned after esc_html if needed.
+     */
+    public function hr_pre_kses_less_than_callback($matches) {
+        if (false === strpos($matches[0], '>'))
+            return Formatting::esc_html($matches[0]);
+        return $matches[0];
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -1998,36 +2028,6 @@ class Formatting {
         }
 
         return $this->HuradHook->apply_filters('sanitize_text_field', $filtered, $str);
-    }
-
-    /**
-     * Convert lone less than signs.
-     *
-     * KSES already converts lone greater than signs.
-     *
-     * @uses hr_pre_kses_less_than_callback in the callback function.
-     * @since 1.0.0
-     *
-     * @param string $text Text to be converted.
-     * @return string Converted text.
-     */
-    public function hr_pre_kses_less_than($text) {
-        return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'Formatting::hr_pre_kses_less_than_callback', $text);
-    }
-
-    /**
-     * Callback function used by preg_replace.
-     *
-     * @uses esc_html to format the $matches text.
-     * @since 1.0.0
-     *
-     * @param array $matches Populated by matches to preg_replace.
-     * @return string The text returned after esc_html if needed.
-     */
-    public function hr_pre_kses_less_than_callback($matches) {
-        if (false === strpos($matches[0], '>'))
-            return Formatting::esc_html($matches[0]);
-        return $matches[0];
     }
 
     /**
