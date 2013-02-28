@@ -1927,6 +1927,21 @@ class Formatting {
     }
 
     /**
+     * Convert full URL paths to absolute paths.
+     *
+     * Removes the http or https protocols and the domain. Keeps the path '/' at the
+     * beginning, so it isn't a true relative link, but from the web root base.
+     *
+     * @since 1.0.0
+     *
+     * @param string $link Full URL path.
+     * @return string Absolute path.
+     */
+    public function hr_make_link_relative($link) {
+        return preg_replace('|https?://[^/]+(/.*)|i', '$1', $link);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
