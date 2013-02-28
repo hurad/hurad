@@ -595,32 +595,31 @@ class CommentHelper extends AppHelper {
     }
 
     /**
-     * Display the comment time of the current comment.
+     * Retrieve the comment time of the current comment.
      *
-     * @since 0.1
+     * @since 1.0.0
+     * @uses apply_filter() Calls 'get_comment_time' hook with the formatted time, the $d parameter, and $gmt parameter passed.
      *
-     * @param string $format Optional. The format of the time (defaults to user's config)
+     * @param string $d Optional. The format of the time (defaults to user's config)
+     * @return string The formatted time
      */
-    public function comment_time($format) {
-        echo $this->get_comment_time($format);
+    public function get_comment_time($d = '') {
+        if ('' == $d)
+            $date = $this->Time->format(Configure::read('General-time_format'), $this->comment['created'], null, Configure::read('General-timezone'));
+        else
+            $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
+        return $this->Hook->apply_filters('get_comment_time', $date, $d);
     }
 
     /**
-     * Retrieve the comment time of the current comment.
+     * Display the comment time of the current comment.
      *
-     * @since 0.1
-     * @uses $comment
+     * @since 1.0.0
      *
-     * @param string $format Optional. The format of the time (defaults to user's config)
-     * @return string The formatted time
+     * @param string $d Optional. The format of the time (defaults to user's config)
      */
-    public function get_comment_time($format = '') {
-        if ('' == $format) {
-            $time = $this->Time->format(Configure::read('General-time_format'), $this->comment['created'], null, Configure::read('General-timezone'));
-        } else {
-            $time = $this->Time->format($format, $this->comment['created'], null, Configure::read('General-timezone'));
-        }
-        return $time;
+    function comment_time($d = '') {
+        echo $this->get_comment_time($d);
     }
 
     /**
