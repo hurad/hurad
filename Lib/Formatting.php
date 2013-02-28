@@ -1758,6 +1758,36 @@ class Formatting {
     }
 
     /**
+     * Perform a deep string replace operation to ensure the values in $search are no longer present
+     *
+     * Repeats the replacement operation until it no longer replaces anything so as to remove "nested" values
+     * e.g. $subject = '%0%0%0DDD', $search ='%0D', $result ='' rather than the '%0%0DD' that
+     * str_replace would return
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string|array $search
+     * @param string $subject
+     * @return string The processed string
+     */
+    private function _deep_replace($search, $subject) {
+        $found = true;
+        $subject = (string) $subject;
+        while ($found) {
+            $found = false;
+            foreach ((array) $search as $val) {
+                while (strpos($subject, $val) !== false) {
+                    $found = true;
+                    $subject = str_replace($val, '', $subject);
+                }
+            }
+        }
+
+        return $subject;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -2107,36 +2137,6 @@ class Formatting {
 
         //return apply_filters('clean_url', $url, $original_url, $_context);
         return $url;
-    }
-
-    /**
-     * Perform a deep string replace operation to ensure the values in $search are no longer present
-     *
-     * Repeats the replacement operation until it no longer replaces anything so as to remove "nested" values
-     * e.g. $subject = '%0%0%0DDD', $search ='%0D', $result ='' rather than the '%0%0DD' that
-     * str_replace would return
-     *
-     * @since 1.0
-     * @access private
-     *
-     * @param string|array $search
-     * @param string $subject
-     * @return string The processed string
-     */
-    function _deep_replace($search, $subject) {
-        $found = true;
-        $subject = (string) $subject;
-        while ($found) {
-            $found = false;
-            foreach ((array) $search as $val) {
-                while (strpos($subject, $val) !== false) {
-                    $found = true;
-                    $subject = str_replace($val, '', $subject);
-                }
-            }
-        }
-
-        return $subject;
     }
 
 }
