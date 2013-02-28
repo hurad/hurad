@@ -26,7 +26,7 @@ echo $this->Form->create('Post', array(
                                             array(
                                                 'publish' => 'Publish',
                                                 'draft' => 'Draft'
-                                                )));
+                                        )));
                                         ?>
                                     </span>
                                 </li>
@@ -59,7 +59,7 @@ echo $this->Form->create('Post', array(
                                             array(
                                                 'open' => 'Open',
                                                 'close' => 'Close'
-                                                )));
+                                        )));
                                         ?>    
                                     </span>
                                 </li>
@@ -110,36 +110,21 @@ echo $this->Form->create('Post', array(
         <div id="wrap-body-content">
             <table class="form-table">
                 <tbody><tr class="form-field form-required">
-                        <th scope="row"><?php echo $this->Form->label('title', 'Title'); ?> <span class="description"><?php echo __("(Required)"); ?></span></th>
                         <td><?php echo $this->Form->input('title', array('type' => 'text', 'class' => 'postTitle', 'placeholder' => __('Enter title here'))); ?></td>
                     </tr>
                     <tr class="form-field form-required">
-                        <th scope="row"><?php echo $this->Form->label('slug', 'Slug'); ?> <span class="description"><?php echo __("(Required)"); ?></span></th>
                         <td>
                             <p style="display: inline;"><?php echo Configure::read('General-site_url') . '/'; ?></p>
                             <?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'postSlug')); ?>
                             <?php echo $this->Form->button(__('Edit'), array('id' => 'perma_edit', 'type' => 'button', 'class' => 'add_button')); ?>
-                            <?php //echo $this->Form->button(__('OK'), array('id' => 'perma_ok', 'type' => 'button', 'class' => 'add_button', 'style' => 'display:none;')); ?>
                         </td>
                     </tr>
                     <tr class="form-field">
-                        <th scope="row"><?php echo $this->Form->label('content', 'Content'); ?></th>
-                        <td><?php echo $this->Form->input('content'); ?></td>
-                <script type="text/javascript">
-                    //<![CDATA[
-
-                    CKEDITOR.replace( 'data[Post][content]',
-                    {
-                        customConfig : 'ckeditor_config.js'
-                    });
-
-                    //]]>
-                </script> 
-                </tr>
-                <tr class="form-field">
-                    <th scope="row"><?php echo $this->Form->label('excerpt', 'Excerpt'); ?></th>
-                    <td><?php echo $this->Form->input('excerpt'); ?></td>
-                </tr>
+                        <td><?php echo $this->Form->input('content', array('class' => 'editor')); ?></td>
+                    </tr>
+                    <tr class="form-field">
+                        <td><?php echo $this->Form->input('excerpt'); ?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
