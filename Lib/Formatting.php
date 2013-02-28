@@ -1209,6 +1209,85 @@ class Formatting {
     }
 
     /**
+     * Callback to convert URI match to HTML A element.
+     *
+     * Regex callback for {@link make_clickable()}.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param array $matches Single Regex Match.
+     * @return string HTML A element with URI address.
+     */
+    private function _make_url_clickable_cb($matches) {
+        $url = $matches[2];
+
+        if (')' == $matches[3] && strpos($url, '(')) {
+            // If the trailing character is a closing parethesis, and the URL has an opening parenthesis in it, add the closing parenthesis to the URL.
+            // Then we can let the parenthesis balancer do its thing below.
+            $url .= $matches[3];
+            $suffix = '';
+        } else {
+            $suffix = $matches[3];
+        }
+
+        // Include parentheses in the URL only if paired
+        while (substr_count($url, '(') < substr_count($url, ')')) {
+            $suffix = strrchr($url, ')') . $suffix;
+            $url = substr($url, 0, strrpos($url, ')'));
+        }
+
+        $url = $this->esc_url($url);
+        if (empty($url))
+            return $matches[0];
+
+        return $matches[1] . "<a href=\"$url\" rel=\"nofollow\">$url</a>" . $suffix;
+    }
+
+    /**
+     * Callback to convert URL match to HTML A element.
+     *
+     * Regex callback for {@link make_clickable()}.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param array $matches Single Regex Match.
+     * @return string HTML A element with URL address.
+     */
+    private function _make_web_ftp_clickable_cb($matches) {
+        $ret = '';
+        $dest = $matches[2];
+        $dest = 'http://' . $dest;
+        $dest = $this->esc_url($dest);
+        if (empty($dest))
+            return $matches[0];
+
+        // removed trailing [.,;:)] from URL
+        if (in_array(substr($dest, -1), array('.', ',', ';', ':', ')')) === true) {
+            $ret = substr($dest, -1);
+            $dest = substr($dest, 0, strlen($dest) - 1);
+        }
+        return $matches[1] . "<a href=\"$dest\" rel=\"nofollow\">$dest</a>$ret";
+    }
+
+    /**
+     * Callback to convert email address match to HTML A element.
+     *
+     * Regex callback for {@link make_clickable()}.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param array $matches Single Regex Match.
+     * @return string HTML A element with email address.
+     */
+    private function _make_email_clickable_cb($matches) {
+        $email = $matches[2] . '@' . $matches[3];
+        return $matches[1] . "<a href=\"mailto:$email\">$email</a>";
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
