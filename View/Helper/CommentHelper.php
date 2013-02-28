@@ -648,19 +648,19 @@ class CommentHelper extends AppHelper {
     /**
      * Whether the current post is open for comments.
      *
-     * @since 0.1
-     * @uses $post
+     * @since 1.0.0
      *
      * @return bool True if the comments are open
      */
-    function comments_open() {
+    public function comments_open() {
         if ($this->view_path == 'Posts') {
-            $open = ( 'open' == $this->post['Post']['comment_status'] );
-            return $open;
+            $comment_status = ( 'open' == $this->post['Post']['comment_status'] );
         } elseif ($this->view_path == 'Pages') {
-            $open = ( 'open' == $this->page['Page']['comment_status'] );
-            return $open;
+            $comment_status = ( 'open' == $this->page['Page']['comment_status'] );
         }
+
+        $open = ( 'open' == $comment_status );
+        return $this->Hook->apply_filters('comments_open', $open);
     }
 
     /**
