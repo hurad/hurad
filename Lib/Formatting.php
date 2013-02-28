@@ -1750,7 +1750,7 @@ class Formatting {
      * @param string $output The text to be formatted.
      * @return string Formatted text after filter applied.
      */
-    function hr_htmledit_pre($output) {
+    public function hr_htmledit_pre($output) {
         if (!empty($output))
             $output = htmlspecialchars($output, ENT_NOQUOTES); // convert only < > &
 
