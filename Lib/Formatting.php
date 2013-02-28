@@ -1852,6 +1852,27 @@ class Formatting {
     }
 
     /**
+     * Escape single quotes, htmlspecialchar " < > &, and fix line endings.
+     *
+     * Escapes text strings for echoing in JS. It is intended to be used for inline JS
+     * (in a tag attribute, for example onclick="..."). Note that the strings have to
+     * be in single quotes. The filter 'js_escape' is also applied here.
+     *
+     * @since 1.0.0
+     *
+     * @param string $text The text to be escaped.
+     * @return string Escaped text.
+     */
+    public function esc_js($text) {
+        $safe_text = Formatting::hr_check_invalid_utf8($text);
+        $safe_text = Formatting::_hr_specialchars($safe_text, ENT_COMPAT);
+        $safe_text = preg_replace('/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes($safe_text));
+        $safe_text = str_replace("\r", '', $safe_text);
+        $safe_text = str_replace("\n", '\\n', addslashes($safe_text));
+        return Configure::read('HuradHook.obj')->apply_filters('js_escape', $safe_text, $text);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
