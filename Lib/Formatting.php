@@ -849,6 +849,68 @@ class Formatting {
     }
 
     /**
+     * Hurad implementation of PHP sprintf() with filters.
+     *
+     * @since 1.0.0
+     * @link http://www.php.net/sprintf
+     *
+     * @param string $pattern The string which formatted args are inserted.
+     * @param mixed $args,... Arguments to be formatted into the $pattern string.
+     * @return string The formatted string.
+     */
+    function hr_sprintf($pattern) {
+        $args = func_get_args();
+        $len = strlen($pattern);
+        $start = 0;
+        $result = '';
+        $arg_index = 0;
+        while ($len > $start) {
+            // Last character: append and break
+            if (strlen($pattern) - 1 == $start) {
+                $result .= substr($pattern, -1);
+                break;
+            }
+
+            // Literal %: append and continue
+            if (substr($pattern, $start, 2) == '%%') {
+                $start += 2;
+                $result .= '%';
+                continue;
+            }
+
+            // Get fragment before next %
+            $end = strpos($pattern, '%', $start + 1);
+            if (false === $end)
+                $end = $len;
+            $fragment = substr($pattern, $start, $end - $start);
+
+            // Fragment has a specifier
+            if ($pattern[$start] == '%') {
+                // Find numbered arguments or take the next one in order
+                if (preg_match('/^%(\d+)\$/', $fragment, $matches)) {
+                    $arg = isset($args[$matches[1]]) ? $args[$matches[1]] : '';
+                    $fragment = str_replace("%{$matches[1]}$", '%', $fragment);
+                } else {
+                    ++$arg_index;
+                    $arg = isset($args[$arg_index]) ? $args[$arg_index] : '';
+                }
+
+                // Apply filters OR sprintf
+                $_fragment = apply_filters('wp_sprintf', $fragment, $arg);
+                if ($_fragment != $fragment)
+                    $fragment = $_fragment;
+                else
+                    $fragment = sprintf($fragment, strval($arg));
+            }
+
+            // Append to result and move to next fragment
+            $result .= $fragment;
+            $start = $end;
+        }
+        return $result;
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -960,6 +1022,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
