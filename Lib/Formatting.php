@@ -1109,6 +1109,20 @@ class Formatting {
     }
 
     /**
+     * Adds backslashes before letters and before a number at the start of a string.
+     *
+     * @since 1.0.0
+     *
+     * @param string $string Value to which backslashes will be added.
+     * @return string String with backslashes inserted.
+     */
+    public function backslashit($string) {
+        $string = preg_replace('/^([0-9])/', '\\\\\\\\\1', $string);
+        $string = preg_replace('/([a-z])/i', '\\\\\1', $string);
+        return $string;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
