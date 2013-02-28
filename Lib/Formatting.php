@@ -1157,6 +1157,32 @@ class Formatting {
     }
 
     /**
+     * Navigates through an array and removes slashes from the values.
+     *
+     * If an array is passed, the array_map() function causes a callback to pass the
+     * value back to the function. The slashes from this value will removed.
+     *
+     * @since 1.0.0
+     *
+     * @param mixed $value The value to be stripped.
+     * @return mixed Stripped value.
+     */
+    public function stripslashes_deep($value) {
+        if (is_array($value)) {
+            $value = array_map('$this->stripslashes_deep', $value);
+        } elseif (is_object($value)) {
+            $vars = get_object_vars($value);
+            foreach ($vars as $key => $data) {
+                $value->{$key} = $this->stripslashes_deep($data);
+            }
+        } elseif (is_string($value)) {
+            $value = stripslashes($value);
+        }
+
+        return $value;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
