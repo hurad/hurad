@@ -293,72 +293,6 @@ class Formatting {
     }
 
     /**
-     * Converts a number of characters from a string.
-     *
-     * Metadata tags <<title>> and <<category>> are removed, <<br>> and <<hr>> are
-     * converted into correct XHTML and Unicode characters are converted to the
-     * valid range.
-     *
-     * @since 1.0.0
-     *
-     * @param string $content String of characters to be converted.
-     * @return string Converted string.
-     */
-    function convert_chars($content) {
-        // Translation of invalid Unicode references range to valid range
-        $hr_htmltranswinuni = array(
-            '&#128;' => '&#8364;', // the Euro sign
-            '&#129;' => '',
-            '&#130;' => '&#8218;', // these are Windows CP1252 specific characters
-            '&#131;' => '&#402;', // they would look weird on non-Windows browsers
-            '&#132;' => '&#8222;',
-            '&#133;' => '&#8230;',
-            '&#134;' => '&#8224;',
-            '&#135;' => '&#8225;',
-            '&#136;' => '&#710;',
-            '&#137;' => '&#8240;',
-            '&#138;' => '&#352;',
-            '&#139;' => '&#8249;',
-            '&#140;' => '&#338;',
-            '&#141;' => '',
-            '&#142;' => '&#381;',
-            '&#143;' => '',
-            '&#144;' => '',
-            '&#145;' => '&#8216;',
-            '&#146;' => '&#8217;',
-            '&#147;' => '&#8220;',
-            '&#148;' => '&#8221;',
-            '&#149;' => '&#8226;',
-            '&#150;' => '&#8211;',
-            '&#151;' => '&#8212;',
-            '&#152;' => '&#732;',
-            '&#153;' => '&#8482;',
-            '&#154;' => '&#353;',
-            '&#155;' => '&#8250;',
-            '&#156;' => '&#339;',
-            '&#157;' => '',
-            '&#158;' => '&#382;',
-            '&#159;' => '&#376;'
-        );
-
-        // Remove metadata tags
-        $content = preg_replace('/<title>(.+?)<\/title>/', '', $content);
-        $content = preg_replace('/<category>(.+?)<\/category>/', '', $content);
-
-        // Converts lone & characters into &#38; (a.k.a. &amp;)
-        $content = preg_replace('/&([^#])(?![a-z1-4]{1,8};)/i', '&#038;$1', $content);
-
-        // Fix Word pasting
-        $content = strtr($content, $hr_htmltranswinuni);
-
-        // Just a little XHTML help
-        $content = str_replace('<br>', '<br />', $content);
-        $content = str_replace('<hr>', '<hr />', $content);
-
-        return $content;
-    }
-
-    /**
      * Checks for invalid UTF8 in a string.
      *
      * @since 1.0.0
@@ -918,6 +852,72 @@ class Formatting {
     }
 
     /**
+     * Converts a number of characters from a string.
+     *
+     * Metadata tags <<title>> and <<category>> are removed, <<br>> and <<hr>> are
+     * converted into correct XHTML and Unicode characters are converted to the
+     * valid range.
+     *
+     * @since 1.0.0
+     *
+     * @param string $content String of characters to be converted.
+     * @return string Converted string.
+     */
+    function convert_chars($content) {
+        // Translation of invalid Unicode references range to valid range
+        $hr_htmltranswinuni = array(
+            '&#128;' => '&#8364;', // the Euro sign
+            '&#129;' => '',
+            '&#130;' => '&#8218;', // these are Windows CP1252 specific characters
+            '&#131;' => '&#402;', // they would look weird on non-Windows browsers
+            '&#132;' => '&#8222;',
+            '&#133;' => '&#8230;',
+            '&#134;' => '&#8224;',
+            '&#135;' => '&#8225;',
+            '&#136;' => '&#710;',
+            '&#137;' => '&#8240;',
+            '&#138;' => '&#352;',
+            '&#139;' => '&#8249;',
+            '&#140;' => '&#338;',
+            '&#141;' => '',
+            '&#142;' => '&#381;',
+            '&#143;' => '',
+            '&#144;' => '',
+            '&#145;' => '&#8216;',
+            '&#146;' => '&#8217;',
+            '&#147;' => '&#8220;',
+            '&#148;' => '&#8221;',
+            '&#149;' => '&#8226;',
+            '&#150;' => '&#8211;',
+            '&#151;' => '&#8212;',
+            '&#152;' => '&#732;',
+            '&#153;' => '&#8482;',
+            '&#154;' => '&#353;',
+            '&#155;' => '&#8250;',
+            '&#156;' => '&#339;',
+            '&#157;' => '',
+            '&#158;' => '&#382;',
+            '&#159;' => '&#376;'
+        );
+
+        // Remove metadata tags
+        $content = preg_replace('/<title>(.+?)<\/title>/', '', $content);
+        $content = preg_replace('/<category>(.+?)<\/category>/', '', $content);
+
+        // Converts lone & characters into &#38; (a.k.a. &amp;)
+        $content = preg_replace('/&([^#])(?![a-z1-4]{1,8};)/i', '&#038;$1', $content);
+
+        // Fix Word pasting
+        $content = strtr($content, $hr_htmltranswinuni);
+
+        // Just a little XHTML help
+        $content = str_replace('<br>', '<br />', $content);
+        $content = str_replace('<hr>', '<hr />', $content);
+
+        return $content;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -1361,6 +1361,9 @@ class Formatting {
 
 
 
+
+
+
             
 // HR fix for the bug with HTML comments
         $newtext = str_replace("< !--", "<!--", $newtext);
@@ -1475,34 +1478,6 @@ class Formatting {
         }
 
         return $subject;
-    }
-
-    /**
-     * Santizes a html classname to ensure it only contains valid characters
-     *
-     * Strips the string down to A-Z,a-z,0-9,_,-. If this results in an empty
-     * string then it will return the alternative value supplied.
-     *
-     * @todo Expand to support the full range of CDATA that a class attribute can contain.
-     *
-     * @since 1.0
-     *
-     * @param string $class The classname to be sanitized
-     * @param string $fallback Optional. The value to return if the sanitization end's up as an empty string.
-     *      Defaults to an empty string.
-     * @return string The sanitized value
-     */
-    function sanitize_html_class($class, $fallback = '') {
-        //Strip out any % encoded octets
-        $sanitized = preg_replace('|%[a-fA-F0-9][a-fA-F0-9]|', '', $class);
-
-        //Limit to A-Z,a-z,0-9,_,-
-        $sanitized = preg_replace('/[^A-Za-z0-9_-]/', '', $sanitized);
-
-        if ('' == $sanitized)
-            $sanitized = $fallback;
-
-        return $sanitized;
     }
 
     /**
