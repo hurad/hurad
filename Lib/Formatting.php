@@ -981,6 +981,44 @@ class Formatting {
     }
 
     /**
+     * Adds a Target attribute to all links in passed content.
+     *
+     * This function by default only applies to <a> tags, however this can be
+     * modified by the 3rd param.
+     *
+     * <b>NOTE:</b> Any current target attributed will be stripped and replaced.
+     *
+     * @since 1.0.0
+     *
+     * @param string $content String to search for links in.
+     * @param string $target The Target to add to the links.
+     * @param array $tags An array of tags to apply to.
+     * @return string The processed content.
+     */
+    public function links_add_target($content, $target = '_blank', $tags = array('a')) {
+        global $_links_add_target;
+        $_links_add_target = $target;
+        $tags = implode('|', (array) $tags);
+        return preg_replace_callback("!<($tags)(.+?)>!i", '$this->_links_add_target', $content);
+    }
+
+    /**
+     * Callback to add a target attribute to all links in passed content.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $m The matched link.
+     * @return string The processed link.
+     */
+    private function _links_add_target($m) {
+        global $_links_add_target;
+        $tag = $m[1];
+        $link = preg_replace('|(target=[\'"](.*?)[\'"])|i', '', $m[2]);
+        return '<' . $tag . $link . ' target="' . $this->esc_attr($_links_add_target) . '">';
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -1092,6 +1130,10 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
+
+
 
 
 
