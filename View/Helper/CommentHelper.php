@@ -521,7 +521,7 @@ class CommentHelper extends AppHelper {
      * @see get_comments_link() Echoes Result
      *
      */
-    function comments_link() {
+    public function comments_link() {
         echo $this->get_comments_link();
     }
 
