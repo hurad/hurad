@@ -1409,6 +1409,36 @@ class Formatting {
     }
 
     /**
+     * Adds rel nofollow string to all HTML A elements in content.
+     *
+     * @since 1.0.0
+     *
+     * @param string $text Content that may contain HTML A elements.
+     * @return string Converted content.
+     */
+    public function hr_rel_nofollow($text) {
+        $text = preg_replace_callback('|<a (.+?)>|i', '$this->hr_rel_nofollow_callback', $text);
+        return $text;
+    }
+
+    /**
+     * Callback to add rel=nofollow string to HTML A element.
+     *
+     * Will remove already existing rel="nofollow" and rel='nofollow' from the
+     * string to prevent from invalidating (X)HTML.
+     *
+     * @since 1.0.0
+     *
+     * @param array $matches Single Match
+     * @return string HTML A Element with rel nofollow.
+     */
+    public function hr_rel_nofollow_callback($matches) {
+        $text = $matches[1];
+        $text = str_replace(array(' rel="nofollow"', " rel='nofollow'"), '', $text);
+        return "<a $text rel=\"nofollow\">";
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
