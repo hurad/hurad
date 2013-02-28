@@ -1183,6 +1183,20 @@ class Formatting {
     }
 
     /**
+     * Navigates through an array and encodes the values to be used in a URL.
+     *
+     *
+     * @since 1.0.0
+     *
+     * @param array|string $value The array or string to be encoded.
+     * @return array|string $value The encoded array (or string from the callback).
+     */
+    public function urlencode_deep($value) {
+        $value = is_array($value) ? array_map('$this->urlencode_deep', $value) : urlencode($value);
+        return $value;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
