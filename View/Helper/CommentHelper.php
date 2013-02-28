@@ -504,6 +504,28 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieves the link to the current post comments.
+     *
+     * @since 1.0.0
+     *
+     * @return string The link to the comments
+     */
+    public function get_comments_link() {
+        return $this->Post->get_permalink() . '#comments';
+    }
+
+    /**
+     * Displays the link to the current post comments.
+     *
+     * @since 1.0.0
+     * @see get_comments_link() Echoes Result
+     *
+     */
+    function comments_link() {
+        echo $this->get_comments_link();
+    }
+
+    /**
      * Display the comment time of the current comment.
      *
      * @since 0.1
@@ -553,28 +575,6 @@ class CommentHelper extends AppHelper {
             return 'trash';
         else
             return false;
-    }
-
-    /**
-     * Retrieves the link to the current post comments.
-     *
-     * @since 1.0.0
-     *
-     * @return string The link to the comments
-     */
-    public function get_comments_link() {
-        return $this->Post->get_permalink() . '#comments';
-    }
-
-    /**
-     * Displays the link to the current post comments.
-     *
-     * @since 1.0.0
-     * @see get_comments_link() Echoes Result
-     *
-     */
-    function comments_link() {
-        echo $this->get_comments_link();
     }
 
     /**
