@@ -101,6 +101,19 @@ class Formatting {
     }
 
     /**
+     * Newline preservation help function for hrautop
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param array $matches preg_replace_callback matches array
+     * @return string
+     */
+    function _autop_newline_preservation_helper($matches) {
+        return str_replace("\n", "<HRPreserveNewline />", $matches[0]);
+    }
+
+    /**
      * Converts a number of characters from a string.
      *
      * Metadata tags <<title>> and <<category>> are removed, <<br>> and <<hr>> are
@@ -278,6 +291,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
