@@ -788,7 +788,7 @@ class Formatting {
      * @param string $key String key
      * @return string Sanitized key
      */
-    function sanitize_key($key) {
+    public function sanitize_key($key) {
         $raw_key = $key;
         $key = strtolower($key);
         $key = preg_replace('/[^a-z0-9_\-]/', '', $key);
@@ -1181,6 +1181,7 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
 
 
 
