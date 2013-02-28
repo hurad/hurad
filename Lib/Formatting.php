@@ -1836,6 +1836,22 @@ class Formatting {
     }
 
     /**
+     * Convert entities, while preserving already-encoded entities.
+     *
+     * @link http://www.php.net/htmlentities Borrowed from the PHP Manual user notes.
+     *
+     * @since 1.0.0
+     *
+     * @param string $myHTML The text to be converted.
+     * @return string Converted text.
+     */
+    public function htmlentities2($myHTML) {
+        $translation_table = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES);
+        $translation_table[chr(38)] = '&';
+        return preg_replace("/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/", "&amp;", strtr($myHTML, $translation_table));
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
