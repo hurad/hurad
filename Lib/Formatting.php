@@ -1446,7 +1446,7 @@ class Formatting {
      * @param string $text The text within which entities will be converted.
      * @return string Text with converted entities.
      */
-    function ent2ncr($text) {
+    public function ent2ncr($text) {
 
         // Allow a plugin to short-circuit and override the mappings.
         $filtered = $this->HuradHook->apply_filters('pre_ent2ncr', null, $text);
