@@ -77,12 +77,12 @@ class CommentHelper extends AppHelper {
      * @var array
      * @access public
      */
-    public $helpers = array('Hook', 'Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page');
+    public $helpers = array('Hook', 'Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page', 'Link');
 
     public function __construct(View $View, $settings = array()) {
         parent::__construct($View, $settings);
         $this->view_path = $this->_View->viewPath;
-        $this->post = $this->_View->getVar('post');
+        $this->post = $this->Link->post = $this->_View->getVar('post');
         $this->page = $this->_View->getVar('page');
         $this->current_user = $this->_View->getVar('current_user');
         $this->MUser = & ClassRegistry::getObject('User');
@@ -669,8 +669,7 @@ class CommentHelper extends AppHelper {
      * Is not meant to be displayed on single posts and pages. Should be used on the
      * lists of posts
      *
-     * @since 0.1
-     * @uses $post
+     * @since 1.0.0
      *
      * @param string $zero The string to display when no comments
      * @param string $one The string to display when only one comment is available
@@ -679,8 +678,7 @@ class CommentHelper extends AppHelper {
      * @param string $none The string to display when comments have been turned off
      * @return null Returns null on single posts and pages.
      */
-    function comments_popup_link($zero = false, $one = false, $more = false, $css_class = '', $none = false) {
-
+    public function comments_popup_link($zero = false, $one = false, $more = false, $css_class = '', $none = false) {
         if (false === $zero)
             $zero = __('No Comments');
         if (false === $one)
@@ -692,35 +690,32 @@ class CommentHelper extends AppHelper {
 
         $number = $this->get_comments_number();
 
-        if (0 == $number && $this->comments_open()) {
-            echo '<span' . ((!empty($css_class)) ? ' class="' . $css_class . '"' : '') . '>' . $none . '</span>';
+        if (0 == $number && !$this->comments_open()) {
+            echo '<span' . ((!empty($css_class)) ? ' class="' . Formatting::esc_attr($css_class) . '"' : '') . '>' . $none . '</span>';
             return;
         }
 
         echo '<a href="';
 
-        if (0 == $number) {
-            if ($this->view_path == 'Posts') {
-                echo $this->Post->get_permalink() . '#respond';
-            } elseif ($this->view_path == 'Pages') {
-                echo $this->Page->get_permalink() . '#respond';
-            }
-            echo '"';
-        } else {
+        if (0 == $number)
+            echo $this->Link->get_permalink() . '#respond';
+        else
             $this->comments_link();
-            echo '"';
-        }
+        echo '"';
 
         if (!empty($css_class)) {
             echo ' class="' . $css_class . '" ';
         }
+
         if ($this->view_path == 'Posts') {
             $title = $this->Post->the_title_attribute(array('echo' => 0));
         } elseif ($this->view_path == 'Pages') {
             $title = $this->Page->the_title_attribute(array('echo' => 0));
         }
 
-        echo ' title="' . sprintf(__('Comment on %s'), $title) . '">';
+        echo $this->Hook->apply_filters('comments_popup_link_attributes', '');
+
+        echo ' title="' . Formatting::esc_attr(sprintf(__('Comment on %s'), $title)) . '">';
         $this->comments_number($zero, $one, $more);
         echo '</a>';
     }
@@ -849,7 +844,7 @@ class CommentHelper extends AppHelper {
             echo '</small>';
             echo '</p>';
             echo '<div class = "commententry">';
-            echo $this->get_comment_text();
+            $this->comment_text();
             echo '</div>';
             echo '<p class="reply"> </p>';
             echo '</li>';
