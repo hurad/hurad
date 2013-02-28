@@ -573,6 +573,28 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieve the text of the current comment.
+     *
+     * @since 1.0.0
+     *
+     * @return string The comment content
+     */
+    public function get_comment_text() {
+        return $this->Hook->apply_filters('get_comment_text', $this->comment['content']);
+    }
+
+    /**
+     * Displays the text of the current comment.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Passes the comment content through the 'comment_text' hook before display
+     * @uses get_comment_text() Gets the comment content
+     */
+    public function comment_text() {
+        echo $this->Hook->apply_filters('comment_text', $this->get_comment_text());
+    }
+
+    /**
      * Display the comment time of the current comment.
      *
      * @since 0.1
@@ -622,29 +644,6 @@ class CommentHelper extends AppHelper {
             return 'trash';
         else
             return false;
-    }
-
-    /**
-     * Retrieve the text of the current comment.
-     *
-     * @since 0.1
-     * @uses $comment
-     *
-     * @return string The comment content
-     */
-    public function get_comment_text() {
-        return $this->comment['content'];
-    }
-
-    /**
-     * Displays the text of the current comment.
-     *
-     * @since 0.1
-     * @uses get_comment_text() Gets the comment content
-     *
-     */
-    public function comment_text() {
-        echo $this->get_comment_text();
     }
 
     /**
