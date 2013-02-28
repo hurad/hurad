@@ -960,6 +960,27 @@ class Formatting {
     }
 
     /**
+     * Safely extracts not more than the first $count characters from html string.
+     *
+     * UTF-8, tags and entities safe prefix extraction. Entities inside will *NOT*
+     * be counted as one character. For example &amp; will be counted as 4, &lt; as
+     * 3, etc.
+     *
+     * @since 1.0.0
+     *
+     * @param integer $str String to get the excerpt from.
+     * @param integer $count Maximum number of characters to take.
+     * @return string The excerpt.
+     */
+    function hr_html_excerpt($str, $count) {
+        $str = $this->hr_strip_all_tags($str, true);
+        $str = mb_substr($str, 0, $count);
+        // remove part of an entity at the end
+        $str = preg_replace('/&[^;\s]{0,6}$/', '', $str);
+        return $str;
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -1071,6 +1092,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
