@@ -1,14 +1,15 @@
 <?php
 
+App::import('Lib', 'HuradHook');
+$HuradHook = new HuradHook();
+Configure::write('HuradHook.obj', $HuradHook);
+require APPLIBS . 'filters.php';
+
 App::uses('Functions', 'Lib');
 App::uses('Formatting', 'Lib');
 App::uses('HrNav', 'Lib');
 App::uses('HrPlugin', 'Lib');
 App::uses('Hurad', 'Lib');
-App::import('Lib', 'HuradHook');
-$HuradHook = new HuradHook();
-Configure::write('HuradHook.obj', $HuradHook);
-require APPLIBS . 'filters.php';
 /**
  * Plugins
  */
