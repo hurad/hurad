@@ -1901,6 +1901,19 @@ class Formatting {
     }
 
     /**
+     * Escaping for textarea values.
+     *
+     * @since 1.0.0
+     *
+     * @param string $text
+     * @return string
+     */
+    public function esc_textarea($text) {
+        $safe_text = htmlspecialchars($text, ENT_QUOTES);
+        return Configure::read('HuradHook.obj')->apply_filters('esc_textarea', $safe_text, $text);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
