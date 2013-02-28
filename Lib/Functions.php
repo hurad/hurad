@@ -53,7 +53,7 @@ class Functions {
      *
      * @return array Array of allowed protocols
      */
-    function allowed_protocols() {
+    public function allowed_protocols() {
         static $protocols;
 
         if (empty($protocols)) {
@@ -70,7 +70,7 @@ class Functions {
      *
      * @return bool True if SSL, false if not used.
      */
-    function is_ssl() {
+    public function is_ssl() {
         if (isset($_SERVER['HTTPS'])) {
             if ('on' == strtolower($_SERVER['HTTPS']))
                 return true;
@@ -92,7 +92,7 @@ class Functions {
      *
      * @return bool True if inside Hurad administration pages.
      */
-    function is_admin() {
+    public function is_admin() {
         $pos = strpos($_SERVER['REQUEST_URI'], 'admin');
 
         if ($pos === false) {
