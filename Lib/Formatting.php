@@ -2123,6 +2123,45 @@ class Formatting {
     }
 
     /**
+     * Add a Base url to relative links in passed content.
+     *
+     * By default it supports the 'src' and 'href' attributes. However this can be
+     * changed via the 3rd param.
+     *
+     * @since 1.0.0
+     *
+     * @param string $content String to search for links in.
+     * @param string $base The base URL to prefix to links.
+     * @param array $attrs The attributes which should be processed.
+     * @return string The processed content.
+     */
+    public function links_add_base_url($content, $base, $attrs = array('src', 'href')) {
+        global $_links_add_base;
+        $_links_add_base = $base;
+        $attrs = implode('|', (array) $attrs);
+        return preg_replace_callback("!($attrs)=(['\"])(.+?)\\2!i", 'Formatting::_links_add_base', $content);
+    }
+
+    /**
+     * Callback to add a base url to relative links in passed content.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $m The matched link.
+     * @return string The processed link.
+     */
+    private function _links_add_base($m) {
+        global $_links_add_base;
+        //1 = attribute name 2 = quotation mark 3 = URL
+        return $m[1] . '=' . $m[2] .
+                ( preg_match('#^(\w{1,20}):#', $m[3], $protocol) && in_array($protocol[1], Functions::allowed_protocols()) ?
+                        $m[3] :
+                        Functions::path_join($_links_add_base, $m[3]) )
+                . $m[2];
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
