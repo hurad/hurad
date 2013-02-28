@@ -526,6 +526,53 @@ class CommentHelper extends AppHelper {
     }
 
     /**
+     * Retrieve the amount of comments a post has.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls the 'get_comments_number' hook on the number of comments
+     *
+     * @return int The number of comments a post has
+     */
+    public function get_comments_number() {
+        if ($this->view_path == 'Posts') {
+            $comment_count = $this->Post->post['Post']['comment_count'];
+            $post_id = $this->Post->post['Post']['id'];
+        } elseif ($this->view_path == 'Pages') {
+            $comment_count = $this->Page->page['Page']['comment_count'];
+            $post_id = $this->Page->page['Page']['id'];
+        }
+        if (!isset($comment_count))
+            $count = 0;
+        else
+            $count = $comment_count;
+
+        return $this->Hook->apply_filters('get_comments_number', $count, $post_id);
+    }
+
+    /**
+     * Display the language string for the number of comments the current post has.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls the 'comments_number' hook on the output and number of comments respectively.
+     *
+     * @param string $zero Text for no comments
+     * @param string $one Text for one comment
+     * @param string $more Text for more than one comment
+     */
+    function comments_number($zero = false, $one = false, $more = false) {
+        $number = $this->get_comments_number();
+
+        if ($number > 1)
+            $output = str_replace('%', Functions::number_format_i18n($number), ( false === $more ) ? __('% Comments') : $more);
+        elseif ($number == 0)
+            $output = ( false === $zero ) ? __('No Comments') : $zero;
+        else // must be one
+            $output = ( false === $one ) ? __('1 Comment') : $one;
+
+        echo $this->Hook->apply_filters('comments_number', $output, $number);
+    }
+
+    /**
      * Display the comment time of the current comment.
      *
      * @since 0.1
@@ -575,46 +622,6 @@ class CommentHelper extends AppHelper {
             return 'trash';
         else
             return false;
-    }
-
-    /**
-     * Retrieve the amount of comments a post has.
-     *
-     * @since 1.0.0
-     * @uses $post
-     *
-     * @return int The number of comments a post has
-     */
-    function get_comments_number() {
-        if ($this->view_path == 'Posts') {
-            return $this->Post->post['Post']['comment_count'];
-        } elseif ($this->view_path == 'Pages') {
-            return $this->Page->page['Page']['comment_count'];
-        }
-    }
-
-    /**
-     * Display the language string for the number of comments the current post has.
-     *
-     * @since 0.1
-     * @uses get_comments_number()
-     *
-     * @param string $zero Text for no comments
-     * @param string $one Text for one comment
-     * @param string $more Text for more than one comment
-     */
-    function comments_number($zero = false, $one = false, $more = false) {
-
-        $number = $this->get_comments_number();
-
-        if ($number > 1) {
-            $output = str_replace('%', $number, ( false === $more ) ? __('% Comments') : $more);
-        } elseif ($number == 0) {
-            $output = ( false === $zero ) ? __('No Comments') : $zero;
-        } else {// must be one
-            $output = ( false === $one ) ? __('1 Comment') : $one;
-        }
-        echo $output;
     }
 
     /**
