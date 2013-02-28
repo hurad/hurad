@@ -1887,6 +1887,20 @@ class Formatting {
     }
 
     /**
+     * Escaping for HTML attributes.
+     *
+     * @since 1.0.0
+     *
+     * @param string $text
+     * @return string
+     */
+    public function esc_attr($text) {
+        $safe_text = Formatting::hr_check_invalid_utf8($text);
+        $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
+        return Configure::read('HuradHook.obj')->apply_filters('attribute_escape', $safe_text, $text);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -2158,20 +2172,6 @@ class Formatting {
             $string = preg_replace('/[\r\n\t ]+/', ' ', $string);
 
         return trim($string);
-    }
-
-    /**
-     * Escaping for HTML attributes.
-     *
-     * @since 1.0
-     *
-     * @param string $text
-     * @return string
-     */
-    function esc_attr($text) {
-        $safe_text = Formatting::hr_check_invalid_utf8($text);
-        $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
-        return $safe_text;
     }
 
 }
