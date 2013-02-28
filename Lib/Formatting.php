@@ -918,6 +918,22 @@ class Formatting {
     }
 
     /**
+     * Balances tags if forced to, or if the 'use_balanceTags' option is set to true.
+     *
+     * @since 1.0.0
+     *
+     * @param string $text Text to be balanced
+     * @param bool $force If true, forces balancing, ignoring the value of the option. Default false.
+     * @return string Balanced text
+     */
+    public function balanceTags($text, $force = false) {
+        if ($force || Configure::read('use_balanceTags') == 1)
+            return $this->force_balance_tags($text);
+        else
+            return $text;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -1303,6 +1319,9 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
+
 
 
 
