@@ -1075,6 +1075,19 @@ class Formatting {
     }
 
     /**
+     * Holder for the 'format_to_post' filter.
+     *
+     * @since 1.0.0
+     *
+     * @param string $content The text to pass through the filter.
+     * @return string Text returned from the 'format_to_post' filter.
+     */
+    public function format_to_post($content) {
+        $content = $this->HuradHook->apply_filters('format_to_post', $content);
+        return $content;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
