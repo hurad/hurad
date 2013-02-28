@@ -1914,6 +1914,19 @@ class Formatting {
     }
 
     /**
+     * Escape an HTML tag name.
+     *
+     * @since 1.0.0
+     *
+     * @param string $tag_name
+     * @return string
+     */
+    public function tag_escape($tag_name) {
+        $safe_tag = strtolower(preg_replace('/[^a-zA-Z0-9_:]/', '', $tag_name));
+        return Configure::read('HuradHook.obj')->apply_filters('tag_escape', $safe_tag, $tag_name);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
