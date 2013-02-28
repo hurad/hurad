@@ -559,7 +559,7 @@ class CommentHelper extends AppHelper {
      * @param string $one Text for one comment
      * @param string $more Text for more than one comment
      */
-    function comments_number($zero = false, $one = false, $more = false) {
+    public function comments_number($zero = false, $one = false, $more = false) {
         $number = $this->get_comments_number();
 
         if ($number > 1)
