@@ -858,7 +858,7 @@ class Formatting {
      * @param mixed $args,... Arguments to be formatted into the $pattern string.
      * @return string The formatted string.
      */
-    function hr_sprintf($pattern) {
+    public function hr_sprintf($pattern) {
         $args = func_get_args();
         $len = strlen($pattern);
         $start = 0;
@@ -923,7 +923,7 @@ class Formatting {
      * @param array $args List items to prepend to the content and replace '%l'.
      * @return string Localized list items and rest of the content.
      */
-    function hr_sprintf_l($pattern, $args) {
+    public function hr_sprintf_l($pattern, $args) {
         // Not a match
         if (substr($pattern, 0, 2) != '%l')
             return $pattern;
@@ -972,7 +972,7 @@ class Formatting {
      * @param integer $count Maximum number of characters to take.
      * @return string The excerpt.
      */
-    function hr_html_excerpt($str, $count) {
+    public function hr_html_excerpt($str, $count) {
         $str = $this->hr_strip_all_tags($str, true);
         $str = mb_substr($str, 0, $count);
         // remove part of an entity at the end
@@ -1130,6 +1130,7 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
 
 
 
