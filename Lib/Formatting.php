@@ -2286,4 +2286,17 @@ class Formatting {
         return urldecode(basename(str_replace(array('%2F', '%5C'), '/', urlencode($path)), $suffix));
     }
 
+    /**
+     * Sanitize a mime type
+     *
+     * @since 1.0.0
+     *
+     * @param string $mime_type Mime type
+     * @return string Sanitized mime type
+     */
+    public function sanitize_mime_type($mime_type) {
+        $sani_mime_type = preg_replace('/[^-+*.a-zA-Z0-9\/]/', '', $mime_type);
+        return Configure::read('HuradHook.obj')->apply_filters('sanitize_mime_type', $sani_mime_type, $mime_type);
+    }
+
 }
