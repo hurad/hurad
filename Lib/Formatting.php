@@ -1991,46 +1991,6 @@ class Formatting {
     }
 
     /**
-     * Sanitize a string from user input or from the db
-     *
-     * check for invalid UTF-8,
-     * Convert single < characters to entity,
-     * strip all tags,
-     * remove line breaks, tabs and extra white space,
-     * strip octets.
-     *
-     * @since 1.0.0
-     *
-     * @param string $str
-     * @return string
-     */
-    public function sanitize_text_field($str) {
-        $filtered = Formatting::hr_check_invalid_utf8($str);
-
-        if (strpos($filtered, '<') !== false) {
-            $filtered = Formatting::hr_pre_kses_less_than($filtered);
-            // This will strip extra whitespace for us.
-            $filtered = Formatting::hr_strip_all_tags($filtered, true);
-        } else {
-            $filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
-        }
-
-        $match = array();
-        $found = false;
-        while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match)) {
-            $filtered = str_replace($match[0], '', $filtered);
-            $found = true;
-        }
-
-        if ($found) {
-            // Strip out the whitespace that may now exist after removing the octets.
-            $filtered = trim(preg_replace('/ +/', ' ', $filtered));
-        }
-
-        return $this->HuradHook->apply_filters('sanitize_text_field', $filtered, $str);
-    }
-
-    /**
      * Hurad implementation of PHP sprintf() with filters.
      *
      * @since 1.0.0
@@ -2078,7 +2038,7 @@ class Formatting {
                 }
 
                 // Apply filters OR sprintf
-                $_fragment = apply_filters('wp_sprintf', $fragment, $arg);
+                $_fragment = Configure::read('HuradHook.obj')->apply_filters('hr_sprintf', $fragment, $arg);
                 if ($_fragment != $fragment)
                     $fragment = $_fragment;
                 else
@@ -2115,7 +2075,7 @@ class Formatting {
             return '';
 
         // Translate and filter the delimiter set (avoid ampersands and entities here)
-        $l = $this->HuradHook->apply_filters('hr_sprintf_l', array(
+        $l = Configure::read('HuradHook.obj')->apply_filters('hr_sprintf_l', array(
             /* translators: used between list items, there is a space after the comma */
             'between' => __(', '),
             /* translators: used between list items, there is a space after the and */
@@ -2160,6 +2120,46 @@ class Formatting {
         // remove part of an entity at the end
         $str = preg_replace('/&[^;\s]{0,6}$/', '', $str);
         return $str;
+    }
+
+    /**
+     * Sanitize a string from user input or from the db
+     *
+     * check for invalid UTF-8,
+     * Convert single < characters to entity,
+     * strip all tags,
+     * remove line breaks, tabs and extra white space,
+     * strip octets.
+     *
+     * @since 1.0.0
+     *
+     * @param string $str
+     * @return string
+     */
+    public function sanitize_text_field($str) {
+        $filtered = Formatting::hr_check_invalid_utf8($str);
+
+        if (strpos($filtered, '<') !== false) {
+            $filtered = Formatting::hr_pre_kses_less_than($filtered);
+            // This will strip extra whitespace for us.
+            $filtered = Formatting::hr_strip_all_tags($filtered, true);
+        } else {
+            $filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
+        }
+
+        $match = array();
+        $found = false;
+        while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match)) {
+            $filtered = str_replace($match[0], '', $filtered);
+            $found = true;
+        }
+
+        if ($found) {
+            // Strip out the whitespace that may now exist after removing the octets.
+            $filtered = trim(preg_replace('/ +/', ' ', $filtered));
+        }
+
+        return $this->HuradHook->apply_filters('sanitize_text_field', $filtered, $str);
     }
 
     /**
