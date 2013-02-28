@@ -745,6 +745,40 @@ class Formatting {
     }
 
     /**
+     * Sanitizes a username, stripping out unsafe characters.
+     *
+     * Removes tags, octets, entities, and if strict is enabled, will only keep
+     * alphanumeric, _, space, ., -, @. After sanitizing, it passes the username,
+     * raw username (the username in the parameter), and the value of $strict as
+     * parameters for the 'sanitize_user' filter.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() Calls 'sanitize_user' hook on username, raw username,
+     * and $strict parameter.
+     *
+     * @param string $username The username to be sanitized.
+     * @param bool $strict If set limits $username to specific characters. Default false.
+     * @return string The sanitized username, after passing through filters.
+     */
+    public function sanitize_user($username, $strict = false) {
+        $raw_username = $username;
+        $username = $this->hr_strip_all_tags($username);
+        $username = $this->remove_accents($username);
+        // Kill octets
+        $username = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '', $username);
+        $username = preg_replace('/&.+?;/', '', $username); // Kill entities
+        // If strict, reduce to ASCII for max portability.
+        if ($strict)
+            $username = preg_replace('|[^a-z0-9 _.\-@]|i', '', $username);
+
+        $username = trim($username);
+        // Consolidate contiguous whitespace
+        $username = preg_replace('|\s+|', ' ', $username);
+
+        return $this->HuradHook->apply_filters('sanitize_user', $username, $raw_username, $strict);
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -856,6 +890,10 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
+
+
 
 
 
@@ -1082,6 +1120,25 @@ class Formatting {
      */
     function untrailingslashit($string) {
         return rtrim($string, '/');
+    }
+
+    /**
+     * Properly strip all HTML tags including script and style
+     *
+     * @since 1.0.0
+     *
+     * @param string $string String containing HTML tags
+     * @param bool $remove_breaks optional Whether to remove left over line breaks and white space chars
+     * @return string The processed string.
+     */
+    public function hr_strip_all_tags($string, $remove_breaks = false) {
+        $string = preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si', '', $string);
+        $string = strip_tags($string);
+
+        if ($remove_breaks)
+            $string = preg_replace('/[\r\n\t ]+/', ' ', $string);
+
+        return trim($string);
     }
 
 }
