@@ -1034,6 +1034,25 @@ class Formatting {
     }
 
     /**
+     * Properly strip all HTML tags including script and style
+     *
+     * @since 1.0.0
+     *
+     * @param string $string String containing HTML tags
+     * @param bool $remove_breaks optional Whether to remove left over line breaks and white space chars
+     * @return string The processed string.
+     */
+    public function hr_strip_all_tags($string, $remove_breaks = false) {
+        $string = preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si', '', $string);
+        $string = strip_tags($string);
+
+        if ($remove_breaks)
+            $string = preg_replace('/[\r\n\t ]+/', ' ', $string);
+
+        return trim($string);
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -1145,6 +1164,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
@@ -1394,25 +1415,6 @@ class Formatting {
      */
     function untrailingslashit($string) {
         return rtrim($string, '/');
-    }
-
-    /**
-     * Properly strip all HTML tags including script and style
-     *
-     * @since 1.0.0
-     *
-     * @param string $string String containing HTML tags
-     * @param bool $remove_breaks optional Whether to remove left over line breaks and white space chars
-     * @return string The processed string.
-     */
-    public function hr_strip_all_tags($string, $remove_breaks = false) {
-        $string = preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si', '', $string);
-        $string = strip_tags($string);
-
-        if ($remove_breaks)
-            $string = preg_replace('/[\r\n\t ]+/', ' ', $string);
-
-        return trim($string);
     }
 
 }
