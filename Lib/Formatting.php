@@ -2162,46 +2162,6 @@ class Formatting {
     }
 
     /**
-     * Sanitize a string from user input or from the db
-     *
-     * check for invalid UTF-8,
-     * Convert single < characters to entity,
-     * strip all tags,
-     * remove line breaks, tabs and extra white space,
-     * strip octets.
-     *
-     * @since 1.0.0
-     *
-     * @param string $str
-     * @return string
-     */
-    public function sanitize_text_field($str) {
-        $filtered = Formatting::hr_check_invalid_utf8($str);
-
-        if (strpos($filtered, '<') !== false) {
-            $filtered = Formatting::hr_pre_kses_less_than($filtered);
-            // This will strip extra whitespace for us.
-            $filtered = Formatting::hr_strip_all_tags($filtered, true);
-        } else {
-            $filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
-        }
-
-        $match = array();
-        $found = false;
-        while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match)) {
-            $filtered = str_replace($match[0], '', $filtered);
-            $found = true;
-        }
-
-        if ($found) {
-            // Strip out the whitespace that may now exist after removing the octets.
-            $filtered = trim(preg_replace('/ +/', ' ', $filtered));
-        }
-
-        return $this->HuradHook->apply_filters('sanitize_text_field', $filtered, $str);
-    }
-
-    /**
      * Adds a Target attribute to all links in passed content.
      *
      * This function by default only applies to <a> tags, however this can be
@@ -2271,6 +2231,46 @@ class Formatting {
             $string = preg_replace('/[\r\n\t ]+/', ' ', $string);
 
         return trim($string);
+    }
+
+    /**
+     * Sanitize a string from user input or from the db
+     *
+     * check for invalid UTF-8,
+     * Convert single < characters to entity,
+     * strip all tags,
+     * remove line breaks, tabs and extra white space,
+     * strip octets.
+     *
+     * @since 1.0.0
+     *
+     * @param string $str
+     * @return string
+     */
+    public function sanitize_text_field($str) {
+        $filtered = Formatting::hr_check_invalid_utf8($str);
+
+        if (strpos($filtered, '<') !== false) {
+            $filtered = Formatting::hr_pre_kses_less_than($filtered);
+            // This will strip extra whitespace for us.
+            $filtered = Formatting::hr_strip_all_tags($filtered, true);
+        } else {
+            $filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
+        }
+
+        $match = array();
+        $found = false;
+        while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match)) {
+            $filtered = str_replace($match[0], '', $filtered);
+            $found = true;
+        }
+
+        if ($found) {
+            // Strip out the whitespace that may now exist after removing the octets.
+            $filtered = trim(preg_replace('/ +/', ' ', $filtered));
+        }
+
+        return Configure::read('HuradHook.obj')->apply_filters('sanitize_text_field', $filtered, $str);
     }
 
 }
