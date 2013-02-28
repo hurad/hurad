@@ -688,6 +688,63 @@ class Formatting {
     }
 
     /**
+     * Sanitizes a filename, replacing whitespace with dashes.
+     *
+     * Removes special characters that are illegal in filenames on certain
+     * operating systems and special characters requiring special escaping
+     * to manipulate at the command line. Replaces spaces and consecutive
+     * dashes with a single dash. Trims period, dash and underscore from beginning
+     * and end of filename.
+     *
+     * @since 1.0.0
+     *
+     * @param string $filename The filename to be sanitized
+     * @return string The sanitized filename
+     */
+    public function sanitize_file_name($filename) {
+        $filename_raw = $filename;
+        $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
+        $special_chars = $this->HuradHook->apply_filters('sanitize_file_name_chars', $special_chars, $filename_raw);
+        $filename = str_replace($special_chars, '', $filename);
+        $filename = preg_replace('/[\s-]+/', '-', $filename);
+        $filename = trim($filename, '.-_');
+
+        // Split the filename into a base and extension[s]
+        $parts = explode('.', $filename);
+
+        // Return if only one extension
+        if (count($parts) <= 2)
+            return $this->HuradHook->apply_filters('sanitize_file_name', $filename, $filename_raw);
+
+        // Process multiple extensions
+        $filename = array_shift($parts);
+        $extension = array_pop($parts);
+        $mimes = Functions::get_allowed_mime_types();
+
+        // Loop over any intermediate extensions. Munge them with a trailing underscore if they are a 2 - 5 character
+        // long alpha string not in the extension whitelist.
+        foreach ((array) $parts as $part) {
+            $filename .= '.' . $part;
+
+            if (preg_match("/^[a-zA-Z]{2,5}\d?$/", $part)) {
+                $allowed = false;
+                foreach ($mimes as $ext_preg => $mime_match) {
+                    $ext_preg = '!^(' . $ext_preg . ')$!i';
+                    if (preg_match($ext_preg, $part)) {
+                        $allowed = true;
+                        break;
+                    }
+                }
+                if (!$allowed)
+                    $filename .= '_';
+            }
+        }
+        $filename .= '.' . $extension;
+
+        return $this->HuradHook->apply_filters('sanitize_file_name', $filename, $filename_raw);
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -799,6 +856,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
