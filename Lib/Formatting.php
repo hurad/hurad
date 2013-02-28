@@ -1123,6 +1123,40 @@ class Formatting {
     }
 
     /**
+     * Appends a trailing slash.
+     *
+     * Will remove trailing slash if it exists already before adding a trailing
+     * slash. This prevents double slashing a string or path.
+     *
+     * The primary use of this is for paths and thus should be used for paths. It is
+     * not restricted to paths and offers no specific path support.
+     *
+     * @since 1.0.0
+     * @uses untrailingslashit() Unslashes string if it was slashed already.
+     *
+     * @param string $string What to add the trailing slash to.
+     * @return string String with trailing slash added.
+     */
+    public function trailingslashit($string) {
+        return $this->untrailingslashit($string) . '/';
+    }
+
+    /**
+     * Removes trailing slash if it exists.
+     *
+     * The primary use of this is for paths and thus should be used for paths. It is
+     * not restricted to paths and offers no specific path support.
+     *
+     * @since 1.0.0
+     *
+     * @param string $string What to remove the trailing slash from.
+     * @return string String without the trailing slash.
+     */
+    public function untrailingslashit($string) {
+        return rtrim($string, '/');
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -1502,40 +1536,6 @@ class Formatting {
         }
 
         return $subject;
-    }
-
-    /**
-     * Appends a trailing slash.
-     *
-     * Will remove trailing slash if it exists already before adding a trailing
-     * slash. This prevents double slashing a string or path.
-     *
-     * The primary use of this is for paths and thus should be used for paths. It is
-     * not restricted to paths and offers no specific path support.
-     *
-     * @since 1.2.0
-     * @uses untrailingslashit() Unslashes string if it was slashed already.
-     *
-     * @param string $string What to add the trailing slash to.
-     * @return string String with trailing slash added.
-     */
-    function trailingslashit($string) {
-        return $this->untrailingslashit($string) . '/';
-    }
-
-    /**
-     * Removes trailing slash if it exists.
-     *
-     * The primary use of this is for paths and thus should be used for paths. It is
-     * not restricted to paths and offers no specific path support.
-     *
-     * @since 2.2.0
-     *
-     * @param string $string What to remove the trailing slash from.
-     * @return string String without the trailing slash.
-     */
-    function untrailingslashit($string) {
-        return rtrim($string, '/');
     }
 
 }
