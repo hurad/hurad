@@ -109,7 +109,7 @@ class Formatting {
      * @param array $matches preg_replace_callback matches array
      * @return string
      */
-    function _autop_newline_preservation_helper($matches) {
+    private function _autop_newline_preservation_helper($matches) {
         return str_replace("\n", "<HRPreserveNewline />", $matches[0]);
     }
 
@@ -291,6 +291,7 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
 
 
 
