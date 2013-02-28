@@ -1197,6 +1197,18 @@ class Formatting {
     }
 
     /**
+     * Navigates through an array and raw encodes the values to be used in a URL.
+     *
+     * @since 1.0.0
+     *
+     * @param array|string $value The array or string to be encoded.
+     * @return array|string $value The encoded array (or string from the callback).
+     */
+    function rawurlencode_deep($value) {
+        return is_array($value) ? array_map('$this->rawurlencode_deep', $value) : rawurlencode($value);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
