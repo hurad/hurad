@@ -911,6 +911,55 @@ class Formatting {
     }
 
     /**
+     * Localize list items before the rest of the content.
+     *
+     * The '%l' must be at the first characters can then contain the rest of the
+     * content. The list items will have ', ', ', and', and ' and ' added depending
+     * on the amount of list items in the $args parameter.
+     *
+     * @since 1.0.0
+     *
+     * @param string $pattern Content containing '%l' at the beginning.
+     * @param array $args List items to prepend to the content and replace '%l'.
+     * @return string Localized list items and rest of the content.
+     */
+    function hr_sprintf_l($pattern, $args) {
+        // Not a match
+        if (substr($pattern, 0, 2) != '%l')
+            return $pattern;
+
+        // Nothing to work with
+        if (empty($args))
+            return '';
+
+        // Translate and filter the delimiter set (avoid ampersands and entities here)
+        $l = $this->HuradHook->apply_filters('hr_sprintf_l', array(
+            /* translators: used between list items, there is a space after the comma */
+            'between' => __(', '),
+            /* translators: used between list items, there is a space after the and */
+            'between_last_two' => __(', and '),
+            /* translators: used between only two list items, there is a space after the and */
+            'between_only_two' => __(' and '),
+        ));
+
+        $args = (array) $args;
+        $result = array_shift($args);
+        if (count($args) == 1)
+            $result .= $l['between_only_two'] . array_shift($args);
+        // Loop when more than two args
+        $i = count($args);
+        while ($i) {
+            $arg = array_shift($args);
+            $i--;
+            if (0 == $i)
+                $result .= $l['between_last_two'] . $arg;
+            else
+                $result .= $l['between'] . $arg;
+        }
+        return $result . substr($pattern, 2);
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -1022,6 +1071,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
