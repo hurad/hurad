@@ -779,6 +779,23 @@ class Formatting {
     }
 
     /**
+     * Sanitizes a string key.
+     *
+     * Keys are used as internal identifiers. Lowercase alphanumeric characters, dashes and underscores are allowed.
+     *
+     * @since 1.0.0
+     *
+     * @param string $key String key
+     * @return string Sanitized key
+     */
+    function sanitize_key($key) {
+        $raw_key = $key;
+        $key = strtolower($key);
+        $key = preg_replace('/[^a-z0-9_\-]/', '', $key);
+        return $this->HuradHook->apply_filters('sanitize_key', $key, $raw_key);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -1164,6 +1181,8 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
 
 
 
