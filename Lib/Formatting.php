@@ -1055,6 +1055,26 @@ class Formatting {
     }
 
     /**
+     * Acts on text which is about to be edited.
+     *
+     * The $content is run through esc_textarea(), which uses htmlspecialchars()
+     * to convert special characters to HTML entities. If $richedit is set to true,
+     * it is simply a holder for the 'format_to_edit' filter.
+     *
+     * @since 1.0.0
+     *
+     * @param string $content The text about to be edited.
+     * @param bool $richedit Whether the $content should not pass through htmlspecialchars(). Default false (meaning it will be passed).
+     * @return string The text after the filter (and possibly htmlspecialchars()) has been run.
+     */
+    public function format_to_edit($content, $richedit = false) {
+        $content = $this->HuradHook->apply_filters('format_to_edit', $content);
+        if (!$richedit)
+            $content = $this->esc_textarea($content);
+        return $content;
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
