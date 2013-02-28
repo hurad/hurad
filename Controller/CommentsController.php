@@ -222,7 +222,6 @@ class CommentsController extends AppController {
         } else {
             $this->request->data = $this->Comment->read(null, $id);
         }
-        $parentComments = $this->Comment->ParentComment->find('list');
         $posts = $this->Comment->Post->find('list');
         $users = $this->Comment->User->find('list');
         $this->set(compact('parentComments', 'posts', 'users'));
