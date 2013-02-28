@@ -1717,6 +1717,29 @@ class Formatting {
     }
 
     /**
+     * Formats text for the rich text editor.
+     *
+     * The filter 'richedit_pre' is applied here. If $text is empty the filter will
+     * be applied to an empty string.
+     *
+     * @since 1.0.0
+     *
+     * @param string $text The text to be formatted.
+     * @return string The formatted text after filter is applied.
+     */
+    public function hr_richedit_pre($text) {
+        // Filtering a blank results in an annoying <br />\n
+        if (empty($text))
+            return $this->HuradHook->apply_filters('richedit_pre', '');
+
+        $output = $this->convert_chars($text);
+        $output = $this->hrautop($output);
+        $output = htmlspecialchars($output, ENT_NOQUOTES);
+
+        return $this->HuradHook->apply_filters('richedit_pre', $output);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
