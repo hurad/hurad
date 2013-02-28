@@ -1788,6 +1788,56 @@ class Formatting {
     }
 
     /**
+     * Checks and cleans a URL.
+     *
+     * A number of characters are removed from the URL. If the URL is for displaying
+     * (the default behaviour) ampersands are also replaced. The 'clean_url' filter
+     * is applied to the returned cleaned URL.
+     *
+     * @since 1.0.0
+     * @uses kses_bad_protocol() To only permit protocols in the URL set
+     * via $protocols or the common ones set in the function.
+     *
+     * @param string $url The URL to be cleaned.
+     * @param array $protocols Optional. An array of acceptable protocols.
+     * Defaults to 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'svn' if not set.
+     * @param string $_context Private. Use esc_url_raw() for database usage.
+     * @return string The cleaned $url after the 'clean_url' filter is applied.
+     */
+    public function esc_url($url, $protocols = null, $_context = 'display') {
+        $original_url = $url;
+
+        if ('' == $url)
+            return $url;
+        $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
+        $strip = array('%0d', '%0a', '%0D', '%0A');
+        $url = $this->_deep_replace($strip, $url);
+        $url = str_replace(';//', '://', $url);
+        /* If the URL doesn't appear to contain a scheme, we
+         * presume it needs http:// appended (unless a relative
+         * link starting with /, # or ? or a php file).
+         */
+        if (strpos($url, ':') === false && !in_array($url[0], array('/', '#', '?')) &&
+                !preg_match('/^[a-z0-9-]+?\.php/i', $url))
+            $url = 'http://' . $url;
+
+        // Replace ampersands and single quotes only when displaying.
+        if ('display' == $_context) {
+            $url = kses_normalize_entities($url);
+            $url = str_replace('&amp;', '&#038;', $url);
+            $url = str_replace("'", '&#039;', $url);
+        }
+
+        if (!is_array($protocols))
+            $protocols = Functions::allowed_protocols();
+        $good_protocol_url = kses_bad_protocol($url, $protocols);
+        if (strtolower($good_protocol_url) != strtolower($url))
+            return '';
+
+        return $this->HuradHook->apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
@@ -2088,55 +2138,6 @@ class Formatting {
         $safe_text = Formatting::hr_check_invalid_utf8($text);
         $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
         return $safe_text;
-    }
-
-    /**
-     * Checks and cleans a URL.
-     *
-     * A number of characters are removed from the URL. If the URL is for displaying
-     * (the default behaviour) ampersands are also replaced. The 'clean_url' filter
-     * is applied to the returned cleaned URL.
-     *
-     * @since 1.0
-     * @uses kses_bad_protocol() To only permit protocols in the URL set
-     *              via $protocols or the common ones set in the function.
-     *
-     * @param string $url The URL to be cleaned.
-     * @param array $protocols Optional. An array of acceptable protocols.
-     *              Defaults to 'http', 'https', 'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet', 'mms', 'rtsp', 'svn' if not set.
-     * @param string $_context Private. Use esc_url_raw() for database usage.
-     * @return string The cleaned $url after the 'clean_url' filter is applied.
-     */
-    function esc_url($url, $protocols = null, $_context = 'display') {
-
-        if ('' == $url)
-            return $url;
-        $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
-        $strip = array('%0d', '%0a', '%0D', '%0A');
-        $url = Formatting::_deep_replace($strip, $url);
-        $url = str_replace(';//', '://', $url);
-        /* If the URL doesn't appear to contain a scheme, we
-         * presume it needs http:// appended (unless a relative
-         * link starting with /, # or ? or a php file).
-         */
-        if (strpos($url, ':') === false && !in_array($url[0], array('/', '#', '?')) &&
-                !preg_match('/^[a-z0-9-]+?\.php/i', $url))
-            $url = 'http://' . $url;
-
-        // Replace ampersands and single quotes only when displaying.
-        if ('display' == $_context) {
-            $url = kses_normalize_entities($url);
-            $url = str_replace('&amp;', '&#038;', $url);
-            $url = str_replace("'", '&#039;', $url);
-        }
-
-        if (!is_array($protocols))
-            $protocols = Functions::allowed_protocols();
-        if (kses_bad_protocol($url, $protocols) != $url)
-            return '';
-
-        //return apply_filters('clean_url', $url, $original_url, $_context);
-        return $url;
     }
 
 }
