@@ -1942,6 +1942,25 @@ class Formatting {
     }
 
     /**
+     * Parses a string into variables to be stored in an array.
+     *
+     * Uses {@link http://www.php.net/parse_str parse_str()} and stripslashes if
+     * {@link http://www.php.net/magic_quotes magic_quotes_gpc} is on.
+     *
+     * @since 1.0.0
+     * @uses apply_filters() for the 'wp_parse_str' filter.
+     *
+     * @param string $string The string to be parsed.
+     * @param array $array Variables will be stored in this array.
+     */
+    public function hr_parse_str($string, &$array) {
+        parse_str($string, $array);
+        if (get_magic_quotes_gpc())
+            $array = Formatting::stripslashes_deep($array);
+        $array = Configure::read('HuradHook.obj')->apply_filters('hr_parse_str', $array);
+    }
+
+    /**
      * Sanitize a string from user input or from the db
      *
      * check for invalid UTF-8,
