@@ -779,6 +779,76 @@ class Formatting {
     }
 
     /**
+     * Sanitize a string from user input or from the db
+     *
+     * check for invalid UTF-8,
+     * Convert single < characters to entity,
+     * strip all tags,
+     * remove line breaks, tabs and extra white space,
+     * strip octets.
+     *
+     * @since 1.0.0
+     *
+     * @param string $str
+     * @return string
+     */
+    public function sanitize_text_field($str) {
+        $filtered = $this->hr_check_invalid_utf8($str);
+
+        if (strpos($filtered, '<') !== false) {
+            $filtered = $this->hr_pre_kses_less_than($filtered);
+            // This will strip extra whitespace for us.
+            $filtered = $this->hr_strip_all_tags($filtered, true);
+        } else {
+            $filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
+        }
+
+        $match = array();
+        $found = false;
+        while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match)) {
+            $filtered = str_replace($match[0], '', $filtered);
+            $found = true;
+        }
+
+        if ($found) {
+            // Strip out the whitespace that may now exist after removing the octets.
+            $filtered = trim(preg_replace('/ +/', ' ', $filtered));
+        }
+
+        return $this->HuradHook->apply_filters('sanitize_text_field', $filtered, $str);
+    }
+
+    /**
+     * Convert lone less than signs.
+     *
+     * KSES already converts lone greater than signs.
+     *
+     * @uses hr_pre_kses_less_than_callback in the callback function.
+     * @since 1.0.0
+     *
+     * @param string $text Text to be converted.
+     * @return string Converted text.
+     */
+    public function hr_pre_kses_less_than($text) {
+        return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', '$this->hr_pre_kses_less_than_callback', $text);
+    }
+
+    /**
+     * Callback function used by preg_replace.
+     *
+     * @uses esc_html to format the $matches text.
+     * @since 1.0.0
+     *
+     * @param array $matches Populated by matches to preg_replace.
+     * @return string The text returned after esc_html if needed.
+     */
+    public function hr_pre_kses_less_than_callback($matches) {
+        if (false === strpos($matches[0], '>'))
+            return $this->esc_html($matches[0]);
+        return $matches[0];
+    }
+
+    /**
      * Balances tags of string using a modified stack.
      *
      * @since 1.0.0
@@ -890,6 +960,12 @@ class Formatting {
         // Empty Stack
         while ($x = array_pop($tagstack))
             $newtext .= '</' . $x . '>'; // Add remaining tags to close
+
+
+
+
+
+
 
 
 
