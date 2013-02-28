@@ -9,11 +9,6 @@ App::import('Vendor', 'kses');
  */
 class Formatting {
 
-    public function __construct() {
-        $this->HuradHook = Configure::read('HuradHook.obj');
-        ;
-    }
-
     /**
      * Replaces double line-breaks with paragraph elements.
      *
@@ -86,7 +81,7 @@ class Formatting {
         $pee = preg_replace('!<p>\s*(</?' . $allblocks . '[^>]*>)!', "$1", $pee);
         $pee = preg_replace('!(</?' . $allblocks . '[^>]*>)\s*</p>!', "$1", $pee);
         if ($br) {
-            $pee = preg_replace_callback('/<(script|style).*?<\/\\1>/s', '$this->_autop_newline_preservation_helper', $pee);
+            $pee = preg_replace_callback('/<(script|style).*?<\/\\1>/s', 'Formatting::_autop_newline_preservation_helper', $pee);
             $pee = preg_replace('|(?<!<br />)\s*\n|', "<br />\n", $pee); // optionally make line breaks
             $pee = str_replace('<HRPreserveNewline />', "\n", $pee);
         }
@@ -183,11 +178,14 @@ class Formatting {
         elseif (!in_array($quote_style, array(0, 2, 3, 'single', 'double'), true))
             $quote_style = ENT_QUOTES;
 
-        // Store the site charset as a static to avoid multiple calls to wp_load_alloptions()
         if (!$charset) {
             static $_charset;
             if (!isset($_charset)) {
-                $_charset = isset(Configure::read('site_charset')) ? Configure::read('site_charset') : '';
+                if (Configure::read('site_charset')) {
+                    $_charset = Configure::read('site_charset');
+                } else {
+                    $_charset = '';
+                }
             }
             $charset = $_charset;
         }
@@ -209,7 +207,7 @@ class Formatting {
             $string = @htmlspecialchars($string, $quote_style, $charset);
         } else {
             // Decode &amp; into &
-            $string = $this->hr_specialchars_decode($string, $_quote_style);
+            $string = Formatting::hr_specialchars_decode($string, $_quote_style);
 
             // Guarantee every &entity; is valid or re-encode the &
             $string = $kses->normalizeEntities($string);
@@ -405,7 +403,7 @@ class Formatting {
         if (!preg_match('/[\x80-\xff]/', $string))
             return $string;
 
-        if ($this->seems_utf8($string)) {
+        if (Formatting::seems_utf8($string)) {
             $chars = array(
                 // Decompositions for Latin-1 Supplement
                 chr(194) . chr(170) => 'a', chr(194) . chr(186) => 'o',
@@ -696,8 +694,8 @@ class Formatting {
      */
     public function sanitize_user($username, $strict = false) {
         $raw_username = $username;
-        $username = $this->hr_strip_all_tags($username);
-        $username = $this->remove_accents($username);
+        $username = Formatting::hr_strip_all_tags($username);
+        $username = Formatting::remove_accents($username);
         // Kill octets
         $username = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '', $username);
         $username = preg_replace('/&.+?;/', '', $username); // Kill entities
@@ -747,7 +745,7 @@ class Formatting {
         $raw_title = $title;
 
         if ('save' == $context)
-            $title = $this->remove_accents($title);
+            $title = Formatting::remove_accents($title);
 
         $title = $this->HuradHook->apply_filters('sanitize_title', $title, $raw_title, $context);
 
@@ -779,11 +777,11 @@ class Formatting {
         // Restore octets.
         $title = preg_replace('|---([a-fA-F0-9][a-fA-F0-9])---|', '%$1', $title);
 
-        if ($this->seems_utf8($title)) {
+        if (Formatting::seems_utf8($title)) {
             if (function_exists('mb_strtolower')) {
                 $title = mb_strtolower($title, 'UTF-8');
             }
-            $title = $this->utf8_uri_encode($title, 200);
+            $title = Formatting::utf8_uri_encode($title, 200);
         }
 
         $title = strtolower($title);
@@ -848,7 +846,7 @@ class Formatting {
         if ('' == $sanitized)
             $sanitized = $fallback;
 
-        return $this->HuradHook->apply_filters('sanitize_html_class', $sanitized, $class, $fallback);
+        return Configure::read('HuradHook.obj')->apply_filters('sanitize_html_class', $sanitized, $class, $fallback);
     }
 
     /**
@@ -928,7 +926,7 @@ class Formatting {
      */
     public function balanceTags($text, $force = false) {
         if ($force || Configure::read('use_balanceTags') == 1)
-            return $this->force_balance_tags($text);
+            return Formatting::force_balance_tags($text);
         else
             return $text;
     }
@@ -1070,7 +1068,7 @@ class Formatting {
     public function format_to_edit($content, $richedit = false) {
         $content = $this->HuradHook->apply_filters('format_to_edit', $content);
         if (!$richedit)
-            $content = $this->esc_textarea($content);
+            $content = Formatting::esc_textarea($content);
         return $content;
     }
 
@@ -1138,7 +1136,7 @@ class Formatting {
      * @return string String with trailing slash added.
      */
     public function trailingslashit($string) {
-        return $this->untrailingslashit($string) . '/';
+        return Formatting::untrailingslashit($string) . '/';
     }
 
     /**
@@ -1169,11 +1167,11 @@ class Formatting {
      */
     public function stripslashes_deep($value) {
         if (is_array($value)) {
-            $value = array_map('$this->stripslashes_deep', $value);
+            $value = array_map('Formatting::stripslashes_deep', $value);
         } elseif (is_object($value)) {
             $vars = get_object_vars($value);
             foreach ($vars as $key => $data) {
-                $value->{$key} = $this->stripslashes_deep($data);
+                $value->{$key} = Formatting::stripslashes_deep($data);
             }
         } elseif (is_string($value)) {
             $value = stripslashes($value);
@@ -1192,7 +1190,7 @@ class Formatting {
      * @return array|string $value The encoded array (or string from the callback).
      */
     public function urlencode_deep($value) {
-        $value = is_array($value) ? array_map('$this->urlencode_deep', $value) : urlencode($value);
+        $value = is_array($value) ? array_map('Formatting::urlencode_deep', $value) : urlencode($value);
         return $value;
     }
 
@@ -1205,7 +1203,7 @@ class Formatting {
      * @return array|string $value The encoded array (or string from the callback).
      */
     public function rawurlencode_deep($value) {
-        return is_array($value) ? array_map('$this->rawurlencode_deep', $value) : rawurlencode($value);
+        return is_array($value) ? array_map('Formatting::rawurlencode_deep', $value) : rawurlencode($value);
     }
 
     /**
@@ -1237,7 +1235,7 @@ class Formatting {
             $url = substr($url, 0, strrpos($url, ')'));
         }
 
-        $url = $this->esc_url($url);
+        $url = Formatting::esc_url($url);
         if (empty($url))
             return $matches[0];
 
@@ -1259,7 +1257,7 @@ class Formatting {
         $ret = '';
         $dest = $matches[2];
         $dest = 'http://' . $dest;
-        $dest = $this->esc_url($dest);
+        $dest = Formatting::esc_url($dest);
         if (empty($dest))
             return $matches[0];
 
@@ -1310,11 +1308,11 @@ class Formatting {
             // Long strings might contain expensive edge cases ...
             if (10000 < strlen($piece)) {
                 // ... break it up
-                foreach ($this->_split_str_by_whitespace($piece, 2100) as $chunk) { // 2100: Extra room for scheme and leading and trailing paretheses
+                foreach (Formatting::_split_str_by_whitespace($piece, 2100) as $chunk) { // 2100: Extra room for scheme and leading and trailing paretheses
                     if (2101 < strlen($chunk)) {
                         $r .= $chunk; // Too big, no whitespace: bail.
                     } else {
-                        $r .= $this->make_clickable($chunk);
+                        $r .= Formatting::make_clickable($chunk);
                     }
                 }
             } else {
@@ -1335,10 +1333,10 @@ class Formatting {
                                 ~xS'; // The regex is a non-anchored pattern and does not have a single fixed starting character.
                 // Tell PCRE to spend more time optimizing since, when used on a page load, it will probably be used several times.
 
-                $ret = preg_replace_callback($url_clickable, '$this->_make_url_clickable_cb', $ret);
+                $ret = preg_replace_callback($url_clickable, 'Formatting::_make_url_clickable_cb', $ret);
 
-                $ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', '$this->_make_web_ftp_clickable_cb', $ret);
-                $ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', '$this->_make_email_clickable_cb', $ret);
+                $ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', 'Formatting::_make_web_ftp_clickable_cb', $ret);
+                $ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', 'Formatting::_make_email_clickable_cb', $ret);
 
                 $ret = substr($ret, 1, -1); // Remove our whitespace padding.
                 $r .= $ret;
@@ -1417,7 +1415,7 @@ class Formatting {
      * @return string Converted content.
      */
     public function hr_rel_nofollow($text) {
-        $text = preg_replace_callback('|<a (.+?)>|i', '$this->hr_rel_nofollow_callback', $text);
+        $text = preg_replace_callback('|<a (.+?)>|i', 'Formatting::hr_rel_nofollow_callback', $text);
         return $text;
     }
 
@@ -1732,8 +1730,8 @@ class Formatting {
         if (empty($text))
             return $this->HuradHook->apply_filters('richedit_pre', '');
 
-        $output = $this->convert_chars($text);
-        $output = $this->hrautop($output);
+        $output = Formatting::convert_chars($text);
+        $output = Formatting::hrautop($output);
         $output = htmlspecialchars($output, ENT_NOQUOTES);
 
         return $this->HuradHook->apply_filters('richedit_pre', $output);
@@ -1811,7 +1809,7 @@ class Formatting {
             return $url;
         $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
         $strip = array('%0d', '%0a', '%0D', '%0A');
-        $url = $this->_deep_replace($strip, $url);
+        $url = Formatting::_deep_replace($strip, $url);
         $url = str_replace(';//', '://', $url);
         /* If the URL doesn't appear to contain a scheme, we
          * presume it needs http:// appended (unless a relative
@@ -1834,7 +1832,7 @@ class Formatting {
         if (strtolower($good_protocol_url) != strtolower($url))
             return '';
 
-        return $this->HuradHook->apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
+        return Configure::read('HuradHook.obj')->apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
     }
 
     /**
@@ -1852,12 +1850,12 @@ class Formatting {
      * @return string
      */
     public function sanitize_text_field($str) {
-        $filtered = $this->hr_check_invalid_utf8($str);
+        $filtered = Formatting::hr_check_invalid_utf8($str);
 
         if (strpos($filtered, '<') !== false) {
-            $filtered = $this->hr_pre_kses_less_than($filtered);
+            $filtered = Formatting::hr_pre_kses_less_than($filtered);
             // This will strip extra whitespace for us.
-            $filtered = $this->hr_strip_all_tags($filtered, true);
+            $filtered = Formatting::hr_strip_all_tags($filtered, true);
         } else {
             $filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
         }
@@ -1889,7 +1887,7 @@ class Formatting {
      * @return string Converted text.
      */
     public function hr_pre_kses_less_than($text) {
-        return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', '$this->hr_pre_kses_less_than_callback', $text);
+        return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'Formatting::hr_pre_kses_less_than_callback', $text);
     }
 
     /**
@@ -1903,7 +1901,7 @@ class Formatting {
      */
     public function hr_pre_kses_less_than_callback($matches) {
         if (false === strpos($matches[0], '>'))
-            return $this->esc_html($matches[0]);
+            return Formatting::esc_html($matches[0]);
         return $matches[0];
     }
 
@@ -2032,7 +2030,7 @@ class Formatting {
      * @return string The excerpt.
      */
     public function hr_html_excerpt($str, $count) {
-        $str = $this->hr_strip_all_tags($str, true);
+        $str = Formatting::hr_strip_all_tags($str, true);
         $str = mb_substr($str, 0, $count);
         // remove part of an entity at the end
         $str = preg_replace('/&[^;\s]{0,6}$/', '', $str);
@@ -2058,7 +2056,7 @@ class Formatting {
         global $_links_add_target;
         $_links_add_target = $target;
         $tags = implode('|', (array) $tags);
-        return preg_replace_callback("!<($tags)(.+?)>!i", '$this->_links_add_target', $content);
+        return preg_replace_callback("!<($tags)(.+?)>!i", 'Formatting::_links_add_target', $content);
     }
 
     /**
@@ -2074,7 +2072,7 @@ class Formatting {
         global $_links_add_target;
         $tag = $m[1];
         $link = preg_replace('|(target=[\'"](.*?)[\'"])|i', '', $m[2]);
-        return '<' . $tag . $link . ' target="' . $this->esc_attr($_links_add_target) . '">';
+        return '<' . $tag . $link . ' target="' . Formatting::esc_attr($_links_add_target) . '">';
     }
 
     /**
@@ -2120,8 +2118,8 @@ class Formatting {
      * @return string
      */
     function esc_html($text) {
-        $safe_text = $this->hr_check_invalid_utf8($text);
-        $safe_text = $this->_hr_specialchars($safe_text, ENT_QUOTES);
+        $safe_text = Formatting::hr_check_invalid_utf8($text);
+        $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
         //return apply_filters('esc_html', $safe_text, $text);
         return $safe_text;
     }
