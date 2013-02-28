@@ -2273,4 +2273,17 @@ class Formatting {
         return Configure::read('HuradHook.obj')->apply_filters('sanitize_text_field', $filtered, $str);
     }
 
+    /**
+     * i18n friendly version of basename()
+     *
+     * @since 1.0.0
+     *
+     * @param string $path A path.
+     * @param string $suffix If the filename ends in suffix this will also be cut off.
+     * @return string
+     */
+    public function hr_basename($path, $suffix = '') {
+        return urldecode(basename(str_replace(array('%2F', '%5C'), '/', urlencode($path)), $suffix));
+    }
+
 }
