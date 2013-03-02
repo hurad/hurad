@@ -1,39 +1,26 @@
-<?php $this->Html->css(array('admin/list-table', 'admin/paging', 'admin/Categories/categories'), null, array('inline' => false)); ?>
+<?php $this->Html->css(array('admin/Categories/categories'), null, array('inline' => false)); ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
-<h2>
-    <?php echo $title_for_layout; ?>
-    <?php echo $this->Html->link(__('Add New'), '/admin/categories/add', array('class' => 'add_button')); ?>
-</h2>
+<div class="page-header">
+    <h2>
+        <?php echo $title_for_layout; ?>
+        <?php echo $this->Html->link(__('Add New'), '/admin/categories/add', array('class' => 'btn btn-mini')); ?>
+    </h2>
+</div>
 
 <?php
 echo $this->Form->create('Category', array('url' =>
     array('admin' => TRUE, 'action' => 'process'),
+    'class' => 'form-inline',
     'inputDefaults' =>
     array('label' => false, 'div' => false)));
 ?>
 
-<div class="tablenav">
-    <div class="actions">
-        <?php
-        echo $this->Form->input('Category.action.top', array(
-            'label' => false,
-            'options' => array(
-                'delete' => __('Delete'),
-            ),
-            'empty' => __('Bulk Actions'),
-        ));
-        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
-        ?>
-    </div>
-    <?php echo $this->element('admin/paginator'); ?>
-</div>
-
-<table class="list-table">
+<table class="table table-striped">
     <thead>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -67,49 +54,50 @@ echo $this->Form->create('Category', array('url' =>
         ));
         ?>
     </thead>
-    <?php foreach ($categories AS $i => $category): ?>
-        <?php
-        echo $this->Html->tableCells(array(
-            array(
-                array($this->Form->checkbox('Category.' . $category['Category']['id'] . '.id'),
-                    array(
-                        'class' => 'check-column',
-                        'scope' => 'row')
-                ),
-                array($this->Html->link('<strong>' . h($category['Category']['path']) . '</strong>', array('action' => 'edit', $category['Category']['id']), array('title' => __('Edit “%s”', $category['Category']['path']), 'escape' => FALSE)) . $this->element('admin/Categories/row_actions', array('category' => $category)),
-                    array(
-                        'class' => 'column-path'
+    <tbody>
+        <?php foreach ($categories AS $i => $category): ?>
+            <?php
+            echo $this->Html->tableCells(array(
+                array(
+                    array($this->Form->checkbox('Category.' . $category['Category']['id'] . '.id'),
+                        array(
+                            'class' => 'check-column',
+                            'scope' => 'row')
+                    ),
+                    array($this->Html->link('<strong>' . h($category['Category']['path']) . '</strong>', array('action' => 'edit', $category['Category']['id']), array('title' => __('Edit “%s”', $category['Category']['path']), 'escape' => FALSE)) . $this->element('admin/Categories/row_actions', array('category' => $category)),
+                        array(
+                            'class' => 'column-path'
+                        )
+                    ),
+                    array(h($category['Category']['description']),
+                        array(
+                            'class' => 'column-description'
+                        )
+                    ),
+                    array(h($category['Category']['slug']),
+                        array(
+                            'class' => 'column-slug'
+                        )
+                    ),
+                    array($this->Html->link($category['Category']['post_count'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBycategory', $category['Category']['id'])),
+                        array(
+                            'class' => 'column-posts'
+                        )
                     )
                 ),
-                array(h($category['Category']['description']),
-                    array(
-                        'class' => 'column-description'
+                    ), array(
+                'id' => 'category-' . $category['Category']['id']
+                    ), array(
+                'id' => 'category-' . $category['Category']['id']
                     )
-                ),
-                array(h($category['Category']['slug']),
-                    array(
-                        'class' => 'column-slug'
-                    )
-                ),
-                array($this->Html->link($category['Category']['post_count'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBycategory', $category['Category']['id'])),
-                    array(
-                        'class' => 'column-posts'
-                    )
-                )
-            ),
-                ), array(
-            'id' => 'category-' . $category['Category']['id']
-                ), array(
-            'id' => 'category-' . $category['Category']['id'],
-            'class' => 'alternate'
-                )
-        );
-        ?>
-    <?php endforeach; ?>
+            );
+            ?>
+        <?php endforeach; ?>
+    </tbody>
     <tfoot>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -145,21 +133,18 @@ echo $this->Form->create('Category', array('url' =>
     </tfoot>
 </table>
 
-<div class="tablenav">
-    <div class="actions">
-        <?php
-        echo $this->Form->input('Category.action.bot', array(
-            'label' => false,
-            'options' => array(
-                'delete' => __('Delete'),
-            ),
-            'empty' => __('Bulk Actions'),
-        ));
-        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
-        ?>
-    </div>
-    <?php echo $this->element('admin/paginator'); ?>
-</div>
+<section>
+    <?php
+    echo $this->Form->input('Category.action.bot', array(
+        'label' => false,
+        'options' => array(
+            'delete' => __('Delete'),
+        ),
+        'empty' => __('Bulk Actions'),
+    ));
+    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
+    ?>
+</section>
 
 <div class="form-wrap">
     <p>
