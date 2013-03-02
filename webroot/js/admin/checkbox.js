@@ -1,5 +1,11 @@
-function toggleChecked(status) {
-    $(":checkbox").each( function() {
-        $(this).attr("checked",status);
-    })
-}
+$(document).ready(function() {
+    $('.check-all').click(function(event) {
+
+        var selected = this.checked;
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+            this.checked = selected;
+        });
+
+    });
+});
