@@ -1,39 +1,26 @@
-<?php $this->Html->css(array('admin/list-table', 'admin/paging', 'admin/Tags/tags'), null, array('inline' => FALSE)); ?>
+<?php $this->Html->css(array('admin/Tags/tags'), null, array('inline' => FALSE)); ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
-<h2>
-    <?php echo $title_for_layout; ?>
-    <?php echo $this->Html->link(__('Add New'), '/admin/tags/add', array('class' => 'add_button')); ?>
-</h2>
+<div class="page-header">
+    <h2>
+        <?php echo $title_for_layout; ?>
+        <?php echo $this->Html->link(__('Add New'), '/admin/tags/add', array('class' => 'btn btn-mini')); ?>
+    </h2>
+</div>
 
 <?php
 echo $this->Form->create('Tag', array('url' =>
     array('admin' => TRUE, 'controller' => 'tags', 'action' => 'process'),
+    'class' => 'form-inline',
     'inputDefaults' =>
     array('label' => false, 'div' => false)));
 ?>
 
-<div class="tablenav">
-    <div class="actions">
-        <?php
-        echo $this->Form->input('Tag.action.top', array(
-            'label' => false,
-            'options' => array(
-                'delete' => __('Delete'),
-            ),
-            'empty' => __('Bulk Actions'),
-        ));
-        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
-        ?>
-    </div>
-    <?php echo $this->element('admin/paginator'); ?>
-</div>
-
-<table class="list-table">
+<table class="table table-striped">
     <thead>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -67,49 +54,50 @@ echo $this->Form->create('Tag', array('url' =>
         ));
         ?>
     </thead>
-    <?php foreach ($tags AS $tag): ?>
-        <?php
-        echo $this->Html->tableCells(array(
-            array(
-                array($this->Form->checkbox('Tag.' . $tag['Tag']['id'] . '.id'),
-                    array(
-                        'class' => 'check-column',
-                        'scope' => 'row')
-                ),
-                array($this->Html->link('<strong>' . h($tag['Tag']['name']) . '</strong>', array('action' => 'edit', $tag['Tag']['id']), array('title' => __('Edit “%s”', $tag['Tag']['name']), 'escape' => FALSE)) . $this->element('admin/Tags/row_actions', array('tag' => $tag)),
-                    array(
-                        'class' => 'column-name'
+    <tbody>
+        <?php foreach ($tags AS $tag): ?>
+            <?php
+            echo $this->Html->tableCells(array(
+                array(
+                    array($this->Form->checkbox('Tag.' . $tag['Tag']['id'] . '.id'),
+                        array(
+                            'class' => 'check-column',
+                            'scope' => 'row')
+                    ),
+                    array($this->Html->link('<strong>' . h($tag['Tag']['name']) . '</strong>', array('action' => 'edit', $tag['Tag']['id']), array('title' => __('Edit “%s”', $tag['Tag']['name']), 'escape' => FALSE)) . $this->element('admin/Tags/row_actions', array('tag' => $tag)),
+                        array(
+                            'class' => 'column-name'
+                        )
+                    ),
+                    array(h($tag['Tag']['description']),
+                        array(
+                            'class' => 'column-description'
+                        )
+                    ),
+                    array(h($tag['Tag']['slug']),
+                        array(
+                            'class' => 'column-slug'
+                        )
+                    ),
+                    array($this->Html->link($this->Html->tag('span', $tag['Tag']['post_count'], array('class' => 'badge')), array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBytag', $tag['Tag']['id']), array('escape' => FALSE)),
+                        array(
+                            'class' => 'column-posts'
+                        )
                     )
                 ),
-                array(h($tag['Tag']['description']),
-                    array(
-                        'class' => 'column-description'
+                    ), array(
+                'id' => 'tag-' . $tag['Tag']['id']
+                    ), array(
+                'id' => 'tag-' . $tag['Tag']['id']
                     )
-                ),
-                array(h($tag['Tag']['slug']),
-                    array(
-                        'class' => 'column-slug'
-                    )
-                ),
-                array($this->Html->link($tag['Tag']['post_count'], array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBytag', $tag['Tag']['id'])),
-                    array(
-                        'class' => 'column-posts'
-                    )
-                )
-            ),
-                ), array(
-            'id' => 'tag-' . $tag['Tag']['id']
-                ), array(
-            'id' => 'tag-' . $tag['Tag']['id'],
-            'class' => 'alternate'
-                )
-        );
-        ?>
-    <?php endforeach; ?>
+            );
+            ?>
+        <?php endforeach; ?>
+    </tbody>
     <tfoot>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -145,18 +133,15 @@ echo $this->Form->create('Tag', array('url' =>
     </tfoot>
 </table>
 
-<div class="tablenav">
-    <div class="actions">
-        <?php
-        echo $this->Form->input('Tag.action.bot', array(
-            'label' => false,
-            'options' => array(
-                'delete' => __('Delete'),
-            ),
-            'empty' => __('Bulk Actions'),
-        ));
-        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
-        ?>
-    </div>
-    <?php echo $this->element('admin/paginator'); ?>
-</div>
+<section>
+    <?php
+    echo $this->Form->input('Tag.action.bot', array(
+        'label' => false,
+        'options' => array(
+            'delete' => __('Delete'),
+        ),
+        'empty' => __('Bulk Actions'),
+    ));
+    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
+    ?>
+</section>
