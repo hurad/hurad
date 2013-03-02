@@ -34,9 +34,11 @@ class AdminLayoutHelper extends AppHelper {
 
     public function postStatus($value) {
         if ($value == 'publish') {
-            $output = __('Publish');
+            $output = $this->Html->tag('span', __('Publish'), array('class' => 'label label-success'));
         } elseif ($value == 'draft') {
-            $output = __('Draft');
+            $output = $this->Html->tag('span', __('Draft'), array('class' => 'label label-warning'));
+        } elseif ($value == 'trash') {
+            $output = $this->Html->tag('span', __('Trash'), array('class' => 'label label-important'));
         } else {
             $output = __('Unknown');
         }
@@ -190,33 +192,41 @@ class AdminLayoutHelper extends AppHelper {
             $options[$key]['weight'] = abs($options[$key]['weight']);
         }
         $menuSorted = Set::sort($options, '{[a-z]+}.weight', 'asc');
-        echo $this->Html->tag('ul', null, array('id' => 'adminmenu'));
+        echo $this->Html->tag('div', null, array('id' => 'accordion2', 'class' => 'accordion'));
         foreach ($menuSorted as $value => $val) {
-            echo $this->Html->tag('li', null, array('class' => 'widget ' . $value . '-widget'));
-            echo $this->Html->tag('ul', null, array('class' => 'menu ' . $value . '-menu'));
-            echo $this->Html->tag('li', null, array('class' => 'top-menu ' . $value . '-top-menu'));
-            echo $this->Html->image($val['img'], array('class' => 'menu-img'));
-            echo ' ' . $val['title'];
-            echo $this->Html->image('menu-arrow.gif', array('class' => 'arrow-def'));
-            echo '</li>';
+            echo $this->Html->tag('div', null, array('class' => 'accordion-group'));
+            echo $this->Html->tag('div', null, array('class' => 'accordion-heading'));
+            echo $this->Html->tag('a', null, array('class' => 'accordion-toggle', 'data-toggle' => 'collapse', 'data-parent' => '#accordion3', 'href' => '#collapse-' . $value));
+            if ($val['icon-class']) {
+                echo $this->Html->tag('i', null, array('class' => $val['icon-class']));
+                echo '</i>';
+            } elseif ($val['img']) {
+                echo $this->Html->image($val['img']);
+            }
+            echo $this->Html->tag('b', ' ' . $val['title']);
+            echo '</a>'; //a.accordion-toggle
+            echo '</div>'; //div.accordion-heading
+
             if ($val['child'] && is_array($val['child'])) {
                 //Absolute child weight value
-                foreach ($val['child'] as $key => $value) {
+                foreach ($val['child'] as $key => $v) {
                     $val['child'][$key]['weight'] = abs($val['child'][$key]['weight']);
                 }
                 $childSorted = Set::sort($val['child'], '{[a-z]+}.weight', 'asc');
-                echo $this->Html->tag('li', null, array('class' => 'sb'));
-                echo $this->Html->tag('ul', null, array('class' => 'submenu'));
+                echo $this->Html->tag('div', null, array('id' => 'collapse-' . $value, 'class' => 'accordion-body collapse'));
+                echo $this->Html->tag('div', null, array('class' => 'accordion-inner'));
+                echo $this->Html->tag('ul', null, array('class' => 'nav nav-list'));
                 foreach ($childSorted as $key => $value) {
                     echo $this->Html->tag('li', $this->Html->link($value['title'], $value['url']));
                 }
-                echo '</ul>';
-                echo '</li>';
+                echo '</ul>'; //ul.nav .nav-list
+                echo '</div>'; //div.accordion-inner
+                echo '</div>'; //div.accordion-body .collapse
             }
-            echo '</ul>';
-            echo '</li>';
+            echo '</div>'; //div.accordion-group
         }
-        echo '</ul>';
+        echo '</div>'; //div.accordion
     }
 
 }
+
