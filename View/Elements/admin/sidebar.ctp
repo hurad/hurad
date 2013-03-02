@@ -3,7 +3,8 @@
 HrNav::add('dashboard', array(
     'title' => __('Dashboard'),
     'url' => '#',
-    'img' => 'home.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-home',
     'weight' => 1,
     'child' => array(
         'home' => array(
@@ -16,7 +17,8 @@ HrNav::add('dashboard', array(
 HrNav::add('posts', array(
     'title' => __('Posts'),
     'url' => '#',
-    'img' => 'pin.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-pencil',
     'weight' => 2,
     'child' => array(
         'posts' => array(
@@ -44,7 +46,8 @@ HrNav::add('posts', array(
 HrNav::add('links', array(
     'title' => __('Links'),
     'url' => '#',
-    'img' => 'chain.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-globe',
     'weight' => 3,
     'child' => array(
         'all_links' => array(
@@ -67,7 +70,8 @@ HrNav::add('links', array(
 HrNav::add('pages', array(
     'title' => __('Pages'),
     'url' => '#',
-    'img' => 'report-paper.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-file',
     'weight' => 4,
     'child' => array(
         'all_pages' => array(
@@ -85,7 +89,8 @@ HrNav::add('pages', array(
 HrNav::add('comments', array(
     'title' => __('Comments'),
     'url' => '#',
-    'img' => 'sticky-notes-pin.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-comment',
     'weight' => 5,
     'child' => array(
         'all_comments' => array(
@@ -98,7 +103,8 @@ HrNav::add('comments', array(
 HrNav::add('appearance', array(
     'title' => __('Appearance'),
     'url' => '#',
-    'img' => 'application-blog.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-asterisk',
     'weight' => 6,
     'child' => array(
         'themes' => array(
@@ -121,7 +127,8 @@ HrNav::add('appearance', array(
 HrNav::add('plugins', array(
     'title' => __('Plugins'),
     'url' => '#',
-    'img' => 'plug.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-plus',
     'weight' => 7,
     'child' => array(
         'plugins' => array(
@@ -134,7 +141,8 @@ HrNav::add('plugins', array(
 HrNav::add('users', array(
     'title' => __('Users'),
     'url' => '#',
-    'img' => 'users.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-user',
     'weight' => 8,
     'child' => array(
         'all_users' => array(
@@ -152,7 +160,8 @@ HrNav::add('users', array(
 HrNav::add('options', array(
     'title' => __('Options'),
     'url' => '#',
-    'img' => 'toolbox.png',
+    'img' => FALSE,
+    'icon-class' => 'icon-wrench',
     'weight' => 9,
     'child' => array(
         'general' => array(
