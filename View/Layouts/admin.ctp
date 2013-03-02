@@ -1,17 +1,17 @@
-<?php echo $this->Html->docType(); ?>
-<html lang="en-US" dir="ltr">
+<!DOCTYPE html>
+<html>
     <head>
         <title><?php echo $title_for_layout; ?> &#8212; <?php echo __('Huard'); ?></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php echo $this->Html->charset(); ?>
-        <?php echo $this->Html->css(array('reset', 'main', 'color-gray', 'admin-menu', 'error')); ?>
+        <?php echo $this->Html->css(array('bootstrap.min.css', 'main')); ?>
         <?php echo $this->fetch('css'); ?>
         <?php
         echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
             'admin/jquery-1.9.0.min',
             'admin/jquery-ui-1.10.0.custom.min',
-            'admin/modernizr.custom.39710',
-            'form',
+            'bootstrap.min',
             'admin/sidebar-menu',
                 )
         );
@@ -20,29 +20,20 @@
         <?php echo $this->Js->writeBuffer(); ?>
     </head>
     <body>
-        <div id="wrap">
-            <div id="container">
-                <div id="header">             
-                    <?php echo $this->element('admin/user_info'); ?>
-                </div>
-                <div id="wrapper">
-                    <div id="right-side">
+        <?php echo $this->element('admin/header'); ?>
+        <div id="content">
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span2">
                         <?php echo $this->element('admin/sidebar'); ?>
                     </div>
-                    <div id="left-side">
-                        <div class="wrap">
-                            <?php echo $this->Session->flash(); ?>
-                            <?php echo $this->fetch('content'); ?>
-                        </div>
+                    <div class="span10">
+                        <?php echo $this->Session->flash(); ?>
+                        <?php echo $this->fetch('content'); ?>
                     </div>
-                    <div class="clear"></div>
                 </div>
-                <div class="clear"></div>
             </div>
         </div>
-        <div id="footer">
-            <p><?php echo __("Thank you for using Hurad CMS."); ?></p>
-        </div>
-        <?php //echo $this->element('sql_dump');  ?>
+        <?php echo $this->element('admin/footer'); ?>
     </body>
 </html>
