@@ -18,6 +18,22 @@ class Link extends AppModel {
      */
     public $displayField = 'name';
     public $actsAs = array('Tree',);
+    public $validate = array(
+        'name' => array(
+            'nameRule-1' => array(
+                'rule' => 'notEmpty',
+            )
+        ),
+        'url' => array(
+            'urlRule-1' => array(
+                'rule' => 'notEmpty',
+                'last' => true
+            ),
+            'urlRule-2' => array(
+                'rule' => 'url',
+            )
+        )
+    );
 
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
