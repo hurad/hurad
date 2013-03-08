@@ -133,7 +133,7 @@ echo $this->Form->create('Tag', array('url' =>
     </tfoot>
 </table>
 
-<section>
+<section class="bottom-table">
     <?php
     echo $this->Form->input('Tag.action.bot', array(
         'label' => false,
@@ -144,4 +144,16 @@ echo $this->Form->create('Tag', array('url' =>
     ));
     echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
     ?>
+
+    <div class="pagination pull-right">
+        <ul>
+            <?php
+            if ($this->Paginator->numbers()) {
+                echo $this->Paginator->prev('« ' . __('Previous'), array('tag' => 'li'), null, array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled'));
+                echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'a'));
+                echo $this->Paginator->next(__('Next') . ' »', array('tag' => 'li'), null, array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled'));
+            }
+            ?>
+        </ul>
+    </div>
 </section>
