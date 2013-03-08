@@ -210,7 +210,7 @@ class Formatting {
             $string = Formatting::hr_specialchars_decode($string, $_quote_style);
 
             // Guarantee every &entity; is valid or re-encode the &
-            $string = $kses->normalizeEntities($string);
+            $string = kses_normalize_entities($string);
 
             // Now re-encode everything except &entity;
             $string = preg_split('/(&#?x?[0-9a-z]+;)/i', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -747,7 +747,7 @@ class Formatting {
         if ('save' == $context)
             $title = Formatting::remove_accents($title);
 
-        $title = $this->HuradHook->apply_filters('sanitize_title', $title, $raw_title, $context);
+        $title = Configure::read('HuradHook.obj')->apply_filters('sanitize_title', $title, $raw_title, $context);
 
         if ('' === $title || false === $title)
             $title = $fallback_title;
@@ -1948,7 +1948,7 @@ class Formatting {
      * {@link http://www.php.net/magic_quotes magic_quotes_gpc} is on.
      *
      * @since 1.0.0
-     * @uses apply_filters() for the 'wp_parse_str' filter.
+     * @uses apply_filters() for the 'hr_parse_str' filter.
      *
      * @param string $string The string to be parsed.
      * @param array $array Variables will be stored in this array.
