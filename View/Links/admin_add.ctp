@@ -13,7 +13,7 @@ echo $this->Form->create('Link', array(
 ?>
 
 <div class="control-group">
-    <?php echo $this->Form->label('menu_id', __('Select Category')); ?>
+    <?php echo $this->Form->label('menu_id', __('Select Category'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->select('menu_id', $linkcats, array('empty' => FALSE)); ?>
         <span class="help-block">
