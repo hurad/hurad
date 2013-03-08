@@ -180,7 +180,7 @@ class LinksController extends AppController {
             }
             $linkcats = $this->Link->Linkcat->find('list', array(
                 'conditions' => array('Linkcat.type' => 'link_category'),
-                    ));
+            ));
             $this->set(compact('linkcats', 'menu_id'));
         } else {
             $this->Link->Menu->id = $menu_id;
@@ -204,7 +204,7 @@ class LinksController extends AppController {
                 'conditions' => array(
                     'Menu.id' => $menu_id
                 ),
-                    ));
+            ));
             $this->set(compact('linkcats', 'menu_id'));
         }
     }
@@ -234,7 +234,7 @@ class LinksController extends AppController {
         }
         $linkcats = $this->Link->Linkcat->find('list', array(
             'conditions' => array('Linkcat.type' => 'link_category'),
-                ));
+        ));
         $this->set(compact('linkcats', 'menu_id'));
     }
 
@@ -276,34 +276,34 @@ class LinksController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->Session->setFlash(__('No items selected.'), 'notice');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->Session->setFlash(__('No action selected.'), 'notice');
             $this->redirect($this->referer());
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Link->deleteAll(array('Link.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Links deleted.'), 'flash_notice');
+                    $this->Session->setFlash(__('Links deleted.'), 'success');
                 }
                 break;
 
             case 'visible':
                 if ($this->Link->updateAll(array('Link.visible' => "'Y'"), array('Link.id' => $ids))) {
-                    $this->Session->setFlash(__('Links visible'), 'flash_notice');
+                    $this->Session->setFlash(__('Links visible'), 'success');
                 }
                 break;
 
             case 'invisible':
                 if ($this->Link->updateAll(array('Link.visible' => "'N'"), array('Link.id' => $ids))) {
-                    $this->Session->setFlash(__('Links invisible'), 'flash_notice');
+                    $this->Session->setFlash(__('Links invisible'), 'success');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__('An error occurred.'), 'error');
                 break;
         }
         $this->redirect($this->referer());
