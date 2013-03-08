@@ -223,10 +223,10 @@ class LinksController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Link->save($this->request->data)) {
-                $this->Session->setFlash(__('The link has been saved'), 'flash_notice');
+                $this->Session->setFlash(__('The link has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'error');
             }
         } else {
             $this->request->data = $this->Link->read(null, $id);
@@ -253,10 +253,10 @@ class LinksController extends AppController {
             throw new NotFoundException(__('Invalid link'));
         }
         if ($this->Link->delete()) {
-            $this->Session->setFlash(__('Link deleted'), 'flash_notice');
+            $this->Session->setFlash(__('Link deleted'), 'success');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Link was not deleted'), 'flash_error');
+        $this->Session->setFlash(__('Link was not deleted'), 'error');
         $this->redirect(array('action' => 'index'));
     }
 
