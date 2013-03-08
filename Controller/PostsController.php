@@ -105,14 +105,9 @@ class PostsController extends AppController {
      * @return void
      */
     public function view($slug = null) {
+        $slug = Formatting::sanitize_title($slug);
         $this->Post->slug = $slug;
-//        if (!$this->Post->exists()) {
-//            throw new NotFoundException(__('Invalid post'));
-//        }
-//        $this->set('post', $this->Post->read(null, $id));
         if (is_null($slug) && !$this->Post->exists()) {
-//            $this->Session->setFlash(__('Your post not exist.'));
-//            $this->redirect(array('action' => 'index'));
             throw new NotFoundException(__('Invalid post'));
         } else {
             $this->set('post', $this->Post->findBySlug($slug));
@@ -225,19 +220,37 @@ class PostsController extends AppController {
     public function admin_add($type = 'post') {
         $this->set('title_for_layout', __('Add Post'));
 
+        $defaults = array(
+            'parent_id' => NULL,
+            'user_id' => $this->Auth->user('id'),
+            'title' => '',
+            'slug' => '',
+            'content' => '',
+            'excerpt' => '',
+            'status' => 'draft',
+            'comment_status' => 'open',
+            'comment_count' => 0,
+            'type' => 'post',
+        );
+
         if ($this->request->is('post')) {
+            $this->request->data['Post'] = Functions::hr_parse_args($this->request->data['Post'], $defaults);
             // get the tags from the text data
             if ($this->request->data['Post']['tags']) {
-                //$this->request->data['Post']['id'] = $id;
-                //add code
                 $this->_saveTags();
             }
-
-            $this->request->data['Post']['type'] = 'post';
-            $this->request->data['Post']['user_id'] = $this->Auth->user('id');
-
             // prevent the current tags from being deleted
             $this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
+
+            if (empty($this->request->data['Post']['slug'])) {
+                if (!in_array($this->request->data['Post']['status'], array('draft')))
+                    $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['title']);
+                else
+                    $this->request->data['Post']['slug'] = '';
+            } else {
+                $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['slug']);
+            }
+
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
                 $this->Session->setFlash(__('The post has been saved'), 'flash_notice');
@@ -258,36 +271,39 @@ class PostsController extends AppController {
      */
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Post'));
+
+        $defaults = array(
+            'parent_id' => NULL,
+            'user_id' => $this->Auth->user('id'),
+            'title' => '',
+            'slug' => '',
+            'content' => '',
+            'excerpt' => '',
+            'status' => 'draft',
+            'comment_status' => 'open',
+            'comment_count' => 0,
+            'type' => 'post',
+        );
+
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
+                $this->request->data['Post'] = Functions::hr_parse_args($this->request->data['Post'], $defaults);
                 if (empty($this->request->data['Post']['tags'])) {
                     $this->loadModel('PostsTag');
                     $this->PostsTag->deleteAll(array('post_id' => $id), false);
                 }
             }
 
-            // get the tags from the textarea data
-            $tags = explode(',', $this->request->data['Post']['tags']);
-            foreach ($tags as $_tag) {
-                $_tag = strtolower(trim($_tag));
-                if ($_tag) {
-                    $this->Post->Tag->recursive = -1;
-                    $tag = $this->Post->Tag->findByName($_tag);
-                    if (!$tag) {
-                        $this->Post->Tag->create();
-                        $tag = $this->Post->Tag->save(array('name' => $_tag, 'slug' => $_tag));
-                        $tag['Tag']['id'] = $this->Post->Tag->id;
-                        if (!$tag) {
-                            $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag)), 'flash_error');
-                        }
-                    }
-                    if ($tag) {
-                        $this->request->data['Tag']['Tag'][$tag['Tag']['id']] = $tag['Tag']['id'];
-                    }
-                }
-            }
+            $this->_saveTags();
 
-            $this->request->data['Post']['user_id'] = $this->Auth->user('id');
+            if (empty($this->request->data['Post']['slug'])) {
+                if (!in_array($this->request->data['Post']['status'], array('draft')))
+                    $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['title']);
+                else
+                    $this->request->data['Post']['slug'] = '';
+            } else {
+                $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['slug']);
+            }
 
             // save the data
             $this->Post->create();
@@ -300,18 +316,12 @@ class PostsController extends AppController {
         }
         if (empty($this->request->data)) {
             $this->request->data = $this->Post->read(null, $id);
-            // load the habtm data for the textarea
-            $tags = array();
-            if (isset($this->request->data['Tag']) && !empty($this->request->data['Tag'])) {
-                foreach ($this->request->data['Tag'] as $tag) {
-                    $tags[] = $tag['name'];
-                }
-                $this->request->data['Post']['tags'] = implode(', ', $tags);
-            }
+            // load the habtm data for the text input.
+            $this->_loadTags();
         }
 
         // get the posts current tags
-        $post = $id ? $this->Post->find('all', array('Post.id' => $id)) : false;
+        $post = $id ? $this->Post->find('first', array('conditions' => array('Post.id' => $id))) : false;
         $categories = $this->Post->Category->generateTreeList();
         $this->set(compact('post', 'categories'));
     }
@@ -341,7 +351,6 @@ class PostsController extends AppController {
 
     private function _saveTags() {
         // get the tags from the text data
-        //$this->request->data['Post']['id'] = $id;
         $tags = explode(',', $this->request->data['Post']['tags']);
         foreach ($tags as $_tag) {
             $tagName = trim($_tag);
@@ -365,10 +374,6 @@ class PostsController extends AppController {
                 }
             }
         }
-
-
-        // prevent the current tags from being deleted
-        //$this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
     }
 
     private function _loadTags() {
