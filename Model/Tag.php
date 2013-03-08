@@ -19,18 +19,15 @@ class Tag extends AppModel {
         'name' => array(
             'nameRule-1' => array(
                 'rule' => 'notEmpty',
-                'message' => 'This field cannot be left blank.',
             )
         ),
         'slug' => array(
             'slugRule-1' => array(
                 'rule' => 'notEmpty',
-                'message' => 'This field cannot be left blank.',
                 'last' => true
             ),
             'slugRule-2' => array(
                 'rule' => 'isUnique',
-                'message' => 'This slug has already exist.'
             )
         )
     );
