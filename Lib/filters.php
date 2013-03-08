@@ -12,13 +12,20 @@ $HuradHook->add_filter('the_content', 'Formatting::convert_chars');
 //$HuradHook->add_filter('the_content', 'shortcode_unautop');
 //$HuradHook->add_filter('the_content', 'prepend_attachment');
 
-//foreach (array('the_content', 'the_title') as $filter) {
-//    $HuradHook->add_filter($filter, 'capital_P_dangit', 11);
-//}
-
 //$HuradHook->add_filter( 'comment_text', 'wptexturize' );
-$HuradHook->add_filter( 'comment_text', 'Formatting::convert_chars' );
-$HuradHook->add_filter( 'comment_text', 'Formatting::make_clickable', 9 );
-$HuradHook->add_filter( 'comment_text', 'Formatting::force_balance_tags', 25 );
+$HuradHook->add_filter('comment_text', 'Formatting::convert_chars');
+$HuradHook->add_filter('comment_text', 'Formatting::make_clickable', 9);
+$HuradHook->add_filter('comment_text', 'Formatting::force_balance_tags', 25);
 //$HuradHook->add_filter( 'comment_text', 'convert_smilies', 20 );
-$HuradHook->add_filter( 'comment_text', 'Formatting::hrautop', 30 );
+$HuradHook->add_filter('comment_text', 'Formatting::hrautop', 30);
+
+$HuradHook->add_filter('editable_slug', 'urldecode');
+$HuradHook->add_filter('editable_slug', 'Formatting::esc_textarea');
+$HuradHook->add_filter('sanitize_title', 'Formatting::sanitize_title_with_dashes', 10, 3);
+
+//$HuradHook->add_filter( 'the_excerpt', 'wptexturize' );
+//$HuradHook->add_filter( 'the_excerpt', 'convert_smilies' );
+$HuradHook->add_filter( 'the_excerpt', 'Formatting::convert_chars' );
+$HuradHook->add_filter( 'the_excerpt', 'Formatting::hrautop' );
+//$HuradHook->add_filter( 'the_excerpt', 'shortcode_unautop');
+//$HuradHook->add_filter( 'get_the_excerpt', 'wp_trim_excerpt' );
