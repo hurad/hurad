@@ -176,10 +176,10 @@ class CategoriesController extends AppController {
             $this->Category->create();
             //$this->request->data['Category']['parent_id'] = $this->ModelName->getInsertID();
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash(__('The category has been saved'));
+                $this->Session->setFlash(__('The category has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The category could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'error');
             }
         }
         $parentCategories = $this->Category->generateTreeList();
