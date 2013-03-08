@@ -17,6 +17,22 @@ class Category extends AppModel {
      * @var string
      */
     public $displayField = 'name';
+    public $validate = array(
+        'name' => array(
+            'nameRule-1' => array(
+                'rule' => 'notEmpty',
+            )
+        ),
+        'slug' => array(
+            'slugRule-1' => array(
+                'rule' => 'notEmpty',
+                'last' => true
+            ),
+            'slugRule-2' => array(
+                'rule' => 'isUnique',
+            )
+        )
+    );
 
     /**
      * Acts As
@@ -90,7 +106,7 @@ class Category extends AppModel {
         if ($action == 'admin_delete') {
             $cat = $this->find('first', array(
                 'conditions' => array('Category.id' => $this->request->params['pass'][0])
-                    ));
+            ));
             if (count($cat['Post']) > 0) {
                 foreach ($cat['Post'] as $key => $value) {
                     $this->query("DELETE FROM `categories_posts` WHERE `categories_posts`.`post_id` = " . $value['id']);
@@ -108,7 +124,7 @@ class Category extends AppModel {
                     )
                 ),
                 'group' => 'post_id'
-                    ));
+            ));
             $this->query("UPDATE `categories` SET `post_count` = '" . $post_count . "' WHERE `categories`.`id` =37;");
         }
     }
