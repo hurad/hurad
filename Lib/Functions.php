@@ -208,4 +208,30 @@ class Functions {
         return $mimes;
     }
 
+    /**
+     * Merge user defined arguments into defaults array.
+     *
+     * This function is used throughout Hurad to allow for both string or array
+     * to be merged into another array.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @param string|array $args Value to merge with $defaults
+     * @param array $defaults Array that serves as the defaults.
+     * @return array Merged user defined values with defaults.
+     */
+    public function hr_parse_args($args, $defaults = '') {
+        if (is_object($args))
+            $r = get_object_vars($args);
+        elseif (is_array($args))
+            $r = & $args;
+        else
+            Formatting::hr_parse_str($args, $r);
+
+        if (is_array($defaults))
+            return array_merge($defaults, $r);
+        return $r;
+    }
+
 }
