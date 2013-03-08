@@ -55,6 +55,8 @@ class AppController extends Controller {
     }
 
     public function beforeFilter() {
+        parent::beforeFilter();
+
         //Cookie Configuration
         $this->Cookie->name = 'Hurad';
 
