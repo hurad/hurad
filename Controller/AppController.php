@@ -65,6 +65,7 @@ class AppController extends Controller {
 
         $this->cookie_check();
 
+        //Load admin layout
         if (isset($this->request->params['admin'])) {
             $this->layout = 'admin';
         }
