@@ -14,11 +14,17 @@
 </section>
 
 <?php
-echo $this->Form->create('Post', array('url' =>
-    array('admin' => TRUE, 'action' => 'process'),
+echo $this->Form->create('Post', array(
+    'url' => array(
+        'admin' => TRUE,
+        'action' => 'process'
+    ),
     'class' => 'form-inline',
-    'inputDefaults' =>
-    array('label' => false, 'div' => false)));
+    'inputDefaults' => array(
+        'label' => false,
+        'div' => false
+    )
+));
 ?>
 
 <table class="table table-striped">
@@ -188,4 +194,3 @@ echo $this->Form->create('Post', array('url' =>
     echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
-
