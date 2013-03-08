@@ -11,7 +11,7 @@ class TagsController extends AppController {
 
     public $components = array('RequestHandler');
     public $paginate = array(
-        'limit' => 25,
+        'limit' => 10,
         'order' => array(
             'Tag.created' => 'desc'
         )
@@ -165,7 +165,7 @@ class TagsController extends AppController {
             }
             $this->Tag->create();
             if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__('The tag has been saved'), 'notice');
+                $this->Session->setFlash(__('The tag has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The tag could not be saved. Please, try again.'), 'error');
@@ -187,10 +187,10 @@ class TagsController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__('The tag has been saved'));
+                $this->Session->setFlash(__('The tag has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tag could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('The tag could not be saved. Please, try again.'), 'error');
             }
         } else {
             $this->request->data = $this->Tag->read(null, $id);
