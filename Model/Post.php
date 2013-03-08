@@ -3,30 +3,42 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Post Model
+ * Post model for Hurad.
  *
- * @property User $User
- * @property Comment $Comment
- * @property Category $Category
- * @property Tag $Tag
+ * Licensed under The GPLv3 License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @package Hurad
+ * @category Model
+ * @since 1.0.0
+ * @license GPLv3 License (http://opensource.org/licenses/GPL-3.0) 
+ * @link http://hurad.org Hurad Project
  */
 class Post extends AppModel {
 
     /**
-     * Display field
+     * The displayField attribute specifies which database field should be used as a label for the record.
+     * The label is used in scaffolding and in find('list') calls.
      *
      * @var string
+     * @access public
      */
     public $displayField = 'title';
-    public $actsAs = array('Tree', 'Containable', 'HabtmCounterCache.HabtmCounterCache');
-
-
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
-     * belongsTo associations
+     * Behaviors are attached to models through the $actsAs model class variable.
      *
      * @var array
+     * @access public
+     */
+    public $actsAs = array('Tree', 'Containable', 'HabtmCounterCache.HabtmCounterCache');
+
+    /**
+     * Define a belongsTo association in the Post model in order to get access to related User data.
+     *
+     * @var array
+     * @access public
      */
     public $belongsTo = array(
         'User' => array(
@@ -39,9 +51,10 @@ class Post extends AppModel {
     );
 
     /**
-     * hasMany associations
+     * A hasMany association will allow us to fetch a post’s comments when we fetch a Post record.
      *
      * @var array
+     * @access public
      */
     public $hasMany = array(
         'Comment' => array(
@@ -57,25 +70,13 @@ class Post extends AppModel {
             'finderQuery' => '',
             'counterQuery' => '',
         ),
-//        'PostsTag' => array(
-//            'className' => 'PostsTag',
-//            'foreignKey' => 'post_id',
-//            'dependent' => false,
-//            'conditions' => '',
-//            'fields' => '',
-//            'order' => '',
-//            'limit' => '',
-//            'offset' => '',
-//            'exclusive' => '',
-//            'finderQuery' => '',
-//            'counterQuery' => ''
-//        )
     );
 
     /**
      * hasAndBelongsToMany associations
      *
      * @var array
+     * @access public
      */
     public $hasAndBelongsToMany = array(
         'Category' => array(
@@ -92,7 +93,6 @@ class Post extends AppModel {
             'finderQuery' => '',
             'deleteQuery' => '',
             'insertQuery' => '',
-        //'counterCache' => true
         ),
         'Tag' => array(
             'className' => 'Tag',
@@ -111,6 +111,9 @@ class Post extends AppModel {
     /**
      * Get first post.
      *
+     * @since 1.0.0
+     * @access public
+     * 
      * @param intiger $post_id Post ID
      * @return array
      */
@@ -126,6 +129,10 @@ class Post extends AppModel {
     /**
      * Count all posts.
      *
+     * @since 1.0.0
+     * @access public
+     * 
+     * @param string $status Post status
      * @return intiger Number of all posts in specify type.
      */
     public function countPosts($status = 'all') {
