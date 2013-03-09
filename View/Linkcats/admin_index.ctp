@@ -14,6 +14,7 @@ echo $this->Form->create('Linkcat', array(
         'controller' => 'linkcats',
         'action' => 'process'
     ),
+    'class' => 'form-inline',
     'inputDefaults' => array(
         'label' => false,
         'div' => false
