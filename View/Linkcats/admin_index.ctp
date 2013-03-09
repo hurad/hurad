@@ -38,15 +38,15 @@ echo $this->Form->create('Linkcat', array(
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('description', __('Description')) => array(
-                    'id' => 'description',
-                    'class' => 'column-description column-manage',
-                    'scope' => 'col'
-                )
-            ),
             array($this->Paginator->sort('slug', __('Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('description', __('Description')) => array(
+                    'id' => 'description',
+                    'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
@@ -115,15 +115,15 @@ echo $this->Form->create('Linkcat', array(
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('description', __('Description')) => array(
-                    'id' => 'description',
-                    'class' => 'column-description column-manage',
-                    'scope' => 'col'
-                )
-            ),
             array($this->Paginator->sort('slug', __('Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('description', __('Description')) => array(
+                    'id' => 'description',
+                    'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
