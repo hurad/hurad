@@ -77,7 +77,7 @@ class LinkcatsController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Linkcat->save($this->request->data)) {
-                $this->Session->setFlash(__('The link category has been saved'), 'notice');
+                $this->Session->setFlash(__('The link category has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The link category could not be saved. Please, try again.'), 'error');
@@ -102,7 +102,7 @@ class LinkcatsController extends AppController {
             throw new NotFoundException(__('Invalid link category'));
         }
         if ($this->Linkcat->delete()) {
-            $this->Session->setFlash(__('Link category deleted'), 'notice');
+            $this->Session->setFlash(__('Link category deleted'), 'success');
             $this->redirect(array('action' => 'index'));
         }
         $this->Session->setFlash(__('Link category was not deleted'), 'error');
@@ -130,7 +130,7 @@ class LinkcatsController extends AppController {
         switch ($action) {
             case 'delete':
                 if ($this->Linkcat->deleteAll(array('Linkcat.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Link categories deleted.'), 'notice');
+                    $this->Session->setFlash(__('Link categories deleted.'), 'success');
                 }
                 break;
 
