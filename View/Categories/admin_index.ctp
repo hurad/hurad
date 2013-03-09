@@ -9,11 +9,17 @@
 </div>
 
 <?php
-echo $this->Form->create('Category', array('url' =>
-    array('admin' => TRUE, 'action' => 'process'),
+echo $this->Form->create('Category', array(
+    'url' => array(
+        'admin' => TRUE,
+        'action' => 'process'
+    ),
     'class' => 'form-inline',
-    'inputDefaults' =>
-    array('label' => false, 'div' => false)));
+    'inputDefaults' => array(
+        'label' => false,
+        'div' => false
+    )
+));
 ?>
 
 <table class="table table-striped">
