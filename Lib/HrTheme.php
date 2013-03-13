@@ -1,14 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of HrTheme
- *
- * @author mohammad
+ * HrTheme
+ * 
+ * Reaname class from CroogoTheme to HrTheme
+ * 
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
  */
 class HrTheme extends Object {
 
