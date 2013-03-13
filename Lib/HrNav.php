@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Description of HrNav
- *
- * @author mohammad
+ * Hurad
+ * 
+ * Reaname class from CroogoNav to HrNav
+ * 
+ * @author Rachman Chavik <rchavik@xintesa.com>
  */
 class HrNav {
 
