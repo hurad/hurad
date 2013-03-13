@@ -1,7 +1,15 @@
 <?php
+
 App::uses('HrEventManager', 'Event');
 App::uses('Folder', 'Utility');
 
+/**
+ * HrPlugin
+ * 
+ * Reaname class from CroogoPlugin to HrPlugin
+ * 
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ */
 class HrPlugin {
 
     /**
