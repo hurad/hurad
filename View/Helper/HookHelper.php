@@ -2,11 +2,6 @@
 
 App::uses('AppHelper', 'View/Helper');
 
-/**
- * Description of HookHelper
- *
- * @author mohammad
- */
 class HookHelper extends AppHelper {
 
     public $HuradHook;
@@ -29,7 +24,7 @@ class HookHelper extends AppHelper {
      *
      * <code>
      * function example_hook($example) { echo $example; }
-     * add_filter('example_filter', 'example_hook');
+     * $this->Hook->addFilter('example_filter', 'example_hook');
      * </code>
      *
      * In WordPress 1.5.1+, hooked functions can take extra arguments that are set
@@ -54,7 +49,7 @@ class HookHelper extends AppHelper {
      * @param int $accepted_args optional. The number of arguments the function accept (default 1).
      * @return boolean true
      */
-    public function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+    public function addFilter($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
         $this->HuradHook->add_filter($tag, $function_to_add, $priority, $accepted_args);
     }
 
@@ -70,7 +65,7 @@ class HookHelper extends AppHelper {
      * When using the $function_to_check argument, this function may return a non-boolean value that evaluates to false
      * (e.g.) 0, so use the === operator for testing the return value.
      */
-    public function has_filter($tag, $function_to_check = false) {
+    public function hasFilter($tag, $function_to_check = false) {
         $this->HuradHook->has_filter($tag, $function_to_check);
     }
 
@@ -89,7 +84,7 @@ class HookHelper extends AppHelper {
      * //Do stuff
      * return $string;
      * }
-     * $value = apply_filters('example_filter', 'filter me', 'arg1', 'arg2');
+     * $value = $this->Hook->applyFilters('example_filter', 'filter me', 'arg1', 'arg2');
      * </code>
      *
      * @since 1.0.0
@@ -99,14 +94,14 @@ class HookHelper extends AppHelper {
      * @param mixed $var,... Additional variables passed to the functions hooked to <tt>$tag</tt>.
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
-    public function apply_filters($tag, $value) {
+    public function applyFilters($tag, $value) {
         return $this->HuradHook->apply_filters($tag, $value);
     }
 
     /**
      * Execute functions hooked on a specific filter hook, specifying arguments in an array.
      *
-     * @see apply_filters() This function is identical, but the arguments passed to the
+     * @see applyFilters() This function is identical, but the arguments passed to the
      * functions hooked to <tt>$tag</tt> are supplied using an array.
      *
      * @since 1.0.0
@@ -115,7 +110,7 @@ class HookHelper extends AppHelper {
      * @param array $args The arguments supplied to the functions hooked to <tt>$tag</tt>
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
-    public function apply_filters_ref_array($tag, $args) {
+    public function applyFiltersRefArray($tag, $args) {
         $this->HuradHook->apply_filters_ref_array($tag, $args);
     }
 
@@ -138,7 +133,7 @@ class HookHelper extends AppHelper {
      * @param int $accepted_args optional. The number of arguments the function accepts (default: 1).
      * @return boolean Whether the function existed before it was removed.
      */
-    public function remove_filter($tag, $function_to_remove, $priority = 10) {
+    public function removeFilter($tag, $function_to_remove, $priority = 10) {
         $this->HuradHook->remove_filter($tag, $function_to_remove, $priority);
     }
 
@@ -151,7 +146,7 @@ class HookHelper extends AppHelper {
      * @param int $priority The priority number to remove.
      * @return bool True when finished.
      */
-    public function remove_all_filters($tag, $priority = false) {
+    public function removeAllFilters($tag, $priority = false) {
         $this->HuradHook->remove_all_filters($tag, $priority);
     }
 
@@ -162,7 +157,7 @@ class HookHelper extends AppHelper {
      *
      * @return string Hook name of the current filter or action.
      */
-    public function current_filter() {
+    public function currentFilter() {
         $this->HuradHook->current_filter();
     }
 
@@ -181,7 +176,7 @@ class HookHelper extends AppHelper {
      * @param int $priority optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
      * @param int $accepted_args optional. The number of arguments the function accept (default 1).
      */
-    public function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+    public function addAction($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
         $this->HuradHook->add_action($tag, $function_to_add, $priority, $accepted_args);
     }
 
@@ -193,9 +188,9 @@ class HookHelper extends AppHelper {
      * specifying the name of the new hook using the <tt>$tag</tt> parameter.
      *
      * You can pass extra arguments to the hooks, much like you can with
-     * apply_filters().
+     * applyFilters().
      *
-     * @see apply_filters() This function works similar with the exception that
+     * @see applyFilters() This function works similar with the exception that
      * nothing is returned and only the functions or methods are called.
      *
      * @since 1.0.0
@@ -204,7 +199,7 @@ class HookHelper extends AppHelper {
      * @param mixed $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
-    public function do_action($tag, $arg = '') {
+    public function doAction($tag, $arg = '') {
         return $this->HuradHook->do_action($tag, $arg);
     }
 
@@ -216,14 +211,14 @@ class HookHelper extends AppHelper {
      * @param string $tag The name of the action hook.
      * @return int The number of times action hook <tt>$tag</tt> is fired
      */
-    public function did_action($tag) {
+    public function didAction($tag) {
         $this->HuradHook->did_action($tag);
     }
 
     /**
      * Execute functions hooked on a specific action hook, specifying arguments in an array.
      *
-     * @see do_action() This function is identical, but the arguments passed to the
+     * @see doAction() This function is identical, but the arguments passed to the
      * functions hooked to <tt>$tag</tt> are supplied using an array.
      *
      * @since 1.0.0
@@ -232,7 +227,7 @@ class HookHelper extends AppHelper {
      * @param array $args The arguments supplied to the functions hooked to <tt>$tag</tt>
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
-    public function do_action_ref_array($tag, $args) {
+    public function doActionRefArray($tag, $args) {
         $this->HuradHook->do_action_ref_array($tag, $args);
     }
 
@@ -240,7 +235,7 @@ class HookHelper extends AppHelper {
      * Check if any action has been registered for a hook.
      *
      * @since 1.0.0
-     * @see has_filter() has_action() is an alias of has_filter().
+     * @see hasFilter() hasAction() is an alias of hasFilter().
      *
      * @param string $tag The name of the action hook.
      * @param callback $function_to_check optional.
@@ -249,7 +244,7 @@ class HookHelper extends AppHelper {
      * When using the $function_to_check argument, this function may return a non-boolean value that evaluates to false
      * (e.g.) 0, so use the === operator for testing the return value.
      */
-    function has_action($tag, $function_to_check = false) {
+    function hasAction($tag, $function_to_check = false) {
         $this->HuradHook->has_action($tag, $function_to_check);
     }
 
@@ -267,7 +262,7 @@ class HookHelper extends AppHelper {
      * @param int $priority optional The priority of the function (default: 10).
      * @return boolean Whether the function is removed.
      */
-    function remove_action($tag, $function_to_remove, $priority = 10) {
+    function removeAction($tag, $function_to_remove, $priority = 10) {
         $this->HuradHook->remove_action($tag, $function_to_remove, $priority);
     }
 
@@ -280,7 +275,7 @@ class HookHelper extends AppHelper {
      * @param int $priority The priority number to remove them from.
      * @return bool True when finished.
      */
-    function remove_all_actions($tag, $priority = false) {
+    function removeAllActions($tag, $priority = false) {
         $this->HuradHook->remove_all_actions($tag, $priority);
     }
 
