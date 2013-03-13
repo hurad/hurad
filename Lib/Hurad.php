@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Hurad
+ * 
+ * Reaname class from Croogo to Hurad
+ * 
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ */
 class Hurad {
 
     /**
