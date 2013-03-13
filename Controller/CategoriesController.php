@@ -40,6 +40,25 @@ class CategoriesController extends AppController {
     }
 
     /**
+     * index method
+     *
+     * @return void
+     */
+    public function index() {
+        if (!empty($this->request->params['requested'])) {
+            $cats = $this->Category->find('threaded', array(
+                'order' => array('Category.' . $this->request->named['sort'] => $this->request->named['direction']),
+                    //'limit' => $this->request->named['limit'],
+                    )
+            );
+            return $cats;
+        } else {
+            $this->Category->recursive = 0;
+            $this->set('categories', $this->paginate());
+        }
+    }
+
+    /**
      * admin_index method
      *
      * @return void
