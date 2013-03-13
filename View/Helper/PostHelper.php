@@ -10,7 +10,7 @@ class PostHelper extends AppHelper {
      * @var array
      * @access public
      */
-    public $helpers = array('Html', 'Time', 'General', 'Link', 'Hook');
+    public $helpers = array('Html', 'Time', 'General', 'Link', 'Hook', 'Author');
 
     /**
      * Current post array.
@@ -51,6 +51,7 @@ class PostHelper extends AppHelper {
         $this->post = $post;
         $this->General->post = $post;
         $this->Link->post = $post;
+        $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
     }
 
     protected function init_post() {
