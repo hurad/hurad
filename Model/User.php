@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppModel', 'Model');
+App::uses('UserMeta', 'Model');
 
 /**
  * User Model
@@ -16,6 +17,7 @@ class User extends AppModel {
      * @var string
      */
     public $displayField = 'username';
+    public $actsAs = array('Containable');
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -40,6 +42,19 @@ class User extends AppModel {
         ),
         'Post' => array(
             'className' => 'Post',
+            'foreignKey' => 'user_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
+        'UserMeta' => array(
+            'className' => 'UserMeta',
             'foreignKey' => 'user_id',
             'dependent' => false,
             'conditions' => '',
@@ -118,12 +133,38 @@ class User extends AppModel {
         }
     }
 
+    public function getUsers($args) {
+        $users = $this->find('all', array(
+            'order' => array(
+                'User.' . $args['orderby'] => $args['order']
+            ),
+            'limit' => $args['number'],
+            'recursive' => 0
+        ));
+        return $users;
+    }
+
     public function getUserData($user_id) {
         $user = $this->find('first', array(
             "conditions" => array('User.id' => $user_id),
             "recursive" => 0
                 )
         );
+
+        $user = $user['User'];
+
+        $metaList = $this->UserMeta->find('list', array(
+            'conditions' => array(
+                'UserMeta.user_id' => $user_id
+            ),
+            'fields' => array(
+                'UserMeta.meta_key',
+                'UserMeta.meta_value'
+            ),
+        ));
+
+        $user = Set::merge($user, $metaList);
+
         return $user;
     }
 
