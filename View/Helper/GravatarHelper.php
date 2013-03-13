@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Gravatar Helper
+ *
+ * @copyright Copyright 2009-2010, Graham Weldon (http://grahamweldon.com)
+ */
 class GravatarHelper extends AppHelper {
 
     var $helpers = array('Html');
