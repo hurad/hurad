@@ -3,9 +3,9 @@
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Description of TinyMCEHelper
- *
- * @author mohammad
+ * TinymceHelper
+ * 
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
  */
 class TinymceHelper extends AppHelper {
 
