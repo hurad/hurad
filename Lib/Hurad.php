@@ -1,11 +1,23 @@
 <?php
 
 /**
+ * Croogo
+ *
+ * @package Croogo
+ * @version 1.0
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link http://www.croogo.org
+ */
+
+/**
  * Hurad
  * 
- * Reaname class from Croogo to Hurad
- * 
- * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @package Hurad
+ * @category Lib
+ * @since 1.0.0
+ * @license http://opensource.org/licenses/GPL-3.0 GPLv3 License 
+ * @link http://hurad.org Hurad Project
  */
 class Hurad {
 
