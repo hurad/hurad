@@ -40,11 +40,28 @@ class AppController extends Controller {
         //'Security' => array('csrfUseOnce' => false, 'csrfExpires' => '+1 hour'),
         'Auth' => array(
             //'fields' => array('username' => 'username', 'password' => 'password'),
-            'loginAction' => array('admin' => false, 'controller' => 'users', 'action' => 'login'),
+            'loginAction' => array(
+                'admin' => false,
+                'controller' => 'users',
+                'action' => 'login'
+            ),
             'loginRedirect' => '/admin/',
-            'logoutAction' => array('admin' => false, 'controller' => 'users', 'action' => 'logout'),
-            'logoutRedirect' => array('admin' => false, 'controller' => 'users', 'action' => 'login'),
-            'authorize' => array('Controller')
+            'logoutAction' => array(
+                'admin' => false,
+                'controller' => 'users',
+                'action' => 'logout'
+            ),
+            'logoutRedirect' => array(
+                'admin' => false,
+                'controller' => 'users',
+                'action' => 'login'
+            ),
+            'authorize' => array('Controller'),
+            'flash' => array(
+                'element' => 'auth',
+                'key' => 'auth',
+                'params' => array()
+            )
         )
     );
     public $uses = array('User');
