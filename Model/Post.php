@@ -32,7 +32,7 @@ class Post extends AppModel {
      * @var array
      * @access public
      */
-    public $actsAs = array('Tree', 'Containable', 'HabtmCounterCache.HabtmCounterCache');
+    public $actsAs = array('Tree', 'Containable', 'HabtmCounterCache');
 
     /**
      * Define a belongsTo association in the Post model in order to get access to related User data.
