@@ -38,23 +38,13 @@ class PostHelper extends AppHelper {
 
     public function __construct(\View $View, $settings = array()) {
         parent::__construct($View, $settings);
-        $this->init();
-        $this->init_post();
+        $this->_init();
     }
 
-    public function init() {
+    private function _init() {
         $this->view = $this->_View->view;
         $this->view_path = $this->_View->viewPath;
-    }
 
-    public function setPost($post) {
-        $this->post = $post;
-        $this->General->post = $post;
-        $this->Link->post = $post;
-        $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
-    }
-
-    protected function init_post() {
         if ($this->view_path == 'Posts') {
             if ($this->view == 'view' || $this->view == 'viewByid') {
                 $this->Link->post = $this->General->post = $this->post = $this->_View->getVar('post');
@@ -64,13 +54,20 @@ class PostHelper extends AppHelper {
         }
     }
 
+    public function setPost($post) {
+        $this->post = $post;
+        $this->General->post = $post;
+        $this->Link->post = $post;
+        $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
+    }
+
     /**
      * Display the ID of the current item in the Hurad Loop.
      *
      * @since 1.0.0
      */
-    public function the_ID() {
-        echo $this->get_the_ID();
+    public function theID() {
+        echo $this->getTheID();
     }
 
     /**
@@ -81,7 +78,7 @@ class PostHelper extends AppHelper {
      * 
      * @return int
      */
-    public function get_the_ID() {
+    public function getTheID() {
         return $this->post['Post']['id'];
     }
 
@@ -95,8 +92,8 @@ class PostHelper extends AppHelper {
      * @param bool $echo Optional, default to true.Whether to display or return.
      * @return null|string Null on no title. String if $echo parameter is false.
      */
-    public function the_title($before = '', $after = '', $echo = true) {
-        $title = $this->get_the_title();
+    public function theTitle($before = '', $after = '', $echo = true) {
+        $title = $this->getTheTitle();
 
         if (strlen($title) == 0)
             return;
@@ -112,31 +109,32 @@ class PostHelper extends AppHelper {
     /**
      * Sanitize the current title when retrieving or displaying.
      *
-     * Works like {@link the_title()}, except the parameters can be in a string or
+     * Works like {@link theTitle()}, except the parameters can be in a string or
      * an array. See the function for what can be override in the $args parameter.
      *
      * The title before it is displayed will have the tags stripped before it
      * is passed to the user or displayed. The default
-     * as with {@link the_title()}, is to display the title.
+     * as with {@link theTitle()}, is to display the title.
      *
      * @since 1.0.0
      *
      * @param string|array $args Optional. Override the defaults.
      * @return string|null Null on failure or display. String when echo is false.
      */
-    function the_title_attribute($args = '') {
-        $title = $this->get_the_title();
+    public function theTitleAttribute($args = '') {
+        $title = $this->getTheTitle();
 
         if (strlen($title) == 0)
             return;
 
         $defaults = array('before' => '', 'after' => '', 'echo' => true);
-        $r = $this->parse_args($args, $defaults);
+        $r = Functions::hr_parse_args($args, $defaults);
+        extract($r, EXTR_SKIP);
 
-        $title = $r['before'] . $title . $r['after'];
-        $title = strip_tags($title);
+        $title = $before . $title . $after;
+        $title = Formatting::esc_attr(strip_tags($title));
 
-        if ($r['echo'])
+        if ($echo)
             echo $title;
         else
             return $title;
@@ -149,9 +147,9 @@ class PostHelper extends AppHelper {
      *
      * @return string
      */
-    public function get_the_title() {
+    public function getTheTitle() {
         $title = isset($this->post['Post']['title']) ? $this->post['Post']['title'] : '';
-        return $this->Hook->apply_filters('the_title', $title);
+        return $this->Hook->applyFilters('the_title', $title);
     }
 
     /**
@@ -161,9 +159,9 @@ class PostHelper extends AppHelper {
      *
      * @param string $more_link_text Optional. Content for when there is more text.
      */
-    function the_content($more_link_text = null) {
-        $content = $this->get_the_content($more_link_text);
-        $content = $this->Hook->apply_filters('the_content', $content);
+    public function theContent($more_link_text = null) {
+        $content = $this->getTheContent($more_link_text);
+        $content = $this->Hook->applyFilters('the_content', $content);
         $content = str_replace(']]>', ']]&gt;', $content);
         echo $content;
     }
@@ -176,7 +174,7 @@ class PostHelper extends AppHelper {
      * @param string $more_link_text Optional. Content for when there is more text.
      * @return string
      */
-    function get_the_content($more_link_text = null) {
+    public function getTheContent($more_link_text = null) {
         if (null === $more_link_text) {
             $more_link_text = __('(more...)');
         }
@@ -198,10 +196,10 @@ class PostHelper extends AppHelper {
         $output .= $teaser;
         if (count($content) > 1) {
             if ($more && $this->view == 'view') {
-                $output .= '<span id="more-' . $this->get_the_ID() . '"></span>' . $content[1];
+                $output .= $this->Html->tag('span', NULL, array('id' => 'more-' . $this->getTheID())) . $content[1];
             } else {
                 if (!empty($more_link_text)) {
-                    $output .= $this->Hook->apply_filters('the_content_more_link', ' <a href="' . $this->get_permalink() . "#more-{$this->get_the_ID()}\" class=\"more-link\">$more_link_text</a>", $more_link_text);
+                    $output .= $this->Hook->applyFilters('the_content_more_link', $this->Html->link($more_link_text, $this->getPermalink() . '#more-' . $this->getTheID(), array('class' => 'more-link')), $more_link_text);
                 }
                 $output = Formatting::force_balance_tags($output);
             }
@@ -215,8 +213,8 @@ class PostHelper extends AppHelper {
      * @since 1.0.0
      * @uses apply_filters() Calls 'the_excerpt' hook on post excerpt.
      */
-    function the_excerpt() {
-        echo $this->Hook->apply_filters('the_excerpt', $this->get_the_excerpt());
+    public function theExcerpt() {
+        echo $this->Hook->applyFilters('the_excerpt', $this->getTheExcerpt());
     }
 
     /**
@@ -226,8 +224,8 @@ class PostHelper extends AppHelper {
      *
      * @return string
      */
-    function get_the_excerpt() {
-        return $this->Hook->apply_filters('get_the_excerpt', $this->post['Post']['excerpt']);
+    public function getTheExcerpt() {
+        return $this->Hook->applyFilters('get_the_excerpt', $this->post['Post']['excerpt']);
     }
 
     /**
@@ -237,7 +235,7 @@ class PostHelper extends AppHelper {
      *
      * @return bool
      */
-    function has_excerpt() {
+    public function hasExcerpt() {
         return (!empty($this->post['Post']['excerpt']) );
     }
 
@@ -248,9 +246,9 @@ class PostHelper extends AppHelper {
      *
      * @param string|array $class One or more classes to add to the class list.
      */
-    function post_class($class = '') {
+    public function postClass($class = '') {
         // Separates classes with a single space, collates classes for post DIV
-        echo 'class="' . join(' ', $this->get_post_class($class)) . '"';
+        echo 'class="' . join(' ', $this->getPostClass($class)) . '"';
     }
 
     /**
@@ -266,7 +264,7 @@ class PostHelper extends AppHelper {
      * @param string|array $class One or more classes to add to the class list.
      * @return array Array of classes.
      */
-    function get_post_class($class = '') {
+    public function getPostClass($class = '') {
 
         $classes = array();
 
@@ -289,7 +287,7 @@ class PostHelper extends AppHelper {
 
         $classes = array_map('Formatting::esc_attr', $classes);
 
-        return $this->Hook->apply_filters('post_class', $classes, $class);
+        return $this->Hook->applyFilters('post_class', $classes, $class);
     }
 
     public function the_category($separator = ', ', $echo = true) {
@@ -335,8 +333,8 @@ class PostHelper extends AppHelper {
      *
      * @since 1.0.0
      */
-    public function the_permalink() {
-        $this->Link->the_permalink();
+    public function thePermalink() {
+        $this->Link->thePermalink();
     }
 
     /**
@@ -346,8 +344,8 @@ class PostHelper extends AppHelper {
      *
      * @return string
      */
-    public function get_permalink() {
-        return $this->Link->get_permalink();
+    public function getPermalink() {
+        return $this->Link->getPermalink();
     }
 
     /**
@@ -370,8 +368,8 @@ class PostHelper extends AppHelper {
      * @param bool $echo Optional, default is display. Whether to echo the date or return it.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function the_date($d = '', $before = '', $after = '', $echo = true) {
-        $this->General->the_date($d = '', $before = '', $after = '', $echo = true);
+    public function theDate($d = '', $before = '', $after = '', $echo = true) {
+        $this->General->theDate($d = '', $before = '', $after = '', $echo = true);
     }
 
     /**
@@ -385,8 +383,8 @@ class PostHelper extends AppHelper {
      * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function get_the_date($d = '') {
-        return $this->General->get_the_date($d = '');
+    public function getTheDate($d = '') {
+        return $this->General->getTheDate($d = '');
     }
 
     public function list_pages($args = '') {
@@ -398,7 +396,7 @@ class PostHelper extends AppHelper {
             'link_after' => '',
         );
         //$narr = merge $args with $defaults
-        $narr = $this->parse_args($args, $defaults);
+        $narr = Functions::hr_parse_args($args, $defaults);
         $pages = $this->requestAction('/posts/pageIndex/sort:' . $narr['sort'] . '/direction:' . $narr['direction']);
         $output = $this->page_tree_render($pages, $narr);
         if ($narr['echo']) {
@@ -437,7 +435,7 @@ class PostHelper extends AppHelper {
             'echo' => 1,
         );
         //$narr = merge $args with $defaults
-        $narr = $this->parse_args($args, $defaults);
+        $narr = Functions::hr_parse_args($args, $defaults);
         $cats = $this->requestAction('/categories/index/sort:' . $narr['sort'] . '/direction:' . $narr['direction']);
         $output = $this->category_tree_render($cats);
         if ($narr['echo']) {
@@ -494,13 +492,6 @@ class PostHelper extends AppHelper {
         }
 
         return $stringArr;
-    }
-
-    public function parse_args($args, $defaults = array()) {
-        if (is_string($args)) {
-            $strArr = $this->stringToArray($args);
-            return array_merge($defaults, $strArr);
-        }
     }
 
 }
