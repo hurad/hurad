@@ -55,13 +55,19 @@
 
 
                     <?php echo $this->fetch('content'); ?>
-                    
+
 
                 </div>
                 <!-- /#content -->
 
                 <aside id="sidebar">
 
+                    <section class="widget">
+                        <h4 class="widgettitle">Authors</h4>
+                        <ul>
+                            <?php $this->Author->hrListAuthors(array('show_fullname' => TRUE)); ?>
+                        </ul>
+                    </section>
 
                     <section class="widget">
                         <h4 class="widgettitle">Pages</h4>
