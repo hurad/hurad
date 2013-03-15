@@ -1,15 +1,15 @@
-<article id="post-<?php $this->Post->the_ID(); ?>" <?php $this->Post->post_class(); ?>>
+<article id="post-<?php $this->Post->theID(); ?>" <?php $this->Post->postClass(); ?>>
 
-    <time datetime="<?php $this->Post->the_date('Y-m-d H:i:s'); ?>" class="post-date"><?php $this->Post->the_date(); ?></time>
-    <h1 class="post-title"><a href="<?php $this->Post->the_permalink(); ?>" title="<?php printf(__('Permalink to %s'), $this->Post->the_title_attribute('echo=0')); ?>" rel="bookmark"><?php $this->Post->the_title(); ?></a></h1>
+    <time datetime="<?php $this->Post->theDate('Y-m-d H:i:s'); ?>" class="post-date"><?php $this->Post->theDate(); ?></time>
+    <h1 class="post-title"><a href="<?php $this->Post->thePermalink(); ?>" title="<?php printf(__('Permalink to %s'), $this->Post->theTitleAttribute('echo=0')); ?>" rel="bookmark"><?php $this->Post->theTitle(); ?></a></h1>
     <p class="post-meta"> 
         <span class="post-author"><?php echo $this->Html->link(h($post['User']['username']), array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?></span>
         <span class="post-category"><?php $this->Post->the_category(); ?></span>
         <span class="post-tag"><?php $this->Post->tag(); ?></span>					
-        <span class="post-comment"><?php $this->Comment->comments_popup_link(__('Leave a comment'), __('1 Comment'), __('% Comments')); ?></span>
+        <span class="post-comment"><?php $this->Comment->commentsPopupLink(__('Leave a comment'), __('1 Comment'), __('% Comments')); ?></span>
     </p>
 
-    <?php $this->Post->the_content(); ?>
+    <?php $this->Post->theContent(); ?>
 
 </article>
 
