@@ -9,7 +9,7 @@ App::uses('AppController', 'Controller');
  */
 class PostsController extends AppController {
 
-    public $helpers = array('Post', 'Comment', 'Text');
+    public $helpers = array('Post', 'Comment', 'Text', 'Editor');
     public $components = array('RequestHandler');
     public $paginate = array(
         'conditions' => array(
