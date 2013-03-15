@@ -70,6 +70,19 @@ class Post extends AppModel {
             'finderQuery' => '',
             'counterQuery' => '',
         ),
+        'PostMeta' => array(
+            'className' => 'PostMeta',
+            'foreignKey' => 'post_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
     );
 
     /**
@@ -177,6 +190,15 @@ class Post extends AppModel {
             default:
                 break;
         }
+        return $num;
+    }
+
+    public function countUserPosts($user_id) {
+        $num = $this->find('count', array(
+            'conditions' => array(
+                'Post.user_id' => $user_id
+            )
+        ));
         return $num;
     }
 

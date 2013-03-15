@@ -1,11 +1,27 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
+/**
+ * Tinymce Helper
+ *
+ * PHP version 5
+ *
+ * @category Tinymce.Helper
+ * @package Croogo
+ * @version 1.0
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link http://www.croogo.org
+ */
 
 /**
  * TinymceHelper
  * 
- * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @package Hurad
+ * @category Tinymce.View.Helper
+ * @since 1.0.0
+ * @license http://opensource.org/licenses/GPL-3.0 GPLv3 License 
+ * @link http://hurad.org Hurad Project
  */
 class TinymceHelper extends AppHelper {
 

@@ -234,4 +234,62 @@ class Functions {
         return $r;
     }
 
+    /**
+     * Whether SSL login should be forced.
+     *
+     * @since 1.0.0
+     *
+     * @param string|bool $force Optional.
+     * @return bool True if forced, false if not forced.
+     */
+    public function force_ssl_login($force = null) {
+        static $forced = false;
+
+        if (!is_null($force)) {
+            $old_forced = $forced;
+            $forced = $force;
+            return $old_forced;
+        }
+
+        return $forced;
+    }
+
+    /**
+     * Whether to force SSL used for the Administration Screens.
+     *
+     * @since 1.0.0
+     *
+     * @param string|bool $force
+     * @return bool True if forced, false if not forced.
+     */
+    public function force_ssl_admin($force = null) {
+        static $forced = false;
+
+        if (!is_null($force)) {
+            $old_forced = $forced;
+            $forced = $force;
+            return $old_forced;
+        }
+
+        return $forced;
+    }
+
+    /**
+     * Extract a slice of an array, given a list of keys.
+     *
+     * @since 1.0.0
+     *
+     * @param array $array The original array
+     * @param array $keys The list of keys
+     * @return array The array slice
+     */
+    public function hr_array_slice_assoc($array, $keys) {
+        $slice = array();
+        foreach ($keys as $key)
+            if (isset($array[$key]))
+                $slice[$key] = $array[$key];
+
+        return $slice;
+    }
+
 }

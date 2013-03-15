@@ -45,15 +45,15 @@ class GeneralHelper extends AppHelper {
      * @param bool $echo Optional, default is display. Whether to echo the date or return it.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function the_date($d = '', $before = '', $after = '', $echo = true) {
+    public function theDate($d = '', $before = '', $after = '', $echo = true) {
 
         $the_date = '';
 
         $the_date .= $before;
-        $the_date .= $this->get_the_date($d);
+        $the_date .= $this->getTheDate($d);
         $the_date .= $after;
 
-        $the_date = $this->Hook->apply_filters('the_date', $the_date, $d, $before, $after);
+        $the_date = $this->Hook->applyFilters('the_date', $the_date, $d, $before, $after);
 
         if ($echo) {
             echo $the_date;
@@ -73,7 +73,7 @@ class GeneralHelper extends AppHelper {
      * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function get_the_date($d = '') {
+    public function getTheDate($d = '') {
         $the_date = '';
 
         if ('' == $d)
@@ -81,7 +81,7 @@ class GeneralHelper extends AppHelper {
         else
             $the_date .= $this->Time->format($d, $this->post['Post']['created'], null, Configure::read('General-timezone'));
 
-        return $this->Hook->apply_filters('get_the_date', $the_date, $d);
+        return $this->Hook->applyFilters('get_the_date', $the_date, $d);
     }
 
     /**
@@ -95,10 +95,10 @@ class GeneralHelper extends AppHelper {
      * @param bool $echo Optional, default is display. Whether to echo the date or return it.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function the_modified_date($d = '', $before = '', $after = '', $echo = true) {
+    public function theModifiedDate($d = '', $before = '', $after = '', $echo = true) {
 
-        $the_modified_date = $before . $this->get_the_modified_date($d) . $after;
-        $the_modified_date = $this->Hook->apply_filters('the_modified_date', $the_modified_date, $d, $before, $after);
+        $the_modified_date = $before . $this->getTheModifiedDate($d) . $after;
+        $the_modified_date = $this->Hook->applyFilters('the_modified_date', $the_modified_date, $d, $before, $after);
 
         if ($echo) {
             echo $the_modified_date;
@@ -115,14 +115,14 @@ class GeneralHelper extends AppHelper {
      * @param string $d Optional. PHP date format. Defaults to the "date_format" option
      * @return string
      */
-    function get_the_modified_date($d = '') {
+    public function getTheModifiedDate($d = '') {
         if ('' == $d) {
-            $the_time = $this->get_post_modified_time(Configure::read('General-date_format'));
+            $the_time = $this->getPostModifiedTime(Configure::read('General-date_format'));
         } else {
-            $the_time = $this->get_post_modified_time($d);
+            $the_time = $this->getPostModifiedTime($d);
         }
 
-        return $this->Hook->apply_filters('get_the_modified_date', $the_time, $d);
+        return $this->Hook->applyFilters('get_the_modified_date', $the_time, $d);
     }
 
     /**
@@ -132,8 +132,8 @@ class GeneralHelper extends AppHelper {
      *
      * @param string $d Either 'G', 'U', or php date format.
      */
-    function the_time($d = '') {
-        echo $this->Hook->apply_filters('the_time', $this->get_the_time($d), $d);
+    public function theTime($d = '') {
+        echo $this->Hook->applyFilters('the_time', $this->getTheTime($d), $d);
     }
 
     /**
@@ -144,14 +144,14 @@ class GeneralHelper extends AppHelper {
      * @param string $d Optional Either 'G', 'U', or php date format defaults to the value specified in the time_format option.
      * @return string
      */
-    function get_the_time($d = '') {
+    public function getTheTime($d = '') {
         if ('' == $d) {
-            $the_time = $this->get_post_time(Configure::read('General-time_format'));
+            $the_time = $this->getPostTime(Configure::read('General-time_format'));
         } else {
-            $the_time = $this->get_post_time($d);
+            $the_time = $this->getPostTime($d);
         }
 
-        return $this->Hook->apply_filters('get_the_time', $the_time, $d);
+        return $this->Hook->applyFilters('get_the_time', $the_time, $d);
     }
 
     /**
@@ -162,11 +162,11 @@ class GeneralHelper extends AppHelper {
      * @param string $d Optional Either 'G', 'U', or php date format.
      * @return string
      */
-    function get_post_time($d = 'U') { // returns timestamp
+    public function getPostTime($d = 'U') { // returns timestamp
         $time = $this->post['Post']['created'];
         $time = $this->Time->format($d, $time, null, Configure::read('General-timezone'));
 
-        return $this->Hook->apply_filters('get_post_time', $time, $d);
+        return $this->Hook->applyFilters('get_post_time', $time, $d);
     }
 
     /**
@@ -176,8 +176,8 @@ class GeneralHelper extends AppHelper {
      *
      * @param string $d Optional Either 'G', 'U', or php date format defaults to the value specified in the time_format option.
      */
-    function the_modified_time($d = '') {
-        echo $this->Hook->apply_filters('the_modified_time', $this->get_the_modified_time($d), $d);
+    public function theModifiedTime($d = '') {
+        echo $this->Hook->applyFilters('the_modified_time', $this->getTheModifiedTime($d), $d);
     }
 
     /**
@@ -188,14 +188,14 @@ class GeneralHelper extends AppHelper {
      * @param string $d Optional Either 'G', 'U', or php date format defaults to the value specified in the time_format option.
      * @return string
      */
-    function get_the_modified_time($d = '') {
+    public function getTheModifiedTime($d = '') {
         if ('' == $d) {
-            $the_time = $this->get_post_modified_time(Configure::read('General-time_format'));
+            $the_time = $this->getPostModifiedTime(Configure::read('General-time_format'));
         } else {
-            $the_time = $this->get_post_modified_time($d);
+            $the_time = $this->getPostModifiedTime($d);
         }
 
-        return $this->Hook->apply_filters('get_the_modified_time', $the_time, $d);
+        return $this->Hook->applyFilters('get_the_modified_time', $the_time, $d);
     }
 
     /**
@@ -206,11 +206,11 @@ class GeneralHelper extends AppHelper {
      * @param string $d Optional, default is 'U'. Either 'G', 'U', or php date format.
      * @return string Returns timestamp
      */
-    function get_post_modified_time($d = 'U') {
+    public function getPostModifiedTime($d = 'U') {
         $time = $this->post['Post']['modified'];
         $time = $this->Time->format($d, $time, null, Configure::read('General-timezone'));
 
-        return $this->Hook->apply_filters('get_post_modified_time', $time, $d);
+        return $this->Hook->applyFilters('get_post_modified_time', $time, $d);
     }
 
 }

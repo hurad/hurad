@@ -1,11 +1,27 @@
 <?php
 
 /**
+ * CroogoTheme class
+ *
+ * PHP version 5
+ *
+ * @category Component
+ * @package Croogo
+ * @version 1.4
+ * @since 1.4
+ * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link http://www.croogo.org
+ */
+
+/**
  * HrTheme
  * 
- * Reaname class from CroogoTheme to HrTheme
- * 
- * @author Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @package Hurad
+ * @category Lib
+ * @since 1.0.0
+ * @license http://opensource.org/licenses/GPL-3.0 GPLv3 License 
+ * @link http://hurad.org Hurad Project
  */
 class HrTheme extends Object {
 

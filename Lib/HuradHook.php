@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The hook API is located in this file, which allows for creating actions
+ * The Hook API is located in this file, which allows for creating actions
  * and filters and hooking functions, and methods. The functions or methods will
  * then be run when the action or filter is called.
  *
@@ -12,6 +12,10 @@
  * {@link http://us2.php.net/manual/en/language.pseudo-types.php#language.types.callback 'callback'}
  * type are valid.
  *
+ * Move all wordpress plugin.php functions to this class 
+ * change prefix global variable from "wp_" to "hr_"
+ * 
+ * @copyright (c) 2006-2012, WordPress
  * @since 1.0.0
  */
 class HuradHook {

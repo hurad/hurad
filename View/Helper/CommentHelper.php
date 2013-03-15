@@ -104,18 +104,18 @@ class CommentHelper extends AppHelper {
      *
      * @return string The comment author
      */
-    public function get_comment_author() {
+    public function getCommentAuthor() {
         if (empty($this->comment['author'])) {
             if (!empty($this->comment['user_id'])) {
                 $user = $this->MUser->getUserData($this->comment['user_id']);
-                $author = $user['User']['username'];
+                $author = $user['username'];
             } else {
                 $author = __('Anonymous');
             }
         } else {
             $author = $this->comment['author'];
         }
-        return $this->Hook->apply_filters('get_comment_author', $author);
+        return $this->Hook->applyFilters('get_comment_author', $author);
     }
 
     /**
@@ -124,8 +124,8 @@ class CommentHelper extends AppHelper {
      * @since 1.0.0
      * @uses apply_filters() Calls 'comment_author' on comment author before displaying
      */
-    public function comment_author() {
-        $author = $this->Hook->apply_filters('comment_author', $this->get_comment_author());
+    public function commentAuthor() {
+        $author = $this->Hook->applyFilters('comment_author', $this->getCommentAuthor());
         echo $author;
     }
 
@@ -138,8 +138,8 @@ class CommentHelper extends AppHelper {
      * @param int $comment_ID The ID of the comment for which to get the author's email. Optional.
      * @return string The current comment author's email
      */
-    public function get_comment_author_email() {
-        return $this->Hook->apply_filters('get_comment_author_email', $this->comment['author_email']);
+    public function getCommentAuthorEmail() {
+        return $this->Hook->applyFilters('get_comment_author_email', $this->comment['author_email']);
     }
 
     /**
@@ -152,10 +152,10 @@ class CommentHelper extends AppHelper {
      * address and use it for their own means good and bad.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls 'author_email' hook on the author email
+     * @uses applyFilters() Calls 'author_email' hook on the author email
      */
-    public function comment_author_email() {
-        echo $this->Hook->apply_filters('author_email', $this->get_comment_author_email());
+    public function commentAuthorEmail() {
+        echo $this->Hook->applyFilters('author_email', $this->getCommentAuthorEmail());
     }
 
     /**
@@ -168,15 +168,15 @@ class CommentHelper extends AppHelper {
      * address and use it for their own means good and bad.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls 'comment_email' hook for the display of the comment author's email
-     * @uses get_comment_author_email_link() For generating the link
+     * @uses applyFilters() Calls 'comment_email' hook for the display of the comment author's email
+     * @uses getCommentAuthorEmailLink() For generating the link
      *
      * @param string $linktext The text to display instead of the comment author's email address
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
      */
-    public function comment_author_email_link($linktext = '', $before = '', $after = '') {
-        if ($link = $this->get_comment_author_email_link($linktext, $before, $after))
+    public function commentAuthorEmailLink($linktext = '', $before = '', $after = '') {
+        if ($link = $this->getCommentAuthorEmailLink($linktext, $before, $after))
             echo $link;
     }
 
@@ -196,8 +196,8 @@ class CommentHelper extends AppHelper {
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
      */
-    public function get_comment_author_email_link($linktext = '', $before = '', $after = '') {
-        $email = $this->Hook->apply_filters('comment_email', $this->comment['author_email']);
+    public function getCommentAuthorEmailLink($linktext = '', $before = '', $after = '') {
+        $email = $this->Hook->applyFilters('comment_email', $this->comment['author_email']);
         if ((!empty($email)) && ($email != '@')) {
             $display = ($linktext != '') ? $linktext : $email;
             $return = $before;
@@ -213,52 +213,52 @@ class CommentHelper extends AppHelper {
      * Retrieve the html link to the url of the author of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls 'get_comment_author_link' hook on the complete link HTML or author
+     * @uses apply_filters() Calls 'getCommentAuthorLink' hook on the complete link HTML or author
      *
      * @return string Comment Author name or HTML link for author's URL
      */
-    public function get_comment_author_link() {
+    public function getCommentAuthorLink() {
         /** @todo Only call these functions when they are needed. Include in if... else blocks */
-        $url = $this->get_comment_author_url();
-        $author = $this->get_comment_author();
+        $url = $this->getCommentAuthorUrl();
+        $author = $this->getCommentAuthor();
 
         if (empty($url) || 'http://' == $url)
             $return = $author;
         else
             $return = $this->Html->link('Enter', $url, array('class' => 'url', 'rel' => 'external nofollow'));
-        return $this->Hook->apply_filters('get_comment_author_link', $return);
+        return $this->Hook->applyFilters('get_comment_author_link', $return);
     }
 
     /**
      * Display the html link to the url of the author of the current comment.
      *
      * @since 1.0.0
-     * @see get_comment_author_link() Echoes result
+     * @see getCommentAuthorLink() Echoes result
      */
-    public function comment_author_link() {
-        echo $this->get_comment_author_link();
+    public function commentAuthorLink() {
+        echo $this->getCommentAuthorLink();
     }
 
     /**
      * Retrieve the IP address of the author of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filters()
+     * @uses applyFilters()
      *
      * @return string The comment author's IP address.
      */
-    public function get_comment_author_IP() {
-        return $this->Hook->apply_filters('get_comment_author_IP', $this->comment['author_ip']);
+    public function getCommentAuthorIP() {
+        return $this->Hook->applyFilters('get_comment_author_IP', $this->comment['author_ip']);
     }
 
     /**
      * Display the IP address of the author of the current comment.
      *
      * @since 1.0.0
-     * @see get_comment_author_IP() Echoes Result
+     * @see getCommentAuthorIP() Echoes Result
      */
-    public function comment_author_IP() {
-        echo $this->get_comment_author_IP();
+    public function commentAuthorIP() {
+        echo $this->getCommentAuthorIP();
     }
 
     /**
@@ -269,10 +269,10 @@ class CommentHelper extends AppHelper {
      *
      * @return string
      */
-    public function get_comment_author_url() {
+    public function getCommentAuthorUrl() {
         $url = ('http://' == $this->comment['author_url']) ? '' : $this->comment['author_url'];
         $url = Formatting::esc_url($url, array('http', 'https'));
-        return $this->Hook->apply_filters('get_comment_author_url', $url);
+        return $this->Hook->applyFilters('get_comment_author_url', $url);
     }
 
     /**
@@ -282,8 +282,8 @@ class CommentHelper extends AppHelper {
      * @uses apply_filters()
      * @uses get_comment_author_url() Retrieves the comment author's URL
      */
-    public function comment_author_url() {
-        echo $this->Hook->apply_filters('comment_url', $this->get_comment_author_url());
+    public function commentAuthorUrl() {
+        echo $this->Hook->applyFilters('comment_url', $this->getCommentAuthorUrl());
     }
 
     /**
@@ -297,36 +297,36 @@ class CommentHelper extends AppHelper {
      * in the order of $before, link, and finally $after.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls the 'get_comment_author_url_link' on the complete HTML before returning.
+     * @uses applyFilters() Calls the 'getCommentAuthorUrlLink' on the complete HTML before returning.
      *
      * @param string $linktext The text to display instead of the comment author's email address
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
      * @return string The HTML link between the $before and $after parameters
      */
-    public function get_comment_author_url_link($linktext = '', $before = '', $after = '') {
-        $url = $this->get_comment_author_url();
+    public function getCommentAuthorUrlLink($linktext = '', $before = '', $after = '') {
+        $url = $this->getCommentAuthorUrl();
         $display = ($linktext != '') ? $linktext : $url;
         $display = str_replace('http://www.', '', $display);
         $display = str_replace('http://', '', $display);
         if ('/' == substr($display, -1))
             $display = substr($display, 0, -1);
         $return = $before . $this->Html->link($display, $url, array('rel' => 'external')) . $after;
-        return $this->Hook->apply_filters('get_comment_author_url_link', $return);
+        return $this->Hook->applyFilters('get_comment_author_url_link', $return);
     }
 
     /**
      * Displays the HTML link of the url of the author of the current comment.
      *
      * @since 1.0.0
-     * @see get_comment_author_url_link() Echoes result
+     * @see getCommentAuthorUrlLink() Echoes result
      *
      * @param string $linktext The text to display instead of the comment author's email address
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
      */
-    public function comment_author_url_link($linktext = '', $before = '', $after = '') {
-        echo $this->get_comment_author_url_link($linktext, $before, $after);
+    public function commentAuthorUrlLink($linktext = '', $before = '', $after = '') {
+        echo $this->getCommentAuthorUrlLink($linktext, $before, $after);
     }
 
     /**
@@ -335,11 +335,11 @@ class CommentHelper extends AppHelper {
      * @since 1.0.0
      *
      * @param string|array $class One or more classes to add to the class list
-     * @param bool $echo Whether comment_class should echo or return
+     * @param bool $echo Whether commentClass should echo or return
      */
-    public function comment_class($class = '', $echo = true) {
+    public function commentClass($class = '', $echo = true) {
         // Separates classes with a single space, collates classes for comment DIV
-        $class = 'class="' . join(' ', $this->get_comment_class($class)) . '"';
+        $class = 'class="' . join(' ', $this->getCommentClass($class)) . '"';
         if ($echo)
             echo $class;
         else
@@ -354,7 +354,7 @@ class CommentHelper extends AppHelper {
      * @param string|array $class One or more classes to add to the class list
      * @return array Array of classes
      */
-    public function get_comment_class($class = '') {
+    public function getCommentClass($class = '') {
         $classes = array();
 
         // Get the comment type (comment, trackback),
@@ -364,7 +364,7 @@ class CommentHelper extends AppHelper {
         if ($this->comment['user_id'] > 0 && $user = $this->MUser->getUserData($this->comment['user_id'])) {
             // For all registered users, 'byuser'
             $classes[] = 'byuser';
-            $classes[] = 'comment-author-' . Formatting::sanitize_html_class($user['User']['nickname'], $this->comment['user_id']);
+            $classes[] = 'comment-author-' . Formatting::sanitize_html_class($user['nickname'], $this->comment['user_id']);
             // For comment authors who are the author of the post
             if ($post = $this->MPost->getPost($this->comment['post_id'])) {
                 if ($this->comment['user_id'] === $post['Post']['user_id'])
@@ -409,25 +409,25 @@ class CommentHelper extends AppHelper {
 
         $classes = array_map('Formatting::esc_attr', $classes);
 
-        return $this->Hook->apply_filters('comment_class', $classes, $class);
+        return $this->Hook->applyFilters('comment_class', $classes, $class);
     }
 
     /**
      * Retrieve the comment date of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls 'get_comment_date' hook with the formatted date and the $d parameter respectively
+     * @uses applyFilters() Calls 'get_comment_date' hook with the formatted date and the $d parameter respectively
      * @uses $comment
      *
      * @param string $d The format of the date (defaults to user's config)
      * @return string The comment's date
      */
-    public function get_comment_date($d = '') {
+    public function getCommentDate($d = '') {
         if ('' == $d)
             $date = $this->Time->format(Configure::read('General-date_format'), $this->comment['created'], null, Configure::read('General-timezone'));
         else
             $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
-        return $this->Hook->apply_filters('get_comment_date', $date, $d);
+        return $this->Hook->applyFilters('get_comment_date', $date, $d);
     }
 
     /**
@@ -437,8 +437,8 @@ class CommentHelper extends AppHelper {
      *
      * @param string $d The format of the date (defaults to user's config)
      */
-    public function comment_date($d = '') {
-        echo $this->get_comment_date($d);
+    public function commentDate($d = '') {
+        echo $this->getCommentDate($d);
     }
 
     /**
@@ -449,11 +449,11 @@ class CommentHelper extends AppHelper {
      * will appear.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls 'get_comment_excerpt' on truncated comment
+     * @uses applyFilters() Calls 'getCommentExcerpt' on truncated comment
      *
      * @return string The maybe truncated comment with 20 words or less
      */
-    public function get_comment_excerpt() {
+    public function getCommentExcerpt() {
         $comment_text = strip_tags($this->comment['content']);
         $blah = explode(' ', $comment_text);
         if (count($blah) > 20) {
@@ -468,29 +468,29 @@ class CommentHelper extends AppHelper {
             $excerpt .= $blah[$i] . ' ';
         }
         $excerpt .= ($use_dotdotdot) ? '...' : '';
-        return $this->Hook->apply_filters('get_comment_excerpt', $excerpt);
+        return $this->Hook->applyFilters('get_comment_excerpt', $excerpt);
     }
 
     /**
      * Display the excerpt of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls 'comment_excerpt' hook before displaying excerpt
+     * @uses applyFilters() Calls 'comment_excerpt' hook before displaying excerpt
      */
-    public function comment_excerpt() {
-        echo $this->Hook->apply_filters('comment_excerpt', $this->get_comment_excerpt());
+    public function commentExcerpt() {
+        echo $this->Hook->applyFilters('comment_excerpt', $this->getCommentExcerpt());
     }
 
     /**
      * Retrieve the comment id of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls the 'get_comment_ID' hook for the comment ID
+     * @uses applyFilters() Calls the 'get_comment_ID' hook for the comment ID
      *
      * @return int The comment ID
      */
-    public function get_comment_ID() {
-        return $this->Hook->apply_filters('get_comment_ID', $this->comment['id']);
+    public function getCommentID() {
+        return $this->Hook->applyFilters('get_comment_ID', $this->comment['id']);
     }
 
     /**
@@ -499,8 +499,8 @@ class CommentHelper extends AppHelper {
      * @since 1.0.0
      * @see get_comment_ID() Echoes Result
      */
-    public function comment_ID() {
-        echo $this->get_comment_ID();
+    public function commentID() {
+        echo $this->getCommentID();
     }
 
     /**
@@ -510,30 +510,30 @@ class CommentHelper extends AppHelper {
      *
      * @return string The link to the comments
      */
-    public function get_comments_link() {
-        return $this->Post->get_permalink() . '#comments';
+    public function getCommentsLink() {
+        return $this->Post->getPermalink() . '#comments';
     }
 
     /**
      * Displays the link to the current post comments.
      *
      * @since 1.0.0
-     * @see get_comments_link() Echoes Result
+     * @see getCommentsLink() Echoes Result
      *
      */
-    public function comments_link() {
-        echo $this->get_comments_link();
+    public function commentsLink() {
+        echo $this->getCommentsLink();
     }
 
     /**
      * Retrieve the amount of comments a post has.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls the 'get_comments_number' hook on the number of comments
+     * @uses applyFilters() Calls the 'get_comments_number' hook on the number of comments
      *
      * @return int The number of comments a post has
      */
-    public function get_comments_number() {
+    public function getCommentsNumber() {
         if ($this->view_path == 'Posts') {
             $comment_count = $this->Post->post['Post']['comment_count'];
             $post_id = $this->Post->post['Post']['id'];
@@ -546,21 +546,21 @@ class CommentHelper extends AppHelper {
         else
             $count = $comment_count;
 
-        return $this->Hook->apply_filters('get_comments_number', $count, $post_id);
+        return $this->Hook->applyFilters('get_comments_number', $count, $post_id);
     }
 
     /**
      * Display the language string for the number of comments the current post has.
      *
      * @since 1.0.0
-     * @uses apply_filters() Calls the 'comments_number' hook on the output and number of comments respectively.
+     * @uses applyFilters() Calls the 'comments_number' hook on the output and number of comments respectively.
      *
      * @param string $zero Text for no comments
      * @param string $one Text for one comment
      * @param string $more Text for more than one comment
      */
-    public function comments_number($zero = false, $one = false, $more = false) {
-        $number = $this->get_comments_number();
+    public function commentsNumber($zero = false, $one = false, $more = false) {
+        $number = $this->getCommentsNumber();
 
         if ($number > 1)
             $output = str_replace('%', Functions::number_format_i18n($number), ( false === $more ) ? __('% Comments') : $more);
@@ -569,7 +569,7 @@ class CommentHelper extends AppHelper {
         else // must be one
             $output = ( false === $one ) ? __('1 Comment') : $one;
 
-        echo $this->Hook->apply_filters('comments_number', $output, $number);
+        echo $this->Hook->applyFilters('comments_number', $output, $number);
     }
 
     /**
@@ -579,36 +579,36 @@ class CommentHelper extends AppHelper {
      *
      * @return string The comment content
      */
-    public function get_comment_text() {
-        return $this->Hook->apply_filters('get_comment_text', $this->comment['content']);
+    public function getCommentText() {
+        return $this->Hook->applyFilters('get_comment_text', $this->comment['content']);
     }
 
     /**
      * Displays the text of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filters() Passes the comment content through the 'comment_text' hook before display
-     * @uses get_comment_text() Gets the comment content
+     * @uses applyFilters() Passes the comment content through the 'comment_text' hook before display
+     * @uses getCommentText() Gets the comment content
      */
-    public function comment_text() {
-        echo $this->Hook->apply_filters('comment_text', $this->get_comment_text());
+    public function commentText() {
+        echo $this->Hook->applyFilters('comment_text', $this->getCommentText());
     }
 
     /**
      * Retrieve the comment time of the current comment.
      *
      * @since 1.0.0
-     * @uses apply_filter() Calls 'get_comment_time' hook with the formatted time, the $d parameter, and $gmt parameter passed.
+     * @uses applyFilter() Calls 'get_comment_time' hook with the formatted time, the $d parameter, and $gmt parameter passed.
      *
      * @param string $d Optional. The format of the time (defaults to user's config)
      * @return string The formatted time
      */
-    public function get_comment_time($d = '') {
+    public function getCommentTime($d = '') {
         if ('' == $d)
             $date = $this->Time->format(Configure::read('General-time_format'), $this->comment['created'], null, Configure::read('General-timezone'));
         else
             $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
-        return $this->Hook->apply_filters('get_comment_time', $date, $d);
+        return $this->Hook->applyFilters('get_comment_time', $date, $d);
     }
 
     /**
@@ -618,8 +618,8 @@ class CommentHelper extends AppHelper {
      *
      * @param string $d Optional. The format of the time (defaults to user's config)
      */
-    function comment_time($d = '') {
-        echo $this->get_comment_time($d);
+    function commentTime($d = '') {
+        echo $this->getCommentTime($d);
     }
 
     /**
@@ -630,7 +630,7 @@ class CommentHelper extends AppHelper {
      * @param int $approved Comment Status
      * @return string|bool Status might be 'trash', 'approved', 'unapproved', 'spam'. False on failure.
      */
-    function get_comment_status($approved) {
+    function getCommentStatus($approved) {
         if ($approved == null)
             return false;
         elseif ($approved == '1')
@@ -652,7 +652,7 @@ class CommentHelper extends AppHelper {
      *
      * @return bool True if the comments are open
      */
-    public function comments_open() {
+    public function commentsOpen() {
         if ($this->view_path == 'Posts') {
             $comment_status = ( 'open' == $this->post['Post']['comment_status'] );
         } elseif ($this->view_path == 'Pages') {
@@ -660,7 +660,7 @@ class CommentHelper extends AppHelper {
         }
 
         $open = ( 'open' == $comment_status );
-        return $this->Hook->apply_filters('comments_open', $open);
+        return $this->Hook->applyFilters('comments_open', $open);
     }
 
     /**
@@ -678,7 +678,7 @@ class CommentHelper extends AppHelper {
      * @param string $none The string to display when comments have been turned off
      * @return null Returns null on single posts and pages.
      */
-    public function comments_popup_link($zero = false, $one = false, $more = false, $css_class = '', $none = false) {
+    public function commentsPopupLink($zero = false, $one = false, $more = false, $css_class = '', $none = false) {
         if (false === $zero)
             $zero = __('No Comments');
         if (false === $one)
@@ -688,9 +688,9 @@ class CommentHelper extends AppHelper {
         if (false === $none)
             $none = __('Comments Off');
 
-        $number = $this->get_comments_number();
+        $number = $this->getCommentsNumber();
 
-        if (0 == $number && !$this->comments_open()) {
+        if (0 == $number && !$this->commentsOpen()) {
             echo '<span' . ((!empty($css_class)) ? ' class="' . Formatting::esc_attr($css_class) . '"' : '') . '>' . $none . '</span>';
             return;
         }
@@ -698,9 +698,9 @@ class CommentHelper extends AppHelper {
         echo '<a href="';
 
         if (0 == $number)
-            echo $this->Link->get_permalink() . '#respond';
+            echo $this->Link->getPermalink() . '#respond';
         else
-            $this->comments_link();
+            $this->commentsLink();
         echo '"';
 
         if (!empty($css_class)) {
@@ -708,20 +708,20 @@ class CommentHelper extends AppHelper {
         }
 
         if ($this->view_path == 'Posts') {
-            $title = $this->Post->the_title_attribute(array('echo' => 0));
+            $title = $this->Post->theTitleAttribute(array('echo' => 0));
         } elseif ($this->view_path == 'Pages') {
-            $title = $this->Page->the_title_attribute(array('echo' => 0));
+            $title = $this->Page->theTitleAttribute(array('echo' => 0));
         }
 
-        echo $this->Hook->apply_filters('comments_popup_link_attributes', '');
+        echo $this->Hook->applyFilters('comments_popup_link_attributes', '');
 
         echo ' title="' . Formatting::esc_attr(sprintf(__('Comment on %s'), $title)) . '">';
-        $this->comments_number($zero, $one, $more);
+        $this->commentsNumber($zero, $one, $more);
         echo '</a>';
     }
 
     public function comments_template() {
-        if ($this->comments_open()) {
+        if ($this->commentsOpen()) {
             $this->_comment_list();
             if ($this->current_user) {
                 $this->_loggedin_comment_form();
@@ -831,20 +831,20 @@ class CommentHelper extends AppHelper {
         echo '<ol class = "commentlist">';
         foreach ($comments as $comment) {
             $this->setComment($comment);
-            echo '<li id = "comment-' . $this->get_comment_ID() . '" ' . $this->comment_class('', FALSE) . '>';
+            echo '<li id = "comment-' . $this->getCommentID() . '" ' . $this->commentClass('', FALSE) . '>';
             echo '<p class = "comment-author">';
-            echo $this->Gravatar->image($this->get_comment_author_email(), array('size' => '48', 'default' => 'mm'));
+            echo $this->Gravatar->image($this->getCommentAuthorEmail(), array('size' => '48', 'default' => 'mm'));
             echo '<cite>';
-            echo $this->get_comment_author_url_link($this->get_comment_author());
+            echo $this->getCommentAuthorUrlLink($this->getCommentAuthor());
             echo '</cite>';
             echo '<br>';
             echo '<small class = "comment-time">';
-            echo '<strong>' . $this->get_comment_date() . '</strong>';
-            echo ' @ ' . $this->get_comment_time();
+            echo '<strong>' . $this->getCommentDate() . '</strong>';
+            echo ' @ ' . $this->getCommentTime();
             echo '</small>';
             echo '</p>';
             echo '<div class = "commententry">';
-            $this->comment_text();
+            $this->commentText();
             echo '</div>';
             echo '<p class="reply"> </p>';
             echo '</li>';
