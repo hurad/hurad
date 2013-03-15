@@ -83,17 +83,17 @@ echo $this->Form->create('Post', array(
             <?php
             echo $this->Html->tableCells(array(
                 array(
-                    array($this->Form->checkbox('Post.' . $post['Post']['id'] . '.id'),
+                    array($this->Form->checkbox('Post.' . $this->Post->getTheID() . '.id'),
                         array(
                             'class' => 'check-column',
                             'scope' => 'row')
                     ),
-                    array($this->Html->link('<strong>' . h($post['Post']['title']) . '</strong>', array('action' => 'edit', $post['Post']['id']), array('title' => __('Edit “%s”', $post['Post']['title']), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
+                    array($this->Html->link('<strong>' . h($this->Post->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Post->getTheID()), array('title' => __('Edit “%s”', $this->Post->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
                         array(
                             'class' => 'column-title'
                         )
                     ),
-                    array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $post['User']['id'])),
+                    array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $this->Post->getTheID())),
                         array(
                             'class' => 'column-author'
                         )
@@ -113,16 +113,16 @@ echo $this->Form->create('Post', array(
                             'class' => 'column-comments'
                         )
                     ),
-                    array($this->Html->tag('abbr', $this->Post->get_the_date(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
+                    array($this->Html->tag('abbr', $this->Post->getTheDate(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
                         array(
                             'class' => 'column-date'
                         )
                     )
                 ),
                     ), array(
-                'id' => 'post-' . $post['Post']['id']
+                'id' => 'post-' . $this->Post->getTheID()
                     ), array(
-                'id' => 'post-' . $post['Post']['id']
+                'id' => 'post-' . $this->Post->getTheID()
                     )
             );
             ?>
