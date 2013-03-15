@@ -135,8 +135,11 @@ class UsersController extends AppController {
      */
     public function admin_index() {
         $this->set('title_for_layout', __('Users'));
-        $this->User->recursive = 0;
-        $this->set('users', $this->paginate());
+        //$this->User->recursive = 0;
+        $this->paginate = array(
+            'contain' => array('UserMeta'),
+        );
+        $this->set('users', $this->paginate('User'));
     }
 
     /**
@@ -477,7 +480,7 @@ class UsersController extends AppController {
             'conditions' => array(
                 'User.reset_key' => $key,
             ),
-                ));
+        ));
         if (!isset($user['User']['id'])) {
             $this->Session->setFlash(__('An error occurred.'));
             $this->redirect(array('action' => 'login'));
