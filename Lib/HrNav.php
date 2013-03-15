@@ -1,11 +1,23 @@
 <?php
 
 /**
- * Hurad
- * 
- * Reaname class from CroogoNav to HrNav
- * 
+ * CroogoNav
+ *
+ * @package Croogo
+ * @since 1.4
  * @author Rachman Chavik <rchavik@xintesa.com>
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link http://www.croogo.org
+ */
+
+/**
+ * HrNav
+ * 
+ * @package Hurad
+ * @category Lib
+ * @since 1.0.0
+ * @license http://opensource.org/licenses/GPL-3.0 GPLv3 License 
+ * @link http://hurad.org Hurad Project
  */
 class HrNav {
 
