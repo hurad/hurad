@@ -28,6 +28,7 @@
                         <?php echo $this->element('admin/sidebar'); ?>
                     </div>
                     <div class="span10">
+                        <?php echo $this->Session->flash('auth'); ?>
                         <?php echo $this->Session->flash(); ?>
                         <?php echo $this->fetch('content'); ?>
                     </div>
