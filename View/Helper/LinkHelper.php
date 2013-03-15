@@ -3,9 +3,11 @@
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Description of LinkHelper
+ * LinkHelper
+ * 
+ * @copyright (c) 2006-2013, WordPress Link Template Functions
  *
- * @author mohammad
+ * @since 1.0.0
  */
 class LinkHelper extends AppHelper {
 
@@ -31,8 +33,8 @@ class LinkHelper extends AppHelper {
      * @since 1.0.0
      * @uses apply_filters() Calls 'the_permalink' filter on the permalink string.
      */
-    function the_permalink() {
-        echo $this->Hook->apply_filters('the_permalink', $this->get_permalink());
+    function thePermalink() {
+        echo $this->Hook->applyFilters('the_permalink', $this->getPermalink());
     }
 
     /**
@@ -45,7 +47,7 @@ class LinkHelper extends AppHelper {
      *
      * @param string $mode Permalink mode can be either 'title', 'id', or default, which is 'id'.
      */
-    function permalink_anchor($mode = 'id') {
+    function permalinkAnchor($mode = 'id') {
         switch (strtolower($mode)) {
             case 'title':
                 $title = Formatting::sanitize_title($this->post['Post']['title']) . '-' . $post->ID;
@@ -65,7 +67,7 @@ class LinkHelper extends AppHelper {
      *
      * @return string
      */
-    function get_permalink() {
+    function getPermalink() {
         $year = $this->Time->format('Y', $this->post['Post']['created']);
         $month = $this->Time->format('m', $this->post['Post']['created']);
         $day = $this->Time->format('d', $this->post['Post']['created']);
@@ -90,27 +92,26 @@ class LinkHelper extends AppHelper {
                 $permalink = $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['slug']);
             }
         }
-        return $this->Hook->apply_filters('post_link', $permalink);
+        return $this->Hook->applyFilters('post_link', $permalink);
     }
 
     /**
-     * Print the home url for the current site.
+     * Retrieve the home url for the current site.
      *
      * Returns the 'home' option with the appropriate protocol, 'https' if
      * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
      * overridden.
      *
-     * @package Hurad
      * @since 1.0.0
      *
-     * @uses get_home_url()
+     * @uses getHomeUrl()
      *
      * @param  string $path   (optional) Path relative to the home url.
      * @param  string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https', or 'relative'.
      * @return string Home url link with optional path appended.
      */
-    function home_url($path = '', $scheme = null) {
-        echo $this->get_home_url($path, $scheme);
+    public function homeUrl($path = '', $scheme = null) {
+        return $this->getHomeUrl($path, $scheme);
     }
 
     /**
@@ -120,83 +121,82 @@ class LinkHelper extends AppHelper {
      * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
      * overridden.
      *
-     * @package Hurad
      * @since 1.0.0
      *
      * @param  string $path   (optional) Path relative to the home url.
      * @param  string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https', or 'relative'.
      * @return string Home url link with optional path appended.
      */
-    function get_home_url($path = '', $scheme = null) {
+    public function getHomeUrl($path = '', $scheme = null) {
+        $orig_scheme = $scheme;
+
+        $url = Configure::read('General-home_url');
 
         if (!in_array($scheme, array('http', 'https', 'relative'))) {
-            $scheme = Functions::is_ssl() && !is_admin() ? 'https' : 'http';
+            if (Functions::is_ssl() && !Functions::is_admin())
+                $scheme = 'https';
+            else
+                $scheme = parse_url($url, PHP_URL_SCHEME);
         }
 
-        $url = Configure::read('General-site_url');
-
-        if ('relative' == $scheme)
-            $url = preg_replace('#^.+://[^/]*#', '', $url);
-        elseif ('http' != $scheme)
-            $url = str_replace('http://', "$scheme://", $url);
+        $url = $this->setUrlScheme($url, $scheme);
 
         if (!empty($path) && is_string($path) && strpos($path, '..') === false)
             $url .= '/' . ltrim($path, '/');
 
-        return $url;
+        return $this->Hook->applyFilters('home_url', $url, $path, $orig_scheme);
     }
 
     /**
-     * Print the url to the admin area for the current site.
+     * Retrieve the url to the admin area for the current site.
      *
-     * @package Hurad
      * @since 1.0.0
+     * @uses getAdminUrl()
      *
      * @param string $path Optional path relative to the admin url.
-     * @param string $scheme The scheme to use.
+     * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
      * @return string Admin url link with optional path appended.
      */
-    function admin_url($path = '', $scheme = null) {
-        return $this->get_admin_url($path, $scheme);
+    public function adminUrl($path = '', $scheme = 'admin') {
+        return $this->getAdminUrl($path, $scheme);
     }
 
     /**
      * Retrieve the url to the admin area for a given site.
      *
-     * @package Hurad
      * @since 1.0.0
+     * @uses getSiteUrl()
      *
      * @param string $path Optional path relative to the admin url.
-     * @param string $scheme The scheme to use.
+     * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
      * @return string Admin url link with optional path appended.
      */
-    function get_admin_url($path = '', $scheme = null) {
-        $url = $this->get_site_url('admin/', $scheme);
+    public function getAdminUrl($path = '', $scheme = 'admin') {
+        $url = $this->getSiteUrl('admin/', $scheme);
 
-        if (!empty($path) && is_string($path) && strpos($path, '..') === false)
+        if ($path && is_string($path))
             $url .= ltrim($path, '/');
 
-        return $url;
+        return $this->Hook->applyFilters('admin_url', $url, $path);
     }
 
     /**
-     * Print the site url for the current site.
+     * Retrieve the site url for the current site.
      *
      * Returns the 'site_url' option with the appropriate protocol, 'https' if
      * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
      * overridden.
      *
-     * @package Hurad
      * @since 1.0.0
      *
-     * @uses get_site_url()
+     * @uses getSiteUrl()
      *
      * @param string $path Optional. Path relative to the site url.
-     * @param string $scheme Optional. Scheme to give the site url context. Currently 'http', 'https', 'relative'.
+     * @param string $scheme Optional. Scheme to give the site url context. See set_url_scheme().
      * @return string Site url link with optional path appended.
      */
-    function site_url($path = '', $scheme = null) {
-        echo $this->get_site_url($path, $scheme);
+    public function siteUrl($path = '', $scheme = null) {
+        return $this->getSiteUrl($path, $scheme);
     }
 
     /**
@@ -206,31 +206,52 @@ class LinkHelper extends AppHelper {
      * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
      * overridden.
      *
-     * @package Hurad
      * @since 1.0.0
+     * @uses setUrlScheme()
      *
      * @param string $path Optional. Path relative to the site url.
-     * @param string $scheme Optional. Scheme to give the site url context. Currently 'http', 'https', 'relative'.
+     * @param string $scheme Optional. Scheme to give the site url context. Currently 'http', 'https', 'login', 'login_post', 'admin', or 'relative'.
      * @return string Site url link with optional path appended.
      */
-    function get_site_url($path = '', $scheme = null) {
-        if (!in_array($scheme, array('http', 'https', 'relative'))) {
-            $scheme = ( Functions::is_ssl() ? 'https' : 'http' );
-        }
-
+    public function getSiteUrl($path = '', $scheme = null) {
         $url = Configure::read('General-site_url');
+
+        $url = $this->setUrlScheme($url, $scheme);
+
+        if ($path && is_string($path))
+            $url .= '/' . ltrim($path, '/');
+
+        return $this->Hook->applyFilters('site_url', $url, $path, $scheme);
+    }
+
+    /**
+     * Set the scheme for a URL
+     *
+     * @since 1.0.0
+     *
+     * @param string $url Absolute url that includes a scheme
+     * @param string $scheme Optional. Scheme to give $url. Currently 'http', 'https', 'login', 'login_post', 'admin', or 'relative'.
+     * @return string $url URL with chosen scheme.
+     */
+    public function setUrlScheme($url, $scheme = null) {
+        $orig_scheme = $scheme;
+        if (!in_array($scheme, array('http', 'https', 'relative'))) {
+            if (( 'login_post' == $scheme || 'rpc' == $scheme ) && ( Functions::force_ssl_login() || Functions::force_ssl_admin() ))
+                $scheme = 'https';
+            elseif (( 'login' == $scheme ) && Functions::force_ssl_admin())
+                $scheme = 'https';
+            elseif (( 'admin' == $scheme ) && Functions::force_ssl_admin())
+                $scheme = 'https';
+            else
+                $scheme = ( Functions::is_ssl() ? 'https' : 'http' );
+        }
 
         if ('relative' == $scheme)
             $url = preg_replace('#^.+://[^/]*#', '', $url);
-        elseif ('http' != $scheme)
-            $url = str_replace('http://', "{$scheme}://", $url);
+        else
+            $url = preg_replace('#^.+://#', $scheme . '://', $url);
 
-        if (!empty($path) && is_string($path) && strpos($path, '..') === false)
-            $url .= '/' . ltrim($path, '/');
-
-        return $url;
+        return $this->Hook->applyFilters('set_url_scheme', $url, $scheme, $orig_scheme);
     }
 
 }
-
-?>
