@@ -1,9 +1,24 @@
 <?php
 
 /**
- * Gravatar Helper
+ * CakePHP Gravatar Helper
+ *
+ * A CakePHP View Helper for the display of Gravatar images (http://www.gravatar.com)
  *
  * @copyright Copyright 2009-2010, Graham Weldon (http://grahamweldon.com)
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @package goodies
+ * @subpackage goodies.views.helpers
+ */
+
+/**
+ * GravatarHelper
+ * 
+ * @package Hurad
+ * @category View.Helper
+ * @since 1.0.0
+ * @license http://opensource.org/licenses/GPL-3.0 GPLv3 License 
+ * @link http://hurad.org Hurad Project
  */
 class GravatarHelper extends AppHelper {
 
