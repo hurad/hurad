@@ -67,6 +67,7 @@ class AppController extends Controller {
     public $uses = array('User');
 
     public function __construct($request = null, $response = null) {
+        App::uses('Hurad', 'Lib');
         Hurad::applyHookProperties('Hook.controller_properties', $this);
         parent::__construct($request, $response);
     }
