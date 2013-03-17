@@ -12,6 +12,7 @@ class UsersController extends AppController {
 
     public $components = array('Cookie', 'Session');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
+    public $uses = array('UserMeta');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -135,11 +136,20 @@ class UsersController extends AppController {
      */
     public function admin_index() {
         $this->set('title_for_layout', __('Users'));
-        //$this->User->recursive = 0;
+
         $this->paginate = array(
             'contain' => array('UserMeta'),
         );
-        $this->set('users', $this->paginate('User'));
+
+        $users_paginate = $this->paginate('User');
+
+        foreach ($users_paginate as $key => $user) {
+            if (isset($user['UserMeta']) && count($user['UserMeta']) >= 1) {
+                $users_paginate[$key]['UserMeta'] = Set::combine($user['UserMeta'], '{n}.meta_key', '{n}.meta_value');
+            }
+        }
+
+        $this->set('users', $users_paginate);
     }
 
     /**
@@ -183,20 +193,35 @@ class UsersController extends AppController {
     public function admin_profile($id = null) {
         $this->set('title_for_layout', __('Profile'));
         $this->User->id = $id;
+
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Invalid user'));
         }
 
         if ($this->request->is('post') || $this->request->is('put')) {
+            if (isset($this->request->data['UserMeta'])) {
+                foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
+                    //Update user_metas table.
+                    $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
+                }
+            }
+
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved'), 'flash_notice');
+                $this->Session->setFlash(__('The user has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->set('errors', $this->User->validationErrors);
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
+
+            //Retraive user_metas table.
+            $this->request->data['UserMeta'] = $this->UserMeta->find('list', array(
+                'conditions' => array('UserMeta.user_id' => $id),
+                'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
+                    )
+            );
         }
     }
 
@@ -215,10 +240,10 @@ class UsersController extends AppController {
             throw new NotFoundException(__('Invalid user'));
         }
         if ($this->User->delete()) {
-            $this->Session->setFlash(__('User deleted'));
+            $this->Session->setFlash(__('User deleted'), 'success');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('User was not deleted'));
+        $this->Session->setFlash(__('User was not deleted'), 'error');
         $this->redirect(array('action' => 'index'));
     }
 
@@ -230,17 +255,17 @@ class UsersController extends AppController {
     public function login() {
         $this->layout = "admin_login";
         if ($this->Auth->loggedIn()) {
-            $this->Session->setFlash(__('You already login.'), 'flash_notice');
+            $this->Session->setFlash(__('You already login.'), 'notice');
             $this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => TRUE));
         } else {
             if ($this->request->is('post')) {
                 if (!empty($this->request->data)) {
                     if ($this->Auth->login()) {
                         $this->_setCookie();
-                        $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'flash_notice');
+                        $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
                         $this->redirect($this->Auth->redirect());
                     } else {
-                        $this->Session->setFlash(__('Your username or password was incorrect.'), 'flash_error');
+                        $this->Session->setFlash(__('Your username or password was incorrect.'), 'error');
                     }
                 }
             }
@@ -272,7 +297,7 @@ class UsersController extends AppController {
      * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
      * @return void
      */
-    protected function _setCookie($options = array(), $cookieKey = 'Auth.User') {
+    private function _setCookie($options = array(), $cookieKey = 'Auth.User') {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
