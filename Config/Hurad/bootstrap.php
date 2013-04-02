@@ -10,6 +10,7 @@ App::uses('Formatting', 'Lib');
 App::uses('HrNav', 'Lib');
 App::uses('HrPlugin', 'Lib');
 App::uses('Hurad', 'Lib');
+App::uses('HuradWidget', 'Lib');
 /**
  * Plugins
  */
@@ -32,4 +33,9 @@ foreach ($plugins as $plugin) {
         )
     );
     HrPlugin::load($option);
+}
+
+$theme_bootstrap = APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS . 'Config' . DS . 'bootstrap.php';
+if (is_file($theme_bootstrap)) {
+    include $theme_bootstrap;
 }
