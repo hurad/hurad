@@ -1,1 +1,1 @@
-<?php echo $this->element('admin/option_' . $prefix); ?>
+<?php echo $this->element('admin/Options/' . $prefix); ?>
