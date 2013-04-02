@@ -27,7 +27,7 @@ class DashboardHelper extends AppHelper {
         $this->Comment->setComment($comment['Comment']);
         ?>
 
-        <div id="comment-<?php $this->Comment->comment_ID(); ?>" <?php $this->Comment->comment_class(array('comment-item', $this->Comment->get_comment_status($comment['Comment']['approved']))); ?>>
+        <div id="comment-<?php $this->Comment->commentID(); ?>" <?php $this->Comment->comment_class(array('comment-item', $this->Comment->get_comment_status($comment['Comment']['approved']))); ?>>
             <?php echo $this->Gravatar->image($this->Comment->get_comment_author_email(), array('size' => '50', 'default' => 'mm')); ?>
             <div class="dashboard-comment-wrap">
                 <h4 class="comment-meta">
