@@ -22,15 +22,15 @@ echo $this->Form->create('User', array(
         </tr>
         <tr class="form-field">
             <th scope="row"><?php echo $this->Form->label('firstname', __('First Name')); ?></th>
-            <td><?php echo $this->Form->input('firstname'); ?></td>
+            <td><?php echo $this->Form->input('UserMeta.firstname'); ?></td>
         </tr>
         <tr class="form-field">
             <th scope="row"><?php echo $this->Form->label('lastname', __('Last Name')); ?></th>
-            <td><?php echo $this->Form->input('lastname'); ?></td>
+            <td><?php echo $this->Form->input('UserMeta.lastname'); ?></td>
         </tr>
         <tr class="form-field">
             <th scope="row"><?php echo $this->Form->label('nickname', __('Nickname')); ?></th>
-            <td><?php echo $this->Form->input('nickname'); ?></td>
+            <td><?php echo $this->Form->input('UserMeta.nickname'); ?></td>
         </tr>
     </tbody>
 </table>
