@@ -1,4 +1,5 @@
 <?php
+App::uses('AppHelper', 'View/Helper');
 
 /**
  * Description of DashboardHelper
@@ -200,4 +201,3 @@ class DashboardHelper extends AppHelper {
     }
 
 }
-?>
