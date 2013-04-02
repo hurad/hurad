@@ -58,7 +58,7 @@ class User extends AppModel {
             'foreignKey' => 'user_id',
             'dependent' => false,
             'conditions' => '',
-            'fields' => '',
+            //'fields' => array('meta_key', 'meta_value'),
             'order' => '',
             'limit' => '',
             'offset' => '',
@@ -71,46 +71,44 @@ class User extends AppModel {
         'username' => array(
             'usernameRule-1' => array(
                 'rule' => array('minLength', 5),
-                'message' => 'Minimum length of 5 characters',
                 'last' => true
             ),
             'usernameRule-2' => array(
                 'rule' => 'isUnique',
-                'message' => 'This username has already been taken.'
             ),
             'usernameRule-3' => array(
                 'rule' => 'notEmpty',
-                'message' => 'This username has already been taken.'
             )
         ),
-        'password' => array(
-            'rule' => array('between', 5, 32),
-            'message' => 'Passwords must be between 5 and 32 characters long.'
-        ),
-        'confirm_password' => array(
-            'rule' => 'checkPasswords',
-            'message' => 'Entered passwords do not match.'
-        ),
-//        'password_old' => array(
-//            'rule' => 'password_old',
-//            'message' => 'Do not match',
-//        ),
         'email' => array(
             'emailRule-1' => array(
                 'rule' => 'email',
-                'message' => 'Please enter valid email.'
             ),
             'emailRule-2' => array(
                 'rule' => 'isUnique',
-                'message' => 'This email has already exist.',
                 'last' => true
             ),
+        ),
+        'url' => array(
+            'urlRule-1' => array(
+                'rule' => 'url',
+            ),
+        ),
+        'password' => array(
+            'passwordRule-1' => array(
+                'rule' => array('between', 5, 32),
+            )
+        ),
+        'confirm_password' => array(
+            'confirmPasswordRule-1' => array(
+                'rule' => 'checkPasswords',
+            )
         )
     );
 
     public function beforeValidate($options = array()) {
         parent::beforeValidate($options);
-        if ($this->request->params['action'] == 'admin_profile') {
+        if (Router::getParam('action') == 'admin_profile') {
             if ($this->data['User']['password'] == "" && $this->data['User']['confirm_password'] == "") {
                 unset($this->data['User']['password']);
                 unset($this->data['User']['confirm_password']);
