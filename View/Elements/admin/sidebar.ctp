@@ -112,15 +112,20 @@ HrNav::add('appearance', array(
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'themes', 'action' => 'index'),
             'weight' => 1,
         ),
+        'widgets' => array(
+            'title' => __('Widgets'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'widgets', 'action' => 'index'),
+            'weight' => 2,
+        ),
         'all_menus' => array(
             'title' => __('All Menus'),
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'menus', 'action' => 'index'),
-            'weight' => 2,
+            'weight' => 3,
         ),
         'add_menu' => array(
             'title' => __('Add Menu'),
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'menus', 'action' => 'add'),
-            'weight' => 3,
+            'weight' => 4,
         ),
     ),
 ));
