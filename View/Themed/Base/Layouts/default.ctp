@@ -7,6 +7,8 @@
         <title><?php echo $title_for_layout; ?> | <?php echo Configure::read('General-site_name'); ?></title>
 
         <?php echo $this->Html->css(array('style', 'media-queries')); ?>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
         <!-- html5.js (HTML5 Shiv for IE) -->
         <!--[if lt IE 9]>
@@ -52,37 +54,14 @@
             <div id="body" class="pagewidth clearfix">		
 
                 <div id="content" class="clearfix">
-
-
                     <?php echo $this->fetch('content'); ?>
-
-
                 </div>
                 <!-- /#content -->
 
+
+
                 <aside id="sidebar">
-
-                    <section class="widget">
-                        <h4 class="widgettitle">Authors</h4>
-                        <ul>
-                            <?php $this->Author->hrListAuthors(array('show_fullname' => TRUE)); ?>
-                        </ul>
-                    </section>
-
-                    <section class="widget">
-                        <h4 class="widgettitle">Pages</h4>
-                        <ul>
-                            <?php $this->Post->list_pages(); ?>
-                        </ul>
-                    </section>
-
-                    <section class="widget">
-                        <h4 class="widgettitle">Category</h4>
-                        <ul>
-                            <?php $this->Post->list_categories(); ?>
-                        </ul>
-                    </section>
-
+                    <?php $this->Widget->sidebar('sidebar-1'); ?>
                 </aside>
                 <!-- /#sidebar -->
 
