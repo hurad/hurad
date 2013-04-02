@@ -1,123 +1,153 @@
-<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
+<?php //$this->Html->css(array(), null, array('inline' => FALSE));                                           ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
-<h2><?php echo $title_for_layout; ?></h2>
-
-<div class="tablenav">
-    <div class="paging">
-        <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
-        }
-        ?>
-    </div>
+<div class="page-header">
+    <h2><?php echo $title_for_layout; ?></h2>
 </div>
 
 <?php
-echo $this->Form->create('User', array('url' =>
-    array('admin' => TRUE, 'controller' => 'users', 'action' => 'process'),
-    'inputDefaults' =>
-    array('label' => false, 'div' => false)));
+echo $this->Form->create('User', array(
+    'url' => array(
+        'admin' => TRUE,
+        'controller' => 'users',
+        'action' => 'process'
+    ),
+    'class' => 'form-inline',
+    'inputDefaults' => array(
+        'label' => false,
+        'div' => false
+    )
+));
 ?>
 
-<table class="list-table">
+<table class="table table-stripede">
     <thead>
-        <tr>
-            <th id="cb" class="column-cb column-manage check-column" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th id="username" class="column-username column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('username'); ?>
-            </th>
-            <th id="name" class="column-name column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('firstname', 'Name'); ?>
-            </th>
-            <th id="email" class="column-email column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('email'); ?>
-            </th>
-            <th id="role" class="column-role column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('role'); ?>
-            </th>
-        </tr>
+        <?php
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb check-column column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('username', __('Username')) => array(
+                    'id' => 'username',
+                    'class' => 'column-username column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('firstname', __('Name')) => array(
+                    'id' => 'name',
+                    'class' => 'column-name column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('email', __('e-Mail')) => array(
+                    'id' => 'email',
+                    'class' => 'column-email column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('role', __('Role')) => array(
+                    'id' => 'role',
+                    'class' => 'column-role column-manage',
+                    'scope' => 'col'
+                )
+            )
+        ));
+        ?>
     </thead>
     <?php foreach ($users as $user): ?>
-        <tr id="<?php echo h($user['User']['id']); ?>" class="user-<?php echo h($user['User']['id']); ?>">
-            <td class="check-column" scope="row">
-                <?php echo $this->Form->checkbox('User.' . $user['User']['id'] . '.id'); ?>
-            </td>
-            <td class="column-username">
-                <?php echo $this->Gravatar->image($user['User']['email'], array('size' => '32', 'default' => 'mm')); ?>
-                <strong><?php echo $this->Html->link(h($user['User']['username']), array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id'])); ?></strong>
-                <div class="row-actions">
-                    <span class="action-edit">
-                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id'])); ?> | 
-                    </span>                 
-                    <span class="action-delete">
-                        <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'controller' => 'users', 'action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
-                    </span>
-                </div>
-            </td>
-            <td class="column-name">
-                <?php echo $this->Html->link($user['User']['firstname'], array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id'])); ?>
-            </td>
-            <td class="column-email">
-                <?php echo $this->Html->link($user['User']['email'], 'mailto:' . $user['User']['email']); ?>
-            </td>
-            <td class="column-role">
-                <?php echo $this->AdminLayout->userRole(h($user['User']['role'])); ?>
-            </td>
-        </tr>
+        <?php $this->Author->setAuthor($user['User']['id']); ?>
+        <tbody>
+            <?php
+            echo $this->Html->tableCells(array(
+                array(
+                    array($this->Form->checkbox('Link.' . $user['User']['id'] . '.id'),
+                        array(
+                            'class' => 'check-column',
+                            'scope' => 'row')
+                    ),
+                    array($this->Gravatar->image($this->Author->getTheAuthorMeta('email'), array('size' => '32', 'default' => 'mm')) . $this->Html->link('<strong>' . $this->Author->getTheAuthorMeta('username') . '</strong>', array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id']), array('escape' => FALSE)) . $this->element('admin/Users/row_actions', array('user' => $user)),
+                        array(
+                            'class' => 'column-username'
+                        )
+                    ),
+                    array($this->Html->link($this->Author->getTheAuthor(), array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id'])),
+                        array(
+                            'class' => 'column-name'
+                        )
+                    ),
+                    array($this->Html->link($this->Author->getTheAuthorMeta('email'), 'mailto:' . $this->Author->getTheAuthorMeta('email')),
+                        array(
+                            'class' => 'column-email'
+                        )
+                    ),
+                    array($this->AdminLayout->userRole(h($user['User']['role'])),
+                        array(
+                            'class' => 'column-role'
+                        )
+                    )
+                ),
+                    ), array(
+                'id' => 'user-' . $user['User']['id']
+                    ), array(
+                'id' => 'user-' . $user['User']['id']
+                    )
+            );
+            ?>
+        </tbody>
     <?php endforeach; ?>
     <tfoot>
-        <tr>
-            <th id="cb" class="column-cb column-manage check-column" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th id="username" class="column-username column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('username'); ?>
-            </th>
-            <th id="name" class="column-name column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('firstname', 'Name'); ?>
-            </th>
-            <th id="email" class="column-email column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('email'); ?>
-            </th>
-            <th id="role" class="column-role column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('role'); ?>
-            </th>
-        </tr>
+        <?php
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb check-column column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('username', __('Username')) => array(
+                    'id' => 'username',
+                    'class' => 'column-username column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('firstname', __('Name')) => array(
+                    'id' => 'name',
+                    'class' => 'column-name column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('email', __('e-Mail')) => array(
+                    'id' => 'email',
+                    'class' => 'column-email column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('role', __('Role')) => array(
+                    'id' => 'role',
+                    'class' => 'column-role column-manage',
+                    'scope' => 'col'
+                )
+            )
+        ));
+        ?>
     </tfoot>
 </table>
-<div class="tablenav">
-    <div class="actions">
-        <?php
-        echo $this->Form->input('User.action', array(
-            'label' => false,
-            'options' => array(
-                'delete' => __('Delete')
-            ),
-            'empty' => __('Bulk Actions'),
-        ));
-        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
-        ?>
-    </div>
-    <div class="paging">
-        <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
-        }
-        ?>
-    </div>
-    <div class="pageing_counter">
-        <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
-        ));
-        ?>	
-    </div>
-</div>
+
+<section>
+    <?php
+    echo $this->Form->input('User.action', array(
+        'label' => false,
+        'options' => array(
+            'delete' => __('Delete')
+        ),
+        'empty' => __('Bulk Actions'),
+    ));
+    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
+    ?>
+</section>
 
