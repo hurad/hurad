@@ -333,7 +333,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
    * @param AppModel $model
    */
   function _updateCounterCache(&$model) {
-
+     
     // Do one habtm associated model at a time
     foreach ($this->settings[$model->alias] as $habtmAlias => $settings) {
 
@@ -350,7 +350,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
 
       // Initialise the update query, we'll add joins and fields below
       $updateQuery = array(
-        'table' => $model->$habtmAlias->table,
+        'table' => 'hr_'.$model->$habtmAlias->table,
         'alias' => '`'.$habtmAlias.'`',
         'order' => null,
         'limit' => null,
@@ -366,7 +366,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
         // counter cache value.
         $counterQuery = array(
           'fields' => array('COUNT(*)'),
-          'table' => $settings['joinTable'],
+          'table' => 'hr_'.$settings['joinTable'],
           'alias' => $settings['joinModel'],
           'conditions' => array(
             $settings['joinModel'] . '.' . $settings['associationForeignKey'] . ' = ' . $habtmAlias . '.' . $model->$habtmAlias->primaryKey,
@@ -385,7 +385,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
           $counterQuery['joins'][] = array(
             'type' => 'INNER',
             'alias' => $model->alias,
-            'table' => $model->table,
+            'table' => 'hr_'.$model->table,
             'conditions' => array_merge(array(
               $settings['joinModel'] . '.' . $settings['foreignKey'] . '=' . $model->alias . '.' . $model->primaryKey
             ), $settings['counterScope']),
@@ -412,7 +412,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
         // counting of the posts both in and under each category.
         $underCounterQuery = array(
           'fields' => array($habtmAlias . '.' . $model->$habtmAlias->primaryKey, 'COUNT(DISTINCT ' . $settings['foreignKey'] . ') AS under_count'),
-          'table' => $model->$habtmAlias->table,
+          'table' => 'hr_'.$model->$habtmAlias->table,
           'alias' => $habtmAlias,
           'conditions' => null,
           'order' => null,
@@ -424,7 +424,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
             array(
               'type' => 'LEFT',
               'alias' => $habtmAlias . '2',
-              'table' => $model->$habtmAlias->table,
+              'table' => 'hr_'.$model->$habtmAlias->table,
               'conditions' => array(
                 $habtmAlias . '.lft <= ' . $habtmAlias . '2.lft',
                 $habtmAlias . '.rght >= ' . $habtmAlias . '2.rght',
@@ -433,7 +433,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
             array(
               'type' => 'INNER',
               'alias' => $settings['joinModel'],
-              'table' => $settings['joinTable'],
+              'table' => 'hr_'.$settings['joinTable'],
               'conditions' => array(
                 $habtmAlias . '2.' . $model->$habtmAlias->primaryKey . ' = ' . $settings['joinModel'] . '.' . $settings['associationForeignKey'],
               )
@@ -449,7 +449,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
           $underCounterQuery['joins'][] = array(
             'type' => 'INNER',
             'alias' => $model->alias,
-            'table' => $model->table,
+            'table' => 'hr_'.$model->table,
             'conditions' => array(
               $settings['joinModel'] . '.' . $settings['foreignKey'] . '=' . $model->alias . '.' . $model->primaryKey
             ),
