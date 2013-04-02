@@ -14,7 +14,7 @@ class OptionsController extends AppController {
     
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow();
         //$this->isAuthorized();
         $this->set('isKeyValid', $this->Akismet->isKeyValid());
     }
