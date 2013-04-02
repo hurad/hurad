@@ -113,6 +113,8 @@ class AppController extends Controller {
 
         //Use request in model
         $this->{$this->modelClass}->request = $this->request;
+
+        $this->set('themePath', APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS);
     }
 
     private function isAdmin() {
