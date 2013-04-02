@@ -1,5 +1,6 @@
 <?php
 
+App::uses('AppHelper', 'View/Helper');
 /**
  * CakePHP Gravatar Helper
  *
