@@ -1,6 +1,14 @@
 <?php
 
 App::uses('CakeEventManager', 'Event');
+/**
+ * Croogo Event Manager class
+ *
+ * Descendant of CakeEventManager, customized to map event listener objects
+ *
+ * @since 1.4
+ * @see CakeEventManager
+ */
 
 /**
  * Hurad Event Manager class
