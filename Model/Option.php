@@ -38,7 +38,7 @@ class Option extends AppModel {
         return $this->find('list', array(
                     'fields' => array('Option.name', 'Option.value'),
                     'cache' => __FUNCTION__
-                ));
+        ));
     }
 
     /**
@@ -54,7 +54,7 @@ class Option extends AppModel {
         if ($this->validates()) {
             $list = $this->find('list', array(
                 'fields' => array('Option.name', 'Option.id')
-                    ));
+            ));
             //debug($data['Option']);
             foreach ($data['Option'] as $key => $value) {
                 $this->id = $list[$key];
