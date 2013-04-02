@@ -27,13 +27,13 @@ class DashboardHelper extends AppHelper {
         $this->Comment->setComment($comment['Comment']);
         ?>
 
-        <div id="comment-<?php $this->Comment->commentID(); ?>" <?php $this->Comment->comment_class(array('comment-item', $this->Comment->get_comment_status($comment['Comment']['approved']))); ?>>
-            <?php echo $this->Gravatar->image($this->Comment->get_comment_author_email(), array('size' => '50', 'default' => 'mm')); ?>
+        <div id="comment-<?php $this->Comment->commentID(); ?>" <?php $this->Comment->commentClass(array('comment-item', $this->Comment->getCommentStatus($comment['Comment']['approved']))); ?>>
+            <?php echo $this->Gravatar->image($this->Comment->getCommentAuthorEmail(), array('size' => '50', 'default' => 'mm')); ?>
             <div class="dashboard-comment-wrap">
                 <h4 class="comment-meta">
                     <?php echo __('From'); ?>
                     <cite class="comment-author">
-                        <?php echo $this->Html->link($this->Comment->get_comment_author(), Formatting::esc_url($this->Comment->get_comment_author_url()), array('class' => 'url', 'rel' => 'external nofollow')); ?>
+                        <?php echo $this->Html->link($this->Comment->getCommentAuthor(), Formatting::esc_url($this->Comment->getCommentAuthorUrl()), array('class' => 'url', 'rel' => 'external nofollow')); ?>
                     </cite>
                     <?php echo __('on'); ?>
                     <a href="http://localhost/wp3en/wp-admin/post.php?post=1&action=edit"><?php echo $comment['Post']['title']; ?></a>
@@ -41,22 +41,22 @@ class DashboardHelper extends AppHelper {
                     <span class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>><?php echo __('[Pending]'); ?></span>
                 </h4>
                 <blockquote>
-                    <p><?php $this->Comment->comment_excerpt(); ?></p>
+                    <p><?php $this->Comment->commentExcerpt(); ?></p>
                 </blockquote>
 
                 <p class="row-actions">
                     <span class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>>
                         <?php
-                        echo $this->Js->link(__('Approve'), array('controller' => 'comments', 'action' => 'action', 'approved', $this->Comment->get_comment_ID()), array(
-                            'success' => 'cApprove(' . $this->Comment->get_comment_ID() . ')'
+                        echo $this->Js->link(__('Approve'), array('controller' => 'comments', 'action' => 'action', 'approved', $this->Comment->getCommentID()), array(
+                            'success' => 'cApprove(' . $this->Comment->getCommentID() . ')'
                                 )
                         );
                         ?>
                     </span>
                     <span class="unapprove" <?php echo ($comment['Comment']['approved']) ? 'style=""' : 'style="display: none;"'; ?>>
                         <?php
-                        echo $this->Js->link(__('Unapprove'), array('controller' => 'comments', 'action' => 'action', 'disapproved', $this->Comment->get_comment_ID()), array(
-                            'success' => 'cUnapprove(' . $this->Comment->get_comment_ID() . ')'
+                        echo $this->Js->link(__('Unapprove'), array('controller' => 'comments', 'action' => 'action', 'disapproved', $this->Comment->getCommentID()), array(
+                            'success' => 'cUnapprove(' . $this->Comment->getCommentID() . ')'
                                 )
                         );
                         ?>
@@ -67,13 +67,13 @@ class DashboardHelper extends AppHelper {
                     </span>-->
                     <span class="edit">
                         |
-                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'edit', $this->Comment->get_comment_ID()), array('title' => 'Edit comment')); ?>
+                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'edit', $this->Comment->getCommentID()), array('title' => 'Edit comment')); ?>
                     </span>
                     <span class="spam">
                         |
                         <?php
-                        echo $this->Js->link(__('Spam'), array('controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->get_comment_ID()), array(
-                            'success' => 'cSpam(' . $this->Comment->get_comment_ID() . ')'
+                        echo $this->Js->link(__('Spam'), array('controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->getCommentID()), array(
+                            'success' => 'cSpam(' . $this->Comment->getCommentID() . ')'
                                 )
                         );
                         ?>
@@ -81,8 +81,8 @@ class DashboardHelper extends AppHelper {
                     <span class="trash">
                         |
                         <?php
-                        echo $this->Js->link(__('Trash'), array('controller' => 'comments', 'action' => 'action', 'trash', $this->Comment->get_comment_ID()), array(
-                            'success' => 'cTrash(' . $this->Comment->get_comment_ID() . ')'
+                        echo $this->Js->link(__('Trash'), array('controller' => 'comments', 'action' => 'action', 'trash', $this->Comment->getCommentID()), array(
+                            'success' => 'cTrash(' . $this->Comment->getCommentID() . ')'
                                 )
                         );
                         ?>
