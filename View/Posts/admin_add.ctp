@@ -29,12 +29,12 @@ echo $this->Form->create('Post', array(
         </div>
         <div class="control-group">
             <div class="controls">
-                <?php echo $this->Form->input('content', array('class' => 'editor')); ?>
+                <?php echo $this->Form->input('content', array('class' => 'editor', 'type' => 'textarea')); ?>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                <?php echo $this->Form->input('excerpt', array('class' => 'span12')); ?>
+                <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
             </div>
         </div>
 
