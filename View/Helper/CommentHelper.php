@@ -102,7 +102,7 @@ class CommentHelper extends AppHelper {
      * assumed.
      *
      * @since 0.1.0
-     * @uses apply_filters() Calls 'get_comment_author' hook on the comment author
+     * @uses applyFilters() Calls 'getCommentAuthor' hook on the comment author
      *
      * @return string The comment author
      */
@@ -117,17 +117,17 @@ class CommentHelper extends AppHelper {
         } else {
             $author = $this->comment['author'];
         }
-        return $this->Hook->applyFilters('get_comment_author', $author);
+        return $this->Hook->applyFilters('getCommentAuthor', $author);
     }
 
     /**
      * Displays the author of the current comment.
      *
      * @since 0.1.0
-     * @uses apply_filters() Calls 'comment_author' on comment author before displaying
+     * @uses applyFilters() Calls 'commentAuthor' on comment author before displaying
      */
     public function commentAuthor() {
-        $author = $this->Hook->applyFilters('comment_author', $this->getCommentAuthor());
+        $author = $this->Hook->applyFilters('commentAuthor', $this->getCommentAuthor());
         echo $author;
     }
 
@@ -135,17 +135,16 @@ class CommentHelper extends AppHelper {
      * Retrieve the email of the author of the current comment.
      *
      * @since 0.1.0
-     * @uses apply_filters() Calls the 'get_comment_author_email' hook on the comment author email
+     * @uses applyFilters() Calls the 'getCommentAuthorEmail' hook on the comment author email
      *
-     * @param int $comment_ID The ID of the comment for which to get the author's email. Optional.
      * @return string The current comment author's email
      */
     public function getCommentAuthorEmail() {
-        return $this->Hook->applyFilters('get_comment_author_email', $this->comment['author_email']);
+        return $this->Hook->applyFilters('getCommentAuthorEmail', $this->comment['author_email']);
     }
 
     /**
-     * Display the email of the author of the current global $comment.
+     * Display the email of the author.
      *
      * Care should be taken to protect the email address and assure that email
      * harvesters do not capture your commentors' email address. Most assume that
@@ -154,10 +153,10 @@ class CommentHelper extends AppHelper {
      * address and use it for their own means good and bad.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls 'author_email' hook on the author email
+     * @uses applyFilters() Calls 'commentAuthorEmail' hook on the author email
      */
     public function commentAuthorEmail() {
-        echo $this->Hook->applyFilters('author_email', $this->getCommentAuthorEmail());
+        echo $this->Hook->applyFilters('commentAuthorEmail', $this->getCommentAuthorEmail());
     }
 
     /**
@@ -170,7 +169,7 @@ class CommentHelper extends AppHelper {
      * address and use it for their own means good and bad.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls 'comment_email' hook for the display of the comment author's email
+     * @uses applyFilters() Calls 'author_email' hook for the display of the comment author's email
      * @uses getCommentAuthorEmailLink() For generating the link
      *
      * @param string $linktext The text to display instead of the comment author's email address
@@ -192,14 +191,14 @@ class CommentHelper extends AppHelper {
      * address and use it for their own means good and bad.
      *
      * @since 0.1.0
-     * @uses apply_filters() Calls 'comment_email' hook for the display of the comment author's email
+     * @uses applyFilters() Calls 'author_email' hook for the display of the comment author's email
      *
      * @param string $linktext The text to display instead of the comment author's email address
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
      */
     public function getCommentAuthorEmailLink($linktext = '', $before = '', $after = '') {
-        $email = $this->Hook->applyFilters('comment_email', $this->comment['author_email']);
+        $email = $this->Hook->applyFilters('author_email', $this->comment['author_email']);
         if ((!empty($email)) && ($email != '@')) {
             $display = ($linktext != '') ? $linktext : $email;
             $return = $before;
@@ -215,12 +214,13 @@ class CommentHelper extends AppHelper {
      * Retrieve the html link to the url of the author of the current comment.
      *
      * @since 0.1.0
-     * @uses apply_filters() Calls 'getCommentAuthorLink' hook on the complete link HTML or author
+     * @uses getCommentAuthorUrl() For retrieve the url of the author of the current comment.
+     * @uses getCommentAuthor() For retrieve the author of the current comment.
+     * @uses applyFilters() Calls 'getCommentAuthorLink' hook on the complete link HTML or author
      *
      * @return string Comment Author name or HTML link for author's URL
      */
     public function getCommentAuthorLink() {
-        /** @todo Only call these functions when they are needed. Include in if... else blocks */
         $url = $this->getCommentAuthorUrl();
         $author = $this->getCommentAuthor();
 
@@ -228,7 +228,7 @@ class CommentHelper extends AppHelper {
             $return = $author;
         else
             $return = $this->Html->link('Enter', $url, array('class' => 'url', 'rel' => 'external nofollow'));
-        return $this->Hook->applyFilters('get_comment_author_link', $return);
+        return $this->Hook->applyFilters('getCommentAuthorLink', $return);
     }
 
     /**
@@ -250,7 +250,7 @@ class CommentHelper extends AppHelper {
      * @return string The comment author's IP address.
      */
     public function getCommentAuthorIP() {
-        return $this->Hook->applyFilters('get_comment_author_IP', $this->comment['author_ip']);
+        return $this->Hook->applyFilters('getCommentAuthorIP', $this->comment['author_ip']);
     }
 
     /**
@@ -267,14 +267,14 @@ class CommentHelper extends AppHelper {
      * Retrieve the url of the author of the current comment.
      *
      * @since 0.1.0
-     * @uses apply_filters() Calls 'get_comment_author_url' hook on the comment author's URL
+     * @uses apply_filters() Calls 'getCommentAuthorUrl' hook on the comment author's URL
      *
      * @return string
      */
     public function getCommentAuthorUrl() {
         $url = ('http://' == $this->comment['author_url']) ? '' : $this->comment['author_url'];
         $url = Formatting::esc_url($url, array('http', 'https'));
-        return $this->Hook->applyFilters('get_comment_author_url', $url);
+        return $this->Hook->applyFilters('getCommentAuthorUrl', $url);
     }
 
     /**
@@ -282,10 +282,10 @@ class CommentHelper extends AppHelper {
      *
      * @since 0.1.0
      * @uses apply_filters()
-     * @uses get_comment_author_url() Retrieves the comment author's URL
+     * @uses getCommentAuthorUrl() Retrieves the comment author's URL
      */
     public function commentAuthorUrl() {
-        echo $this->Hook->applyFilters('comment_url', $this->getCommentAuthorUrl());
+        echo $this->Hook->applyFilters('commentAuthorUrl', $this->getCommentAuthorUrl());
     }
 
     /**
@@ -314,7 +314,7 @@ class CommentHelper extends AppHelper {
         if ('/' == substr($display, -1))
             $display = substr($display, 0, -1);
         $return = $before . $this->Html->link($display, $url, array('rel' => 'external')) . $after;
-        return $this->Hook->applyFilters('get_comment_author_url_link', $return);
+        return $this->Hook->applyFilters('getCommentAuthorUrlLink', $return);
     }
 
     /**
@@ -411,14 +411,14 @@ class CommentHelper extends AppHelper {
 
         $classes = array_map('Formatting::esc_attr', $classes);
 
-        return $this->Hook->applyFilters('comment_class', $classes, $class);
+        return $this->Hook->applyFilters('getCommentClass', $classes, $class);
     }
 
     /**
      * Retrieve the comment date of the current comment.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls 'get_comment_date' hook with the formatted date and the $d parameter respectively
+     * @uses applyFilters() Calls 'getCommentDate' hook with the formatted date and the $d parameter respectively
      * @uses $comment
      *
      * @param string $d The format of the date (defaults to user's config)
@@ -429,7 +429,7 @@ class CommentHelper extends AppHelper {
             $date = $this->Time->format(Configure::read('General-date_format'), $this->comment['created'], null, Configure::read('General-timezone'));
         else
             $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
-        return $this->Hook->applyFilters('get_comment_date', $date, $d);
+        return $this->Hook->applyFilters('getCommentDate', $date, $d);
     }
 
     /**
@@ -470,29 +470,29 @@ class CommentHelper extends AppHelper {
             $excerpt .= $blah[$i] . ' ';
         }
         $excerpt .= ($use_dotdotdot) ? '...' : '';
-        return $this->Hook->applyFilters('get_comment_excerpt', $excerpt);
+        return $this->Hook->applyFilters('getCommentExcerpt', $excerpt);
     }
 
     /**
      * Display the excerpt of the current comment.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls 'comment_excerpt' hook before displaying excerpt
+     * @uses applyFilters() Calls 'commentExcerpt' hook before displaying excerpt
      */
     public function commentExcerpt() {
-        echo $this->Hook->applyFilters('comment_excerpt', $this->getCommentExcerpt());
+        echo $this->Hook->applyFilters('commentExcerpt', $this->getCommentExcerpt());
     }
 
     /**
      * Retrieve the comment id of the current comment.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls the 'get_comment_ID' hook for the comment ID
+     * @uses applyFilters() Calls the 'getCommentID' hook for the comment ID
      *
      * @return int The comment ID
      */
     public function getCommentID() {
-        return $this->Hook->applyFilters('get_comment_ID', $this->comment['id']);
+        return $this->Hook->applyFilters('getCommentID', $this->comment['id']);
     }
 
     /**
@@ -531,7 +531,7 @@ class CommentHelper extends AppHelper {
      * Retrieve the amount of comments a post has.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls the 'get_comments_number' hook on the number of comments
+     * @uses applyFilters() Calls the 'getCommentsNumber' hook on the number of comments
      *
      * @return int The number of comments a post has
      */
@@ -548,14 +548,14 @@ class CommentHelper extends AppHelper {
         else
             $count = $comment_count;
 
-        return $this->Hook->applyFilters('get_comments_number', $count, $post_id);
+        return $this->Hook->applyFilters('getCommentsNumber', $count, $post_id);
     }
 
     /**
      * Display the language string for the number of comments the current post has.
      *
      * @since 0.1.0
-     * @uses applyFilters() Calls the 'comments_number' hook on the output and number of comments respectively.
+     * @uses applyFilters() Calls the 'commentsNumber' hook on the output and number of comments respectively.
      *
      * @param string $zero Text for no comments
      * @param string $one Text for one comment
@@ -571,7 +571,7 @@ class CommentHelper extends AppHelper {
         else // must be one
             $output = ( false === $one ) ? __('1 Comment') : $one;
 
-        echo $this->Hook->applyFilters('comments_number', $output, $number);
+        echo $this->Hook->applyFilters('commentsNumber', $output, $number);
     }
 
     /**
@@ -582,25 +582,25 @@ class CommentHelper extends AppHelper {
      * @return string The comment content
      */
     public function getCommentText() {
-        return $this->Hook->applyFilters('get_comment_text', $this->comment['content']);
+        return $this->Hook->applyFilters('getCommentText', $this->comment['content']);
     }
 
     /**
      * Displays the text of the current comment.
      *
      * @since 0.1.0
-     * @uses applyFilters() Passes the comment content through the 'comment_text' hook before display
+     * @uses applyFilters() Passes the comment content through the 'commentText' hook before display
      * @uses getCommentText() Gets the comment content
      */
     public function commentText() {
-        echo $this->Hook->applyFilters('comment_text', $this->getCommentText());
+        echo $this->Hook->applyFilters('commentText', $this->getCommentText());
     }
 
     /**
      * Retrieve the comment time of the current comment.
      *
      * @since 0.1.0
-     * @uses applyFilter() Calls 'get_comment_time' hook with the formatted time, the $d parameter, and $gmt parameter passed.
+     * @uses applyFilter() Calls 'getCommentTime' hook with the formatted time, the $d parameter.
      *
      * @param string $d Optional. The format of the time (defaults to user's config)
      * @return string The formatted time
@@ -610,7 +610,7 @@ class CommentHelper extends AppHelper {
             $date = $this->Time->format(Configure::read('General-time_format'), $this->comment['created'], null, Configure::read('General-timezone'));
         else
             $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
-        return $this->Hook->applyFilters('get_comment_time', $date, $d);
+        return $this->Hook->applyFilters('getCommentTime', $date, $d);
     }
 
     /**
@@ -662,7 +662,7 @@ class CommentHelper extends AppHelper {
         }
 
         $open = ( 'open' == $comment_status );
-        return $this->Hook->applyFilters('comments_open', $open);
+        return $this->Hook->applyFilters('commentsOpen', $open);
     }
 
     /**
