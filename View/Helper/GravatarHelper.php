@@ -1,98 +1,47 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
-/**
- * CakePHP Gravatar Helper
- *
- * A CakePHP View Helper for the display of Gravatar images (http://www.gravatar.com)
- *
- * @copyright Copyright 2009-2010, Graham Weldon (http://grahamweldon.com)
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- * @package goodies
- * @subpackage goodies.views.helpers
- */
 
-/**
- * GravatarHelper
- * 
- * @package Hurad
- * @category View.Helper
- * @since 1.0.0
- * @license http://opensource.org/licenses/GPL-3.0 GPLv3 License 
- * @link http://hurad.org Hurad Project
- */
 class GravatarHelper extends AppHelper {
 
-    var $helpers = array('Html');
+    public $helpers = array('Html');
 
-    /**
-     * Default settings
-     *
-     * @var array
-     */
-    private $__default = array('default' => null, 'size' => 96, 'rating' => null);
-
-    /**
-     * Collection of allowed ratings
-     *
-     * @var array
-     */
-    private $__rating = array('g', 'pg', 'r', 'x');
-
-    /**
-     * Default Avatars sets
-     *
-     * @var array
-     */
-    private $__defaultAvatars = array('none', 'identicon', 'mm', 'monsterid', 'retro', 'wavatar', '404');
-
-    public function image($email, $options = array(), $alt = 'Avatar') {
-        if (!empty($email)) {
-            $email = md5(strtolower(trim($email)));
-        } else {
-            return FALSE;
-        }
-
-        return $this->Html->image('http://www.gravatar.com/avatar/' . $email . $this->_buildOptions($this->_cleanOptions($options)) . '', array(
-                    'alt' => $alt,
-                    'height' => $options['size'],
-                    'width' => $options['size'],
-                    'class' => 'avatar avatar-' . $options['size'] . ' photo')
+    public function image($email, $options) {
+        $defaults = array(
+            'size' => 45,
+            'default' => Configure::read('Comment-avatar_default'),
+            'rating' => Configure::read('Comment-avatar_rating'),
+            'alt' => __('Avatar'),
+            'class' => 'avatar'
         );
+        $options = Functions::hr_parse_args($options, $defaults);
+
+        $optionsQuery = http_build_query($options);
+        $gravatarUrl = "http://www.gravatar.com/avatar/";
+        $email = md5(strtolower(trim($email)));
+        $imageSrc = $gravatarUrl . $email . '?' . $optionsQuery;
+
+        if (Configure::read('Comment-avatar_default') == 'gravatar_default') {
+            $opt = array(
+                'size' => $options['size']
+            );
+            $email = '00000000000000000000000000000000';
+            $optionsQuery = http_build_query($opt);
+            $imageSrc = $gravatarUrl . $email . '?' . $optionsQuery;
+        }
+
+        echo $this->Html->image($imageSrc, array('alt' => $options['alt'], 'class' => $options['class']));
     }
 
-    private function _buildOptions($options = array()) {
-        $gravatarOptions = array_intersect(array_keys($options), array_keys($this->__default));
-        if (!empty($gravatarOptions)) {
-            $optionArray = array();
-            foreach ($gravatarOptions as $key) {
-                $value = $options[$key];
-                $optionArray[] = $key . '=' . mb_strtolower($value);
-            }
-            return '?' . implode('&amp;', $optionArray);
-        }
-        return '';
-    }
+    public function profile($email) {
+        $requestUrl = "http://www.gravatar.com/";
+        $email = md5(strtolower(trim($email)));
+        $profileUrl = $requestUrl . $email . '.php';
 
-    private function _cleanOptions($options) {
-        if (!isset($options['size']) || empty($options['size']) || !is_numeric($options['size'])) {
-            unset($options['size']);
-        } else {
-            $options['size'] = min(max($options['size'], 1), 512);
-        }
+        $str = file_get_contents($profileUrl);
+        $profile = unserialize($str);
 
-        if (!isset($options['rating']) || !in_array(strtolower($options['rating']), $this->__rating)) {
-            unset($options['rating']);
-        } else {
-            $options['rating'] = 'g';
-        }
-
-        if (!isset($options['default']) || !in_array(strtolower($options['default']), $this->__defaultAvatars)) {
-            unset($options['default']);
-        }
-        return $options;
+        return $profile['entry'][0];
     }
 
 }
-
-?>
