@@ -101,7 +101,7 @@ class CommentHelper extends AppHelper {
      * If the comment has an empty comment_author field, then 'Anonymous' person is
      * assumed.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters() Calls 'get_comment_author' hook on the comment author
      *
      * @return string The comment author
@@ -123,7 +123,7 @@ class CommentHelper extends AppHelper {
     /**
      * Displays the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters() Calls 'comment_author' on comment author before displaying
      */
     public function commentAuthor() {
@@ -134,7 +134,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the email of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters() Calls the 'get_comment_author_email' hook on the comment author email
      *
      * @param int $comment_ID The ID of the comment for which to get the author's email. Optional.
@@ -153,7 +153,7 @@ class CommentHelper extends AppHelper {
      * enable anyone, including those that people don't want to get the email
      * address and use it for their own means good and bad.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls 'author_email' hook on the author email
      */
     public function commentAuthorEmail() {
@@ -169,7 +169,7 @@ class CommentHelper extends AppHelper {
      * enable anyone, including those that people don't want to get the email
      * address and use it for their own means good and bad.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls 'comment_email' hook for the display of the comment author's email
      * @uses getCommentAuthorEmailLink() For generating the link
      *
@@ -191,7 +191,7 @@ class CommentHelper extends AppHelper {
      * enable anyone, including those that people don't want to get the email
      * address and use it for their own means good and bad.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters() Calls 'comment_email' hook for the display of the comment author's email
      *
      * @param string $linktext The text to display instead of the comment author's email address
@@ -214,7 +214,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the html link to the url of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters() Calls 'getCommentAuthorLink' hook on the complete link HTML or author
      *
      * @return string Comment Author name or HTML link for author's URL
@@ -234,7 +234,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the html link to the url of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @see getCommentAuthorLink() Echoes result
      */
     public function commentAuthorLink() {
@@ -244,7 +244,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the IP address of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters()
      *
      * @return string The comment author's IP address.
@@ -256,7 +256,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the IP address of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @see getCommentAuthorIP() Echoes Result
      */
     public function commentAuthorIP() {
@@ -266,7 +266,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the url of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters() Calls 'get_comment_author_url' hook on the comment author's URL
      *
      * @return string
@@ -280,7 +280,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the url of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses apply_filters()
      * @uses get_comment_author_url() Retrieves the comment author's URL
      */
@@ -298,7 +298,7 @@ class CommentHelper extends AppHelper {
      * Encapsulate the HTML link between the $before and $after. So it will appear
      * in the order of $before, link, and finally $after.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls the 'getCommentAuthorUrlLink' on the complete HTML before returning.
      *
      * @param string $linktext The text to display instead of the comment author's email address
@@ -320,7 +320,7 @@ class CommentHelper extends AppHelper {
     /**
      * Displays the HTML link of the url of the author of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @see getCommentAuthorUrlLink() Echoes result
      *
      * @param string $linktext The text to display instead of the comment author's email address
@@ -334,7 +334,7 @@ class CommentHelper extends AppHelper {
     /**
      * Generates semantic classes for each comment element
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param string|array $class One or more classes to add to the class list
      * @param bool $echo Whether commentClass should echo or return
@@ -351,7 +351,7 @@ class CommentHelper extends AppHelper {
     /**
      * Returns the classes for the comment div as an array
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param string|array $class One or more classes to add to the class list
      * @return array Array of classes
@@ -417,7 +417,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the comment date of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls 'get_comment_date' hook with the formatted date and the $d parameter respectively
      * @uses $comment
      *
@@ -435,7 +435,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the comment date of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param string $d The format of the date (defaults to user's config)
      */
@@ -450,7 +450,7 @@ class CommentHelper extends AppHelper {
      * If the word count is less than 20, then no truncating is done and no '...'
      * will appear.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls 'getCommentExcerpt' on truncated comment
      *
      * @return string The maybe truncated comment with 20 words or less
@@ -476,7 +476,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the excerpt of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls 'comment_excerpt' hook before displaying excerpt
      */
     public function commentExcerpt() {
@@ -486,7 +486,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the comment id of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls the 'get_comment_ID' hook for the comment ID
      *
      * @return int The comment ID
@@ -498,7 +498,7 @@ class CommentHelper extends AppHelper {
     /**
      * Displays the comment id of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @see get_comment_ID() Echoes Result
      */
     public function commentID() {
@@ -508,7 +508,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieves the link to the current post comments.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @return string The link to the comments
      */
@@ -519,7 +519,7 @@ class CommentHelper extends AppHelper {
     /**
      * Displays the link to the current post comments.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @see getCommentsLink() Echoes Result
      *
      */
@@ -530,7 +530,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the amount of comments a post has.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls the 'get_comments_number' hook on the number of comments
      *
      * @return int The number of comments a post has
@@ -554,7 +554,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the language string for the number of comments the current post has.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Calls the 'comments_number' hook on the output and number of comments respectively.
      *
      * @param string $zero Text for no comments
@@ -577,7 +577,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the text of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @return string The comment content
      */
@@ -588,7 +588,7 @@ class CommentHelper extends AppHelper {
     /**
      * Displays the text of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilters() Passes the comment content through the 'comment_text' hook before display
      * @uses getCommentText() Gets the comment content
      */
@@ -599,7 +599,7 @@ class CommentHelper extends AppHelper {
     /**
      * Retrieve the comment time of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      * @uses applyFilter() Calls 'get_comment_time' hook with the formatted time, the $d parameter, and $gmt parameter passed.
      *
      * @param string $d Optional. The format of the time (defaults to user's config)
@@ -616,7 +616,7 @@ class CommentHelper extends AppHelper {
     /**
      * Display the comment time of the current comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param string $d Optional. The format of the time (defaults to user's config)
      */
@@ -627,7 +627,7 @@ class CommentHelper extends AppHelper {
     /**
      * The status of a comment.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param int $approved Comment Status
      * @return string|bool Status might be 'trash', 'approved', 'unapproved', 'spam'. False on failure.
@@ -650,7 +650,7 @@ class CommentHelper extends AppHelper {
     /**
      * Whether the current post is open for comments.
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @return bool True if the comments are open
      */
@@ -671,7 +671,7 @@ class CommentHelper extends AppHelper {
      * Is not meant to be displayed on single posts and pages. Should be used on the
      * lists of posts
      *
-     * @since 1.0.0
+     * @since 0.1.0
      *
      * @param string $zero The string to display when no comments
      * @param string $one The string to display when only one comment is available
