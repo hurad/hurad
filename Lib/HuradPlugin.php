@@ -82,4 +82,27 @@ class HuradPlugin {
         }
     }
 
+    public function loadAll() {
+        $plugins = Configure::read('Plugins');
+
+        if (Configure::check('Plugins') && !empty($plugins)) {
+            $plugins = explode(',', $plugins);
+            $config = array();
+            foreach ($plugins as $i => $pluginFolder) {
+                $bs = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'bootstrap.php');
+                $rt = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'routes.php');
+                if ($bs->exists()) {
+                    $config[$pluginFolder]['bootstrap'] = true;
+                }
+                if ($rt->exists()) {
+                    $config[$pluginFolder]['routes'] = true;
+                }
+                if ($bs->exists() == FALSE && $rt->exists() == FALSE) {
+                    $config[$pluginFolder] = array();
+                }
+            }
+            CakePlugin::load($config);
+        }
+    }
+
 }
