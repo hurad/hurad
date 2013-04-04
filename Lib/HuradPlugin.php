@@ -37,8 +37,8 @@ class HuradPlugin {
     }
 
     public function activate($alias) {
-        if (Configure::check('Plugins')) {
-            $aliases = Configure::read('Plugins');
+        $aliases = Configure::read('Plugins');
+        if (Configure::check('Plugins') && !empty($aliases)) {
             $aliases = explode(',', $aliases);
 
             if (count($aliases) > 0) {
@@ -47,14 +47,11 @@ class HuradPlugin {
             } else {
                 $plugins = $alias;
             }
-
-            ClassRegistry::init('Option')->write('Plugins', $plugins);
-            return TRUE;
         } else {
             $plugins = $alias;
-            ClassRegistry::init('Option')->write('Plugins', $plugins);
-            return TRUE;
         }
+        ClassRegistry::init('Option')->write('Plugins', $plugins);
+        return TRUE;
     }
 
     public function deactivate($alias) {
