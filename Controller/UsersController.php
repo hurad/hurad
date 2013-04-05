@@ -16,19 +16,37 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
-        //$this->isAuthorized();
     }
 
     public function isAuthorized() {
+        $action = Router::getParam('action');
         switch ($this->Auth->user('role')) {
             case 'admin':
+                return TRUE;
+                break;
+            case 'editor':
+                if (
+                        $action == 'admin_index' ||
+                        $action == 'admin_edit' ||
+                        $action == 'admin_dashboard' ||
+                        $action == 'register' ||
+                        $action == 'login' ||
+                        $action == 'logout'
+                ) {
+                    return TRUE;
+                }
+                break;
+            case 'author':
                 $this->Auth->allow();
                 break;
             case 'user':
-                $this->Auth->allow('index', 'profile', 'change_password', 'login', 'logout');
+                if ($action == 'login' || $action == 'logout' || $action == 'register' || $action == 'admin_dashboard') {
+                    return TRUE;
+                }
             default :
-                $this->Auth->allow('login', 'logout', 'view', 'register');
+                if ($action == 'login' || $action == 'logout' || $action == 'register') {
+                    return TRUE;
+                }
                 break;
         }
     }
