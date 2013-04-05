@@ -18,21 +18,26 @@ class CategoriesController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->isAuthorized();
+        $this->Session->delete('Message.auth');
     }
 
     public function isAuthorized() {
+        $action = Router::getParam('action');
         switch ($this->Auth->user('role')) {
             case 'admin':
-                $this->Auth->allow();
+                return TRUE;
                 break;
             case 'editor':
-                $this->Auth->allow('admin_index', 'admin_edit', 'admin_add');
+                if ($action == 'admin_index' || $action == 'admin_add' || $action == 'admin_edit' || $action == 'index') {
+                    return TRUE;
+                }
                 break;
             case 'author':
-            case 'user':
-                $this->Auth->allow('admin_index');
+                if ($action == 'admin_index') {
+                    return TRUE;
+                }
                 break;
+            case 'user':
             default :
                 return FALSE;
                 break;
@@ -110,7 +115,7 @@ class CategoriesController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash(__('The category has been saved'), 'flash_notice');
+                $this->Session->setFlash(__('The category has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'error');
@@ -137,15 +142,15 @@ class CategoriesController extends AppController {
         if (!$this->Category->exists()) {
             throw new NotFoundException(__('Invalid category'));
         } elseif ($id == '37') {
-            $this->Session->setFlash(__('You are not deleted uncategorized Category'), 'flash_error');
+            $this->Session->setFlash(__('You are not deleted uncategorized Category'), 'notice');
             $this->redirect(array('action' => 'index'));
         }
 
         if ($this->Category->removeFromTree($id, true)) {
-            $this->Session->setFlash(__('Category deleted'), 'flash_notice');
+            $this->Session->setFlash(__('Category deleted'), 'success');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Category was not deleted'), 'flash_error');
+        $this->Session->setFlash(__('Category was not deleted'), 'error');
         $this->redirect(array('action' => 'index'));
     }
 
@@ -165,10 +170,10 @@ class CategoriesController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->Session->setFlash(__('No items selected.'), 'notice');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->Session->setFlash(__('No action selected.'), 'notice');
             $this->redirect(array('action' => 'index'));
         }
 
@@ -178,12 +183,12 @@ class CategoriesController extends AppController {
                     $this->Category->removeFromTree($value);
                 }
                 // if ($this->Category->deleteAll(array('Category.id' => $ids), true, true)) {
-                $this->Session->setFlash(__('Categories deleted.'), 'flash_notice');
+                $this->Session->setFlash(__('Categories deleted.'), 'success');
                 //}
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__('An error occurred.'), 'error');
                 break;
         }
         $this->redirect(array('action' => 'index'));
