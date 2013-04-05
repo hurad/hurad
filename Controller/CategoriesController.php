@@ -45,6 +45,7 @@ class CategoriesController extends AppController {
      * @return void
      */
     public function index() {
+        $this->autoRender = FALSE;
         if (!empty($this->request->params['requested'])) {
             $cats = $this->Category->find('threaded', array(
                 'order' => array('Category.' . $this->request->named['sort'] => $this->request->named['direction']),
