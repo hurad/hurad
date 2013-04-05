@@ -428,7 +428,7 @@ class PostHelper extends AppHelper {
         return $out;
     }
 
-    public function list_categories($args = '') {
+    public function list_categories($args = array()) {
         $defaults = array(
             'direction' => 'asc',
             'sort' => 'name',
