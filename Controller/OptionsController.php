@@ -35,7 +35,7 @@ class OptionsController extends AppController {
         //'conditions' => "Option.name LIKE '".$prefix."%'"));
         if (count($options) == 0) {
             $prefix = 'general';
-            $this->Session->setFlash(__("Invalid Option name"), 'flash_error');
+            $this->Session->setFlash(__("Invalid Option name"), 'error');
             $this->redirect(array('admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', $prefix));
         }
         if (!empty($this->request->data)) {
