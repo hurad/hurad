@@ -181,7 +181,7 @@ class UsersController extends AppController {
         $this->set('title_for_layout', __('Login to admin section'));
         if ($this->Auth->loggedIn()) {
             $this->Session->setFlash(__('You already login.'), 'notice');
-            $this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => TRUE));
+            $this->redirect($this->Auth->redirectUrl('/admin'));
         } else {
             if ($this->request->is('post')) {
                 if (!empty($this->request->data)) {
