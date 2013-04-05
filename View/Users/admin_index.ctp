@@ -1,4 +1,3 @@
-<?php //$this->Html->css(array(), null, array('inline' => FALSE));                                           ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
 <div class="page-header">
@@ -150,4 +149,3 @@ echo $this->Form->create('User', array(
     echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
-
