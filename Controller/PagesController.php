@@ -97,16 +97,11 @@ class PagesController extends AppController {
      */
     public function view($slug = null) {
         $this->Page->slug = $slug;
-//        if (!$this->Post->exists()) {
-//            throw new NotFoundException(__('Invalid post'));
-//        }
-//        $this->set('post', $this->Post->read(null, $id));
         if (is_null($slug) && !$this->Page->exists()) {
-//            $this->Session->setFlash(__('Your post not exist.'));
-//            $this->redirect(array('action' => 'index'));
             throw new NotFoundException(__('Invalid page'));
         } else {
             $this->set('page', $this->Page->findBySlug($slug));
+            $this->_fallbackView($slug);
         }
     }
 
@@ -325,6 +320,13 @@ class PagesController extends AppController {
                 break;
         }
         $this->redirect(array('action' => 'index'));
+    }
+
+    private function _fallbackView($viewName) {
+        if (file_exists(APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS . 'Pages' . DS . 'view-' . $viewName . '.ctp')) {
+            $this->render('view-' . $viewName);
+            return TRUE;
+        }
     }
 
 }

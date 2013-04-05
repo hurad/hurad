@@ -111,6 +111,7 @@ class PostsController extends AppController {
             throw new NotFoundException(__('Invalid post'));
         } else {
             $this->set('post', $this->Post->findBySlug($slug));
+            $this->_fallbackView($slug);
         }
     }
 
@@ -121,7 +122,10 @@ class PostsController extends AppController {
         }
 
         $this->set('post', $this->Post->read(null, $id));
-        $this->render('view');
+
+        if (!$this->_fallbackView($id)) {
+            $this->render('view');
+        }
     }
 
     public function admin_listByauthor($userId = null) {
@@ -384,6 +388,13 @@ class PostsController extends AppController {
                 $tags[] = $tag['name'];
             }
             $this->request->data['Post']['tags'] = implode(', ', $tags);
+        }
+    }
+
+    private function _fallbackView($viewName) {
+        if (file_exists(APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS . 'Posts' . DS . 'view-' . $viewName . '.ctp')) {
+            $this->render('view-' . $viewName);
+            return TRUE;
         }
     }
 
