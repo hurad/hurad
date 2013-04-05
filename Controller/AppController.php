@@ -45,7 +45,7 @@ class AppController extends Controller {
                 'controller' => 'users',
                 'action' => 'login'
             ),
-            'loginRedirect' => '/admin/',
+            'loginRedirect' => '/admin',
             'logoutAction' => array(
                 'admin' => false,
                 'controller' => 'users',
