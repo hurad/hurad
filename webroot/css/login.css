@@ -1,87 +1,19 @@
-form {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #E5E5E5;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 4px 18px #C8C8C8;
-    font-weight: normal;
-    margin-left: 8px;
-    padding: 16px 16px 40px;
+#content{
+    margin-top: 15%;
 }
-form#UserRegisterForm {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #E5E5E5;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: 0 4px 18px #C8C8C8;
-    font-weight: normal;
-    margin-left: 8px;
-    padding: 16px 16px 0 16px;
-}
-form#UserLoginForm #UserUsername, form#UserLoginForm #UserPassword, form#UserLoginForm #UserConfirmPassword, form#UserLoginForm #UserEmail {
-    background: none repeat scroll 0 0 #FBFBFB;
-    border: 1px solid #E5E5E5;
-    font-size: 24px;
-    margin-bottom: 16px;
-    margin-right: 6px;
-    margin-top: 2px;
-    padding: 3px;
-    width: 97%;
-}
-#login form p {
-    margin-bottom: 0;
-}
-input.login-button {
-    background: -moz-linear-gradient(center bottom, #268CC4, #0CF) repeat scroll 0 0 transparent;
-    border: #09F 1px solid;
-    border-radius: 7px;
-    cursor: pointer;
-    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-    font-size:12px;
-    font-weight: bold;
-    margin-top: -3px;
-    padding: 3px 10px;
-    text-decoration: none;
-    color: #FFF;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-}
-input.login-button:hover {
-    border: #06F 1px solid;
-}
-input.login-button:focus {
-    background: -moz-linear-gradient(center bottom, #268CC4, #0CF) repeat scroll 0 0 transparent;
-}
-input.login-button:active {
-    background: -moz-linear-gradient(center bottom, #0CF, #268CC4) repeat scroll 0 0 transparent;
-    color: #000;
-}
-form .remember_me {
-    float: left;
-}
-form .submit_login {
-    float: right;
-}
-.message {
-    background-color: #FFFFE0;
-    border-color: #E6DB55;
-    border-radius: 3px 3px 3px 3px;
-    border-style: solid;
-    border-width: 1px;
-    margin: 0 0 16px 8px;
-    padding: 12px;
-}
-form#UserRegisterForm #UserUsername, form#UserRegisterForm #UserPassword, form#UserRegisterForm #UserConfirmPassword, form#UserRegisterForm #UserEmail {
-    background: none repeat scroll 0 0 #FBFBFB;
-    border: 1px solid #E5E5E5;
-    font-size: 24px;
-    margin-bottom: 2px;
-    margin-right: 6px;
-    margin-top: 2px;
-    padding: 3px;
-    width: 97%;
-}
-form#UserRegisterForm .login-button{
-    margin-top: -3px !important;
+.login-logo img{
+    margin-bottom: 20px;
+    float:left;
+    padding-right: 10px;
+    /*    background-position: center;*/
 }
 
-table.login tbody tr td{
-    padding-bottom: 16px;
+.login-logo h1{
+    padding-top: 20px;
+}
+.login-logo h1 small{
+    font-size: 12px;
+}
+.control-group span {
+    margin-bottom: 10px;
 }
