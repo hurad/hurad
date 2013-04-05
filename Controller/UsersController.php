@@ -178,6 +178,7 @@ class UsersController extends AppController {
      */
     public function login() {
         $this->layout = "admin_login";
+        $this->set('title_for_layout', __('Login to admin section'));
         if ($this->Auth->loggedIn()) {
             $this->Session->setFlash(__('You already login.'), 'notice');
             $this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => TRUE));
@@ -185,9 +186,10 @@ class UsersController extends AppController {
             if ($this->request->is('post')) {
                 if (!empty($this->request->data)) {
                     if ($this->Auth->login()) {
+                        $this->Session->delete('Message.auth');
                         $this->_setCookie();
                         $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
-                        $this->redirect($this->Auth->redirect());
+                        $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
                         $this->Session->setFlash(__('Your username or password was incorrect.'), 'error');
                     }
@@ -206,10 +208,10 @@ class UsersController extends AppController {
             //$this->Cookie->delete('Hurad');
             $this->Session->destroy();
             $this->Cookie->destroy();
-            $this->Session->setFlash(__('You are successfully logout'), 'flash_notice');
+            $this->Session->setFlash(__('You are successfully logout'), 'success');
             $this->redirect($this->Auth->logout());
         } else {
-            $this->Session->setFlash(__('You already logout.'), 'flash_notice');
+            $this->Session->setFlash(__('You already logout.'), 'notice');
             $this->redirect('/');
         }
     }
@@ -294,10 +296,10 @@ class UsersController extends AppController {
                 $email->to('m.abdolirad@gmail.com');
                 $email->subject('Register to CakeBlog');
                 $email->send('Thank you register Cakeblog');
-                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'flash_notice');
+                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
             }
         }
     }
