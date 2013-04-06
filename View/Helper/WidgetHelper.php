@@ -78,7 +78,8 @@ class WidgetHelper extends AppHelper {
                 'name' => $inputName,
                 'value' => $data[$inputName],
                 'label' => FALSE,
-                'div' => FALSE
+                'div' => FALSE,
+                'empty' => FALSE
                     )
             );
         } elseif (isset($inputName)) {
@@ -87,7 +88,8 @@ class WidgetHelper extends AppHelper {
                 'class' => 'input-block-level',
                 'name' => $inputName,
                 'label' => FALSE,
-                'div' => FALSE
+                'div' => FALSE,
+                'empty' => FALSE
                     )
             );
         } else {
