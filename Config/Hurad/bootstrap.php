@@ -1,10 +1,34 @@
 <?php
 
+/**
+ * Load Options
+ */
+App::uses('ClassRegistry', 'Utility');
+
+$options = ClassRegistry::init('Option')->find('all', array(
+    'fields' => array(
+        'Option.name',
+        'Option.value',
+    )
+        ));
+foreach ($options AS $option) {
+    $_options[$option['Option']['name']] = $option['Option']['value'];
+    Configure::write($option['Option']['name'], $option['Option']['value']);
+}
+//Write all options in "Options" key
+Configure::write('Options', $_options);
+
+/**
+ * Import HuradHook Lib and write object in "HuradHook.obj" key 
+ */
 App::import('Lib', 'HuradHook');
 $HuradHook = new HuradHook();
 Configure::write('HuradHook.obj', $HuradHook);
 require APPLIBS . 'filters.php';
 
+/**
+ * Load Hurad Lib
+ */
 App::uses('Functions', 'Lib');
 App::uses('Formatting', 'Lib');
 App::uses('HrNav', 'Lib');
