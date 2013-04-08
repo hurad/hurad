@@ -180,20 +180,4 @@ CakeLog::config('error', array(
     'file' => 'error',
 ));
 
-
-//Load Option
-App::uses('ClassRegistry', 'Utility');
-
-$options = ClassRegistry::init('Option')->find('all', array(
-    'fields' => array(
-        'Option.name',
-        'Option.value',
-    )
-        ));
-foreach ($options AS $option) {
-    $_options[$option['Option']['name']] = $option['Option']['value'];
-    Configure::write($option['Option']['name'], $option['Option']['value']);
-}
-Configure::write('options', $_options);
-
 require APP . 'Config' . DS . 'Hurad' . DS . 'bootstrap.php';
