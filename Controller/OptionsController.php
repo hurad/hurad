@@ -10,13 +10,11 @@ App::uses('AppController', 'Controller');
 class OptionsController extends AppController {
 
     public $helpers = array('Link');
-    public $components = array('Akismet');
 
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow();
         //$this->isAuthorized();
-        $this->set('isKeyValid', $this->Akismet->isKeyValid());
     }
 
     public function admin_prefix($prefix = null) {
