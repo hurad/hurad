@@ -29,14 +29,15 @@ class OptionsController extends AppController {
 
         $options = $this->Option->find('all', array(
             'conditions' => array(
-                'Option.name LIKE' => $prefix . '-%',
+                'Option.name LIKE' => $prefix . '.%',
             ),
         ));
         //'conditions' => "Option.name LIKE '".$prefix."%'"));
         if (count($options) == 0) {
-            $prefix = 'general';
+            //$prefix = 'general';
             $this->Session->setFlash(__("Invalid Option name"), 'error');
-            $this->redirect(array('admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', $prefix));
+            //$this->redirect(array('admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', $prefix));
+            $this->redirect('/admin');
         }
         if (!empty($this->request->data)) {
             if ($this->Option->update($this->request->data)) {
@@ -47,7 +48,7 @@ class OptionsController extends AppController {
                 $this->Session->setFlash(__('Unable to update ' . $prefix . ' options.'), 'error');
             }
         } else {
-            $this->request->data['Option'] = $this->options;
+            $this->request->data[Inflector::humanize($prefix)] = Configure::read(Inflector::humanize($prefix));
         }
         $this->set(compact('prefix'));
     }
