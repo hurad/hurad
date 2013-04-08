@@ -24,7 +24,7 @@ echo $this->Form->create('Option', array(
         <div class="controls">
             <label class="radio">
                 <?php
-                echo $this->Form->input('Permalink-common', array(
+                echo $this->Form->input('Permalink.common', array(
                     'options' => array(
                         'default' => __('Default')
                     ),
@@ -37,7 +37,7 @@ echo $this->Form->create('Option', array(
             </label>
             <label class="radio">
                 <?php
-                echo $this->Form->input('Permalink-common', array(
+                echo $this->Form->input('Permalink.common', array(
                     'options' => array(
                         'day_name' => __('Day and name')
                     ),
@@ -49,7 +49,7 @@ echo $this->Form->create('Option', array(
             </label>
             <label class="radio">
                 <?php
-                echo $this->Form->input('Permalink-common', array(
+                echo $this->Form->input('Permalink.common', array(
                     'options' => array(
                         'month_name' => __('Month and name')
                     ),
