@@ -42,7 +42,18 @@ class Option extends AppModel {
     }
 
     /**
-     * Update all the settings.
+     * Update all the options.
+     * 
+     * input array $data
+     * <code>
+     * $data = array(
+     *      'Comment' => array(
+     *          'show_avatars' => '0',
+     *          'avatar_rating' => 'X',
+     *          'avatar_default' => 'monsterid'
+     *      )
+     * )
+     * </code>
      *
      * @access public
      * @param array $data
@@ -55,16 +66,18 @@ class Option extends AppModel {
             $list = $this->find('list', array(
                 'fields' => array('Option.name', 'Option.id')
             ));
-            //debug($data['Option']);
-            foreach ($data['Option'] as $key => $value) {
-                $this->id = $list[$key];
-                $this->saveField('value', $value);
+
+            foreach ($data as $prefix => $suffixes) {
+                foreach ($suffixes as $suffix => $value) {
+                    $this->id = $list[$prefix . '.' . $suffix];
+                    $this->saveField('value', $value);
+                }
             }
 
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
     public function write($name, $value) {
