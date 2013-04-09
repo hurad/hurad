@@ -87,4 +87,5 @@ echo $this->Form->create('User', array(
 </div>    
 
 <?php echo $this->Form->button(__('Register'), array('div' => false, 'type' => 'submit', 'class' => 'btn btn-info btn-block')); ?>
-</form>
+
+<?php echo $this->Form->end(); ?>
