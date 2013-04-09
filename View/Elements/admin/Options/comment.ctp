@@ -19,15 +19,15 @@ echo $this->Form->create('Option', array(
     <legend><?php echo __('Avatar Display'); ?></legend>
     <div class="control-group">
         <div class="controls">
-            <label class="radio" title="Y/m/d">
-                <?php
-                echo $this->Form->radio('Comment.show_avatars', array(
-                    '0' => __('Don’t show Avatars'),
-                    '1' => __('Show Avatars')), array(
-                    'legend' => FALSE,
+            <label class="radio">
+            <?php
+            echo $this->Form->radio('Comment.show_avatars', array(
+                '0' => __('Don’t show Avatars'),
+                '1' => __('Show Avatars')), array(
+                'legend' => FALSE,
                         //'label' => FALSE
-                ));
-                ?>
+            ));
+            ?>
             </label>
         </div>
     </div>
