@@ -16,7 +16,7 @@
                 )
         );
         ?>
-        <?php echo $this->fetch('headerScript'); ?>
+        <?php echo $this->fetch('scriptHeader'); ?>
         <?php echo $this->Js->writeBuffer(); ?>
     </head>
     <body>
@@ -36,5 +36,6 @@
             </div>
         </div>
         <?php echo $this->element('admin/footer'); ?>
+        <?php echo $this->fetch('scriptFooter'); ?>
     </body>
 </html>
