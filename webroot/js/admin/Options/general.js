@@ -1,10 +1,10 @@
 jQuery(document).ready(function($) {
     $("input[name='date_format']").click(function() {
-        if ("date_format_custom_radio" !== $(this).attr("id"))
+        if ("DateFormatCustomRadioCUSTOM" !== $(this).attr("id"))
             $("input[name='data[General][date_format]']").val($(this).val());
     });
     $("input[name='data[General][date_format]']").focus(function() {
-        $("#date_format_custom_radio").attr("checked", "checked");
+        $("#DateFormatCustomRadioCUSTOM").attr("checked", "checked");
     });
 
     $("input[name='time_format']").click(function() {
