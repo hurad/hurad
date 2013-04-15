@@ -15,12 +15,11 @@ class WidgetsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow();
+        $this->Security->unlockedActions = array('admin_index', 'admin_edit');
     }
 
     public function admin_index() {
         if ($this->RequestHandler->isAjax()) {
-            //debug($this->request->data, $showHtml = null, $showFrom = true);
-            //exit();
             $option_name = Configure::read('template') . '.widgets';
             $widgets_db = unserialize(Configure::read(Configure::read('template') . '.widgets'));
             //Before save sidebar widgets remove exist sidebar data in database.
@@ -35,21 +34,17 @@ class WidgetsController extends AppController {
                         $wg[$sidebar_id][$widget_id] = Hash::combine($widget_data, '{n}.name', '{n}.value');
                     }
                 }
-                
             }
-            //debug($wg);
+
             $widgets_order = serialize(Hash::mergeDiff($wg, $widgets_db));
-            //debug(Hash::combine($this->request->data, '{s}.{n}.{s}.{n}.name', '{s}.{n}.{s}.{n}.value'));
-            //debug(unserialize($widgets_order), $showHtml = null, $showFrom = true);
-            //exit();
             $this->Option->write($option_name, $widgets_order);
         }
     }
-    
+
     public function admin_edit() {
         $this->autoRender = false;
-        
-        if($this->RequestHandler->isAjax()){
+
+        if ($this->RequestHandler->isAjax()) {
             $optionName = Configure::read('template') . '.widgets';
             $widgetsDB = unserialize(Configure::read($optionName));
             $widgetData = Hash::combine($this->request->data, '{s}.{n}.name', '{s}.{n}.value');
@@ -59,12 +54,12 @@ class WidgetsController extends AppController {
                 foreach ($widgets as $widgetUID => $widget) {
                     if ($widgetUID == $widgetData['unique-id']) {
                         $newArray[$sidebarId][$widgetData['unique-id']] = $widgetData;
-                    }  else {
+                    } else {
                         $newArray[$sidebarId][$widgetUID] = $widget;
                     }
                 }
             }
-            
+
             $widgetUpdated = serialize($newArray);
             $this->Option->write($optionName, $widgetUpdated);
         }
