@@ -15,16 +15,21 @@ class Option extends AppModel {
      */
     public $displayField = 'name';
     public $validate = array(
-        'General-admin_email' => array(
-            'Rule1' => array(
-                'rule' => 'notEmpty',
-                'message' => 'This email has already exist.',
-            //'last' => true
-            ),
-            'Rule2' => array(
+        'General.admin_email' => array(
+            'email' => array(
                 'rule' => 'email',
-                'message' => 'Please enter valid email.'
+                'message' => 'Please enter valid email'
+            ),
+            'notEmpty' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Please not blank this field'
             )
+        ),
+        'General.site_url' => array(
+            'url' => array(
+                'rule' => 'url',
+                'message' => 'Please enter valid url'
+            ),
         )
     );
 
@@ -67,9 +72,9 @@ class Option extends AppModel {
                 'fields' => array('Option.name', 'Option.id')
             ));
 
-            foreach ($data as $prefix => $suffixes) {
-                foreach ($suffixes as $suffix => $value) {
-                    $this->id = $list[$prefix . '.' . $suffix];
+            foreach ($data as $modelName => $options) {
+                foreach ($options as $name => $value) {
+                    $this->id = $list[$name];
                     $this->saveField('value', $value);
                 }
             }
