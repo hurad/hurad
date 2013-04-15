@@ -96,8 +96,10 @@ class AdminLayoutHelper extends AppHelper {
         }
     }
 
-    public function optionDateFormat($format, $def) {
-        if ($format == $def) {
+    public function optionDateFormat($format, $def, $in_array = FALSE) {
+        if ($format == $def && $in_array) {
+            return 'checked';
+        } elseif ($format == $def && !$in_array) {
             echo 'checked="checked"';
         }
     }
@@ -228,5 +230,12 @@ class AdminLayoutHelper extends AppHelper {
         echo '</div>'; //div.accordion
     }
 
-}
+    public function isFieldError($field, $errors) {
+        if (key_exists($field, $errors)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
+}

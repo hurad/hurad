@@ -21,9 +21,9 @@ Router::connect('/', array('controller' => 'posts', 'action' => 'index', 'admin'
 /**
  * Posts permalink
  */
-if (Configure::read('Permalink-common') == 'default') {
+if (Configure::read('Permalink.common') == 'default') {
     Router::connect('/p/:id', array('controller' => 'posts', 'action' => 'viewByid'), array('pass' => array('id')));
-} elseif (Configure::read('Permalink-common') == 'day_name') {
+} elseif (Configure::read('Permalink.common') == 'day_name') {
     Router::connect(
             '/:year/:month/:day/:slug', array('controller' => 'posts', 'action' => 'view'), array(
         'year' => '[12][0-9]{3}',
@@ -32,7 +32,7 @@ if (Configure::read('Permalink-common') == 'default') {
         'pass' => array('slug')
             )
     );
-} elseif (Configure::read('Permalink-common') == 'month_name') {
+} elseif (Configure::read('Permalink.common') == 'month_name') {
     Router::connect(
             '/:year/:month/:slug', array('controller' => 'posts', 'action' => 'view'), array(
         'year' => '[12][0-9]{3}',
@@ -52,7 +52,7 @@ Router::connect('/pages', array('controller' => 'pages', 'action' => 'index', 'a
 /**
  * Pages permalink
  */
-if (Configure::read('Permalink-common') == 'default') {
+if (Configure::read('Permalink.common') == 'default') {
     Router::connect('/page/:id', array('controller' => 'pages', 'action' => 'viewByid'), array('pass' => array('id')));
 } else {
     Router::connect('/page/:slug', array('controller' => 'pages', 'action' => 'view'), array('pass' => array('slug')));
@@ -61,4 +61,3 @@ if (Configure::read('Permalink-common') == 'default') {
  * Comments
  */
 Router::connect('/comments/reply/:post_id/:comment_id', array('controller' => 'comment', 'action' => 'reply'), array('pass' => array('post_id', 'id'), 'post_id' => '[0-9]+', 'id' => '[0-9]+'));
-?>

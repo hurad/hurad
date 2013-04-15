@@ -72,24 +72,24 @@ class LinkHelper extends AppHelper {
         $month = $this->Time->format('m', $this->post['Post']['created']);
         $day = $this->Time->format('d', $this->post['Post']['created']);
         if ($this->post['Post']['type'] == 'post') {
-            switch (Configure::read('Permalink-common')) {
+            switch (Configure::read('Permalink.common')) {
                 case 'default':
-                    $permalink = $this->Html->url(Configure::read('General-site_url') . "/p/" . $this->post['Post']['id']);
+                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/p/" . $this->post['Post']['id']);
                     break;
                 case 'day_name':
-                    $permalink = $this->Html->url(Configure::read('General-site_url') . "/" . $year . "/" . $month . "/" . $day . "/" . $this->post['Post']['slug']);
+                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/" . $year . "/" . $month . "/" . $day . "/" . $this->post['Post']['slug']);
                     break;
                 case 'month_name':
-                    $permalink = $this->Html->url(Configure::read('General-site_url') . "/" . $year . "/" . $month . "/" . $this->post['Post']['slug']);
+                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/" . $year . "/" . $month . "/" . $this->post['Post']['slug']);
                     break;
                 default:
                     break;
             }
         } elseif ($this->post['Post']['type'] == 'page') {
-            if (Configure::read('Permalink-common') == 'default') {
-                $permalink = $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['id']);
+            if (Configure::read('Permalink.common') == 'default') {
+                $permalink = $this->Html->url(Configure::read('General.site_url') . "/page/" . $this->post['Post']['id']);
             } else {
-                $permalink = $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->post['Post']['slug']);
+                $permalink = $this->Html->url(Configure::read('General.site_url') . "/page/" . $this->post['Post']['slug']);
             }
         }
         return $this->Hook->applyFilters('post_link', $permalink);
@@ -130,7 +130,7 @@ class LinkHelper extends AppHelper {
     public function getHomeUrl($path = '', $scheme = null) {
         $orig_scheme = $scheme;
 
-        $url = Configure::read('General-home_url');
+        $url = Configure::read('General.home_url');
 
         if (!in_array($scheme, array('http', 'https', 'relative'))) {
             if (Functions::is_ssl() && !Functions::is_admin())
@@ -214,7 +214,7 @@ class LinkHelper extends AppHelper {
      * @return string Site url link with optional path appended.
      */
     public function getSiteUrl($path = '', $scheme = null) {
-        $url = Configure::read('General-site_url');
+        $url = Configure::read('General.site_url');
 
         $url = $this->setUrlScheme($url, $scheme);
 

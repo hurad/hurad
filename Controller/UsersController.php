@@ -16,20 +16,35 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
-        //$this->isAuthorized();
+        //For not logged user's
+        $this->Auth->allow(array('register', 'login', 'logout'));
     }
 
     public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
+                return TRUE;
+                break;
+            case 'editor':
+                if (
+                        $action == 'admin_index' ||
+                        $action == 'admin_edit' ||
+                        $action == 'admin_dashboard' ||
+                        $action == 'register' ||
+                        $action == 'login' ||
+                        $action == 'logout'
+                ) {
+                    return TRUE;
+                }
+                break;
+            case 'author':
                 $this->Auth->allow();
                 break;
             case 'user':
-                $this->Auth->allow('index', 'profile', 'change_password', 'login', 'logout');
-            default :
-                $this->Auth->allow('login', 'logout', 'view', 'register');
-                break;
+                if ($action == 'login' || $action == 'logout' || $action == 'register' || $action == 'admin_dashboard') {
+                    return TRUE;
+                }
         }
     }
 
@@ -125,7 +140,7 @@ class UsersController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             if (isset($this->request->data['UserMeta'])) {
                 foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
-                    //Update user_metas table.
+//Update user_metas table.
                     $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
                 }
             }
@@ -140,7 +155,7 @@ class UsersController extends AppController {
         } else {
             $this->request->data = $this->User->read(null, $id);
 
-            //Retraive user_metas table.
+//Retraive user_metas table.
             $this->request->data['UserMeta'] = $this->UserMeta->find('list', array(
                 'conditions' => array('UserMeta.user_id' => $id),
                 'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
@@ -178,16 +193,18 @@ class UsersController extends AppController {
      */
     public function login() {
         $this->layout = "admin_login";
+        $this->set('title_for_layout', __('Login to admin section'));
         if ($this->Auth->loggedIn()) {
             $this->Session->setFlash(__('You already login.'), 'notice');
-            $this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => TRUE));
+            $this->redirect($this->Auth->redirectUrl('/admin'));
         } else {
             if ($this->request->is('post')) {
                 if (!empty($this->request->data)) {
                     if ($this->Auth->login()) {
+                        $this->Session->delete('Message.auth');
                         $this->_setCookie();
                         $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
-                        $this->redirect($this->Auth->redirect());
+                        $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
                         $this->Session->setFlash(__('Your username or password was incorrect.'), 'error');
                     }
@@ -203,13 +220,13 @@ class UsersController extends AppController {
      */
     public function logout() {
         if ($this->Auth->loggedIn()) {
-            //$this->Cookie->delete('Hurad');
+//$this->Cookie->delete('Hurad');
             $this->Session->destroy();
             $this->Cookie->destroy();
-            $this->Session->setFlash(__('You are successfully logout'), 'flash_notice');
+            $this->Session->setFlash(__('You are successfully logout'), 'success');
             $this->redirect($this->Auth->logout());
         } else {
-            $this->Session->setFlash(__('You already logout.'), 'flash_notice');
+            $this->Session->setFlash(__('You already logout.'), 'notice');
             $this->redirect('/');
         }
     }
@@ -241,11 +258,11 @@ class UsersController extends AppController {
     public function change_password() {
         $this->layout = "admin";
         if ($this->request->is('post')) {
-            // Set User's ID in model which is needed for validation
+// Set User's ID in model which is needed for validation
             $this->User->id = $this->Auth->user('id');
             if ($this->User->save($this->request->data)) {
                 debug($this->request->data);
-                //Find user by id
+//Find user by id
                 $user = $this->User->findById($this->Auth->user('id'));
 
                 $email = new CakeEmail('gmail');
@@ -276,7 +293,7 @@ class UsersController extends AppController {
         $this->layout = "admin_login";
         $this->set('title_for_layout', __('Register'));
         if ($this->request->is('post')) {
-            $this->request->data['User']['role'] = Configure::read('General-default_role');
+            $this->request->data['User']['role'] = Configure::read('General.default_role');
             $this->request->data['User']['activation_key'] = $this->_getActivationKey();
             $this->User->create();
             if ($this->User->save($this->request->data)) {
@@ -287,17 +304,17 @@ class UsersController extends AppController {
                     'password' => $this->request->data['User']['password'],
                     'username' => $this->request->data['User']['username'],
                     'activation_key' => $this->request->data['User']['activation_key'],
-                    'siteurl' => Configure::read('General-site_url'),
+                    'siteurl' => Configure::read('General.site_url'),
                     'email' => $this->request->data['User']['email']
                 ));
                 $email->from(array('info@cakeblog.com' => 'CakeBlog'));
                 $email->to('m.abdolirad@gmail.com');
                 $email->subject('Register to CakeBlog');
                 $email->send('Thank you register Cakeblog');
-                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'flash_notice');
+                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
             }
         }
     }
@@ -333,7 +350,7 @@ class UsersController extends AppController {
      * @return string activation key
      */
     public function verify($key = NULL) {
-        //Find id from users table
+//Find id from users table
         $user = $this->User->find('first', array(
             'conditions' => array('User.activation_key' => $key))
         );
@@ -385,7 +402,7 @@ class UsersController extends AppController {
             $this->User->id = $user['User']['id'];
             $resetKey = md5(uniqid());
             $this->User->saveField('reset_key', $resetKey);
-            //$this->set(compact('user', 'resetKey'));
+//$this->set(compact('user', 'resetKey'));
 //            $this->Email->from = Configure::read('Site.title') . ' '
 //                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 //            $this->Email->to = $user['User']['email'];
@@ -404,7 +421,7 @@ class UsersController extends AppController {
             $email->from(array('info@cakeblog.com' => 'CakeBlog'));
             $email->to($user['User']['email']);
             $email->subject(__('Reset Password'));
-            //$email->send('Thank you confirm Cakeblog');
+//$email->send('Thank you confirm Cakeblog');
 
 
 
@@ -418,7 +435,7 @@ class UsersController extends AppController {
     }
 
     public function reset($key = null) {
-        //$this->set('title_for_layout', __('Reset Password'));
+//$this->set('title_for_layout', __('Reset Password'));
 
         if ($key == null) {
             $this->Session->setFlash(__('An error occurred.'));
@@ -438,7 +455,7 @@ class UsersController extends AppController {
         if (!empty($this->request->data) && isset($this->request->data['User']['password'])) {
             $this->User->id = $user['User']['id'];
             $user['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
-            //$user['User']['activation_key'] = md5(uniqid());
+//$user['User']['activation_key'] = md5(uniqid());
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('Your password has been reset successfully.'));
                 $this->redirect(array('action' => 'login'));

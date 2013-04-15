@@ -1,41 +1,50 @@
 <?php
 
+/**
+ * Load Options
+ */
+App::uses('ClassRegistry', 'Utility');
+
+$options = ClassRegistry::init('Option')->find('all', array(
+    'fields' => array(
+        'Option.name',
+        'Option.value',
+    )
+        ));
+foreach ($options AS $option) {
+    $_options[$option['Option']['name']] = $option['Option']['value'];
+    Configure::write($option['Option']['name'], $option['Option']['value']);
+}
+//Write all options in "Options" key
+Configure::write('Options', $_options);
+
+/**
+ * Import HuradHook Lib and write object in "HuradHook.obj" key 
+ */
 App::import('Lib', 'HuradHook');
 $HuradHook = new HuradHook();
 Configure::write('HuradHook.obj', $HuradHook);
 require APPLIBS . 'filters.php';
 
+/**
+ * Load Hurad Lib
+ */
 App::uses('Functions', 'Lib');
 App::uses('Formatting', 'Lib');
 App::uses('HrNav', 'Lib');
-App::uses('HrPlugin', 'Lib');
+App::uses('HuradPlugin', 'Lib');
 App::uses('Hurad', 'Lib');
 App::uses('HuradWidget', 'Lib');
-/**
- * Plugins
- */
-$pluginBootstraps = Configure::read('Plugin.bootstraps');
-$plugins = array_filter(explode(',', $pluginBootstraps));
-foreach ($plugins as $plugin) {
-    $pluginName = Inflector::camelize($plugin);
-    if (!file_exists(APP . 'Plugin' . DS . $pluginName)) {
-        CakeLog::write(LOG_ERR, 'Plugin not found during bootstrap: ' . $pluginName);
-        continue;
-    }
-    $bootstrapFile = APP . 'Plugin' . DS . $pluginName . DS . 'Config' . DS . 'bootstrap.php';
-    $bootstrap = file_exists($bootstrapFile);
-    $routesFile = APP . 'Plugin' . DS . $pluginName . DS . 'Config' . DS . 'routes.php';
-    $routes = file_exists($routesFile);
-    $option = array(
-        $pluginName => array(
-            'bootstrap' => $bootstrap,
-            'routes' => $routes,
-        )
-    );
-    HrPlugin::load($option);
-}
 
+/**
+ * Load all active plugins
+ */
+HuradPlugin::loadAll();
+
+/**
+ * Include current theme bootstrap file.
+ */
 $theme_bootstrap = APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS . 'Config' . DS . 'bootstrap.php';
-if (is_file($theme_bootstrap)) {
+if (is_file($theme_bootstrap) && file_exists($theme_bootstrap)) {
     include $theme_bootstrap;
 }
