@@ -14,7 +14,6 @@ class OptionsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow();
-        //$this->isAuthorized();
     }
 
     public function admin_prefix($prefix = null) {
@@ -32,22 +31,29 @@ class OptionsController extends AppController {
         ));
         //'conditions' => "Option.name LIKE '".$prefix."%'"));
         if (count($options) == 0) {
-            //$prefix = 'general';
             $this->Session->setFlash(__("Invalid Option name"), 'error');
-            //$this->redirect(array('admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', $prefix));
             $this->redirect('/admin');
         }
-        if (!empty($this->request->data)) {
-            if ($this->Option->update($this->request->data)) {
+        if ($this->request->is('post') || $this->request->is('put')) {
+
+            foreach ($this->request->data as $modelName => $optionArray) {
+                foreach ($optionArray as $option => $value) {
+                    $opt[Inflector::humanize($prefix) . '.' . $option] = $value;
+                }
+            }
+            $optionData['Option'] = $opt;
+
+            if ($this->Option->update($optionData)) {
                 $this->Session->setFlash(__('Options have been updated!'), 'success');
                 //Cache::delete('Option.getOptions');
                 //Configure::write($prefix, $this->request->data['Option']);
             } else {
-                $this->Session->setFlash(__('Unable to update ' . $prefix . ' options.'), 'error');
+                $this->Session->setFlash(__('Unable to update ' . $prefix . ' options.'), 'error-option', array('errors' => $this->Option->validationErrors));
             }
         } else {
-            $this->request->data[Inflector::humanize($prefix)] = Configure::read(Inflector::humanize($prefix));
+            $this->request->data['Option'] = Configure::read(Inflector::humanize($prefix));
         }
+        $this->set('errors', $this->Option->validationErrors);
         $this->set(compact('prefix'));
     }
 
