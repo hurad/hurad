@@ -230,5 +230,12 @@ class AdminLayoutHelper extends AppHelper {
         echo '</div>'; //div.accordion
     }
 
-}
+    public function isFieldError($field, $errors) {
+        if (key_exists($field, $errors)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
+}
