@@ -37,7 +37,7 @@ class AppController extends Controller {
         'Cookie',
         'Session',
         'DebugKit.Toolbar',
-        //'Security' => array('csrfUseOnce' => false, 'csrfExpires' => '+1 hour'),
+        'Security' => array('csrfUseOnce' => false, 'csrfExpires' => '+1 hour'),
         'Auth' => array(
             //'fields' => array('username' => 'username', 'password' => 'password'),
             'loginAction' => array(
@@ -109,7 +109,7 @@ class AppController extends Controller {
         $this->set('isadmin', $this->isAdmin());
 
         //Load Option model in all controller
-        $this->options = Configure::read('options');
+        //$this->options = Configure::read('options');
 
         //Use request in model
         $this->{$this->modelClass}->request = $this->request;
