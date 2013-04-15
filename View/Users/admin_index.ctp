@@ -1,4 +1,4 @@
-<?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/checkbox'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
