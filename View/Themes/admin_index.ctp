@@ -1,89 +1,116 @@
+<?php $this->Html->script(array('holder'), array('block' => 'scriptHeader')); ?>
 <h3><?php echo __('Current Theme'); ?></h3>
-<div id="current-theme">
-    <?php if (isset($currentTheme['screenshot'])) { ?>
-        <?php echo $this->Html->image($currentTheme['screenshot'], array('alt' => __('Current theme preview'))); ?>
-    <?php } ?>
-    <h4><?php echo (isset($currentTheme['name'])) ? $currentTheme['name'] : ''; ?> <?php echo (isset($currentTheme['version'])) ? $currentTheme['version'] : ''; ?> by <?php echo (isset($currentTheme['author'])) ? $currentTheme['author'] : ''; ?></h4>
-    <p class="theme-description"><?php echo (isset($currentTheme['description'])) ? $currentTheme['description'] : ''; ?></p>
-    <p>
-        <?php echo __('All of this theme’s files are located in'); ?>
-        <code>
-            <?php if (count($themes) >= 1) { ?>
-                /View/Themed/<?php echo Configure::read('template'); ?>
-            <?php } ?>
-        </code>
-        .
-    </p>
-    <?php if (isset($currentTheme['tags'])) { ?>
-        <p><?php echo __('Tags:'); ?> <?php echo $currentTheme['tags']; ?></p>
-    <?php } ?>
-</div>
-<div class="clear"></div>
-<h3><?php echo __('Available Themes') ?></h3>
-<div class="clear"></div>
-<?php if (count($themes) > 1) { ?>
-    <table id="availablethemes" cellspacing="0" cellpadding="0">
-        <tbody>
-            <?php
-            $theme_folders = array_keys($themes);
-            natcasesort($theme_folders);
-            $table = array();
-            $rows = ceil(count($theme_folders) / 3);
+<style>
+    ul.thumbnails li.span4:nth-child(3n + 4) {
+        margin-left : 0px;
+    }
 
-            for ($row = 1; $row <= $rows; $row++)
-                for ($col = 1; $col <= 3; $col++)
-                    $table[$row][$col] = array_shift($theme_folders);
-            foreach ($table as $row => $cols) {
+    ul.thumbnails li.span3:nth-child(4n + 5) {
+        margin-left : 0px;
+    }
+
+    ul.thumbnails li.span12 + li {
+        margin-left : 0px;
+    }
+    .description{
+        margin-bottom: 20px;
+    }
+</style>
+<div class="current-theme">
+    <ul class="thumbnails">
+        <li class="span4">
+            <div class="thumbnail">
+                <?php
+                $viewPath = App::path('View');
+                if (file_exists($viewPath[0] . 'Themed' . DS . Configure::read('template') . DS . 'webroot' . DS . 'img' . DS . 'screenshot.png')) {
+                    echo $this->Html->image('screenshot.png', array('alt' => $currentTheme['name']));
+                } else {
+                    echo $this->Html->image('/holder.js/300x225');
+                }
                 ?>
-                <tr>
-                    <?php
-                    foreach ($cols as $col => $theme_folder) {
-                        $class = array('available-theme');
-                        if ($row == 1)
-                            $class[] = 'top';
-                        if ($col == 1)
-                            $class[] = 'left';
-                        if ($row == $rows)
-                            $class[] = 'bottom';
-                        if ($col == 3)
-                            $class[] = 'right';
-                        ?>
-                        <td class="<?php echo join(' ', $class); ?>">
-                            <?php if (!empty($theme_folder)) { ?>
-<!--                                <a class="thickbox thickbox-preview screenshot" href="#">-->
-                                    <?php echo $this->Html->image('/theme/' . $theme_folder . DS . 'img' . DS . $themesData[$theme_folder]['screenshot'], array('alt' => __('Theme preview'))); ?>
-<!--                                </a>-->
-                                <h3>
-                                    <?php echo $themesData[$theme_folder]['name']; ?> <?php echo $themesData[$theme_folder]['version']; ?> by
-                                    <?php echo $this->Html->link($themesData[$theme_folder]['author'], $themesData[$theme_folder]['authorUrl'],array('title' => __('Visit author homepage'))); ?>
-                                </h3>
-                                <p class="description"><?php echo $themesData[$theme_folder]['description']; ?></p>
-                                <span class="action-links">        
-                                    <?php echo $this->Form->postLink(__('Activate'), array('title' => 'Activate “Green Theme”', 'class' => 'activatelink', 'action' => 'activate', $theme_folder,)) ?>
-                                    |
-                                    <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'action' => 'delete', $theme_folder), null, __('You are about to delete this theme \'%s\'\n \'Cancel\' to stop, \'OK\' to delete.', $themesData[$theme_folder]['name'])); ?>
-                                </span>
-                                <p>
-                                    <?php echo __('All of this theme’s files are located in'); ?>
-                                    <code>/View/Themed/<?php echo $theme_folder; ?></code>
-                                    .
-                                </p>
-                                <?php if ($themesData[$theme_folder]['tags']) { ?>
-                                    <p><?php echo __('Tags:'); ?> <?php echo $themesData[$theme_folder]['tags']; ?></p>
-                                <?php } ?>
-                            <?php } ?>
-                        </td>
+                <div class="caption">
+                    <h3><?php echo $currentTheme['name']; ?></h3>
+                    <div class="description">
+                        <span>
+                            <?php
+                            if (isset($currentTheme['theme_url']) && !empty($currentTheme['theme_url'])) {
+                                $name = $this->Html->link($currentTheme['name'], $currentTheme['theme_url'], array('title' => __('Visit theme url')));
+                            } else {
+                                $name = $currentTheme['name'];
+                            }
+
+                            if (isset($currentTheme['author_url']) && !empty($currentTheme['author_url'])) {
+                                $author = $this->Html->link($currentTheme['author'], $currentTheme['author_url'], array('title' => __('Visit author url')));
+                            } else {
+                                $author = $currentTheme['author'];
+                            }
+                            echo $name . ' ' . $currentTheme['version'] . ' ' . __('by') . ' ' . $author;
+                            ?>
+                        </span>
+                    </div>
+                    <?php if (isset($currentTheme['description']) && !empty($currentTheme['description'])) { ?>
+                        <p><?php echo $currentTheme['description']; ?></p>
                     <?php } ?>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-<?php } elseif (count($themes) <= 0) { ?>
-    <p></p>
-<?php } else { ?>
-    <p>
-        <?php echo __('You only have one theme installed right now.') ?>
-    </p>
-<?php } ?>
-<br class="clear">
-<br class="clear">
+                    <?php if (isset($currentTheme['tags']) && !empty($currentTheme['tags'])) { ?>
+                        <p><?php echo __('Tags: ') . $currentTheme['tags']; ?></p>
+                    <?php } ?>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<h3><?php echo __('Available Themes') ?></h3>
+<div class="available-theme">
+    <ul class="thumbnails">
+        <?php foreach ($themes as $alias => $theme) { ?>
+            <?php
+            if ($alias == Configure::read('template')) {
+                continue;
+            }
+            ?>
+            <li class="span4">
+                <div class="thumbnail">
+                    <?php
+                    $viewPath = App::path('View');
+                    if (file_exists($viewPath[0] . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'img' . DS . 'screenshot.png')) {
+                        echo $this->Html->image('/theme/' . $alias . DS . 'img' . DS . 'screenshot.png', array('alt' => $theme['name']));
+                    } else {
+                        echo $this->Html->image('/holder.js/300x225');
+                    }
+                    ?>
+                    <div class="caption">
+                        <h3><?php echo $theme['name']; ?></h3>
+                        <div class="description">
+                            <span>
+                                <?php
+                                if (isset($theme['theme_url']) && !empty($theme['theme_url'])) {
+                                    $name = $this->Html->link($theme['name'], $theme['theme_url'], array('title' => __('Visit theme url')));
+                                } else {
+                                    $name = $theme['name'];
+                                }
+
+                                if (isset($theme['author_url']) && !empty($theme['author_url'])) {
+                                    $author = $this->Html->link($theme['author'], $theme['author_url'], array('title' => __('Visit author url')));
+                                } else {
+                                    $author = $theme['author'];
+                                }
+                                echo $name . ' ' . $theme['version'] . ' ' . __('by') . ' ' . $author;
+                                ?>
+                            </span>
+                        </div>
+                        <?php if (isset($theme['description']) && !empty($theme['description'])) { ?>
+                            <p><?php echo $theme['description']; ?></p>
+                        <?php } ?>
+                        <?php if (isset($theme['tags']) && !empty($theme['tags'])) { ?>
+                            <p><?php echo __('Tags: ') . $theme['tags']; ?></p>
+                        <?php } ?>
+                        <p>
+                            <?php echo $this->Form->postLink(__('Activate'), array('admin' => TRUE, 'action' => 'activate', $alias), array('title' => __('Activate "%s"', $theme['name']), 'class' => 'btn btn-success')); ?>
+                            <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'action' => 'delete', $alias), array('title' => __('Delete "%s"', $theme['name']), 'class' => 'btn btn-danger'), __('Are you sure delete "%s"', $theme['name'])); ?>
+                        </p>
+                    </div>
+                </div>
+            </li>
+        <?php } ?>
+    </ul>
+</div>
