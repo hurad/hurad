@@ -21,7 +21,7 @@ echo $this->Form->create('Option', array(
         <div class="controls">
             <label class="radio">
             <?php
-            echo $this->Form->radio('Comment.show_avatars', array(
+            echo $this->Form->radio('show_avatars', array(
                 '0' => __('Don’t show Avatars'),
                 '1' => __('Show Avatars')), array(
                 'legend' => FALSE,
@@ -36,9 +36,9 @@ echo $this->Form->create('Option', array(
     <legend><?php echo __('Maximum Rating'); ?></legend>
     <div class="control-group">
         <div class="controls">
-            <label class="radio" for="CommentAvatarRatingG">
+            <label class="radio" for="OptionAvatarRatingG">
                 <?php
-                echo $this->Form->input('Comment.avatar_rating', array(
+                echo $this->Form->input('avatar_rating', array(
                     'options' => array(
                         'G' => ''
                     ),
@@ -52,9 +52,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarRatingPG">
+            <label class="radio" for="OptionAvatarRatingPG">
                 <?php
-                echo $this->Form->input('Comment.avatar_rating', array(
+                echo $this->Form->input('avatar_rating', array(
                     'options' => array(
                         'PG' => ''
                     ),
@@ -68,9 +68,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarRatingR">
+            <label class="radio" for="OptionAvatarRatingR">
                 <?php
-                echo $this->Form->input('Comment.avatar_rating', array(
+                echo $this->Form->input('avatar_rating', array(
                     'options' => array(
                         'R' => ''
                     ),
@@ -84,9 +84,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarRatingX">
+            <label class="radio" for="OptionAvatarRatingX">
                 <?php
-                echo $this->Form->input('Comment.avatar_rating', array(
+                echo $this->Form->input('avatar_rating', array(
                     'options' => array(
                         'X' => ''
                     ),
@@ -106,9 +106,9 @@ echo $this->Form->create('Option', array(
     <legend><?php echo __('Default Avatar'); ?></legend>
     <div class="control-group">
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultMystery">
+            <label class="radio" for="OptionAvatarDefaultMystery">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'mystery' => ''
                     ),
@@ -123,9 +123,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultBlank">
+            <label class="radio" for="OptionAvatarDefaultBlank">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'blank' => ''
                     ),
@@ -140,9 +140,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultGravatarDefault">
+            <label class="radio" for="OptionAvatarDefaultGravatarDefault">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'gravatar_default' => ''
                     ),
@@ -157,9 +157,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultIdenticon">
+            <label class="radio" for="OptionAvatarDefaultIdenticon">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'identicon' => ''
                     ),
@@ -174,9 +174,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultWavatar">
+            <label class="radio" for="OptionAvatarDefaultWavatar">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'wavatar' => ''
                     ),
@@ -191,9 +191,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultMonsterid">
+            <label class="radio" for="OptionAvatarDefaultMonsterid">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'monsterid' => ''
                     ),
@@ -208,9 +208,9 @@ echo $this->Form->create('Option', array(
             </label>
         </div>
         <div class="controls">
-            <label class="radio" for="CommentAvatarDefaultRetro">
+            <label class="radio" for="OptionAvatarDefaultRetro">
                 <?php
-                echo $this->Form->input('Comment.avatar_default', array(
+                echo $this->Form->input('avatar_default', array(
                     'options' => array(
                         'retro' => ''
                     ),
