@@ -77,9 +77,9 @@ class GeneralHelper extends AppHelper {
         $the_date = '';
 
         if ('' == $d)
-            $the_date .= $this->Time->format(Configure::read('General-date_format'), $this->post['Post']['created'], null, Configure::read('General-timezone'));
+            $the_date .= $this->Time->format(Configure::read('General.date_format'), $this->post['Post']['created'], null, Configure::read('General.timezone'));
         else
-            $the_date .= $this->Time->format($d, $this->post['Post']['created'], null, Configure::read('General-timezone'));
+            $the_date .= $this->Time->format($d, $this->post['Post']['created'], null, Configure::read('General.timezone'));
 
         return $this->Hook->applyFilters('get_the_date', $the_date, $d);
     }
@@ -117,7 +117,7 @@ class GeneralHelper extends AppHelper {
      */
     public function getTheModifiedDate($d = '') {
         if ('' == $d) {
-            $the_time = $this->getPostModifiedTime(Configure::read('General-date_format'));
+            $the_time = $this->getPostModifiedTime(Configure::read('General.date_format'));
         } else {
             $the_time = $this->getPostModifiedTime($d);
         }
@@ -146,7 +146,7 @@ class GeneralHelper extends AppHelper {
      */
     public function getTheTime($d = '') {
         if ('' == $d) {
-            $the_time = $this->getPostTime(Configure::read('General-time_format'));
+            $the_time = $this->getPostTime(Configure::read('General.time_format'));
         } else {
             $the_time = $this->getPostTime($d);
         }
@@ -164,7 +164,7 @@ class GeneralHelper extends AppHelper {
      */
     public function getPostTime($d = 'U') { // returns timestamp
         $time = $this->post['Post']['created'];
-        $time = $this->Time->format($d, $time, null, Configure::read('General-timezone'));
+        $time = $this->Time->format($d, $time, null, Configure::read('General.timezone'));
 
         return $this->Hook->applyFilters('get_post_time', $time, $d);
     }
@@ -190,7 +190,7 @@ class GeneralHelper extends AppHelper {
      */
     public function getTheModifiedTime($d = '') {
         if ('' == $d) {
-            $the_time = $this->getPostModifiedTime(Configure::read('General-time_format'));
+            $the_time = $this->getPostModifiedTime(Configure::read('General.time_format'));
         } else {
             $the_time = $this->getPostModifiedTime($d);
         }
@@ -208,7 +208,7 @@ class GeneralHelper extends AppHelper {
      */
     public function getPostModifiedTime($d = 'U') {
         $time = $this->post['Post']['modified'];
-        $time = $this->Time->format($d, $time, null, Configure::read('General-timezone'));
+        $time = $this->Time->format($d, $time, null, Configure::read('General.timezone'));
 
         return $this->Hook->applyFilters('get_post_modified_time', $time, $d);
     }
