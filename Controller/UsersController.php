@@ -20,7 +20,7 @@ class UsersController extends AppController {
         $this->Auth->allow(array('register', 'login', 'logout'));
     }
 
-    public function isAuthorized() {
+    public function isAuthorized($user) {
         $action = Router::getParam('action');
         switch ($user['role']) {
             case 'admin':
