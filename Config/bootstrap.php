@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
  *
@@ -180,4 +181,23 @@ CakeLog::config('error', array(
     'file' => 'error',
 ));
 
-require APP . 'Config' . DS . 'Hurad' . DS . 'bootstrap.php';
+/**
+ * Define App/Config/ dir
+ */
+define('CONFIG', APP . 'Config' . DS);
+
+/**
+ * Define App/Config/Schema/ dir
+ */
+define('SCHEMA', APP . 'Config' . DS . 'Schema' . DS);
+
+/**
+ * Define App/Config/Hurad/ dir
+ */
+define('HURAD_CONFIG', CONFIG . 'Hurad' . DS);
+
+Configure::write('Installed', !file_exists(CONFIG . 'database.php.default'));
+
+if (Configure::read('Installed')) {
+    config('Hurad/bootstrap');
+}
