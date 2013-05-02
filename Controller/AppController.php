@@ -64,25 +64,23 @@ class AppController extends Controller {
             )
         )
     );
-    public $uses = array('User');
-
-    public function __construct($request = null, $response = null) {
-        App::uses('Hurad', 'Lib');
-        Hurad::applyHookProperties('Hook.controller_properties', $this);
-        parent::__construct($request, $response);
-    }
 
     public function beforeFilter() {
         parent::beforeFilter();
 
+        $this->theme = Configure::read('template');
+
+        if (!Configure::read('Installed')) {
+            $this->layout = 'install';
+            $this->theme = false;
+        } else {
+            $this->__cookieCheck();
+        }
+
         //Cookie Configuration
         $this->Cookie->name = 'Hurad';
 
-        //Set default theme
-        $this->theme = Configure::read('template');
-
-        $this->cookie_check();
-
+        //$this->cookie_check();
         //Load admin layout
         if (isset($this->request->params['admin'])) {
             $this->layout = 'admin';
@@ -110,7 +108,6 @@ class AppController extends Controller {
 
         //Load Option model in all controller
         //$this->options = Configure::read('options');
-
         //Use request in model
         $this->{$this->modelClass}->request = $this->request;
 
@@ -125,12 +122,12 @@ class AppController extends Controller {
         return $admin;
     }
 
-    private function cookie_check() {
+    private function __cookieCheck() {
         $cookie = $this->Cookie->read('Auth.User');
         if (!is_array($cookie) || $this->Auth->user()) {
             return;
         }
-        $user = $this->User->find('first', array(
+        $user = ClassRegistry::init('User')->find('first', array(
             'fields' => array('User.username', 'User.password', 'User.role', 'User.email', 'User.url'),
             'conditions' => array(
                 'User.username' => $cookie['User']['username'],
