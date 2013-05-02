@@ -40,7 +40,13 @@
  */
 CakePlugin::routes();
 
-require APP . 'Config' . DS . 'Hurad' . DS . 'routes.php';
+if (!Configure::read('Installed')) {
+    if (strpos(Router::getRequest()->url, 'installer') === false) {
+        Router::redirect('/*', 'installer/index', array('status' => 307));
+    }
+}
+
+config('Hurad' . DS . 'routes');
 
 /**
  * Load the CakePHP default routes. Remove this if you do not want to use
