@@ -11,25 +11,30 @@ class LinkcatsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->isAuthorized();
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow();
+                return TRUE;
                 break;
             case 'editor':
-                $this->Auth->allow('admin_index', 'admin_edit', 'admin_add');
+                if (
+                        $action == 'admin_index' ||
+                        $action == 'admin_edit' ||
+                        $action == 'admin_add'
+                ) {
+                    return TRUE;
+                }
                 break;
             case 'author':
-                $this->Auth->allow('admin_index');
+                if ($action == 'admin_index') {
+                    return TRUE;
+                }
                 break;
             case 'user':
-                $this->Auth->deny();
-            default :
-                return FALSE;
-                break;
+                return false;
         }
     }
 
