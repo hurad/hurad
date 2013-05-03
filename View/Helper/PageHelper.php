@@ -4,7 +4,7 @@ App::uses('AppHelper', 'View/Helper');
 
 class PageHelper extends AppHelper {
 
-    public $helpers = array('Html', 'Time');
+    public $helpers = array('Html', 'Time', 'General');
     public $page = array();
     public $pages = array();
     public $view = null;
@@ -23,6 +23,7 @@ class PageHelper extends AppHelper {
 
     public function setPage($page) {
         $this->page = $page;
+        $this->General->content = $page;
     }
 
     protected function init_page() {
@@ -42,7 +43,7 @@ class PageHelper extends AppHelper {
      *
      * @return string
      */
-    public function get_permalink() {
+    public function getPermalink() {
         $year = $this->Time->format('Y', $this->page['Page']['created']);
         $month = $this->Time->format('m', $this->page['Page']['created']);
         $day = $this->Time->format('d', $this->page['Page']['created']);
@@ -59,8 +60,8 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      */
-    public function the_permalink() {
-        echo $this->get_permalink();
+    public function thePermalink() {
+        echo $this->getPermalink();
     }
 
     /**
@@ -68,8 +69,8 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      */
-    public function the_ID() {
-        echo $this->get_the_ID();
+    public function theID() {
+        echo $this->getTheID();
     }
 
     /**
@@ -80,7 +81,7 @@ class PageHelper extends AppHelper {
      * 
      * @return int
      */
-    public function get_the_ID() {
+    public function getTheID() {
         return $this->page['Page']['id'];
     }
 
@@ -94,8 +95,8 @@ class PageHelper extends AppHelper {
      * @param bool $echo Optional, default to true.Whether to display or return.
      * @return null|string Null on no title. String if $echo parameter is false.
      */
-    public function the_title($before = '', $after = '', $echo = true) {
-        $title = $this->get_the_title();
+    public function theTitle($before = '', $after = '', $echo = true) {
+        $title = $this->getTheTitle();
 
         if (strlen($title) == 0)
             return;
@@ -123,8 +124,8 @@ class PageHelper extends AppHelper {
      * @param string|array $args Optional. Override the defaults.
      * @return string|null Null on failure or display. String when echo is false.
      */
-    function the_title_attribute($args = '') {
-        $title = $this->get_the_title();
+    function theTitleAttribute($args = '') {
+        $title = $this->getTheTitle();
 
         if (strlen($title) == 0)
             return;
@@ -148,7 +149,7 @@ class PageHelper extends AppHelper {
      *
      * @return string
      */
-    public function get_the_title() {
+    public function getTheTitle() {
         return $this->page['Page']['title'];
     }
 
@@ -158,8 +159,8 @@ class PageHelper extends AppHelper {
      * @since 0.1
      * @uses get_the_excerpt() Echos Result
      */
-    function the_excerpt() {
-        echo $this->get_the_excerpt();
+    function theExcerpt() {
+        echo $this->getTheExcerpt();
     }
 
     /**
@@ -170,7 +171,7 @@ class PageHelper extends AppHelper {
      * 
      * @return string
      */
-    function get_the_excerpt() {
+    function getTheExcerpt() {
         return $this->page['Page']['excerpt'];
     }
 
@@ -181,7 +182,7 @@ class PageHelper extends AppHelper {
      *
      * @return bool
      */
-    function has_excerpt() {
+    function hasExcerpt() {
         return (!empty($this->page['Page']['excerpt']) );
     }
 
@@ -205,17 +206,8 @@ class PageHelper extends AppHelper {
      * @param bool $echo Optional, default is display. Whether to echo the date or return it.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function the_date($format = '', $before = '', $after = '', $echo = true) {
-        $the_date = '';
-
-        $the_date .= $before;
-        $the_date .= $this->get_the_date($format);
-        $the_date .= $after;
-
-        if ($echo)
-            echo $the_date;
-        else
-            return $the_date;
+    function theDate($d = '', $before = '', $after = '', $echo = true) {
+        $this->General->theDate($d, $before, $after, $echo);
     }
 
     /**
@@ -228,15 +220,8 @@ class PageHelper extends AppHelper {
      * @param string $format Optional. PHP date format defaults to the date_format option if not specified.
      * @return string|null Null if displaying, string if retrieving.
      */
-    function get_the_date($format = '') {
-        $the_date = '';
-
-        if ('' == $format)
-            $the_date .= $this->Time->format(Configure::read('General-date_format'), $this->page['Page']['created'], null, Configure::read('General-timezone'));
-        else
-            $the_date .= $this->Time->format($format, $this->page['Page']['created'], null, Configure::read('General-timezone'));
-
-        return $the_date;
+    function getTheDate($d = '') {
+        return $this->General->getTheDate($d);
     }
 
     public function list_pages($args = '') {
