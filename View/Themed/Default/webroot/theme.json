@@ -1,9 +1,0 @@
-{
-    "name": "Default",
-    "description": "Default theme for Hurad",
-    "version": "1.0",
-    "author": "Abdoli Rad",
-    "authorUrl": "http://google.com",
-    "screenshot": "screenshot.png",
-    "tags": "white, two-columns, fixed-width, threaded-comments"
-}
