@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme>
+    <name>Base</name>
+    <description>Theme description</description>
+    <theme_url></theme_url>
+    <author>Mohammad</author>
+    <author_url></author_url>
+    <version>0.1.0</version>
+    <tags>green, orange, white, black, two-columns</tags>
+</theme>
