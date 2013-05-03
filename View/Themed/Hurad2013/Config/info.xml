@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme>
+    <name>Hurad 2013</name>
+    <description>Default Hurad theme</description>
+    <theme_url>hurad.org</theme_url>
+    <author>Mohammad Abdoli Rad</author>
+    <author_url>magzilla.org</author_url>
+    <version>0.1.0</version>
+    <tags>white, two-columns, sidebar</tags>
+</theme>
