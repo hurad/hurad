@@ -24,6 +24,16 @@ class UserTest extends CakeTestCase {
         $this->assertEquals($created, '2007-03-17 01:16:23', 'Created Date');
     }
 
-}
+    public function testGetUserData() {
+        $result = $this->User->getUserData(1);
 
-?>
+        $expected = array(
+            array('User' => array('id' => 1, 'username' => 'Ali')),
+//            array('Article' => array('id' => 2, 'title' => 'Second Article')),
+//            array('Article' => array('id' => 3, 'title' => 'Third Article'))
+        );
+
+        $this->assertEquals($expected, $result);
+    }
+
+}
