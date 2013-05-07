@@ -24,8 +24,7 @@ class CommentsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
-        //$this->isAuthorized();
+        $this->Auth->allow('index', 'reply');
     }
 
     public function isAuthorized() {
