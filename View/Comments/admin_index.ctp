@@ -34,33 +34,33 @@ echo $this->Form->create('Comment', array('url' =>
     </thead>
     <?php foreach ($comments as $comment): ?>
         <?php $this->Comment->setComment($comment['Comment']) ?>
-        <tr id="<?php echo $this->Comment->comment_ID(); ?>" class="comment-<?php echo $this->Comment->comment_ID(); ?>">
+        <tr id="<?php echo $this->Comment->commentID(); ?>" class="comment-<?php echo $this->Comment->commentID(); ?>">
             <td class="check-column" scope="row">
-                <?php echo $this->Form->checkbox('Comment.' . $this->Comment->get_comment_ID() . '.id'); ?>
+                <?php echo $this->Form->checkbox('Comment.' . $this->Comment->getCommentID() . '.id'); ?>
             </td>
             <td class="column-author">
-                <?php echo $this->Gravatar->image($this->Comment->get_comment_author_email(), array('size' => '32', 'default' => 'mm')); ?>
-                <?php $this->Comment->comment_author(); ?>
+                <?php echo $this->Gravatar->image($this->Comment->getCommentAuthorEmail(), array('size' => '32', 'default' => 'mm')); ?>
+                <?php $this->Comment->commentAuthor(); ?>
                 <div class="row-actions">
                     <span class="action-approved">
-                        <?php echo $this->AdminLayout->approveLink($comment['Comment']['approved'], $this->Comment->get_comment_ID()); ?> |
+                        <?php echo $this->AdminLayout->approveLink($comment['Comment']['approved'], $this->Comment->getCommentID()); ?> |
                     </span>
                     <span class="action-view">
-                        <?php echo $this->Html->link(__('View'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'view', $this->Comment->get_comment_ID())); ?> | 
+                        <?php echo $this->Html->link(__('View'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'view', $this->Comment->getCommentID())); ?> | 
                     </span>
                     <span class="action-edit">
-                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'edit', $this->Comment->get_comment_ID())); ?> | 
+                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'edit', $this->Comment->getCommentID())); ?> | 
                     </span>
                     <span class="action-spam">
-                        <?php echo $this->Html->link(__('Spam'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->get_comment_ID())); ?> | 
+                        <?php echo $this->Html->link(__('Spam'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->getCommentID())); ?> | 
                     </span>  
                     <span class="action-trash">
-                        <?php echo $this->Html->link(__('Trash'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'action', 'trash', $this->Comment->get_comment_ID())); ?> | 
+                        <?php echo $this->Html->link(__('Trash'), array('admin' => TRUE, 'controller' => 'comments', 'action' => 'action', 'trash', $this->Comment->getCommentID())); ?> | 
                     </span> 
                 </div>
             </td>
             <td class="column-name">
-                <?php $this->Comment->comment_excerpt(); ?>
+                <?php $this->Comment->commentExcerpt(); ?>
             </td>
             <td class="column-replyto">
                 <?php echo $this->Html->link($comment['Post']['title'], array('controller' => 'posts', 'action' => 'edit', $comment['Post']['id'])); ?>
