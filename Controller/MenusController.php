@@ -21,19 +21,26 @@ class MenusController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
-        //$this->isAuthorized();
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow('*');
+                return true;
+                break;
+            case 'editor':
+                if ($action == 'admin_add' || $action == 'admin_edit' || $action == 'admin_index') {
+                    return true;
+                }
+                break;
+            case 'author':
+                if ($action == 'admin_index') {
+                    return true;
+                }
                 break;
             case 'user':
-                $this->Auth->allow('index', 'profile', 'change_password', 'login', 'logout');
-            default :
-                $this->Auth->allow('login', 'logout', 'view', 'register');
+                return false;
                 break;
         }
     }
