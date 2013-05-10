@@ -12,7 +12,7 @@ class UsersController extends AppController {
 
     public $components = array('Cookie', 'Session');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
-    public $uses = array('UserMeta');
+    public $uses = array('User', 'UserMeta');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -31,6 +31,7 @@ class UsersController extends AppController {
                         $action == 'admin_index' ||
                         $action == 'admin_edit' ||
                         $action == 'admin_dashboard' ||
+                        $action == 'admin_profile' ||
                         $action == 'register' ||
                         $action == 'login' ||
                         $action == 'logout'
@@ -133,6 +134,11 @@ class UsersController extends AppController {
 
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Invalid user'));
+        }
+
+        if ($this->Auth->user('role') != 'admin' && $this->Auth->user('id') != $id) {
+            $this->Session->setFlash(__('You do not have permission to access this section.'), 'error');
+            $this->redirect('/admin');
         }
 
         if ($this->request->is('post') || $this->request->is('put')) {
