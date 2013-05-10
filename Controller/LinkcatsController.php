@@ -9,6 +9,13 @@ App::uses('AppController', 'Controller');
  */
 class LinkcatsController extends AppController {
 
+    public $paginate = array(
+        'limit' => 25,
+        'order' => array(
+            'Linkcat.created' => 'desc'
+        )
+    );
+
     public function beforeFilter() {
         parent::beforeFilter();
     }
@@ -46,6 +53,15 @@ class LinkcatsController extends AppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Link Categories'));
         $this->Linkcat->recursive = 0;
+        if (isset($this->request->params['named']['q'])) {
+            App::uses('Sanitize', 'Utility');
+            $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Linkcat']['limit'] = 25;
+            $this->paginate['Linkcat']['conditions'] = array(
+                'Linkcat.type' => 'link_category',
+                'Linkcat.name LIKE' => '%' . $q . '%',
+            );
+        }
         $this->set('linkcats', $this->paginate('Linkcat', array('Linkcat.type' => 'link_category')));
     }
 
