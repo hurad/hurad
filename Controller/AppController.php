@@ -89,7 +89,7 @@ class AppController extends Controller {
         $this->set('logged_in', $this->Auth->loggedIn());
 
         //Set current_user var in all view
-        $this->set('current_user', $this->Auth->user());
+        $this->set('current_user', ClassRegistry::init('User')->getUserData($this->Auth->user('id')));
 
         //Set url var in all view
         $this->set('url', $this->request->url);
