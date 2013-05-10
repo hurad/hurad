@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('admin/Posts/posts'), array('block' => 'headerScript')); ?>
+<?php echo $this->Html->script(array('admin/Posts/posts'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
