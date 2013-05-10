@@ -68,6 +68,9 @@ class AppController extends Controller {
     public function beforeFilter() {
         parent::beforeFilter();
 
+        //Cookie Configuration
+        $this->Cookie->name = 'Hurad';
+
         $this->theme = Configure::read('template');
 
         if (!Configure::read('Installed')) {
@@ -77,10 +80,6 @@ class AppController extends Controller {
             $this->__cookieCheck();
         }
 
-        //Cookie Configuration
-        $this->Cookie->name = 'Hurad';
-
-        //$this->cookie_check();
         //Load admin layout
         if (isset($this->request->params['admin'])) {
             $this->layout = 'admin';
