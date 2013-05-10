@@ -23,16 +23,16 @@ Pages.documentReady = function() {
  */
 Pages.search = function() {
 
-    $('#PageAdminIndexForm, #PageAdminFilterForm').submit(function() {
-        var q='';
-		
+    $('#AdminSearchForm').submit(function() {
+        var q = '';
+
         //query string
-        if($('#PageQ').val() != '') {
-            q=$('#PageQ').val();
+        if ($('#PageQ').val() != '') {
+            q = $('#PageQ').val();
         }
         var loadUrl = Hurad.basePath + 'admin/pages/index';
         if (q != '') {
-            loadUrl +='/q:'+q;          
+            loadUrl += '/q:' + q;
         }
 
         window.location = loadUrl;
