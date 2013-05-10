@@ -238,4 +238,23 @@ class AdminLayoutHelper extends AppHelper {
         }
     }
 
+    public function displayNameOptions($current_user = array()) {
+        $options = array();
+        $options[$current_user['username']] = $current_user['username'];
+        if (!empty($current_user['firstname']) && !empty($current_user['lastname'])) {
+            $options[$current_user['firstname'] . ' ' . $current_user['lastname']] = $current_user['firstname'] . ' ' . $current_user['lastname'];
+            $options[$current_user['lastname'] . ' ' . $current_user['firstname']] = $current_user['lastname'] . ' ' . $current_user['firstname'];
+        }
+        if (!empty($current_user['firstname']) && empty($current_user['lastname'])) {
+            $options[$current_user['firstname']] = $current_user['firstname'];
+        }
+        if (empty($current_user['firstname']) && !empty($current_user['lastname'])) {
+            $options[$current_user['lastname']] = $current_user['lastname'];
+        }
+        if (!empty($current_user['nickname'])) {
+            $options[$current_user['nickname']] = $current_user['nickname'];
+        }
+        return $options;
+    }
+
 }
