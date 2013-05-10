@@ -39,8 +39,6 @@ class UsersController extends AppController {
                 }
                 break;
             case 'author':
-                $this->Auth->allow();
-                break;
             case 'user':
                 if ($action == 'login' || $action == 'logout' || $action == 'register' || $action == 'admin_dashboard') {
                     return TRUE;
