@@ -395,7 +395,7 @@ class UsersController extends AppController {
     }
 
     public function forgot() {
-
+        $this->layout = "admin_login";
         if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
             $user = $this->User->findByUsername($this->request->data['User']['username']);
             if (!isset($user['User']['id'])) {
