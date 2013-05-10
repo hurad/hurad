@@ -85,13 +85,29 @@ echo $this->Form->create('Post', array(
                                     )
                             );
                             ?>
-                            <?php echo $this->Form->month('created', array('empty' => false, 'class' => 'input-small')); ?>
-                            <?php echo $this->Form->day('created', array('empty' => false, 'class' => 'input-mini')); ?>
+                            <?php echo $this->Form->month('created', array('empty' => false, 'class' => 'input-small', 'value' => date('m'))); ?>
+                            <?php echo $this->Form->day('created', array('empty' => false, 'class' => 'input-mini', 'value' => date('d'))); ?>
                         </li>
                         <li class="text-center">
-                            <?php echo $this->Html->tag('span', __('Hour: '), array('class' => 'hr-control-label')); ?> <?php echo $this->Form->hour('created', TRUE, array('empty' => false, 'class' => 'input-mini', 'value' => $this->Time->format('G', 'Now', TRUE, Configure::read('General-timezone')))); ?>
+                            <?php echo $this->Html->tag('span', __('Hour: '), array('class' => 'hr-control-label')); ?>
+                            <?php
+                            echo $this->Form->hour('created', TRUE, array(
+                                'empty' => false,
+                                'class' => 'input-mini',
+                                'value' => $this->Time->format('G', 'Now', TRUE, Configure::read('General.timezone'))
+                                    )
+                            );
+                            ?>
                             <?php echo '<b> : </b>'; ?>
-                            <?php echo $this->Form->minute('created', array('empty' => false, 'class' => 'input-mini', 'value' => $this->Time->format('i', 'Now', TRUE, Configure::read('General-timezone')))); ?><?php echo $this->Html->tag('span', __('Minute'), array('class' => 'hr-control-label-minute')); ?>
+                            <?php
+                            echo $this->Form->minute('created', array(
+                                'empty' => false,
+                                'class' => 'input-mini',
+                                'value' => $this->Time->format('i', 'Now', TRUE, Configure::read('General.timezone'))
+                                    )
+                            );
+                            ?>
+                            <?php echo $this->Html->tag('span', __('Minute'), array('class' => 'hr-control-label-minute')); ?>
                         </li>
                         <li class="divider"></li>
                     </ul>
