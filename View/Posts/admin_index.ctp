@@ -1,5 +1,5 @@
 <?php $this->Html->css(array('admin/Posts/posts'), null, array('inline' => FALSE)); ?>
-<?php $this->Html->script(array('admin/Posts/posts', 'admin/checkbox'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/Posts/posts', 'admin/checkbox'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2>
