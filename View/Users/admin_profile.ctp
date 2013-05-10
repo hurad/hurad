@@ -1,4 +1,4 @@
-<?php $this->Html->css('pass-strength', null, array('inline' => FALSE)); ?>
+<?php $this->Html->css('admin/Users/pass-strength', null, array('inline' => FALSE)); ?>
 <?php $this->Html->script(array('admin/Users/profile', 'admin/Users/password-strength-meter'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
