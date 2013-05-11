@@ -144,7 +144,7 @@ class UsersController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
             if (isset($this->request->data['UserMeta'])) {
                 foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
-//Update user_metas table.
+                    //Update user_metas table.
                     $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
                 }
             }
@@ -159,7 +159,7 @@ class UsersController extends AppController {
         } else {
             $this->request->data = $this->User->read(null, $id);
 
-//Retraive user_metas table.
+            //Retraive user_metas table.
             $this->request->data['UserMeta'] = $this->UserMeta->find('list', array(
                 'conditions' => array('UserMeta.user_id' => $id),
                 'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
@@ -206,7 +206,7 @@ class UsersController extends AppController {
                 if (!empty($this->request->data)) {
                     if ($this->Auth->login()) {
                         $this->Session->delete('Message.auth');
-                        $this->_setCookie();
+                        $this->__setCookie();
                         $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
                         $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
@@ -242,7 +242,7 @@ class UsersController extends AppController {
      * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
      * @return void
      */
-    private function _setCookie($options = array(), $cookieKey = 'Auth.User') {
+    private function __setCookie($cookieKey = 'Auth.User') {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
@@ -344,7 +344,7 @@ class UsersController extends AppController {
      * @return string activation key
      */
     private function _getActivationKey() {
-        return Security::hash(date('Y-m-d H:i:s'), $type = NULL, $salt = TRUE);
+        return Security::hash(date('Y-m-d H:i:s'), null, true);
     }
 
     /**
