@@ -148,15 +148,13 @@ echo $this->Form->create('User', array(
     <div class="controls">
         <?php
         echo $this->Form->input('url', array(
-//            'error' => array(
-//                'usernameRule-1' => __('Minimum length of 5 characters.'), //minLength rule message
-//                'usernameRule-2' => __('This username has already been taken.'), //isUnique rule message
-//                'usernameRule-3' => __('This field cannot be left blank.'), //notEmpty rule message
-//                'attributes' => array(
-//                    'wrap' => 'span',
-//                    'class' => 'help-inline'
-//                )
-//            ),
+            'error' => array(
+                'urlRule-1' => __('Enter valid url.'), //url rule message
+                'attributes' => array(
+                    'wrap' => 'span',
+                    'class' => 'help-inline'
+                )
+            ),
             'required' => FALSE, //For disable HTML5 validation
             'type' => 'text')
         );
