@@ -92,6 +92,7 @@ class User extends AppModel {
         'url' => array(
             'urlRule-1' => array(
                 'rule' => 'url',
+                'allowEmpty' => true
             ),
         ),
         'password' => array(
