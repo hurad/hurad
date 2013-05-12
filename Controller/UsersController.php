@@ -143,8 +143,6 @@ class UsersController extends AppController {
 
         if ($this->request->is('post') || $this->request->is('put')) {
             if (isset($this->request->data['UserMeta'])) {
-                debug($this->request->data);
-                exit();
                 foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
                     //Update user_metas table.
                     $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
