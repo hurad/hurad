@@ -68,7 +68,7 @@ echo $this->Form->create('User', array(
                             'class' => 'check-column',
                             'scope' => 'row')
                     ),
-                    array($this->Gravatar->image($this->Author->getTheAuthorMeta('email'), array('size' => '32', 'default' => 'mm')) . $this->Html->link('<strong>' . $this->Author->getTheAuthorMeta('username') . '</strong>', array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id']), array('escape' => FALSE)) . $this->element('admin/Users/row_actions', array('user' => $user)),
+                    array($this->Gravatar->image($this->Author->getTheAuthorMeta('email'), array('size' => '32', 'default' => 'mm', 'echo' => false)) . $this->Html->link('<strong>' . $this->Author->getTheAuthorMeta('username') . '</strong>', array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id']), array('escape' => FALSE)) . $this->element('admin/Users/row_actions', array('user' => $user)),
                         array(
                             'class' => 'column-username'
                         )
