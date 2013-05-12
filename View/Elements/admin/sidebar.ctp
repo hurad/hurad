@@ -160,6 +160,11 @@ HrNav::add('users', array(
             'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'add'),
             'weight' => 2,
         ),
+        'profile' => array(
+            'title' => __('Edit Profile'),
+            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $current_user['id']),
+            'weight' => 3,
+        ),
     ),
 ));
 HrNav::add('options', array(
