@@ -17,7 +17,7 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         //For not logged user's
-        $this->Auth->allow(array('register', 'login', 'logout'));
+        $this->Auth->allow(array('register', 'login', 'logout', 'forgot'));
     }
 
     public function isAuthorized($user) {
@@ -430,7 +430,7 @@ class UsersController extends AppController {
 //            $this->Email->template = 'forgot_password';
 
 
-            $email = new CakeEmail('gmail');
+            $email = new CakeEmail('default');
             $email->emailFormat('html');
             $email->template('forgot_password');
             $email->viewVars(array(
@@ -446,10 +446,10 @@ class UsersController extends AppController {
 
 
             if ($email->send()) {
-                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
+                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'success');
                 $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('An error occurred. Please try again.'), 'default', array('class' => 'error'));
+                $this->Session->setFlash(__('An error occurred. Please try again.'), 'error');
             }
         }
     }
