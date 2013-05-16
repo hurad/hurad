@@ -238,21 +238,22 @@ class AdminLayoutHelper extends AppHelper {
         }
     }
 
-    public function displayNameOptions($current_user = array()) {
+    public function displayNameOptions($userID = null) {
+        $user = ClassRegistry::init('User')->getUserData($userID);
         $options = array();
-        $options[$current_user['username']] = $current_user['username'];
-        if (!empty($current_user['firstname']) && !empty($current_user['lastname'])) {
-            $options[$current_user['firstname'] . ' ' . $current_user['lastname']] = $current_user['firstname'] . ' ' . $current_user['lastname'];
-            $options[$current_user['lastname'] . ' ' . $current_user['firstname']] = $current_user['lastname'] . ' ' . $current_user['firstname'];
+        $options[$user['username']] = $user['username'];
+        if (!empty($user['firstname']) && !empty($user['lastname'])) {
+            $options[$user['firstname'] . ' ' . $user['lastname']] = $user['firstname'] . ' ' . $user['lastname'];
+            $options[$user['lastname'] . ' ' . $user['firstname']] = $user['lastname'] . ' ' . $user['firstname'];
         }
-        if (!empty($current_user['firstname']) && empty($current_user['lastname'])) {
-            $options[$current_user['firstname']] = $current_user['firstname'];
+        if (!empty($user['firstname']) && empty($user['lastname'])) {
+            $options[$user['firstname']] = $user['firstname'];
         }
-        if (empty($current_user['firstname']) && !empty($current_user['lastname'])) {
-            $options[$current_user['lastname']] = $current_user['lastname'];
+        if (empty($user['firstname']) && !empty($user['lastname'])) {
+            $options[$user['lastname']] = $user['lastname'];
         }
-        if (!empty($current_user['nickname'])) {
-            $options[$current_user['nickname']] = $current_user['nickname'];
+        if (!empty($user['nickname'])) {
+            $options[$user['nickname']] = $user['nickname'];
         }
         return $options;
     }
