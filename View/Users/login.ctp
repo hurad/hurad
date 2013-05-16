@@ -57,6 +57,10 @@ echo $this->Form->create('User', array(
     </div>
 <?php endif; ?>
 
+<div class="control-group">
+    <?php echo $this->Html->link(__('Forgot password?'), array('controller' => 'users', 'action' => 'forgot')); ?>
+</div>
+
 <?php echo $this->Form->button(__('Login'), array('div' => false, 'type' => 'submit', 'class' => 'btn btn-info btn-block')); ?>
 
 <?php echo $this->Form->end(); ?>
