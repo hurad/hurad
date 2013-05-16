@@ -124,6 +124,28 @@ class User extends AppModel {
         }
     }
 
+    public function afterSave($created) {
+        parent::afterSave($created);
+
+        if ($created) {
+            $userMetaData = array(
+                'firstname' => '',
+                'lastname' => '',
+                'nickname' => '',
+                'bio' => '',
+                'display_name' => $this->data['User']['username']
+            );
+            foreach ($userMetaData as $meta_key => $meta_value) {
+                $this->UserMeta->addMeta($meta_key, $meta_value, $this->id);
+            }
+        }
+    }
+
+    public function afterDelete() {
+        parent::afterDelete();
+        $this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false);
+    }
+
     function checkPasswords() {
         if ($this->data['User']['confirm_password'] === $this->data['User']['password']) {
             return true;
