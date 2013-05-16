@@ -1,10 +1,25 @@
-<div class="users form">
-<h2><?php echo __('Forgot Password'); ?></h2>
-<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'forgot')));?>
-<fieldset>
 <?php
-            echo $this->Form->input('username');
-        ?>
-</fieldset>
-<?php echo $this->Form->end('Submit');?>
+echo $this->Form->create('User', array(
+    'inputDefaults' => array(
+        'label' => false,
+        'div' => false
+    )
+));
+?>
+
+<div class="control-group <?php echo $this->Form->isFieldError('username') ? 'error' : ''; ?>">
+    <?php
+    echo $this->Form->input('username', array(
+        'error' => false,
+        'required' => FALSE, //For disable HTML5 validation
+        'type' => 'text',
+        'class' => 'input-block-level',
+        'placeholder' => __('Username')
+            )
+    );
+    ?>
 </div>
+
+<?php echo $this->Form->button(__('Submit'), array('div' => false, 'type' => 'submit', 'class' => 'btn btn-info btn-block')); ?>
+
+<?php echo $this->Form->end(); ?>
