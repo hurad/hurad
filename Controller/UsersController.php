@@ -41,7 +41,13 @@ class UsersController extends AppController {
                 break;
             case 'author':
             case 'user':
-                if ($action == 'login' || $action == 'logout' || $action == 'register' || $action == 'admin_dashboard') {
+                if (
+                        $action == 'login' ||
+                        $action == 'logout' ||
+                        $action == 'register' ||
+                        $action == 'admin_dashboard' ||
+                        $action == 'admin_profile'
+                ) {
                     return TRUE;
                 }
         }
@@ -151,7 +157,7 @@ class UsersController extends AppController {
 
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The user has been saved'), 'success');
-                $this->redirect(array('action' => 'index'));
+                $this->redirect($this->referer());
             } else {
                 $this->set('errors', $this->User->validationErrors);
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
