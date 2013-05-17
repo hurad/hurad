@@ -27,15 +27,11 @@ class CommentsController extends AppController {
         $this->Auth->allow('index', 'reply');
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow('*');
-                break;
-            case 'user':
-                $this->Auth->allow('*');
-            default :
-                $this->Auth->allow('*');
+                return TRUE;
                 break;
         }
     }
