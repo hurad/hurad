@@ -307,16 +307,6 @@ class UsersController extends AppController {
             $this->request->data['User']['activation_key'] = $this->_getActivationKey();
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $userMetaData = array(
-                    'firstname' => '',
-                    'lastname' => '',
-                    'nickname' => '',
-                    'bio' => '',
-                    'display_name' => $this->request->data['User']['username']
-                );
-                foreach ($userMetaData as $meta_key => $meta_value) {
-                    $this->UserMeta->addMeta($meta_key, $meta_value, $this->User->id);
-                }
                 $email = new CakeEmail('gmail');
                 $email->emailFormat('html');
                 $email->template('register');
