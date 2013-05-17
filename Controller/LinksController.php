@@ -10,6 +10,12 @@ App::uses('AppController', 'Controller');
 class LinksController extends AppController {
 
     public $helpers = array('AdminLayout');
+    public $paginate = array(
+        'limit' => 25,
+        'order' => array(
+            'Link.created' => 'desc'
+        )
+    );
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -62,6 +68,14 @@ class LinksController extends AppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Links'));
         $this->Link->recursive = 0;
+        if (isset($this->request->params['named']['q'])) {
+            App::uses('Sanitize', 'Utility');
+            $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Link']['limit'] = 25;
+            $this->paginate['Link']['conditions'] = array(
+                'Link.name LIKE' => '%' . $q . '%',
+            );
+        }
         $this->set('links', $this->paginate(array('Linkcat.type' => 'link_category')));
     }
 
