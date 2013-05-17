@@ -194,3 +194,5 @@ echo $this->Form->create('Post', array(
     echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
+
+<?php echo $this->Form->end(); ?>
