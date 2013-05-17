@@ -9,7 +9,7 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-    public $helpers = array('Page', 'Comment', 'Text');
+    public $helpers = array('Page', 'Comment', 'Text', 'Editor');
     public $components = array('RequestHandler');
     public $paginate = array(
         'conditions' => array(
