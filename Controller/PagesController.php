@@ -155,10 +155,10 @@ class PagesController extends AppController {
             $this->request->data['Page']['user_id'] = $this->Auth->user('id');
             $this->Page->create();
             if ($this->Page->save($this->request->data)) {
-                $this->Session->setFlash(__('The page has been saved'), 'flash_notice');
+                $this->Session->setFlash(__('The page has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'error');
             }
         }
         $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page'), null, null, '_');
