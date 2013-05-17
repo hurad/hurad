@@ -1,9 +1,16 @@
 <?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
-<?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/Links/links','admin/checkbox'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
 </div>
+
+<section class="top-table">
+    <div class="row-fluid">
+        <div class="span6"><!-- --></div>
+        <div class="span6"><?php echo $this->element('admin/Links/search'); ?></div>
+    </div>
+</section>
 
 <?php
 echo $this->Form->create('Link', array(
