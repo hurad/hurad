@@ -258,4 +258,18 @@ class AdminLayoutHelper extends AppHelper {
         return $options;
     }
 
+    public function commentClass($approved = null) {
+        switch ($approved) {
+            case 0:
+                return 'warning';
+
+                break;
+
+            case 'spam':
+                return 'error';
+
+                break;
+        }
+    }
+
 }
