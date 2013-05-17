@@ -41,10 +41,10 @@
     if ($countComments['trash']) {
         if (stripos($url, "admin/comments/index/trash") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
-            echo $this->Html->link(__('Trash ') . $this->Html->tag('span', $countComments['trash'], array('class' => 'label label-important')), array('admin' => TRUE, 'action' => 'index', 'trash'), array('class' => 'current', 'escape' => false));
+            echo $this->Html->link(__('Trash ') . $this->Html->tag('span', $countComments['trash'], array('class' => 'badge badge-important')), array('admin' => TRUE, 'action' => 'index', 'trash'), array('class' => 'current', 'escape' => false));
         } else {
             echo $this->Html->tag('li', NULL);
-            echo $this->Html->link(__('Trash ') . $this->Html->tag('span', $countComments['trash'], array('class' => 'label label-important')), array('admin' => TRUE, 'action' => 'index', 'trash'), array('escape' => false));
+            echo $this->Html->link(__('Trash ') . $this->Html->tag('span', $countComments['trash'], array('class' => 'badge badge-important')), array('admin' => TRUE, 'action' => 'index', 'trash'), array('escape' => false));
         }
     }
     ?>
