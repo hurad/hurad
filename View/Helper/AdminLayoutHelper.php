@@ -260,7 +260,7 @@ class AdminLayoutHelper extends AppHelper {
 
     public function commentClass($approved = null) {
         switch ($approved) {
-            case 0:
+            case '0':
                 return 'warning';
 
                 break;
