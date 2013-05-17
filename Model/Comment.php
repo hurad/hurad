@@ -73,7 +73,7 @@ class Comment extends AppModel {
 //        )
 //    );
 
-    public function count_comments($type = 'all') {
+    public function countComments($type = 'all') {
         if ($type == NULL) {
             return FALSE;
         } elseif ($type == 'all') {
