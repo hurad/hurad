@@ -137,11 +137,11 @@ class AdminLayoutHelper extends AppHelper {
     public function approveLink($approved, $comment_id) {
         switch ($approved) {
             case '1':
-                return $this->Html->link(__('Disapprove'), array('action' => 'disapprove', $comment_id));
+                return $this->Html->link(__('Disapprove'), array('action' => 'action', 'disapproved', $comment_id));
                 break;
 
             case '0':
-                return $this->Html->link(__('Approve'), array('action' => 'approve', $comment_id));
+                return $this->Html->link(__('Approve'), array('action' => 'action', 'approved', $comment_id));
                 break;
 
             default:
