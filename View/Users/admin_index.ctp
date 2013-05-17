@@ -57,13 +57,13 @@ echo $this->Form->create('User', array(
         ));
         ?>
     </thead>
-    <?php foreach ($users as $user): ?>
-        <?php $this->Author->setAuthor($user['User']['id']); ?>
-        <tbody>
+    <tbody>
+        <?php foreach ($users as $user): ?>
+            <?php $this->Author->setAuthor($user['User']['id']); ?>
             <?php
             echo $this->Html->tableCells(array(
                 array(
-                    array($this->Form->checkbox('Link.' . $user['User']['id'] . '.id'),
+                    array($this->Form->checkbox('User.' . $user['User']['id'] . '.id'),
                         array(
                             'class' => 'check-column',
                             'scope' => 'row')
@@ -96,8 +96,8 @@ echo $this->Form->create('User', array(
                     )
             );
             ?>
-        </tbody>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </tbody>
     <tfoot>
         <?php
         echo $this->Html->tableHeaders(array(
