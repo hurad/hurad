@@ -355,7 +355,7 @@ class CommentsController extends AppController {
                 $err = __('Comment not move to trash please try again.');
                 break;
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__('An error occurred.'), 'error');
                 break;
         }
 
@@ -363,10 +363,10 @@ class CommentsController extends AppController {
             $this->Comment->save($data);
         } else {
             if ($this->Comment->save($data)) {
-                $this->Session->setFlash($msg, 'flash_notice');
+                $this->Session->setFlash($msg, 'notice');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash($err, 'flash_error');
+                $this->Session->setFlash($err, 'error');
                 $this->redirect(array('action' => 'index'));
             }
         }
