@@ -31,7 +31,7 @@ class HuradTheme {
             if ($file->exists()) {
                 $fileContent = $file->read();
                 $theme = Xml::toArray(Xml::build($fileContent));
-                $themes[$folder] = Functions::hr_parse_args($theme['theme'], $defaults);
+                $themes[Inflector::camelize($folder)] = Functions::hr_parse_args($theme['theme'], $defaults);
             }
         }
 

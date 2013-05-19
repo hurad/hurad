@@ -12,15 +12,15 @@ class UsersController extends AppController {
 
     public $components = array('Cookie', 'Session');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
-    public $uses = array('UserMeta');
+    public $uses = array('User', 'UserMeta');
 
     public function beforeFilter() {
         parent::beforeFilter();
         //For not logged user's
-        $this->Auth->allow(array('register', 'login', 'logout'));
+        $this->Auth->allow(array('register', 'login', 'logout', 'forgot'));
     }
 
-    public function isAuthorized() {
+    public function isAuthorized($user) {
         $action = Router::getParam('action');
         switch ($user['role']) {
             case 'admin':
@@ -31,6 +31,7 @@ class UsersController extends AppController {
                         $action == 'admin_index' ||
                         $action == 'admin_edit' ||
                         $action == 'admin_dashboard' ||
+                        $action == 'admin_profile' ||
                         $action == 'register' ||
                         $action == 'login' ||
                         $action == 'logout'
@@ -39,10 +40,14 @@ class UsersController extends AppController {
                 }
                 break;
             case 'author':
-                $this->Auth->allow();
-                break;
             case 'user':
-                if ($action == 'login' || $action == 'logout' || $action == 'register' || $action == 'admin_dashboard') {
+                if (
+                        $action == 'login' ||
+                        $action == 'logout' ||
+                        $action == 'register' ||
+                        $action == 'admin_dashboard' ||
+                        $action == 'admin_profile'
+                ) {
                     return TRUE;
                 }
         }
@@ -137,17 +142,22 @@ class UsersController extends AppController {
             throw new NotFoundException(__('Invalid user'));
         }
 
+        if ($this->Auth->user('role') != 'admin' && $this->Auth->user('id') != $id) {
+            $this->Session->setFlash(__('You do not have permission to access this section.'), 'error');
+            $this->redirect('/admin');
+        }
+
         if ($this->request->is('post') || $this->request->is('put')) {
             if (isset($this->request->data['UserMeta'])) {
                 foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
-//Update user_metas table.
+                    //Update user_metas table.
                     $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
                 }
             }
 
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The user has been saved'), 'success');
-                $this->redirect(array('action' => 'index'));
+                $this->redirect($this->referer());
             } else {
                 $this->set('errors', $this->User->validationErrors);
                 $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
@@ -155,7 +165,7 @@ class UsersController extends AppController {
         } else {
             $this->request->data = $this->User->read(null, $id);
 
-//Retraive user_metas table.
+            //Retraive user_metas table.
             $this->request->data['UserMeta'] = $this->UserMeta->find('list', array(
                 'conditions' => array('UserMeta.user_id' => $id),
                 'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
@@ -202,7 +212,7 @@ class UsersController extends AppController {
                 if (!empty($this->request->data)) {
                     if ($this->Auth->login()) {
                         $this->Session->delete('Message.auth');
-                        $this->_setCookie();
+                        $this->__setCookie();
                         $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
                         $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
@@ -238,7 +248,7 @@ class UsersController extends AppController {
      * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
      * @return void
      */
-    private function _setCookie($options = array(), $cookieKey = 'Auth.User') {
+    private function __setCookie($cookieKey = 'Auth.User') {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
@@ -340,7 +350,7 @@ class UsersController extends AppController {
      * @return string activation key
      */
     private function _getActivationKey() {
-        return Security::hash(date('Y-m-d H:i:s'), $type = NULL, $salt = TRUE);
+        return Security::hash(date('Y-m-d H:i:s'), null, true);
     }
 
     /**
@@ -391,7 +401,7 @@ class UsersController extends AppController {
     }
 
     public function forgot() {
-
+        $this->layout = "admin_login";
         if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
             $user = $this->User->findByUsername($this->request->data['User']['username']);
             if (!isset($user['User']['id'])) {
@@ -410,7 +420,7 @@ class UsersController extends AppController {
 //            $this->Email->template = 'forgot_password';
 
 
-            $email = new CakeEmail('gmail');
+            $email = new CakeEmail('default');
             $email->emailFormat('html');
             $email->template('forgot_password');
             $email->viewVars(array(
@@ -426,10 +436,10 @@ class UsersController extends AppController {
 
 
             if ($email->send()) {
-                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
+                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'success');
                 $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('An error occurred. Please try again.'), 'default', array('class' => 'error'));
+                $this->Session->setFlash(__('An error occurred. Please try again.'), 'error');
             }
         }
     }

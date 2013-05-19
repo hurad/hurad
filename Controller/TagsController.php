@@ -20,8 +20,26 @@ class TagsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         //$this->Security->requirePost('admin_edit');
-        $this->Auth->allow('*');
-        //$this->isAuthorized();
+        $this->Auth->allow('index');
+    }
+
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
+            case 'admin':
+                return true;
+                break;
+
+            case 'editor':
+            case 'author':
+                if ($action == 'admin_index' || $action == 'admin_add' || $action == 'admin_edit') {
+                    
+                }
+                break;
+            case 'user':
+                return false;
+                break;
+        }
     }
 
     /**

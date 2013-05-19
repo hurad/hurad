@@ -12,7 +12,8 @@ class GravatarHelper extends AppHelper {
             'default' => Configure::read('Comment-avatar_default'),
             'rating' => Configure::read('Comment-avatar_rating'),
             'alt' => __('Avatar'),
-            'class' => 'avatar'
+            'class' => 'avatar',
+            'echo' => true
         );
         $options = Functions::hr_parse_args($options, $defaults);
 
@@ -29,8 +30,12 @@ class GravatarHelper extends AppHelper {
             $optionsQuery = http_build_query($opt);
             $imageSrc = $gravatarUrl . $email . '?' . $optionsQuery;
         }
-
-        echo $this->Html->image($imageSrc, array('alt' => $options['alt'], 'class' => $options['class']));
+        
+        if ($options['echo']) {
+            echo $this->Html->image($imageSrc, array('alt' => $options['alt'], 'class' => $options['class']));
+        } else {
+            return $this->Html->image($imageSrc, array('alt' => $options['alt'], 'class' => $options['class']));
+        }
     }
 
     public function profile($email) {

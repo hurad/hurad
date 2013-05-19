@@ -32,8 +32,8 @@ class EditorHelper extends AppHelper {
 
     public function beforeRender($viewFile) {
         parent::beforeRender($viewFile);
-        $this->Html->script('admin/tiny_mce/tiny_mce.js', array('block' => 'headerScript'));
-        $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($this->editorSettings()) . ');', array('block' => 'headerScript'));
+        $this->Html->script('admin/tiny_mce/tiny_mce.js', array('block' => 'scriptHeader'));
+        $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($this->editorSettings()) . ');', array('block' => 'scriptHeader'));
     }
 
     public function editorSettings() {

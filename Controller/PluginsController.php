@@ -1,5 +1,7 @@
 <?php
 
+App::uses('AppController', 'Controller');
+
 /**
  * Description of PluginsController
  *
@@ -7,7 +9,7 @@
  */
 class PluginsController extends AppController {
 
-    var $uses = array();
+    public $uses = array();
 
     public function beforeFilter() {
         parent::beforeFilter();

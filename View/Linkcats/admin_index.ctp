@@ -1,4 +1,4 @@
-<?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/Linkcats/linkcats','admin/checkbox'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2>
@@ -6,6 +6,13 @@
         <?php echo $this->Html->link(__('Add New'), '/admin/linkcats/add', array('class' => 'btn btn-mini')); ?>
     </h2>
 </div>
+
+<section class="top-table">
+    <div class="row-fluid">
+        <div class="span6"><!-- --></div>
+        <div class="span6"><?php echo $this->element('admin/Linkcats/search'); ?></div>
+    </div>
+</section>
 
 <?php
 echo $this->Form->create('Linkcat', array(

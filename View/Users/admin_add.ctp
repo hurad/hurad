@@ -135,3 +135,5 @@ echo $this->Form->create('User', array(
 <div class="form-actions">
     <?php echo $this->Form->button(__('Add New User'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
+
+<?php echo $this->Form->end(); ?>

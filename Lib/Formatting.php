@@ -747,7 +747,7 @@ class Formatting {
         if ('save' == $context)
             $title = Formatting::remove_accents($title);
 
-        $title = Configure::read('HuradHook.obj')->apply_filters('sanitize_title', $title, $raw_title, $context);
+        $title = HuradHook::apply_filters('sanitize_title', $title, $raw_title, $context);
 
         if ('' === $title || false === $title)
             $title = $fallback_title;
@@ -846,7 +846,7 @@ class Formatting {
         if ('' == $sanitized)
             $sanitized = $fallback;
 
-        return Configure::read('HuradHook.obj')->apply_filters('sanitize_html_class', $sanitized, $class, $fallback);
+        return HuradHook::apply_filters('sanitize_html_class', $sanitized, $class, $fallback);
     }
 
     /**
@@ -1832,7 +1832,7 @@ class Formatting {
         if (strtolower($good_protocol_url) != strtolower($url))
             return '';
 
-        return Configure::read('HuradHook.obj')->apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
+        return HuradHook::apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
     }
 
     /**
@@ -1869,7 +1869,7 @@ class Formatting {
         $safe_text = preg_replace('/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes($safe_text));
         $safe_text = str_replace("\r", '', $safe_text);
         $safe_text = str_replace("\n", '\\n', addslashes($safe_text));
-        return Configure::read('HuradHook.obj')->apply_filters('js_escape', $safe_text, $text);
+        return HuradHook::apply_filters('js_escape', $safe_text, $text);
     }
 
     /**
@@ -1883,7 +1883,7 @@ class Formatting {
     public function esc_html($text) {
         $safe_text = Formatting::hr_check_invalid_utf8($text);
         $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
-        return Configure::read('HuradHook.obj')->apply_filters('esc_html', $safe_text, $text);
+        return HuradHook::apply_filters('esc_html', $safe_text, $text);
     }
 
     /**
@@ -1897,7 +1897,7 @@ class Formatting {
     public function esc_attr($text) {
         $safe_text = Formatting::hr_check_invalid_utf8($text);
         $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
-        return Configure::read('HuradHook.obj')->apply_filters('attribute_escape', $safe_text, $text);
+        return HuradHook::apply_filters('attribute_escape', $safe_text, $text);
     }
 
     /**
@@ -1910,7 +1910,7 @@ class Formatting {
      */
     public function esc_textarea($text) {
         $safe_text = htmlspecialchars($text, ENT_QUOTES);
-        return Configure::read('HuradHook.obj')->apply_filters('esc_textarea', $safe_text, $text);
+        return HuradHook::apply_filters('esc_textarea', $safe_text, $text);
     }
 
     /**
@@ -1923,7 +1923,7 @@ class Formatting {
      */
     public function tag_escape($tag_name) {
         $safe_tag = strtolower(preg_replace('/[^a-zA-Z0-9_:]/', '', $tag_name));
-        return Configure::read('HuradHook.obj')->apply_filters('tag_escape', $safe_tag, $tag_name);
+        return HuradHook::apply_filters('tag_escape', $safe_tag, $tag_name);
     }
 
     /**
@@ -1957,7 +1957,7 @@ class Formatting {
         parse_str($string, $array);
         if (get_magic_quotes_gpc())
             $array = Formatting::stripslashes_deep($array);
-        $array = Configure::read('HuradHook.obj')->apply_filters('hr_parse_str', $array);
+        $array = HuradHook::apply_filters('hr_parse_str', $array);
     }
 
     /**
@@ -2038,7 +2038,7 @@ class Formatting {
                 }
 
                 // Apply filters OR sprintf
-                $_fragment = Configure::read('HuradHook.obj')->apply_filters('hr_sprintf', $fragment, $arg);
+                $_fragment = HuradHook::apply_filters('hr_sprintf', $fragment, $arg);
                 if ($_fragment != $fragment)
                     $fragment = $_fragment;
                 else
@@ -2075,7 +2075,7 @@ class Formatting {
             return '';
 
         // Translate and filter the delimiter set (avoid ampersands and entities here)
-        $l = Configure::read('HuradHook.obj')->apply_filters('hr_sprintf_l', array(
+        $l = HuradHook::apply_filters('hr_sprintf_l', array(
             /* translators: used between list items, there is a space after the comma */
             'between' => __(', '),
             /* translators: used between list items, there is a space after the and */
@@ -2270,7 +2270,7 @@ class Formatting {
             $filtered = trim(preg_replace('/ +/', ' ', $filtered));
         }
 
-        return Configure::read('HuradHook.obj')->apply_filters('sanitize_text_field', $filtered, $str);
+        return HuradHook::apply_filters('sanitize_text_field', $filtered, $str);
     }
 
     /**
@@ -2296,7 +2296,7 @@ class Formatting {
      */
     public function sanitize_mime_type($mime_type) {
         $sani_mime_type = preg_replace('/[^-+*.a-zA-Z0-9\/]/', '', $mime_type);
-        return Configure::read('HuradHook.obj')->apply_filters('sanitize_mime_type', $sani_mime_type, $mime_type);
+        return HuradHook::apply_filters('sanitize_mime_type', $sani_mime_type, $mime_type);
     }
 
 }

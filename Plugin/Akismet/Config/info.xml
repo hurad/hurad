@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin>
+    <name>Akismet</name>
+    <plugin_uri>hurad.org</plugin_uri>
+    <description>Akismet plugin</description>
+    <version>0.1.0</version>
+    <author>Mohammad Abdoli Rad</author>
+    <author_uri>http://magzilla.org</author_uri>
+    <license>GPL3</license>
+</plugin>

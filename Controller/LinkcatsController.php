@@ -9,27 +9,39 @@ App::uses('AppController', 'Controller');
  */
 class LinkcatsController extends AppController {
 
+    public $paginate = array(
+        'limit' => 25,
+        'order' => array(
+            'Linkcat.created' => 'desc'
+        )
+    );
+
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->isAuthorized();
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow();
+                return TRUE;
                 break;
             case 'editor':
-                $this->Auth->allow('admin_index', 'admin_edit', 'admin_add');
+                if (
+                        $action == 'admin_index' ||
+                        $action == 'admin_edit' ||
+                        $action == 'admin_add'
+                ) {
+                    return TRUE;
+                }
                 break;
             case 'author':
-                $this->Auth->allow('admin_index');
+                if ($action == 'admin_index') {
+                    return TRUE;
+                }
                 break;
             case 'user':
-                $this->Auth->deny();
-            default :
-                return FALSE;
-                break;
+                return false;
         }
     }
 
@@ -41,6 +53,15 @@ class LinkcatsController extends AppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Link Categories'));
         $this->Linkcat->recursive = 0;
+        if (isset($this->request->params['named']['q'])) {
+            App::uses('Sanitize', 'Utility');
+            $q = Sanitize::clean($this->request->params['named']['q']);
+            $this->paginate['Linkcat']['limit'] = 25;
+            $this->paginate['Linkcat']['conditions'] = array(
+                'Linkcat.type' => 'link_category',
+                'Linkcat.name LIKE' => '%' . $q . '%',
+            );
+        }
         $this->set('linkcats', $this->paginate('Linkcat', array('Linkcat.type' => 'link_category')));
     }
 

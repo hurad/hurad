@@ -24,16 +24,15 @@ class WidgetHelper extends AppHelper {
 
         $sidebar_widgets = unserialize(Configure::read(Configure::read('template') . '.widgets'));
         $widgets = Configure::read('widgets');
+        if (Configure::check(Configure::read('template') . '.widgets') && !is_null(Configure::read(Configure::read('template') . '.widgets'))) {
+            $this->_View->start($sidebar_id);
 
-        $this->_View->start($sidebar_id);
+            foreach ($sidebar_widgets[$sidebar_id] as $widget) {
+                echo $this->_View->element('Widgets/' . $widgets[$widget['widget-id']]['element'], array('data' => HuradWidget::getWidgetData($widget['unique-id'])));
+            }
 
-        foreach ($sidebar_widgets[$sidebar_id] as $widget) {
-            //debug($widgets[$widget['widget-id']]['element']);
-            echo $this->_View->element($widgets[$widget['widget-id']]['element'], array('data' => HuradWidget::getWidgetData($widget['unique-id'])));
+            $this->_View->end();
         }
-
-        $this->_View->end();
-
 
         echo $this->_View->fetch($sidebar_id);
     }
@@ -98,8 +97,7 @@ class WidgetHelper extends AppHelper {
     }
 
     public function formExist($element) {
-        $themePath = $this->_View->getVar('themePath');
-        return file_exists($themePath . 'Elements/' . $element . '-form.ctp');
+        return $this->_View->elementExists('Widgets/' . $element . '-form');
     }
 
 }

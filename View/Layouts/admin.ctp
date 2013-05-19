@@ -4,14 +4,14 @@
         <title><?php echo $title_for_layout; ?> &#8212; <?php echo __('Huard'); ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php echo $this->Html->charset(); ?>
-        <?php echo $this->Html->css(array('bootstrap.min.css', 'main')); ?>
+        <?php echo $this->Html->css(array('admin/bootstrap.min.css', 'admin/main')); ?>
         <?php echo $this->fetch('css'); ?>
         <?php
         echo $this->AdminLayout->jsVar();
         echo $this->Html->script(array(
             'admin/jquery-1.9.0.min',
             'admin/jquery-ui-1.10.0.custom.min',
-            'bootstrap.min',
+            'admin/bootstrap.min',
             'admin/sidebar-menu',
                 )
         );

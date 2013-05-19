@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('admin/Posts/posts'), array('block' => 'headerScript')); ?>
+<?php echo $this->Html->script(array('admin/Posts/posts'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
@@ -14,7 +14,7 @@ echo $this->Form->create('Post', array(
 ?>
 
 <div class="row-fluid">
-    <div class="span9">
+    <div class="span8">
         <div class="control-group">
             <div class="controls">
                 <?php echo $this->Form->input('title', array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __('Enter title here'))); ?>
@@ -39,10 +39,10 @@ echo $this->Form->create('Post', array(
         </div>
 
     </div>
-    <div class="span3">
+    <div class="span4">
         <div class="column">
             <div class="portlet">
-                <div class="portlet-header">Publish</div>
+                <div class="portlet-header"><?php echo __('Publish'); ?></div>
                 <div class="portlet-content publish-widget">
                     <ul class="unstyled">
                         <li>    
@@ -85,13 +85,29 @@ echo $this->Form->create('Post', array(
                                     )
                             );
                             ?>
-                            <?php echo $this->Form->month('created', array('empty' => false, 'class' => 'input-small')); ?>
-                            <?php echo $this->Form->day('created', array('empty' => false, 'class' => 'input-mini')); ?>
+                            <?php echo $this->Form->month('created', array('empty' => false, 'class' => 'input-small', 'value' => date('m'))); ?>
+                            <?php echo $this->Form->day('created', array('empty' => false, 'class' => 'input-mini', 'value' => date('d'))); ?>
                         </li>
                         <li class="text-center">
-                            <?php echo $this->Html->tag('span', __('Hour: '), array('class' => 'hr-control-label')); ?> <?php echo $this->Form->hour('created', TRUE, array('empty' => false, 'class' => 'input-mini', 'value' => $this->Time->format('G', 'Now', TRUE, Configure::read('General-timezone')))); ?>
+                            <?php echo $this->Html->tag('span', __('Hour: '), array('class' => 'hr-control-label')); ?>
+                            <?php
+                            echo $this->Form->hour('created', TRUE, array(
+                                'empty' => false,
+                                'class' => 'input-mini',
+                                'value' => $this->Time->format('G', 'Now', TRUE, Configure::read('General.timezone'))
+                                    )
+                            );
+                            ?>
                             <?php echo '<b> : </b>'; ?>
-                            <?php echo $this->Form->minute('created', array('empty' => false, 'class' => 'input-mini', 'value' => $this->Time->format('i', 'Now', TRUE, Configure::read('General-timezone')))); ?><?php echo $this->Html->tag('span', __('Minute'), array('class' => 'hr-control-label-minute')); ?>
+                            <?php
+                            echo $this->Form->minute('created', array(
+                                'empty' => false,
+                                'class' => 'input-mini',
+                                'value' => $this->Time->format('i', 'Now', TRUE, Configure::read('General.timezone'))
+                                    )
+                            );
+                            ?>
+                            <?php echo $this->Html->tag('span', __('Minute'), array('class' => 'hr-control-label-minute')); ?>
                         </li>
                         <li class="divider"></li>
                     </ul>
@@ -101,15 +117,15 @@ echo $this->Form->create('Post', array(
                 </div>
             </div>
             <div class="portlet">
-                <div class="portlet-header">Categories</div>
+                <div class="portlet-header"><?php echo __('Categories'); ?></div>
                 <div class="portlet-content">
                     <?php echo $this->Form->input('Category', array('multiple' => 'checkbox')); ?>
                 </div>
             </div>
             <div class="portlet">
-                <div class="portlet-header">Tags</div>
+                <div class="portlet-header"><?php echo __('Tags'); ?></div>
                 <div class="portlet-content">
-                    <?php echo $this->Form->input('Post.tags'); ?>
+                    <?php echo $this->Form->input('Post.tags', array('class' => 'input-block-level')); ?>
                 </div>
             </div>
         </div>

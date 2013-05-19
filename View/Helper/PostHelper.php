@@ -56,7 +56,7 @@ class PostHelper extends AppHelper {
 
     public function setPost($post) {
         $this->post = $post;
-        $this->General->post = $post;
+        $this->General->content = $post;
         $this->Link->post = $post;
         $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
     }
@@ -369,7 +369,7 @@ class PostHelper extends AppHelper {
      * @return string|null Null if displaying, string if retrieving.
      */
     public function theDate($d = '', $before = '', $after = '', $echo = true) {
-        $this->General->theDate($d = '', $before = '', $after = '', $echo = true);
+        $this->General->theDate($d, $before, $after, $echo);
     }
 
     /**
@@ -384,7 +384,7 @@ class PostHelper extends AppHelper {
      * @return string|null Null if displaying, string if retrieving.
      */
     public function getTheDate($d = '') {
-        return $this->General->getTheDate($d = '');
+        return $this->General->getTheDate($d);
     }
 
     public function list_pages($args = '') {

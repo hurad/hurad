@@ -11,7 +11,7 @@ App::uses('CakeEmail', 'Network/Email');
 class CommentsController extends AppController {
 
     public $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
-    public $components = array('RequestHandler', 'Akismet');
+    public $components = array('RequestHandler');
     public $paginate = array(
         'conditions' => array(
             'Comment.approved' => array(0, 1),
@@ -24,19 +24,14 @@ class CommentsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
-        //$this->isAuthorized();
+        $this->Auth->allow('index', 'reply');
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow('*');
-                break;
-            case 'user':
-                $this->Auth->allow('*');
-            default :
-                $this->Auth->allow('*');
+                return TRUE;
                 break;
         }
     }
@@ -150,9 +145,10 @@ class CommentsController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index($action = null) {
         $this->set('title_for_layout', __('Comments'));
         $this->Comment->recursive = 0;
+
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
@@ -163,6 +159,51 @@ class CommentsController extends AppController {
                 'Comment.content LIKE' => '%' . $q . '%',
             );
         }
+
+        switch ($action) {
+            case 'moderated':
+                $this->set('title_for_layout', __('Comments'));
+                $this->paginate['conditions'] = array(
+                    'Comment.approved' => 0,
+                );
+                break;
+
+            case 'approved':
+                $this->set('title_for_layout', __('Comments'));
+                $this->paginate['conditions'] = array(
+                    'Comment.approved' => 1,
+                );
+                break;
+
+            case 'spam':
+                $this->set('title_for_layout', __('Comments'));
+                $this->paginate['conditions'] = array(
+                    'Comment.approved' => 'spam',
+                );
+                break;
+
+            case 'trash':
+                $this->set('title_for_layout', __('Comments'));
+                $this->paginate['conditions'] = array(
+                    'Comment.approved' => 'trash',
+                );
+                break;
+
+            default:
+                $this->set('title_for_layout', __('Comments'));
+                $this->paginate['conditions'] = array(
+                    'Comment.approved' => array(0, 1),
+                );
+                break;
+        }
+
+        $countComments['all'] = $this->Comment->countComments();
+        $countComments['moderated'] = $this->Comment->countComments('moderated');
+        $countComments['approved'] = $this->Comment->countComments('approved');
+        $countComments['spam'] = $this->Comment->countComments('spam');
+        $countComments['trash'] = $this->Comment->countComments('trash');
+
+        $this->set('countComments', $countComments);
         $this->set('comments', $this->paginate());
     }
 
@@ -314,7 +355,7 @@ class CommentsController extends AppController {
                 $err = __('Comment not move to trash please try again.');
                 break;
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__('An error occurred.'), 'error');
                 break;
         }
 
@@ -322,65 +363,13 @@ class CommentsController extends AppController {
             $this->Comment->save($data);
         } else {
             if ($this->Comment->save($data)) {
-                $this->Session->setFlash($msg, 'flash_notice');
+                $this->Session->setFlash($msg, 'notice');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash($err, 'flash_error');
+                $this->Session->setFlash($err, 'error');
                 $this->redirect(array('action' => 'index'));
             }
         }
-    }
-
-    /**
-     * admin_filter method
-     *
-     * @param string $action
-     * @return void
-     */
-    public function admin_filter($action = null) {
-        $this->Comment->recursive = 0;
-        $this->paginate = array();
-        $this->paginate['limit'] = 25;
-        switch ($action) {
-            case 'moderated':
-                $this->set('title_for_layout', __('Comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 0,
-                );
-                break;
-
-            case 'approved':
-                $this->set('title_for_layout', __('Comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 1,
-                );
-                break;
-
-            case 'spam':
-                $this->set('title_for_layout', __('Comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 'spam',
-                );
-                break;
-
-            case 'trash':
-                $this->set('title_for_layout', __('Comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 'trash',
-                );
-                break;
-
-            default:
-                $this->set('title_for_layout', __('Comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => array(0, 1),
-                );
-                break;
-        }
-
-        $this->paginate['order'] = array('Comment.created' => 'desc');
-        $this->set('comments', $this->paginate('Comment'));
-        $this->render('admin_index');
     }
 
     public function admin_process() {

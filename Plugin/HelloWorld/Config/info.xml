@@ -3,6 +3,6 @@
 <plugin>
     <name>Hello World Plugin</name>
     <description>Description for Hello World plugin.</description>
-    <version>2.2</version>
+    <version>0.1.0</version>
     <author>Mohammad</author>
 </plugin>

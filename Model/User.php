@@ -92,6 +92,7 @@ class User extends AppModel {
         'url' => array(
             'urlRule-1' => array(
                 'rule' => 'url',
+                'allowEmpty' => true
             ),
         ),
         'password' => array(
@@ -121,6 +122,28 @@ class User extends AppModel {
         if (isset($this->data['User']['password'])) {
             $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
         }
+    }
+
+    public function afterSave($created) {
+        parent::afterSave($created);
+
+        if ($created) {
+            $userMetaData = array(
+                'firstname' => '',
+                'lastname' => '',
+                'nickname' => '',
+                'bio' => '',
+                'display_name' => $this->data['User']['username']
+            );
+            foreach ($userMetaData as $meta_key => $meta_value) {
+                $this->UserMeta->addMeta($meta_key, $meta_value, $this->id);
+            }
+        }
+    }
+
+    public function afterDelete() {
+        parent::afterDelete();
+        $this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false);
     }
 
     function checkPasswords() {

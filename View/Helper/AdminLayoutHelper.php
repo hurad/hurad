@@ -137,11 +137,11 @@ class AdminLayoutHelper extends AppHelper {
     public function approveLink($approved, $comment_id) {
         switch ($approved) {
             case '1':
-                return $this->Html->link(__('Disapprove'), array('action' => 'disapprove', $comment_id));
+                return $this->Html->link(__('Disapprove'), array('action' => 'action', 'disapproved', $comment_id));
                 break;
 
             case '0':
-                return $this->Html->link(__('Approve'), array('action' => 'approve', $comment_id));
+                return $this->Html->link(__('Approve'), array('action' => 'action', 'approved', $comment_id));
                 break;
 
             default:
@@ -235,6 +235,40 @@ class AdminLayoutHelper extends AppHelper {
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    public function displayNameOptions($userID = null) {
+        $user = ClassRegistry::init('User')->getUserData($userID);
+        $options = array();
+        $options[$user['username']] = $user['username'];
+        if (!empty($user['firstname']) && !empty($user['lastname'])) {
+            $options[$user['firstname'] . ' ' . $user['lastname']] = $user['firstname'] . ' ' . $user['lastname'];
+            $options[$user['lastname'] . ' ' . $user['firstname']] = $user['lastname'] . ' ' . $user['firstname'];
+        }
+        if (!empty($user['firstname']) && empty($user['lastname'])) {
+            $options[$user['firstname']] = $user['firstname'];
+        }
+        if (empty($user['firstname']) && !empty($user['lastname'])) {
+            $options[$user['lastname']] = $user['lastname'];
+        }
+        if (!empty($user['nickname'])) {
+            $options[$user['nickname']] = $user['nickname'];
+        }
+        return $options;
+    }
+
+    public function commentClass($approved = null) {
+        switch ($approved) {
+            case '0':
+                return 'warning';
+
+                break;
+
+            case 'spam':
+                return 'error';
+
+                break;
         }
     }
 

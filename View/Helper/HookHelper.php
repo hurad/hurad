@@ -4,13 +4,6 @@ App::uses('AppHelper', 'View/Helper');
 
 class HookHelper extends AppHelper {
 
-    public $HuradHook;
-
-    public function __construct(\View $View, $settings = array()) {
-        parent::__construct($View, $settings);
-        $this->HuradHook = Configure::read('HuradHook.obj');
-    }
-
     /**
      * Hooks a function or method to a specific filter action.
      *
@@ -50,7 +43,7 @@ class HookHelper extends AppHelper {
      * @return boolean true
      */
     public function addFilter($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-        $this->HuradHook->add_filter($tag, $function_to_add, $priority, $accepted_args);
+        HuradHook::add_filter($tag, $function_to_add, $priority, $accepted_args);
     }
 
     /**
@@ -66,7 +59,7 @@ class HookHelper extends AppHelper {
      * (e.g.) 0, so use the === operator for testing the return value.
      */
     public function hasFilter($tag, $function_to_check = false) {
-        $this->HuradHook->has_filter($tag, $function_to_check);
+        HuradHook::has_filter($tag, $function_to_check);
     }
 
     /**
@@ -95,7 +88,7 @@ class HookHelper extends AppHelper {
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
     public function applyFilters($tag, $value) {
-        return $this->HuradHook->apply_filters($tag, $value);
+        return HuradHook::apply_filters($tag, $value);
     }
 
     /**
@@ -111,7 +104,7 @@ class HookHelper extends AppHelper {
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
     public function applyFiltersRefArray($tag, $args) {
-        $this->HuradHook->apply_filters_ref_array($tag, $args);
+        HuradHook::apply_filters_ref_array($tag, $args);
     }
 
     /**
@@ -134,7 +127,7 @@ class HookHelper extends AppHelper {
      * @return boolean Whether the function existed before it was removed.
      */
     public function removeFilter($tag, $function_to_remove, $priority = 10) {
-        $this->HuradHook->remove_filter($tag, $function_to_remove, $priority);
+        HuradHook::remove_filter($tag, $function_to_remove, $priority);
     }
 
     /**
@@ -147,7 +140,7 @@ class HookHelper extends AppHelper {
      * @return bool True when finished.
      */
     public function removeAllFilters($tag, $priority = false) {
-        $this->HuradHook->remove_all_filters($tag, $priority);
+        HuradHook::remove_all_filters($tag, $priority);
     }
 
     /**
@@ -158,7 +151,7 @@ class HookHelper extends AppHelper {
      * @return string Hook name of the current filter or action.
      */
     public function currentFilter() {
-        $this->HuradHook->current_filter();
+        HuradHook::current_filter();
     }
 
     /**
@@ -177,7 +170,7 @@ class HookHelper extends AppHelper {
      * @param int $accepted_args optional. The number of arguments the function accept (default 1).
      */
     public function addAction($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-        $this->HuradHook->add_action($tag, $function_to_add, $priority, $accepted_args);
+        HuradHook::add_action($tag, $function_to_add, $priority, $accepted_args);
     }
 
     /**
@@ -200,7 +193,7 @@ class HookHelper extends AppHelper {
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
     public function doAction($tag, $arg = '') {
-        return $this->HuradHook->do_action($tag, $arg);
+        return HuradHook::do_action($tag, $arg);
     }
 
     /**
@@ -212,7 +205,7 @@ class HookHelper extends AppHelper {
      * @return int The number of times action hook <tt>$tag</tt> is fired
      */
     public function didAction($tag) {
-        $this->HuradHook->did_action($tag);
+        HuradHook::did_action($tag);
     }
 
     /**
@@ -228,7 +221,7 @@ class HookHelper extends AppHelper {
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
     public function doActionRefArray($tag, $args) {
-        $this->HuradHook->do_action_ref_array($tag, $args);
+        HuradHook::do_action_ref_array($tag, $args);
     }
 
     /**
@@ -245,7 +238,7 @@ class HookHelper extends AppHelper {
      * (e.g.) 0, so use the === operator for testing the return value.
      */
     function hasAction($tag, $function_to_check = false) {
-        $this->HuradHook->has_action($tag, $function_to_check);
+        HuradHook::has_action($tag, $function_to_check);
     }
 
     /**
@@ -263,7 +256,7 @@ class HookHelper extends AppHelper {
      * @return boolean Whether the function is removed.
      */
     function removeAction($tag, $function_to_remove, $priority = 10) {
-        $this->HuradHook->remove_action($tag, $function_to_remove, $priority);
+        HuradHook::remove_action($tag, $function_to_remove, $priority);
     }
 
     /**
@@ -276,7 +269,7 @@ class HookHelper extends AppHelper {
      * @return bool True when finished.
      */
     function removeAllActions($tag, $priority = false) {
-        $this->HuradHook->remove_all_actions($tag, $priority);
+        HuradHook::remove_all_actions($tag, $priority);
     }
 
 }

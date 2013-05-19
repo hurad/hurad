@@ -24,7 +24,7 @@ class Comment extends AppModel {
      *
      * @var array
      */
-    public $actsAs = array('Tree',);
+    public $actsAs = array('Tree');
 
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -73,7 +73,7 @@ class Comment extends AppModel {
 //        )
 //    );
 
-    public function count_comments($type = 'all') {
+    public function countComments($type = 'all') {
         if ($type == NULL) {
             return FALSE;
         } elseif ($type == 'all') {

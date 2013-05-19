@@ -257,10 +257,10 @@ class PostsController extends AppController {
 
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__('The post has been saved'), 'flash_notice');
+                $this->Session->setFlash(__('The post has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'error');
             }
         }
         $categories = $this->Post->Category->generateTreeList(null, null, null, '_');
@@ -312,10 +312,10 @@ class PostsController extends AppController {
             // save the data
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__('The Post has been saved.'), 'flash_notice');
+                $this->Session->setFlash(__('The Post has been saved.'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The Post could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The Post could not be saved. Please, try again.'), 'error');
             }
         }
         if (empty($this->request->data)) {

@@ -1,5 +1,5 @@
 <?php $this->Html->css(array('admin/Posts/posts'), null, array('inline' => FALSE)); ?>
-<?php $this->Html->script(array('admin/Posts/posts', 'admin/checkbox'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/Posts/posts', 'admin/checkbox'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2>
@@ -194,3 +194,5 @@ echo $this->Form->create('Post', array(
     echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
+
+<?php echo $this->Form->end(); ?>

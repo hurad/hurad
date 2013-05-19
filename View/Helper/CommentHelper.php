@@ -607,9 +607,9 @@ class CommentHelper extends AppHelper {
      */
     public function getCommentTime($d = '') {
         if ('' == $d)
-            $date = $this->Time->format(Configure::read('General-time_format'), $this->comment['created'], null, Configure::read('General-timezone'));
+            $date = $this->Time->format(Configure::read('General.time_format'), $this->comment['created'], null, Configure::read('General.timezone'));
         else
-            $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
+            $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General.timezone'));
         return $this->Hook->applyFilters('getCommentTime', $date, $d);
     }
 

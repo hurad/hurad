@@ -51,6 +51,16 @@ echo $this->Form->create('User', array(
     <?php echo $this->Form->input('remember_me', array('label' => __('Remember Me'), 'type' => 'checkbox')); ?>
 </label>
 
+<?php if (Configure::check('General.users_can_register') && Configure::read('General.users_can_register') == 1) : ?>
+    <div class="control-group">
+        <?php echo $this->Html->link(__('Not registered?'), array('controller' => 'users', 'action' => 'register')); ?>
+    </div>
+<?php endif; ?>
+
+<div class="control-group">
+    <?php echo $this->Html->link(__('Forgot password?'), array('controller' => 'users', 'action' => 'forgot')); ?>
+</div>
+
 <?php echo $this->Form->button(__('Login'), array('div' => false, 'type' => 'submit', 'class' => 'btn btn-info btn-block')); ?>
 
 <?php echo $this->Form->end(); ?>

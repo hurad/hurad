@@ -84,7 +84,7 @@ class Page extends AppModel {
      * 
      * @return intiger Number of all pages in specify status.
      */
-    public function count_pages($status = 'all') {
+    public function countPages($status = 'all') {
         switch ($status) {
             case 'all':
                 $num = $this->find('count', array(

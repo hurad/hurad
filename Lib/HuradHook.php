@@ -26,7 +26,7 @@ class HuradHook {
      * @var array 
      * @access public
      */
-    public $hr_filter = array();
+    public static $hr_filter = array();
 
     /**
      * Merges the filter hooks using this function.
@@ -34,7 +34,7 @@ class HuradHook {
      * @var array
      * @access public
      */
-    public $merged_filters = array();
+    public static $merged_filters = array();
 
     /**
      * stores the list of current filters with the current one last
@@ -42,7 +42,7 @@ class HuradHook {
      * @var array
      * @access public
      */
-    public $hr_current_filter = array();
+    public static $hr_current_filter = array();
 
     /**
      * Increments the amount of times action was triggered.
@@ -50,7 +50,7 @@ class HuradHook {
      * @var array
      * @access public 
      */
-    public $hr_actions = array();
+    public static $hr_actions = array();
 
     /**
      * Hooks a function or method to a specific filter action.
@@ -91,10 +91,10 @@ class HuradHook {
      * @param int $accepted_args optional. The number of arguments the function accept (default 1).
      * @return boolean true
      */
-    public function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-        $idx = $this->_hr_filter_build_unique_id($tag, $function_to_add, $priority);
-        $this->hr_filter[$tag][$priority][$idx] = array('function' => $function_to_add, 'accepted_args' => $accepted_args);
-        unset($this->merged_filters[$tag]);
+    public static function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+        $idx = self::_hr_filter_build_unique_id($tag, $function_to_add, $priority);
+        self::$hr_filter[$tag][$priority][$idx] = array('function' => $function_to_add, 'accepted_args' => $accepted_args);
+        unset(self::$merged_filters[$tag]);
         return true;
     }
 
@@ -111,16 +111,16 @@ class HuradHook {
      * When using the $function_to_check argument, this function may return a non-boolean value that evaluates to false
      * (e.g.) 0, so use the === operator for testing the return value.
      */
-    public function has_filter($tag, $function_to_check = false) {
-        $has = !empty($this->hr_filter[$tag]);
+    public static function has_filter($tag, $function_to_check = false) {
+        $has = !empty(self::$hr_filter[$tag]);
         if (false === $function_to_check || false == $has)
             return $has;
 
-        if (!$idx = $this->_hr_filter_build_unique_id($tag, $function_to_check, false))
+        if (!$idx = self::_hr_filter_build_unique_id($tag, $function_to_check, false))
             return false;
 
-        foreach ((array) array_keys($this->hr_filter[$tag]) as $priority) {
-            if (isset($this->hr_filter[$tag][$priority][$idx]))
+        foreach ((array) array_keys(self::$hr_filter[$tag]) as $priority) {
+            if (isset(self::$hr_filter[$tag][$priority][$idx]))
                 return $priority;
         }
 
@@ -153,45 +153,45 @@ class HuradHook {
      * @param mixed $var,... Additional variables passed to the functions hooked to <tt>$tag</tt>.
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
-    public function apply_filters($tag, $value) {
+    public static function apply_filters($tag, $value) {
         $args = array();
 
         // Do 'all' actions first
-        if (isset($this->hr_filter['all'])) {
-            $this->hr_current_filter[] = $tag;
+        if (isset(self::$hr_filter['all'])) {
+            self::$hr_current_filter[] = $tag;
             $args = func_get_args();
-            $this->_hr_call_all_hook($args);
+            self::_hr_call_all_hook($args);
         }
 
-        if (!isset($this->hr_filter[$tag])) {
-            if (isset($this->hr_filter['all']))
-                array_pop($this->hr_current_filter);
+        if (!isset(self::$hr_filter[$tag])) {
+            if (isset(self::$hr_filter['all']))
+                array_pop(self::$hr_current_filter);
             return $value;
         }
 
-        if (!isset($this->hr_filter['all']))
-            $this->hr_current_filter[] = $tag;
+        if (!isset(self::$hr_filter['all']))
+            self::$hr_current_filter[] = $tag;
 
         // Sort
-        if (!isset($this->merged_filters[$tag])) {
-            ksort($this->hr_filter[$tag]);
-            $this->merged_filters[$tag] = true;
+        if (!isset(self::$merged_filters[$tag])) {
+            ksort(self::$hr_filter[$tag]);
+            self::$merged_filters[$tag] = true;
         }
 
-        reset($this->hr_filter[$tag]);
+        reset(self::$hr_filter[$tag]);
 
         if (empty($args))
             $args = func_get_args();
 
         do {
-            foreach ((array) current($this->hr_filter[$tag]) as $the_)
+            foreach ((array) current(self::$hr_filter[$tag]) as $the_)
                 if (!is_null($the_['function'])) {
                     $args[1] = $value;
                     $value = call_user_func_array($the_['function'], array_slice($args, 1, (int) $the_['accepted_args']));
                 }
-        } while (next($this->hr_filter[$tag]) !== false);
+        } while (next(self::$hr_filter[$tag]) !== false);
 
-        array_pop($this->hr_current_filter);
+        array_pop(self::$hr_current_filter);
 
         return $value;
     }
@@ -209,38 +209,38 @@ class HuradHook {
      * @param array $args The arguments supplied to the functions hooked to <tt>$tag</tt>
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
-    public function apply_filters_ref_array($tag, $args) {
+    public static function apply_filters_ref_array($tag, $args) {
         // Do 'all' actions first
-        if (isset($this->hr_filter['all'])) {
-            $this->hr_current_filter[] = $tag;
+        if (isset(self::$hr_filter['all'])) {
+            self::$hr_current_filter[] = $tag;
             $all_args = func_get_args();
-            $this->_hr_call_all_hook($all_args);
+            self::_hr_call_all_hook($all_args);
         }
 
-        if (!isset($this->hr_filter[$tag])) {
-            if (isset($this->hr_filter['all']))
-                array_pop($this->hr_current_filter);
+        if (!isset(self::$hr_filter[$tag])) {
+            if (isset(self::$hr_filter['all']))
+                array_pop(self::$hr_current_filter);
             return $args[0];
         }
 
-        if (!isset($this->hr_filter['all']))
-            $this->hr_current_filter[] = $tag;
+        if (!isset(self::$hr_filter['all']))
+            self::$hr_current_filter[] = $tag;
 
         // Sort
-        if (!isset($this->merged_filters[$tag])) {
-            ksort($this->hr_filter[$tag]);
-            $this->merged_filters[$tag] = true;
+        if (!isset(self::$merged_filters[$tag])) {
+            ksort(self::$hr_filter[$tag]);
+            self::$merged_filters[$tag] = true;
         }
 
-        reset($this->hr_filter[$tag]);
+        reset(self::$hr_filter[$tag]);
 
         do {
-            foreach ((array) current($this->hr_filter[$tag]) as $the_)
+            foreach ((array) current(self::$hr_filter[$tag]) as $the_)
                 if (!is_null($the_['function']))
                     $args[0] = call_user_func_array($the_['function'], array_slice($args, 0, (int) $the_['accepted_args']));
-        } while (next($this->hr_filter[$tag]) !== false);
+        } while (next(self::$hr_filter[$tag]) !== false);
 
-        array_pop($this->hr_current_filter);
+        array_pop(self::$hr_current_filter);
 
         return $args[0];
     }
@@ -265,16 +265,16 @@ class HuradHook {
      * @param int $accepted_args optional. The number of arguments the function accepts (default: 1).
      * @return boolean Whether the function existed before it was removed.
      */
-    public function remove_filter($tag, $function_to_remove, $priority = 10) {
-        $function_to_remove = $this->_hr_filter_build_unique_id($tag, $function_to_remove, $priority);
+    public static function remove_filter($tag, $function_to_remove, $priority = 10) {
+        $function_to_remove = self::_hr_filter_build_unique_id($tag, $function_to_remove, $priority);
 
-        $r = isset($this->hr_filter[$tag][$priority][$function_to_remove]);
+        $r = isset(self::$hr_filter[$tag][$priority][$function_to_remove]);
 
         if (true === $r) {
-            unset($this->hr_filter[$tag][$priority][$function_to_remove]);
-            if (empty($this->hr_filter[$tag][$priority]))
-                unset($this->hr_filter[$tag][$priority]);
-            unset($this->merged_filters[$tag]);
+            unset(self::$hr_filter[$tag][$priority][$function_to_remove]);
+            if (empty(self::$hr_filter[$tag][$priority]))
+                unset(self::$hr_filter[$tag][$priority]);
+            unset(self::$merged_filters[$tag]);
         }
 
         return $r;
@@ -290,16 +290,16 @@ class HuradHook {
      * @param int $priority The priority number to remove.
      * @return bool True when finished.
      */
-    public function remove_all_filters($tag, $priority = false) {
-        if (isset($this->hr_filter[$tag])) {
-            if (false !== $priority && isset($this->hr_filter[$tag][$priority]))
-                unset($this->hr_filter[$tag][$priority]);
+    public static function remove_all_filters($tag, $priority = false) {
+        if (isset(self::$hr_filter[$tag])) {
+            if (false !== $priority && isset(self::$hr_filter[$tag][$priority]))
+                unset(self::$hr_filter[$tag][$priority]);
             else
-                unset($this->hr_filter[$tag]);
+                unset(self::$hr_filter[$tag]);
         }
 
-        if (isset($this->merged_filters[$tag]))
-            unset($this->merged_filters[$tag]);
+        if (isset(self::$merged_filters[$tag]))
+            unset(self::$merged_filters[$tag]);
 
         return true;
     }
@@ -312,8 +312,8 @@ class HuradHook {
      *
      * @return string Hook name of the current filter or action.
      */
-    public function current_filter() {
-        return end($this->hr_current_filter);
+    public static function current_filter() {
+        return end(self::$hr_current_filter);
     }
 
     /**
@@ -334,8 +334,8 @@ class HuradHook {
      * @param int $priority optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
      * @param int $accepted_args optional. The number of arguments the function accept (default 1).
      */
-    public function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
-        return $this->add_filter($tag, $function_to_add, $priority, $accepted_args);
+    public static function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
+        return self::add_filter($tag, $function_to_add, $priority, $accepted_args);
     }
 
     /**
@@ -358,30 +358,30 @@ class HuradHook {
      * @param mixed $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
-    public function do_action($tag, $arg = '') {
-        if (!isset($this->hr_actions))
-            $this->hr_actions = array();
+    public static function do_action($tag, $arg = '') {
+        if (!isset(self::$hr_actions))
+            self::$hr_actions = array();
 
-        if (!isset($this->hr_actions[$tag]))
-            $this->hr_actions[$tag] = 1;
+        if (!isset(self::$hr_actions[$tag]))
+            self::$hr_actions[$tag] = 1;
         else
-            ++$this->hr_actions[$tag];
+            ++self::$hr_actions[$tag];
 
         // Do 'all' actions first
-        if (isset($this->hr_filter['all'])) {
-            $this->hr_current_filter[] = $tag;
+        if (isset(self::$hr_filter['all'])) {
+            self::$hr_current_filter[] = $tag;
             $all_args = func_get_args();
-            $this->_hr_call_all_hook($all_args);
+            self::_hr_call_all_hook($all_args);
         }
 
-        if (!isset($this->hr_filter[$tag])) {
-            if (isset($this->hr_filter['all']))
-                array_pop($this->hr_current_filter);
+        if (!isset(self::$hr_filter[$tag])) {
+            if (isset(self::$hr_filter['all']))
+                array_pop(self::$hr_current_filter);
             return;
         }
 
-        if (!isset($this->hr_filter['all']))
-            $this->hr_current_filter[] = $tag;
+        if (!isset(self::$hr_filter['all']))
+            self::$hr_current_filter[] = $tag;
 
         $args = array();
         if (is_array($arg) && 1 == count($arg) && isset($arg[0]) && is_object($arg[0])) // array(&$this)
@@ -392,20 +392,20 @@ class HuradHook {
             $args[] = func_get_arg($a);
 
         // Sort
-        if (!isset($this->merged_filters[$tag])) {
-            ksort($this->hr_filter[$tag]);
-            $this->merged_filters[$tag] = true;
+        if (!isset(self::$merged_filters[$tag])) {
+            ksort(self::$hr_filter[$tag]);
+            self::$merged_filters[$tag] = true;
         }
 
-        reset($this->hr_filter[$tag]);
+        reset(self::$hr_filter[$tag]);
 
         do {
-            foreach ((array) current($this->hr_filter[$tag]) as $the_)
+            foreach ((array) current(self::$hr_filter[$tag]) as $the_)
                 if (!is_null($the_['function']))
                     call_user_func_array($the_['function'], array_slice($args, 0, (int) $the_['accepted_args']));
-        } while (next($this->hr_filter[$tag]) !== false);
+        } while (next(self::$hr_filter[$tag]) !== false);
 
-        array_pop($this->hr_current_filter);
+        array_pop(self::$hr_current_filter);
     }
 
     /**
@@ -417,11 +417,11 @@ class HuradHook {
      * @param string $tag The name of the action hook.
      * @return int The number of times action hook <tt>$tag</tt> is fired
      */
-    public function did_action($tag) {
-        if (!isset($this->hr_actions) || !isset($this->hr_actions[$tag]))
+    public static function did_action($tag) {
+        if (!isset(self::$hr_actions) || !isset(self::$hr_actions[$tag]))
             return 0;
 
-        return $this->hr_actions[$tag];
+        return self::$hr_actions[$tag];
     }
 
     /**
@@ -437,46 +437,46 @@ class HuradHook {
      * @param array $args The arguments supplied to the functions hooked to <tt>$tag</tt>
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
-    public function do_action_ref_array($tag, $args) {
-        if (!isset($this->hr_actions))
-            $this->hr_actions = array();
+    public static function do_action_ref_array($tag, $args) {
+        if (!isset(self::$hr_actions))
+            self::$hr_actions = array();
 
-        if (!isset($this->hr_actions[$tag]))
-            $this->hr_actions[$tag] = 1;
+        if (!isset(self::$hr_actions[$tag]))
+            self::$hr_actions[$tag] = 1;
         else
-            ++$this->hr_actions[$tag];
+            ++self::$hr_actions[$tag];
 
         // Do 'all' actions first
-        if (isset($this->hr_filter['all'])) {
-            $this->hr_current_filter[] = $tag;
+        if (isset(self::$hr_filter['all'])) {
+            self::$hr_current_filter[] = $tag;
             $all_args = func_get_args();
-            $this->_hr_call_all_hook($all_args);
+            self::_hr_call_all_hook($all_args);
         }
 
-        if (!isset($this->hr_filter[$tag])) {
-            if (isset($this->hr_filter['all']))
-                array_pop($this->hr_current_filter);
+        if (!isset(self::$hr_filter[$tag])) {
+            if (isset(self::$hr_filter['all']))
+                array_pop(self::$hr_current_filter);
             return;
         }
 
-        if (!isset($this->hr_filter['all']))
-            $this->hr_current_filter[] = $tag;
+        if (!isset(self::$hr_filter['all']))
+            self::$hr_current_filter[] = $tag;
 
         // Sort
-        if (!isset($this->merged_filters[$tag])) {
-            ksort($this->hr_filter[$tag]);
-            $this->merged_filters[$tag] = true;
+        if (!isset(self::$merged_filters[$tag])) {
+            ksort(self::$hr_filter[$tag]);
+            self::$merged_filters[$tag] = true;
         }
 
-        reset($this->hr_filter[$tag]);
+        reset(self::$hr_filter[$tag]);
 
         do {
-            foreach ((array) current($this->hr_filter[$tag]) as $the_)
+            foreach ((array) current(self::$hr_filter[$tag]) as $the_)
                 if (!is_null($the_['function']))
                     call_user_func_array($the_['function'], array_slice($args, 0, (int) $the_['accepted_args']));
-        } while (next($this->hr_filter[$tag]) !== false);
+        } while (next(self::$hr_filter[$tag]) !== false);
 
-        array_pop($this->hr_current_filter);
+        array_pop(self::$hr_current_filter);
     }
 
     /**
@@ -493,8 +493,8 @@ class HuradHook {
      * When using the $function_to_check argument, this function may return a non-boolean value that evaluates to false
      * (e.g.) 0, so use the === operator for testing the return value.
      */
-    public function has_action($tag, $function_to_check = false) {
-        return $this->has_filter($tag, $function_to_check);
+    public static function has_action($tag, $function_to_check = false) {
+        return self::has_filter($tag, $function_to_check);
     }
 
     /**
@@ -512,8 +512,8 @@ class HuradHook {
      * @param int $priority optional The priority of the function (default: 10).
      * @return boolean Whether the function is removed.
      */
-    public function remove_action($tag, $function_to_remove, $priority = 10) {
-        return $this->remove_filter($tag, $function_to_remove, $priority);
+    public static function remove_action($tag, $function_to_remove, $priority = 10) {
+        return self::remove_filter($tag, $function_to_remove, $priority);
     }
 
     /**
@@ -526,8 +526,8 @@ class HuradHook {
      * @param int $priority The priority number to remove them from.
      * @return bool True when finished.
      */
-    public function remove_all_actions($tag, $priority = false) {
-        return $this->remove_all_filters($tag, $priority);
+    public static function remove_all_actions($tag, $priority = false) {
+        return self::remove_all_filters($tag, $priority);
     }
 
     /**
@@ -549,13 +549,13 @@ class HuradHook {
      * @param array $args The collected parameters from the hook that was called.
      * @param string $hook Optional. The hook name that was used to call the 'all' hook.
      */
-    private function _hr_call_all_hook($args) {
-        reset($this->hr_filter['all']);
+    private static function _hr_call_all_hook($args) {
+        reset(self::$hr_filter['all']);
         do {
-            foreach ((array) current($this->hr_filter['all']) as $the_)
+            foreach ((array) current(self::$hr_filter['all']) as $the_)
                 if (!is_null($the_['function']))
                     call_user_func_array($the_['function'], $args);
-        } while (next($this->hr_filter['all']) !== false);
+        } while (next(self::$hr_filter['all']) !== false);
     }
 
     /**
@@ -583,7 +583,7 @@ class HuradHook {
      * @param int|bool $priority Used in counting how many hooks were applied. If === false and $function is an object reference, we return the unique id only if it already has one, false otherwise.
      * @return string|bool Unique ID for usage as array key or false if $priority === false and $function is an object reference, and it does not already have a unique id.
      */
-    private function _hr_filter_build_unique_id($tag, $function, $priority) {
+    private static function _hr_filter_build_unique_id($tag, $function, $priority) {
         static $filter_id_count = 0;
 
         if (is_string($function))
@@ -605,7 +605,7 @@ class HuradHook {
                 if (!isset($function[0]->hr_filter_id)) {
                     if (false === $priority)
                         return false;
-                    $obj_idx .= isset($this->hr_filter[$tag][$priority]) ? count((array) $this->hr_filter[$tag][$priority]) : $filter_id_count;
+                    $obj_idx .= isset(self::$hr_filter[$tag][$priority]) ? count((array) self::$hr_filter[$tag][$priority]) : $filter_id_count;
                     $function[0]->hr_filter_id = $filter_id_count;
                     ++$filter_id_count;
                 } else {

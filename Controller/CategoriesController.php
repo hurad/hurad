@@ -19,6 +19,7 @@ class CategoriesController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Session->delete('Message.auth');
+        $this->Auth->allow('index');
     }
 
     public function isAuthorized() {

@@ -24,23 +24,41 @@ class PagesController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('*');
-        //$this->isAuthorized();
+        $this->Auth->allow('index', 'view');
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow();
+                return TRUE;
                 break;
             case 'editor':
-                $this->Auth->allow('admin_index', 'admin_add', 'admin_edit', 'index', 'view');
+                if (
+                        $action == 'admin_index' ||
+                        $action == 'admin_edit' ||
+                        $action == 'admin_add' ||
+                        $action == 'admin_filter' ||
+                        $action == 'index' ||
+                        $action == 'view'
+                ) {
+                    return TRUE;
+                }
+                break;
+            case 'author':
+                if (
+                        $action == 'admin_index' ||
+                        $action == 'admin_add' ||
+                        $action == 'index' ||
+                        $action == 'view'
+                ) {
+                    return TRUE;
+                }
                 break;
             case 'user':
-                $this->Auth->allow('index', 'view');
-                break;
-            default :
-                $this->Auth->allow('index', 'view');
+                if ($action == 'index' || $action == 'view') {
+                    return TRUE;
+                }
                 break;
         }
     }

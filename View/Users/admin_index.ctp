@@ -57,18 +57,18 @@ echo $this->Form->create('User', array(
         ));
         ?>
     </thead>
-    <?php foreach ($users as $user): ?>
-        <?php $this->Author->setAuthor($user['User']['id']); ?>
-        <tbody>
+    <tbody>
+        <?php foreach ($users as $user): ?>
+            <?php $this->Author->setAuthor($user['User']['id']); ?>
             <?php
             echo $this->Html->tableCells(array(
                 array(
-                    array($this->Form->checkbox('Link.' . $user['User']['id'] . '.id'),
+                    array($this->Form->checkbox('User.' . $user['User']['id'] . '.id'),
                         array(
                             'class' => 'check-column',
                             'scope' => 'row')
                     ),
-                    array($this->Gravatar->image($this->Author->getTheAuthorMeta('email'), array('size' => '32', 'default' => 'mm')) . $this->Html->link('<strong>' . $this->Author->getTheAuthorMeta('username') . '</strong>', array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id']), array('escape' => FALSE)) . $this->element('admin/Users/row_actions', array('user' => $user)),
+                    array($this->Gravatar->image($this->Author->getTheAuthorMeta('email'), array('size' => '32', 'default' => 'mm', 'echo' => false)) . $this->Html->link('<strong>' . $this->Author->getTheAuthorMeta('username') . '</strong>', array('admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $user['User']['id']), array('escape' => FALSE)) . $this->element('admin/Users/row_actions', array('user' => $user)),
                         array(
                             'class' => 'column-username'
                         )
@@ -96,8 +96,8 @@ echo $this->Form->create('User', array(
                     )
             );
             ?>
-        </tbody>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </tbody>
     <tfoot>
         <?php
         echo $this->Html->tableHeaders(array(

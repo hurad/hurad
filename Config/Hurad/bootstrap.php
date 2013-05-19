@@ -19,12 +19,10 @@ foreach ($options AS $option) {
 Configure::write('Options', $_options);
 
 /**
- * Import HuradHook Lib and write object in "HuradHook.obj" key 
+ * Load HuradHook Lib and include default filters
  */
-App::import('Lib', 'HuradHook');
-$HuradHook = new HuradHook();
-Configure::write('HuradHook.obj', $HuradHook);
-require APPLIBS . 'filters.php';
+App::uses('HuradHook', 'Lib');
+config('Hurad/default_filters');
 
 /**
  * Load Hurad Lib
@@ -40,6 +38,11 @@ App::uses('HuradWidget', 'Lib');
  * Load all active plugins
  */
 HuradPlugin::loadAll();
+
+/**
+ * Include default widgets
+ */
+config('Hurad/default_widgets');
 
 /**
  * Include current theme bootstrap file.
