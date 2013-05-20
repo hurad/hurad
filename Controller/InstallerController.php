@@ -41,20 +41,15 @@ class InstallerController extends AppController {
             try {
                 ConnectionManager::create('install', $config);
                 $db = ConnectionManager::getDataSource('install');
-            } catch (MissingConnectionException $exc) {
-                $this->Session->setFlash($exc->getMessage(), 'error');
-            }
-        }
-        //debug($db);
-        if ($db->connected) {
-            if ($this->__executeSQL('hurad.sql', $db)) {
-                $file = new File(CONFIG . 'database.php', true, 0644);
 
-                debug($file);
-                if ($file->exists() && $file->writable()) {
-                    $default = '$default';
-                    $test = '$test';
-                    $data = <<<EOF
+                if ($db->connected) {
+                    if ($this->__executeSQL('hurad.sql', $db)) {
+                        $file = new File(CONFIG . 'database.php', true, 0644);
+
+                        if ($file->exists() && $file->writable()) {
+                            $default = '$default';
+                            $test = '$test';
+                            $data = <<<EOF
 <?php
 
 class DATABASE_CONFIG {
@@ -80,10 +75,14 @@ class DATABASE_CONFIG {
 
 }
 EOF;
-                    $file->write($data);
+                            $file->write($data);
+                        }
+                        $this->Session->setFlash(__('Database successfuly installed'), 'success');
+                        $this->redirect(array('action' => 'finalize'));
+                    }
                 }
-                $this->Session->setFlash(__('Database successfuly installed'), 'success');
-                $this->redirect(array('action' => 'finalize'));
+            } catch (MissingConnectionException $exc) {
+                $this->Session->setFlash($exc->getMessage(), 'error');
             }
         }
     }
