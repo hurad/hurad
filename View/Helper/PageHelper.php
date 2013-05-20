@@ -4,7 +4,7 @@ App::uses('AppHelper', 'View/Helper');
 
 class PageHelper extends AppHelper {
 
-    public $helpers = array('Html', 'Time', 'General');
+    public $helpers = array('Html', 'Time', 'General', 'Link');
     public $page = array();
     public $pages = array();
     public $view = null;
@@ -24,6 +24,7 @@ class PageHelper extends AppHelper {
     public function setPage($page) {
         $this->page = $page;
         $this->General->content = $page;
+        $this->Link->content = $page;
     }
 
     protected function init_page() {
@@ -44,15 +45,7 @@ class PageHelper extends AppHelper {
      * @return string
      */
     public function getPermalink() {
-        $year = $this->Time->format('Y', $this->page['Page']['created']);
-        $month = $this->Time->format('m', $this->page['Page']['created']);
-        $day = $this->Time->format('d', $this->page['Page']['created']);
-
-        if (Configure::read('Permalink-common') == 'default') {
-            return $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->page['Page']['id']);
-        } else {
-            return $this->Html->url(Configure::read('General-site_url') . "/page/" . $this->page['Page']['slug']);
-        }
+        return $this->Link->getPermalink();
     }
 
     /**
