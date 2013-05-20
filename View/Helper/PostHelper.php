@@ -57,7 +57,7 @@ class PostHelper extends AppHelper {
     public function setPost($post) {
         $this->post = $post;
         $this->General->content = $post;
-        $this->Link->post = $post;
+        $this->Link->content = $post;
         $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
     }
 
