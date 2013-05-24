@@ -78,55 +78,59 @@ echo $this->Form->create('Post', array(
         ?>
     </thead>
     <tbody>
-        <?php foreach ($posts as $post): ?>
-            <?php $this->Post->setPost($post); ?>
-            <?php
-            echo $this->Html->tableCells(array(
-                array(
-                    array($this->Form->checkbox('Post.' . $this->Post->getTheID() . '.id'),
-                        array(
-                            'class' => 'check-column',
-                            'scope' => 'row')
-                    ),
-                    array($this->Html->link('<strong>' . h($this->Post->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Post->getTheID()), array('title' => __('Edit “%s”', $this->Post->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
-                        array(
-                            'class' => 'column-title'
+        <?php
+        if (count($posts) > 0) {
+            foreach ($posts as $post) {
+                $this->Post->setPost($post);
+                echo $this->Html->tableCells(array(
+                    array(
+                        array($this->Form->checkbox('Post.' . $this->Post->getTheID() . '.id'),
+                            array(
+                                'class' => 'check-column',
+                                'scope' => 'row')
+                        ),
+                        array($this->Html->link('<strong>' . h($this->Post->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Post->getTheID()), array('title' => __('Edit “%s”', $this->Post->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
+                            array(
+                                'class' => 'column-title'
+                            )
+                        ),
+                        array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $this->Post->getTheID())),
+                            array(
+                                'class' => 'column-author'
+                            )
+                        ),
+                        array($this->Post->the_category('', FALSE),
+                            array(
+                                'class' => 'column-categories'
+                            )
+                        ),
+                        array($this->Post->tag('', FALSE),
+                            array(
+                                'class' => 'column-tags'
+                            )
+                        ),
+                        array($this->Html->tag('span', $post['Post']['comment_count'], array('class' => 'badge')),
+                            array(
+                                'class' => 'column-comments'
+                            )
+                        ),
+                        array($this->Html->tag('abbr', $this->Post->getTheDate(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
+                            array(
+                                'class' => 'column-date'
+                            )
                         )
                     ),
-                    array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $this->Post->getTheID())),
-                        array(
-                            'class' => 'column-author'
+                        ), array(
+                    'id' => 'post-' . $this->Post->getTheID()
+                        ), array(
+                    'id' => 'post-' . $this->Post->getTheID()
                         )
-                    ),
-                    array($this->Post->the_category('', FALSE),
-                        array(
-                            'class' => 'column-categories'
-                        )
-                    ),
-                    array($this->Post->tag('', FALSE),
-                        array(
-                            'class' => 'column-tags'
-                        )
-                    ),
-                    array($this->Html->tag('span', $post['Post']['comment_count'], array('class' => 'badge')),
-                        array(
-                            'class' => 'column-comments'
-                        )
-                    ),
-                    array($this->Html->tag('abbr', $this->Post->getTheDate(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
-                        array(
-                            'class' => 'column-date'
-                        )
-                    )
-                ),
-                    ), array(
-                'id' => 'post-' . $this->Post->getTheID()
-                    ), array(
-                'id' => 'post-' . $this->Post->getTheID()
-                    )
-            );
-            ?>
-        <?php endforeach; ?>    
+                );
+            }
+        } else {
+            echo $this->Html->tag('tr', $this->Html->tag('td', __('No posts were found'), array('colspan' => '7', 'style' => 'text-align:center;')), array('id' => 'post-0'));
+        }
+        ?>
     </tbody>
     <tfoot>
         <?php

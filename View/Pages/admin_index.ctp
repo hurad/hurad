@@ -65,45 +65,49 @@ echo $this->Form->create('Page', array(
         ?>
     </thead>
     <tbody>
-        <?php foreach ($pages as $page): ?>
-            <?php $this->Page->setPage($page); ?>
-            <?php
-            echo $this->Html->tableCells(array(
-                array(
-                    array($this->Form->checkbox('Page.' . $this->Page->getTheID() . '.id'),
-                        array(
-                            'class' => 'check-column',
-                            'scope' => 'row')
-                    ),
-                    array($this->Html->link('<strong>' . h($this->Page->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Page->getTheID()), array('title' => __('Edit “%s”', $this->Page->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Pages/row_actions', array('post' => $page)),
-                        array(
-                            'class' => 'column-title'
+        <?php
+        if (count($pages) > 0) {
+            foreach ($pages as $page) {
+                $this->Page->setPage($page);
+                echo $this->Html->tableCells(array(
+                    array(
+                        array($this->Form->checkbox('Page.' . $this->Page->getTheID() . '.id'),
+                            array(
+                                'class' => 'check-column',
+                                'scope' => 'row')
+                        ),
+                        array($this->Html->link('<strong>' . h($this->Page->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Page->getTheID()), array('title' => __('Edit “%s”', $this->Page->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Pages/row_actions', array('post' => $page)),
+                            array(
+                                'class' => 'column-title'
+                            )
+                        ),
+                        array($this->Html->link($page['User']['username'], array('controller' => 'pages', 'action' => 'listByauthor', $this->Page->getTheID())),
+                            array(
+                                'class' => 'column-author'
+                            )
+                        ),
+                        array($this->Html->tag('span', $page['Page']['comment_count'], array('class' => 'badge')),
+                            array(
+                                'class' => 'column-comments'
+                            )
+                        ),
+                        array($this->Html->tag('abbr', $this->Page->getTheDate(), array('title' => $page['Page']['created'])) . '<br>' . $this->AdminLayout->postStatus($page['Page']['status']),
+                            array(
+                                'class' => 'column-date'
+                            )
                         )
                     ),
-                    array($this->Html->link($page['User']['username'], array('controller' => 'pages', 'action' => 'listByauthor', $this->Page->getTheID())),
-                        array(
-                            'class' => 'column-author'
+                        ), array(
+                    'id' => 'page-' . $this->Page->getTheID()
+                        ), array(
+                    'id' => 'page-' . $this->Page->getTheID()
                         )
-                    ),
-                    array($this->Html->tag('span', $page['Page']['comment_count'], array('class' => 'badge')),
-                        array(
-                            'class' => 'column-comments'
-                        )
-                    ),
-                    array($this->Html->tag('abbr', $this->Page->getTheDate(), array('title' => $page['Page']['created'])) . '<br>' . $this->AdminLayout->postStatus($page['Page']['status']),
-                        array(
-                            'class' => 'column-date'
-                        )
-                    )
-                ),
-                    ), array(
-                'id' => 'page-' . $this->Page->getTheID()
-                    ), array(
-                'id' => 'page-' . $this->Page->getTheID()
-                    )
-            );
-            ?>
-        <?php endforeach; ?>    
+                );
+            }
+        } else {
+            echo $this->Html->tag('tr', $this->Html->tag('td', __('No pages were found'), array('colspan' => '5', 'style' => 'text-align:center;')), array('id' => 'post-0'));
+        }
+        ?>
     </tbody>
     <tfoot>
         <?php
