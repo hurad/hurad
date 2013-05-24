@@ -52,8 +52,8 @@ echo $this->Form->create('Post', array(
                                 echo $this->Form->input('status', array(
                                     'class' => 'input-medium',
                                     'options' => array(
-                                        'publish' => 'Publish',
-                                        'draft' => 'Draft'
+                                        'publish' => __('Publish'),
+                                        'draft' => __('Draft')
                                     )
                                 ));
                                 ?>
@@ -66,8 +66,9 @@ echo $this->Form->create('Post', array(
                                 echo $this->Form->input('comment_status', array(
                                     'class' => 'input-medium',
                                     'options' => array(
-                                        'open' => 'Open',
-                                        'close' => 'Close'
+                                        'open' => __('Open'),
+                                        'close' => __('Close'),
+                                        'disable' => __('Disable')
                                     )
                                 ));
                                 ?>
