@@ -246,7 +246,7 @@
                             echo '<form id="form-' . $wgdb['unique-id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
                             if (isset($widget[$wgdb['widget-id']]['element']) && $this->Widget->formExist($widget[$wgdb['widget-id']]['element'])) {
                                 echo $this->Html->div('widget-content', NULL);
-                                echo $this->element($widget[$wgdb['widget-id']]['element'] . '-form', array('data' => HuradWidget::getWidgetData($wgdb['unique-id'])));
+                                echo $this->element('Widgets/' . $widget[$wgdb['widget-id']]['element'] . '-form', array('data' => HuradWidget::getWidgetData($wgdb['unique-id'])));
                                 echo "</div>"; //Close div.widget-content
                             }
                             echo '<input id="number" type="hidden" value="' . $wgdb['number'] . '" name="number">';
