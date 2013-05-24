@@ -103,58 +103,6 @@ class LinkHelper extends AppHelper {
     }
 
     /**
-     * Retrieve the home url for the current site.
-     *
-     * Returns the 'home' option with the appropriate protocol, 'https' if
-     * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
-     * overridden.
-     *
-     * @since 1.0.0
-     *
-     * @uses getHomeUrl()
-     *
-     * @param  string $path   (optional) Path relative to the home url.
-     * @param  string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https', or 'relative'.
-     * @return string Home url link with optional path appended.
-     */
-    public function homeUrl($path = '', $scheme = null) {
-        return $this->getHomeUrl($path, $scheme);
-    }
-
-    /**
-     * Retrieve the home url for a given site.
-     *
-     * Returns the 'home' option with the appropriate protocol, 'https' if
-     * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
-     * overridden.
-     *
-     * @since 1.0.0
-     *
-     * @param  string $path   (optional) Path relative to the home url.
-     * @param  string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https', or 'relative'.
-     * @return string Home url link with optional path appended.
-     */
-    public function getHomeUrl($path = '', $scheme = null) {
-        $orig_scheme = $scheme;
-
-        $url = Configure::read('General.home_url');
-
-        if (!in_array($scheme, array('http', 'https', 'relative'))) {
-            if (Functions::is_ssl() && !Functions::is_admin())
-                $scheme = 'https';
-            else
-                $scheme = parse_url($url, PHP_URL_SCHEME);
-        }
-
-        $url = $this->setUrlScheme($url, $scheme);
-
-        if (!empty($path) && is_string($path) && strpos($path, '..') === false)
-            $url .= '/' . ltrim($path, '/');
-
-        return $this->Hook->applyFilters('home_url', $url, $path, $orig_scheme);
-    }
-
-    /**
      * Retrieve the url to the admin area for the current site.
      *
      * @since 1.0.0
