@@ -205,8 +205,8 @@ class AuthorHelper extends AppHelper {
             if (!empty($this->authorData['nicename']))
                 $author_nicename = $this->authorData['nicename'];
         }
-        $file = $this->Link->homeUrl('/');
-        $link = $file . '/author/' . $author_nicename;
+        $file = $this->Link->siteUrl('/');
+        $link = $file . 'author/' . $author_nicename;
 
         $link = $this->Hook->applyFilters('author_link', $link, $author_id, $author_nicename);
 
