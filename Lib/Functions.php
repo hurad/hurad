@@ -10,7 +10,7 @@ class Functions {
      * @param string $path File path
      * @return bool True if path is absolute, false is not absolute.
      */
-    public function path_is_absolute($path) {
+    public static function path_is_absolute($path) {
         // this is definitive if true but fails if $path does not exist or contains a symbolic link
         if (realpath($path) == $path)
             return true;
@@ -37,7 +37,7 @@ class Functions {
      * @param string $path
      * @return string The path with the base or absolute path.
      */
-    public function path_join($base, $path) {
+    public static function path_join($base, $path) {
         if (Functions::path_is_absolute($path))
             return $path;
 
@@ -53,7 +53,7 @@ class Functions {
      *
      * @return array Array of allowed protocols
      */
-    public function allowed_protocols() {
+    public static function allowed_protocols() {
         static $protocols;
 
         if (empty($protocols)) {
@@ -70,7 +70,7 @@ class Functions {
      *
      * @return bool True if SSL, false if not used.
      */
-    public function is_ssl() {
+    public static function is_ssl() {
         if (isset($_SERVER['HTTPS'])) {
             if ('on' == strtolower($_SERVER['HTTPS']))
                 return true;
@@ -92,7 +92,7 @@ class Functions {
      *
      * @return bool True if inside Hurad administration pages.
      */
-    public function is_admin() {
+    public static function is_admin() {
         $pos = strpos($_SERVER['REQUEST_URI'], 'admin');
 
         if ($pos === false) {
@@ -111,7 +111,7 @@ class Functions {
      * @param int $decimals Precision of the number of decimal places.
      * @return string Converted number in string format.
      */
-    public function number_format_i18n($number, $decimals = 0) {
+    public static function number_format_i18n($number, $decimals = 0) {
         $formatted = number_format($number, Functions::absint($decimals), Configure::read('decimal_point'), Configure::read('thousands_sep'));
         return HuradHook::apply_filters('number_format_i18n', $formatted);
     }
@@ -124,7 +124,7 @@ class Functions {
      * @param mixed $maybeint Data you wish to have converted to a nonnegative integer
      * @return int An nonnegative integer
      */
-    public function absint($maybeint) {
+    public static function absint($maybeint) {
         return abs(intval($maybeint));
     }
 
@@ -135,7 +135,7 @@ class Functions {
      *
      * @return array Array of mime types keyed by the file extension regex corresponding to those types.
      */
-    public function get_allowed_mime_types() {
+    public static function get_allowed_mime_types() {
         static $mimes = false;
 
         if (!$mimes) {
@@ -221,7 +221,7 @@ class Functions {
      * @param array $defaults Array that serves as the defaults.
      * @return array Merged user defined values with defaults.
      */
-    public function hr_parse_args($args, $defaults = '') {
+    public static function hr_parse_args($args, $defaults = '') {
         if (is_object($args))
             $r = get_object_vars($args);
         elseif (is_array($args))
@@ -242,7 +242,7 @@ class Functions {
      * @param string|bool $force Optional.
      * @return bool True if forced, false if not forced.
      */
-    public function force_ssl_login($force = null) {
+    public static function force_ssl_login($force = null) {
         static $forced = false;
 
         if (!is_null($force)) {
@@ -262,7 +262,7 @@ class Functions {
      * @param string|bool $force
      * @return bool True if forced, false if not forced.
      */
-    public function force_ssl_admin($force = null) {
+    public static function force_ssl_admin($force = null) {
         static $forced = false;
 
         if (!is_null($force)) {
@@ -283,7 +283,7 @@ class Functions {
      * @param array $keys The list of keys
      * @return array The array slice
      */
-    public function hr_array_slice_assoc($array, $keys) {
+    public static function hr_array_slice_assoc($array, $keys) {
         $slice = array();
         foreach ($keys as $key)
             if (isset($array[$key]))
