@@ -23,7 +23,7 @@ class Formatting {
      * @param bool $br Optional. If set, this will convert all remaining line-breaks after paragraphing. Default true.
      * @return string Text which has been converted into correct paragraph tags.
      */
-    public function hrautop($pee, $br = true) {
+    public static function hrautop($pee, $br = true) {
         $pre_tags = array();
 
         if (trim($pee) === '')
@@ -104,7 +104,7 @@ class Formatting {
      * @param array $matches preg_replace_callback matches array
      * @return string
      */
-    private function _autop_newline_preservation_helper($matches) {
+    private static function _autop_newline_preservation_helper($matches) {
         return str_replace("\n", "<HRPreserveNewline />", $matches[0]);
     }
 
@@ -119,7 +119,7 @@ class Formatting {
      * @param string $str The string to be checked
      * @return bool True if $str fits a UTF-8 model, false otherwise.
      */
-    public function seems_utf8($str) {
+    public static function seems_utf8($str) {
         $length = strlen($str);
         for ($i = 0; $i < $length; $i++) {
             $c = ord($str[$i]);
@@ -162,7 +162,7 @@ class Formatting {
      * @param boolean $double_encode Optional. Whether to encode existing html entities. Default is false.
      * @return string The encoded text with HTML entities.
      */
-    private function _hr_specialchars($string, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false) {
+    private static function _hr_specialchars($string, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false) {
         $string = (string) $string;
 
         if (0 === strlen($string))
@@ -242,7 +242,7 @@ class Formatting {
      * @param mixed $quote_style Optional. Converts double quotes if set to ENT_COMPAT, both single and double if set to ENT_QUOTES or none if set to ENT_NOQUOTES. Also compatible with old _wp_specialchars() values; converting single quotes if set to 'single', double if set to 'double' or both if otherwise set. Default is ENT_NOQUOTES.
      * @return string The decoded text without HTML entities.
      */
-    public function hr_specialchars_decode($string, $quote_style = ENT_NOQUOTES) {
+    public static function hr_specialchars_decode($string, $quote_style = ENT_NOQUOTES) {
         $string = (string) $string;
 
         if (0 === strlen($string)) {
@@ -299,7 +299,7 @@ class Formatting {
      * @param boolean $strip Optional. Whether to attempt to strip out invalid UTF8. Default is false.
      * @return string The checked text.
      */
-    public function hr_check_invalid_utf8($string, $strip = false) {
+    public static function hr_check_invalid_utf8($string, $strip = false) {
         $string = (string) $string;
 
         if (0 === strlen($string)) {
@@ -347,7 +347,7 @@ class Formatting {
      * @param int $length Max length of the string
      * @return string String with Unicode encoded for URI.
      */
-    function utf8_uri_encode($utf8_string, $length = 0) {
+    public static function utf8_uri_encode($utf8_string, $length = 0) {
         $unicode = '';
         $values = array();
         $num_octets = 1;
@@ -399,7 +399,7 @@ class Formatting {
      * @param string $string Text that might have accent characters
      * @return string Filtered string with replaced "nice" characters.
      */
-    public function remove_accents($string) {
+    public static function remove_accents($string) {
         if (!preg_match('/[\x80-\xff]/', $string))
             return $string;
 
@@ -633,7 +633,7 @@ class Formatting {
      * @param string $filename The filename to be sanitized
      * @return string The sanitized filename
      */
-    public function sanitize_file_name($filename) {
+    public static function sanitize_file_name($filename) {
         $filename_raw = $filename;
         $special_chars = array("?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr(0));
         $special_chars = $this->HuradHook->apply_filters('sanitize_file_name_chars', $special_chars, $filename_raw);
@@ -692,7 +692,7 @@ class Formatting {
      * @param bool $strict If set limits $username to specific characters. Default false.
      * @return string The sanitized username, after passing through filters.
      */
-    public function sanitize_user($username, $strict = false) {
+    public static function sanitize_user($username, $strict = false) {
         $raw_username = $username;
         $username = Formatting::hr_strip_all_tags($username);
         $username = Formatting::remove_accents($username);
@@ -720,7 +720,7 @@ class Formatting {
      * @param string $key String key
      * @return string Sanitized key
      */
-    public function sanitize_key($key) {
+    public static function sanitize_key($key) {
         $raw_key = $key;
         $key = strtolower($key);
         $key = preg_replace('/[^a-z0-9_\-]/', '', $key);
@@ -741,7 +741,7 @@ class Formatting {
      * @param string $context Optional. The operation for which the string is sanitized
      * @return string The sanitized string.
      */
-    public function sanitize_title($title, $fallback_title = '', $context = 'save') {
+    public static function sanitize_title($title, $fallback_title = '', $context = 'save') {
         $raw_title = $title;
 
         if ('save' == $context)
@@ -768,7 +768,7 @@ class Formatting {
      * @param string $context Optional. The operation for which the string is sanitized.
      * @return string The sanitized title.
      */
-    public function sanitize_title_with_dashes($title, $raw_title = '', $context = 'display') {
+    public static function sanitize_title_with_dashes($title, $raw_title = '', $context = 'display') {
         $title = strip_tags($title);
         // Preserve escaped octets.
         $title = preg_replace('|%([a-fA-F0-9][a-fA-F0-9])|', '---$1---', $title);
@@ -836,7 +836,7 @@ class Formatting {
      * Defaults to an empty string.
      * @return string The sanitized value
      */
-    function sanitize_html_class($class, $fallback = '') {
+    public static function sanitize_html_class($class, $fallback = '') {
         //Strip out any % encoded octets
         $sanitized = preg_replace('|%[a-fA-F0-9][a-fA-F0-9]|', '', $class);
 
@@ -861,7 +861,7 @@ class Formatting {
      * @param string $content String of characters to be converted.
      * @return string Converted string.
      */
-    function convert_chars($content) {
+    public static function convert_chars($content) {
         // Translation of invalid Unicode references range to valid range
         $hr_htmltranswinuni = array(
             '&#128;' => '&#8364;', // the Euro sign
@@ -924,7 +924,7 @@ class Formatting {
      * @param bool $force If true, forces balancing, ignoring the value of the option. Default false.
      * @return string Balanced text
      */
-    public function balanceTags($text, $force = false) {
+    public static function balanceTags($text, $force = false) {
         if ($force || Configure::read('use_balanceTags') == 1)
             return Formatting::force_balance_tags($text);
         else
@@ -939,7 +939,7 @@ class Formatting {
      * @param string $text Text to be balanced.
      * @return string Balanced text.
      */
-    public function force_balance_tags($text) {
+    public static function force_balance_tags($text) {
         $tagstack = array();
         $stacksize = 0;
         $tagqueue = '';
@@ -1065,7 +1065,7 @@ class Formatting {
      * @param bool $richedit Whether the $content should not pass through htmlspecialchars(). Default false (meaning it will be passed).
      * @return string The text after the filter (and possibly htmlspecialchars()) has been run.
      */
-    public function format_to_edit($content, $richedit = false) {
+    public static function format_to_edit($content, $richedit = false) {
         $content = $this->HuradHook->apply_filters('format_to_edit', $content);
         if (!$richedit)
             $content = Formatting::esc_textarea($content);
@@ -1080,7 +1080,7 @@ class Formatting {
      * @param string $content The text to pass through the filter.
      * @return string Text returned from the 'format_to_post' filter.
      */
-    public function format_to_post($content) {
+    public static function format_to_post($content) {
         $content = $this->HuradHook->apply_filters('format_to_post', $content);
         return $content;
     }
@@ -1102,7 +1102,7 @@ class Formatting {
      * @param int $threshold Digit places number needs to be to not have zeros added.
      * @return string Adds leading zeros to number if needed.
      */
-    public function zeroise($number, $threshold) {
+    public static function zeroise($number, $threshold) {
         return sprintf('%0' . $threshold . 's', $number);
     }
 
@@ -1114,7 +1114,7 @@ class Formatting {
      * @param string $string Value to which backslashes will be added.
      * @return string String with backslashes inserted.
      */
-    public function backslashit($string) {
+    public static function backslashit($string) {
         $string = preg_replace('/^([0-9])/', '\\\\\\\\\1', $string);
         $string = preg_replace('/([a-z])/i', '\\\\\1', $string);
         return $string;
@@ -1135,7 +1135,7 @@ class Formatting {
      * @param string $string What to add the trailing slash to.
      * @return string String with trailing slash added.
      */
-    public function trailingslashit($string) {
+    public static function trailingslashit($string) {
         return Formatting::untrailingslashit($string) . '/';
     }
 
@@ -1150,7 +1150,7 @@ class Formatting {
      * @param string $string What to remove the trailing slash from.
      * @return string String without the trailing slash.
      */
-    public function untrailingslashit($string) {
+    public static function untrailingslashit($string) {
         return rtrim($string, '/');
     }
 
@@ -1165,7 +1165,7 @@ class Formatting {
      * @param mixed $value The value to be stripped.
      * @return mixed Stripped value.
      */
-    public function stripslashes_deep($value) {
+    public static function stripslashes_deep($value) {
         if (is_array($value)) {
             $value = array_map('Formatting::stripslashes_deep', $value);
         } elseif (is_object($value)) {
@@ -1189,7 +1189,7 @@ class Formatting {
      * @param array|string $value The array or string to be encoded.
      * @return array|string $value The encoded array (or string from the callback).
      */
-    public function urlencode_deep($value) {
+    public static function urlencode_deep($value) {
         $value = is_array($value) ? array_map('Formatting::urlencode_deep', $value) : urlencode($value);
         return $value;
     }
@@ -1202,7 +1202,7 @@ class Formatting {
      * @param array|string $value The array or string to be encoded.
      * @return array|string $value The encoded array (or string from the callback).
      */
-    public function rawurlencode_deep($value) {
+    public static function rawurlencode_deep($value) {
         return is_array($value) ? array_map('Formatting::rawurlencode_deep', $value) : rawurlencode($value);
     }
 
@@ -1217,7 +1217,7 @@ class Formatting {
      * @param array $matches Single Regex Match.
      * @return string HTML A element with URI address.
      */
-    private function _make_url_clickable_cb($matches) {
+    private static function _make_url_clickable_cb($matches) {
         $url = $matches[2];
 
         if (')' == $matches[3] && strpos($url, '(')) {
@@ -1253,7 +1253,7 @@ class Formatting {
      * @param array $matches Single Regex Match.
      * @return string HTML A element with URL address.
      */
-    private function _make_web_ftp_clickable_cb($matches) {
+    private static function _make_web_ftp_clickable_cb($matches) {
         $ret = '';
         $dest = $matches[2];
         $dest = 'http://' . $dest;
@@ -1280,7 +1280,7 @@ class Formatting {
      * @param array $matches Single Regex Match.
      * @return string HTML A element with email address.
      */
-    private function _make_email_clickable_cb($matches) {
+    private static function _make_email_clickable_cb($matches) {
         $email = $matches[2] . '@' . $matches[3];
         return $matches[1] . "<a href=\"mailto:$email\">$email</a>";
     }
@@ -1296,7 +1296,7 @@ class Formatting {
      * @param string $text Content to convert URIs.
      * @return string Content with converted URIs.
      */
-    public function make_clickable($text) {
+    public static function make_clickable($text) {
         $r = '';
         $textarr = preg_split('/(<[^<>]+>)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE); // split out HTML tags
         foreach ($textarr as $piece) {
@@ -1379,7 +1379,7 @@ class Formatting {
      * @param int $goal The desired chunk length.
      * @return array Numeric array of chunks.
      */
-    private function _split_str_by_whitespace($string, $goal) {
+    private static function _split_str_by_whitespace($string, $goal) {
         $chunks = array();
 
         $string_nullspace = strtr($string, "\r\n\t\v\f ", "\000\000\000\000\000\000");
@@ -1414,7 +1414,7 @@ class Formatting {
      * @param string $text Content that may contain HTML A elements.
      * @return string Converted content.
      */
-    public function hr_rel_nofollow($text) {
+    public static function hr_rel_nofollow($text) {
         $text = preg_replace_callback('|<a (.+?)>|i', 'Formatting::hr_rel_nofollow_callback', $text);
         return $text;
     }
@@ -1430,7 +1430,7 @@ class Formatting {
      * @param array $matches Single Match
      * @return string HTML A Element with rel nofollow.
      */
-    public function hr_rel_nofollow_callback($matches) {
+    public static function hr_rel_nofollow_callback($matches) {
         $text = $matches[1];
         $text = str_replace(array(' rel="nofollow"', " rel='nofollow'"), '', $text);
         return "<a $text rel=\"nofollow\">";
@@ -1444,7 +1444,7 @@ class Formatting {
      * @param string $text The text within which entities will be converted.
      * @return string Text with converted entities.
      */
-    public function ent2ncr($text) {
+    public static function ent2ncr($text) {
 
         // Allow a plugin to short-circuit and override the mappings.
         $filtered = $this->HuradHook->apply_filters('pre_ent2ncr', null, $text);
@@ -1725,7 +1725,7 @@ class Formatting {
      * @param string $text The text to be formatted.
      * @return string The formatted text after filter is applied.
      */
-    public function hr_richedit_pre($text) {
+    public static function hr_richedit_pre($text) {
         // Filtering a blank results in an annoying <br />\n
         if (empty($text))
             return $this->HuradHook->apply_filters('richedit_pre', '');
@@ -1748,7 +1748,7 @@ class Formatting {
      * @param string $output The text to be formatted.
      * @return string Formatted text after filter applied.
      */
-    public function hr_htmledit_pre($output) {
+    public static function hr_htmledit_pre($output) {
         if (!empty($output))
             $output = htmlspecialchars($output, ENT_NOQUOTES); // convert only < > &
 
@@ -1769,7 +1769,7 @@ class Formatting {
      * @param string $subject
      * @return string The processed string
      */
-    private function _deep_replace($search, $subject) {
+    private static function _deep_replace($search, $subject) {
         $found = true;
         $subject = (string) $subject;
         while ($found) {
@@ -1802,7 +1802,7 @@ class Formatting {
      * @param string $_context Private. Use esc_url_raw() for database usage.
      * @return string The cleaned $url after the 'clean_url' filter is applied.
      */
-    public function esc_url($url, $protocols = null, $_context = 'display') {
+    public static function esc_url($url, $protocols = null, $_context = 'display') {
         $original_url = $url;
 
         if ('' == $url)
@@ -1845,7 +1845,7 @@ class Formatting {
      * @param string $myHTML The text to be converted.
      * @return string Converted text.
      */
-    public function htmlentities2($myHTML) {
+    public static function htmlentities2($myHTML) {
         $translation_table = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES);
         $translation_table[chr(38)] = '&';
         return preg_replace("/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,3};)/", "&amp;", strtr($myHTML, $translation_table));
@@ -1863,7 +1863,7 @@ class Formatting {
      * @param string $text The text to be escaped.
      * @return string Escaped text.
      */
-    public function esc_js($text) {
+    public static function esc_js($text) {
         $safe_text = Formatting::hr_check_invalid_utf8($text);
         $safe_text = Formatting::_hr_specialchars($safe_text, ENT_COMPAT);
         $safe_text = preg_replace('/&#(x)?0*(?(1)27|39);?/i', "'", stripslashes($safe_text));
@@ -1880,7 +1880,7 @@ class Formatting {
      * @param string $text
      * @return string
      */
-    public function esc_html($text) {
+    public static function esc_html($text) {
         $safe_text = Formatting::hr_check_invalid_utf8($text);
         $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
         return HuradHook::apply_filters('esc_html', $safe_text, $text);
@@ -1894,7 +1894,7 @@ class Formatting {
      * @param string $text
      * @return string
      */
-    public function esc_attr($text) {
+    public static function esc_attr($text) {
         $safe_text = Formatting::hr_check_invalid_utf8($text);
         $safe_text = Formatting::_hr_specialchars($safe_text, ENT_QUOTES);
         return HuradHook::apply_filters('attribute_escape', $safe_text, $text);
@@ -1908,7 +1908,7 @@ class Formatting {
      * @param string $text
      * @return string
      */
-    public function esc_textarea($text) {
+    public static function esc_textarea($text) {
         $safe_text = htmlspecialchars($text, ENT_QUOTES);
         return HuradHook::apply_filters('esc_textarea', $safe_text, $text);
     }
@@ -1921,7 +1921,7 @@ class Formatting {
      * @param string $tag_name
      * @return string
      */
-    public function tag_escape($tag_name) {
+    public static function tag_escape($tag_name) {
         $safe_tag = strtolower(preg_replace('/[^a-zA-Z0-9_:]/', '', $tag_name));
         return HuradHook::apply_filters('tag_escape', $safe_tag, $tag_name);
     }
@@ -1937,7 +1937,7 @@ class Formatting {
      * @param string $link Full URL path.
      * @return string Absolute path.
      */
-    public function hr_make_link_relative($link) {
+    public static function hr_make_link_relative($link) {
         return preg_replace('|https?://[^/]+(/.*)|i', '$1', $link);
     }
 
@@ -1953,7 +1953,7 @@ class Formatting {
      * @param string $string The string to be parsed.
      * @param array $array Variables will be stored in this array.
      */
-    public function hr_parse_str($string, &$array) {
+    public static function hr_parse_str($string, &$array) {
         parse_str($string, $array);
         if (get_magic_quotes_gpc())
             $array = Formatting::stripslashes_deep($array);
@@ -1971,7 +1971,7 @@ class Formatting {
      * @param string $text Text to be converted.
      * @return string Converted text.
      */
-    public function hr_pre_kses_less_than($text) {
+    public static function hr_pre_kses_less_than($text) {
         return preg_replace_callback('%<[^>]*?((?=<)|>|$)%', 'Formatting::hr_pre_kses_less_than_callback', $text);
     }
 
@@ -1984,7 +1984,7 @@ class Formatting {
      * @param array $matches Populated by matches to preg_replace.
      * @return string The text returned after esc_html if needed.
      */
-    public function hr_pre_kses_less_than_callback($matches) {
+    public static function hr_pre_kses_less_than_callback($matches) {
         if (false === strpos($matches[0], '>'))
             return Formatting::esc_html($matches[0]);
         return $matches[0];
@@ -2000,7 +2000,7 @@ class Formatting {
      * @param mixed $args,... Arguments to be formatted into the $pattern string.
      * @return string The formatted string.
      */
-    public function hr_sprintf($pattern) {
+    public static function hr_sprintf($pattern) {
         $args = func_get_args();
         $len = strlen($pattern);
         $start = 0;
@@ -2065,7 +2065,7 @@ class Formatting {
      * @param array $args List items to prepend to the content and replace '%l'.
      * @return string Localized list items and rest of the content.
      */
-    public function hr_sprintf_l($pattern, $args) {
+    public static function hr_sprintf_l($pattern, $args) {
         // Not a match
         if (substr($pattern, 0, 2) != '%l')
             return $pattern;
@@ -2114,7 +2114,7 @@ class Formatting {
      * @param integer $count Maximum number of characters to take.
      * @return string The excerpt.
      */
-    public function hr_html_excerpt($str, $count) {
+    public static function hr_html_excerpt($str, $count) {
         $str = Formatting::hr_strip_all_tags($str, true);
         $str = mb_substr($str, 0, $count);
         // remove part of an entity at the end
@@ -2135,7 +2135,7 @@ class Formatting {
      * @param array $attrs The attributes which should be processed.
      * @return string The processed content.
      */
-    public function links_add_base_url($content, $base, $attrs = array('src', 'href')) {
+    public static function links_add_base_url($content, $base, $attrs = array('src', 'href')) {
         global $_links_add_base;
         $_links_add_base = $base;
         $attrs = implode('|', (array) $attrs);
@@ -2151,7 +2151,7 @@ class Formatting {
      * @param string $m The matched link.
      * @return string The processed link.
      */
-    private function _links_add_base($m) {
+    private static function _links_add_base($m) {
         global $_links_add_base;
         //1 = attribute name 2 = quotation mark 3 = URL
         return $m[1] . '=' . $m[2] .
@@ -2176,7 +2176,7 @@ class Formatting {
      * @param array $tags An array of tags to apply to.
      * @return string The processed content.
      */
-    public function links_add_target($content, $target = '_blank', $tags = array('a')) {
+    public static function links_add_target($content, $target = '_blank', $tags = array('a')) {
         global $_links_add_target;
         $_links_add_target = $target;
         $tags = implode('|', (array) $tags);
@@ -2192,7 +2192,7 @@ class Formatting {
      * @param string $m The matched link.
      * @return string The processed link.
      */
-    private function _links_add_target($m) {
+    private static function _links_add_target($m) {
         global $_links_add_target;
         $tag = $m[1];
         $link = preg_replace('|(target=[\'"](.*?)[\'"])|i', '', $m[2]);
@@ -2223,7 +2223,7 @@ class Formatting {
      * @param bool $remove_breaks optional Whether to remove left over line breaks and white space chars
      * @return string The processed string.
      */
-    public function hr_strip_all_tags($string, $remove_breaks = false) {
+    public static function hr_strip_all_tags($string, $remove_breaks = false) {
         $string = preg_replace('@<(script|style)[^>]*?>.*?</\\1>@si', '', $string);
         $string = strip_tags($string);
 
@@ -2247,7 +2247,7 @@ class Formatting {
      * @param string $str
      * @return string
      */
-    public function sanitize_text_field($str) {
+    public static function sanitize_text_field($str) {
         $filtered = Formatting::hr_check_invalid_utf8($str);
 
         if (strpos($filtered, '<') !== false) {
@@ -2282,7 +2282,7 @@ class Formatting {
      * @param string $suffix If the filename ends in suffix this will also be cut off.
      * @return string
      */
-    public function hr_basename($path, $suffix = '') {
+    public static function hr_basename($path, $suffix = '') {
         return urldecode(basename(str_replace(array('%2F', '%5C'), '/', urlencode($path)), $suffix));
     }
 
@@ -2294,7 +2294,7 @@ class Formatting {
      * @param string $mime_type Mime type
      * @return string Sanitized mime type
      */
-    public function sanitize_mime_type($mime_type) {
+    public static function sanitize_mime_type($mime_type) {
         $sani_mime_type = preg_replace('/[^-+*.a-zA-Z0-9\/]/', '', $mime_type);
         return HuradHook::apply_filters('sanitize_mime_type', $sani_mime_type, $mime_type);
     }
