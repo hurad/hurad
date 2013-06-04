@@ -1,11 +1,24 @@
 <?php
 
+/**
+ * Category Controller
+ *
+ * This file is category controller file.
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Categories Controller
+ * CategoriesController is used for managing Hurd categories.
  *
- * @property Category $Category
+ * @package app.Controller
  */
 class CategoriesController extends AppController {
 
