@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('admin/Posts/posts'), array('block' => 'scriptHeader')); ?>
+<?php $this->Html->script(array('admin/Posts/posts'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
@@ -32,12 +32,19 @@ echo $this->Form->create('Post', array(
                 <?php echo $this->Form->input('content', array('class' => 'editor', 'type' => 'textarea')); ?>
             </div>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
+
+        <div class="column">
+            <div class="portlet">
+                <div class="portlet-header"><?php echo __('Excerpt'); ?></div>
+                <div class="portlet-content">
+                    <div class="control-group">
+                        <div class="controls">
+                            <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
     <div class="span4">
         <div class="column">
@@ -132,3 +139,5 @@ echo $this->Form->create('Post', array(
         </div>
     </div>
 </div>
+
+<?php echo $this->Form->end(null); ?>
