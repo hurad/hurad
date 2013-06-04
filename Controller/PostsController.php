@@ -24,14 +24,15 @@ class PostsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
-        //$this->isAuthorized();
+        $this->Auth->allow('index', 'view', 'viewById');
+        $this->Security->unlockedFields = array('Post.tcheckbox', 'Post.bcheckbox');
     }
 
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
+    public function isAuthorized($user) {
+        $action = Router::getParam('action');
+        switch ($user['role']) {
             case 'admin':
-                $this->Auth->allow();
+                return true;
                 break;
             case 'editor':
                 $this->Auth->allow('admin_index', 'admin_add', 'admin_edit', 'index', 'view');
@@ -115,7 +116,7 @@ class PostsController extends AppController {
         }
     }
 
-    public function viewByid($id = null) {
+    public function viewById($id = null) {
         $this->Post->id = $id;
         if (is_null($id) && !$this->Post->exists()) {
             throw new NotFoundException(__('Invalid post'));
@@ -450,10 +451,8 @@ class PostsController extends AppController {
     public function admin_process() {
         $this->autoRender = false;
         $action = NULL;
-        if ($this->request->data['Post']['action']['top']) {
-            $action = $this->request->data['Post']['action']['top'];
-        } elseif ($this->request->data['Post']['action']['bot']) {
-            $action = $this->request->data['Post']['action']['bot'];
+        if ($this->request->data['Post']['action']) {
+            $action = $this->request->data['Post']['action'];
         }
         $ids = array();
         foreach ($this->request->data['Post'] AS $id => $value) {
