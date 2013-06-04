@@ -47,7 +47,7 @@ class PostHelper extends AppHelper {
 
         if ($this->view_path == 'Posts') {
             if ($this->view == 'view' || $this->view == 'viewByid') {
-                $this->Link->post = $this->General->post = $this->post = $this->_View->getVar('post');
+                $this->Link->content = $this->General->content = $this->post = $this->_View->getVar('post');
             }
         } else {
             return FALSE;
