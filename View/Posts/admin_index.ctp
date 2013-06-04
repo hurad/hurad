@@ -31,7 +31,7 @@ echo $this->Form->create('Post', array(
     <thead>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('Post.tcheckbox', array('class' => 'check-all', 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -135,7 +135,7 @@ echo $this->Form->create('Post', array(
     <tfoot>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('Post.bcheckbox', array('class' => 'check-all', 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -185,7 +185,7 @@ echo $this->Form->create('Post', array(
 
 <section>
     <?php
-    echo $this->Form->input('Post.action.bot', array(
+    echo $this->Form->input('Post.action', array(
         'label' => false,
         'options' => array(
             'publish' => __('Publish'),
@@ -195,8 +195,8 @@ echo $this->Form->create('Post', array(
         ),
         'empty' => __('Bulk Actions'),
     ));
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
+    echo $this->Form->submit(__('Apply'), array('class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
 
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end(null); ?>
