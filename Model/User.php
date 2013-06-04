@@ -131,7 +131,7 @@ class User extends AppModel {
             $userMetaData = array(
                 'firstname' => '',
                 'lastname' => '',
-                'nickname' => '',
+                'nickname' => $this->data['User']['username'],
                 'bio' => '',
                 'display_name' => $this->data['User']['username']
             );
