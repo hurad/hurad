@@ -10,7 +10,7 @@ App::uses('File', 'Utility');
  */
 class HuradTheme {
 
-    public function getThemeData() {
+    public static function getThemeData() {
         $defaults = array(
             'name' => '',
             'description' => '',
@@ -38,7 +38,7 @@ class HuradTheme {
         return $themes;
     }
 
-    public function activate($alias) {
+    public static function activate($alias) {
         if ($alias == '') {
             return FALSE;
         }
@@ -46,7 +46,7 @@ class HuradTheme {
         return TRUE;
     }
 
-    public function delete($alias) {
+    public static function delete($alias) {
         $viewPath = App::path('View');
         $folder = new Folder($viewPath[0] . 'Themed' . DS . $alias . DS);
 
