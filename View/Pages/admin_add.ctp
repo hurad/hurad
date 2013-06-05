@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('admin/Pages/pages'), array('block' => 'scriptHeader')); ?>
+<?php $this->Html->script(array('admin/Pages/pages'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
@@ -22,9 +22,7 @@ echo $this->Form->create('Page', array(
         </div>
         <div class="control-group">
             <div class="controls">
-                <p style="display: inline;"><?php echo Configure::read('General-site_url') . '/'; ?></p>
-                <?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'postSlug')); ?>
-                <?php echo $this->Form->button(__('Edit'), array('id' => 'perma_edit', 'type' => 'button', 'class' => 'add_button')); ?>
+                <?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'span12 postSlug', 'placeholder' => __('Enter slug here'))); ?>
             </div>
         </div>
         <div class="control-group">
