@@ -1,107 +1,161 @@
-<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => FALSE)); ?>
-<?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/checkbox'), array('block' => 'scriptHeader')); ?>
 
-<h2><?php echo $title_for_layout; ?></h2>
+<div class="page-header">
+    <h2><?php echo $title_for_layout; ?></h2>
+</div>
+
+<section class="top-table">
+    <div class="row-fluid">
+        <div class="span6"><!-- Filter --></div>
+        <div class="span6"><!-- Search --></div>
+    </div>
+</section>
 
 <?php
-echo $this->Form->create('User', array('url' =>
-    array('admin' => TRUE, 'controller' => 'users', 'action' => 'process'),
-    'inputDefaults' =>
-    array('label' => false, 'div' => false)));
+echo $this->Form->create('Menu', array(
+    'url' => array(
+        'admin' => TRUE,
+        'controller' => 'menus',
+        'action' => 'process'
+    ),
+    'class' => 'form-inline',
+    'inputDefaults' => array(
+        'label' => false,
+        'div' => false
+    )
+));
 ?>
 
-<table class="list-table">
+<table class="table table-striped">
     <thead>
-        <tr>
-            <th id="cb" class="column-cb column-manage check-column" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th id="name" class="column-name column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('name', __('Name')); ?>
-            </th>
-            <th id="slug" class="column-slug column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
-            </th>
-            <th id="link_count" class="column-link_count column-manage" scope="col">
-                <?php echo $this->Paginator->sort('link_count', __('Link Count')); ?>
-            </th>
-            <th id="description" class="column-description column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('description', __('Description')); ?>
-            </th>
-        </tr>
-    </thead>
-    <?php foreach ($menus as $menu): ?>
-        <tr id="<?php echo h($menu['Menu']['id']); ?>" class="menu-<?php echo h($menu['Menu']['id']); ?>">
-            <td class="check-column" scope="row"><input type=checkbox name=checkbox[<?php echo h($menu['Menu']['id']); ?>] value=<?php echo h($menu['Menu']['id']); ?>></td>
-            <td class="column-name">
-                <?php echo h($menu['Menu']['name']); ?>
-                <div class="row-actions">
-                    <span class="action-add_link">
-                        <?php echo $this->Html->link(__('Add new link'), array('admin' => TRUE, 'controller' => 'links', 'action' => 'add', $menu['Menu']['id'])); ?> | 
-                    </span>
-                    <span class="action-view_links">
-                        <?php echo $this->Html->link(__('View Links'), array('admin' => TRUE, 'controller' => 'links', 'action' => 'indexBymenu', $menu['Menu']['id'])); ?> | 
-                    </span>                 
-                    <span class="action-edit">
-                        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'menus', 'action' => 'edit', $menu['Menu']['id'])); ?> |
-                    </span>
-                    <span class="action-delete">
-                        <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'controller' => 'menus', 'action' => 'delete', $menu['Menu']['id']), null, __('Are you sure you want to delete # %s?', $menu['Menu']['id'])); ?>
-                    </span>
-                </div>
-            </td>
-            <td class="column-slug"><?php echo h($menu['Menu']['slug']); ?>&nbsp;</td>
-            <td class="column-link_count"><?php echo h($menu['Menu']['link_count']); ?>&nbsp;</td>
-            <td class="column-description"><?php echo h($menu['Menu']['description']); ?>&nbsp;</td>
-        </tr>
-    <?php endforeach; ?>
-    <tfoot>
-        <tr>
-            <th class="column-cb column-manage check-column" scope="col">
-                <?php echo $this->Form->checkbox('', array('onclick' => 'toggleChecked(this.checked)', 'name' => false, 'hiddenField' => false)); ?>
-            </th>
-            <th class="column-name column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('name', __('Name')); ?>
-            </th>
-            <th class="column-slug column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('slug', __('Slug')); ?>
-            </th>
-            <th id="link_count" class="column-link_count column-manage" scope="col">
-                <?php echo $this->Paginator->sort('link_count', __('Link Count')); ?>
-            </th>
-            <th class="column-description column-manage check-column" scope="col">
-                <?php echo $this->Paginator->sort('description', __('Description')); ?>
-            </th>
-        </tr>
-    </tfoot>
-</table>
-<div class="tablenav">
-    <div class="actions">
         <?php
-        echo $this->Form->input('User.action', array(
-            'label' => false,
-            'options' => array(
-                'delete' => __('Delete')
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('Menu.tcheckbox', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb check-column column-manage',
+                    'scope' => 'col'
+                )
             ),
-            'empty' => __('Bulk Actions'),
+            array($this->Paginator->sort('name', __('Name')) => array(
+                    'id' => 'name',
+                    'class' => 'column-name column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('slug', __('Slug')) => array(
+                    'id' => 'slug',
+                    'class' => 'column-slug column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('link_count', __('Link Count')) => array(
+                    'id' => 'link-count',
+                    'class' => 'column-link-count column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('description', __('Description')) => array(
+                    'id' => 'description',
+                    'class' => 'column-description column-manage',
+                    'scope' => 'col'
+                )
+            )
         ));
-        echo $this->Form->submit(__('Apply'), array('class' => 'action_button', 'div' => FALSE));
         ?>
-    </div>
-    <div class="paging">
+    </thead>
+    <tbody>
         <?php
-        if ($this->Paginator->numbers()) {
-            echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
-            echo $this->Paginator->numbers(array('separator' => ''));
-            echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
+        if (count($menus) > 0) {
+            foreach ($menus as $menu) {
+                echo $this->Html->tableCells(array(
+                    array(
+                        array($this->Form->checkbox('Menu.' . $menu['Menu']['id'] . '.id'),
+                            array(
+                                'class' => 'check-column',
+                                'scope' => 'row')
+                        ),
+                        array($this->Html->link('<strong>' . h($menu['Menu']['name']) . '</strong>', array('action' => 'edit', $menu['Menu']['id']), array('title' => __('Edit “%s”', $menu['Menu']['name']), 'escape' => FALSE)) . $this->element('admin/Menus/row_actions', array('menu' => $menu)),
+                            array(
+                                'class' => 'column-name'
+                            )
+                        ),
+                        array($menu['Menu']['slug'],
+                            array(
+                                'class' => 'column-slug'
+                            )
+                        ),
+                        array($menu['Menu']['link_count'],
+                            array(
+                                'class' => 'column-link-count'
+                            )
+                        ),
+                        array($menu['Menu']['description'],
+                            array(
+                                'class' => 'column-visible'
+                            )
+                        )
+                    ),
+                        ), array(
+                    'id' => 'menu-' . $menu['Menu']['id']
+                        ), array(
+                    'id' => 'menu-' . $menu['Menu']['id']
+                        )
+                );
+            }
+        } else {
+            echo $this->Html->tag('tr', $this->Html->tag('td', __('No menus were found'), array('colspan' => '5', 'style' => 'text-align:center;')), array('id' => 'menu-0'));
         }
         ?>
-    </div>
-    <div class="pageing_counter">
+    </tbody>
+    <tfoot>
         <?php
-        echo $this->Paginator->counter(array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        echo $this->Html->tableHeaders(array(
+            array($this->Form->checkbox('Menu.bcheckbox', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+                array(
+                    'id' => 'cb',
+                    'class' => 'column-cb check-column column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('name', __('Name')) => array(
+                    'id' => 'name',
+                    'class' => 'column-name column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('slug', __('Slug')) => array(
+                    'id' => 'slug',
+                    'class' => 'column-slug column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('link_count', __('Link Count')) => array(
+                    'id' => 'link-count',
+                    'class' => 'column-link-count column-manage',
+                    'scope' => 'col'
+                )
+            ),
+            array($this->Paginator->sort('description', __('Description')) => array(
+                    'id' => 'description',
+                    'class' => 'column-description column-manage',
+                    'scope' => 'col'
+                )
+            )
         ));
-        ?>	
-    </div>
-</div>
+        ?>
+    </tfoot>
+</table>
+
+<section>
+    <?php
+    echo $this->Form->input('Menu.action', array(
+        'label' => false,
+        'options' => array(
+            'delete' => __('Delete')
+        ),
+        'empty' => __('Bulk Actions'),
+    ));
+    echo $this->Form->submit(__('Apply'), array('class' => 'btn btn-info', 'div' => FALSE));
+    ?>
+</section>
