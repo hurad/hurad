@@ -31,12 +31,18 @@ echo $this->Form->create('Page', array(
                 <?php echo $this->Form->input('content', array('class' => 'editor', 'type' => 'textarea')); ?>
             </div>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
+        <div class="column">
+            <div class="portlet">
+                <div class="portlet-header"><?php echo __('Excerpt'); ?></div>
+                <div class="portlet-content">
+                    <div class="control-group">
+                        <div class="controls">
+                            <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
     <div class="span4">
         <div class="column">

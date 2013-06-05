@@ -1,4 +1,4 @@
-<?php echo $this->Html->script(array('admin/Posts/posts'), array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/Posts/posts'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
@@ -14,7 +14,7 @@ echo $this->Form->create('Post', array(
 ?>
 
 <div class="row-fluid">
-    <div class="span9">
+    <div class="span8">
         <div class="control-group">
             <div class="controls">
                 <?php echo $this->Form->input('id'); ?>
@@ -38,14 +38,20 @@ echo $this->Form->create('Post', array(
                 <?php echo $this->Form->input('content', array('class' => 'editor')); ?>
             </div>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $this->Form->input('excerpt', array('class' => 'span12')); ?>
+        <div class="column">
+            <div class="portlet">
+                <div class="portlet-header"><?php echo __('Excerpt'); ?></div>
+                <div class="portlet-content">
+                    <div class="control-group">
+                        <div class="controls">
+                            <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-    <div class="span3">
+    <div class="span4">
         <div class="column">
             <div class="portlet">
                 <div class="portlet-header">Publish</div>
