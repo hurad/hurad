@@ -1,7 +1,8 @@
-<?php $this->Html->css('admin-side-widget', null, array('inline' => false)); ?>
-<?php echo $this->Html->script('slug', array('block' => 'headerScript')); ?>
+<?php $this->Html->script(array('admin/Pages/pages'), array('block' => 'scriptHeader')); ?>
 
-<h2><?php echo $title_for_layout; ?></h2>
+<div class="page-header">
+    <h2><?php echo $title_for_layout; ?></h2>
+</div>
 
 <?php
 echo $this->Form->create('Page', array(
@@ -11,118 +12,119 @@ echo $this->Form->create('Page', array(
     )
 ));
 ?>
-<div id="poststuff" class="metabox-holder">
-    <?php echo $this->Form->input('id'); ?>
-    <div id="admin-side-column">
-        <div id="side-sortables">
-            <ul id="side-column">
-                <li class="side-widget">
-                    <ul class="side-menu">
-                        <li class="top-side-menu"><?php echo __("Publish"); ?></li>
-                        <li>
-                            <ul class="sub-side-menu">
-                                <li><?php echo __("Status: "); ?>
-                                    <span>
-                                        <?php
-                                        echo $this->Form->input('status', array('options' =>
-                                            array(
-                                                'publish' => 'Publish',
-                                                'draft' => 'Draft'
-                                                )));
-                                        ?>
-                                    </span>
-                                </li>
-                                <li><?php echo __("Publish on: "); ?>
-                                    <span class="date_published">
-                                        <span class="label_published"><?php echo __("Date:"); ?></span>
-                                        <?php
-                                        echo $this->Form->input('created', array(
-                                            'type' => 'date',
-                                            'dateFormat' => 'MDY',
-                                            'class' => 'date_select')
-                                        );
-                                        ?>
-                                    </span>                                   
-                                    <span class="time_published">
-                                        <span class="label_published"><?php echo __("Time:"); ?></span>
-                                        <?php
-                                        echo $this->Form->input('created', array(
-                                            'type' => 'time',
-                                            'timeFormat' => 12,
-                                            'class' => 'time_select')
-                                        );
-                                        ?>
-                                    </span>                                    
-                                </li>
-                                <li><?php echo __("Comment Status:"); ?>
-                                    <span>
-                                        <?php
-                                        echo $this->Form->input('comment_status', array('options' =>
-                                            array(
-                                                'open' => 'Open',
-                                                'close' => 'Close'
-                                                )));
-                                        ?>    
-                                    </span>
-                                </li>
-                                <li class="last-item">
-                                    <?php echo $this->Form->submit(__('Update'), array('div' => false, 'name' => 'publish', 'class' => 'publish-button')); ?>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="side-widget">
-                    <ul class="side-menu">
-                        <li class="top-side-menu"><?php echo __("Page Attributes"); ?></li>
-                        <li>
-                            <ul class="sub-side-menu">
-                                <li>
-                                    <p>
-                                        <strong>
-                                            <?php echo __("Parent"); ?>
-                                        </strong>
-                                    </p>
-                                    <span>
-                                        <?php echo $this->Form->select('parent_id', $parentPages, array('empty' => __('(No Parent)'))); ?>
-                                    </span>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+
+<div class="row-fluid">
+    <div class="span8">
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->Form->input('id'); ?>
+                <?php echo $this->Form->input('title', array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __('Enter title here'))); ?>
+            </div>
         </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'span12 postSlug', 'placeholder' => __('Enter slug here'))); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->Form->input('content', array('class' => 'editor', 'type' => 'textarea')); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->Form->input('excerpt', array('class' => 'span12', 'type' => 'textarea')); ?>
+            </div>
+        </div>
+
     </div>
-
-    <div id="wrap-body">
-        <div id="wrap-body-content">
-            <table class="form-table">
-                <tbody><tr class="form-field form-required">
-                        <th scope="row"><?php echo $this->Form->label('title', 'Title'); ?> <span class="description"><?php echo __("(Required)"); ?></span></th>
-                        <td><?php echo $this->Form->input('title', array('type' => 'text', 'class' => 'postTitle')); ?></td>
-                    </tr>
-                    <tr class="form-field form-required">
-                        <th scope="row"><?php echo $this->Form->label('slug', 'Slug'); ?> <span class="description"><?php echo __("(Required)"); ?></span></th>
-                        <td><?php echo $this->Form->input('slug', array('type' => 'text', 'class' => 'postSlug')); ?></td>
-                    </tr>
-                    <tr class="form-field">
-                        <th scope="row"><?php echo $this->Form->label('content', 'Content'); ?></th>
-                        <td><?php echo $this->Form->input('content'); ?></td>
-                <script type="text/javascript">
-                    //<![CDATA[
-
-                    CKEDITOR.replace( 'data[Page][content]',
-                    {
-                        customConfig : 'ckeditor_config.js'
-                    });
-
-                    //]]>
-                </script> 
-                </tr>
-                </tbody>
-            </table>
-            <?php //echo $this->Form->end(__('Submit'));  ?>
+    <div class="span4">
+        <div class="column">
+            <div class="portlet">
+                <div class="portlet-header"><?php echo __('Publish'); ?></div>
+                <div class="portlet-content publish-widget">
+                    <ul class="unstyled">
+                        <li>    
+                            <?php echo $this->Form->label('status', __('Post Status:'), array('class' => 'hr-control-label')); ?>
+                            <div class="hr-control">
+                                <?php
+                                echo $this->Form->input('status', array(
+                                    'class' => 'input-medium',
+                                    'options' => array(
+                                        'publish' => __('Publish'),
+                                        'draft' => __('Draft')
+                                    )
+                                ));
+                                ?>
+                            </div>
+                        </li>
+                        <li>
+                            <?php echo $this->Form->label('comment_status', __('Comment Status:'), array('class' => 'hr-control-label')); ?>
+                            <div class="hr-control">
+                                <?php
+                                echo $this->Form->input('comment_status', array(
+                                    'class' => 'input-medium',
+                                    'options' => array(
+                                        'open' => __('Open'),
+                                        'close' => __('Close'),
+                                        'disable' => __('Disable')
+                                    )
+                                ));
+                                ?>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li  class="text-right">
+                            <?php echo $this->Html->tag('span', __('Date: '), array('class' => 'hr-control-label')); ?>
+                            <?php
+                            echo $this->Form->year('created', date('Y'), date('Y', strtotime('+20 Years'))
+                                    , array(
+                                'class' => 'input-small',
+                                'orderYear' => 'asc',
+                                'empty' => false
+                                    )
+                            );
+                            ?>
+                            <?php echo $this->Form->month('created', array('empty' => false, 'class' => 'input-small', 'value' => date('m'))); ?>
+                            <?php echo $this->Form->day('created', array('empty' => false, 'class' => 'input-mini', 'value' => date('d'))); ?>
+                        </li>
+                        <li class="text-center">
+                            <?php echo $this->Html->tag('span', __('Hour: '), array('class' => 'hr-control-label')); ?>
+                            <?php
+                            echo $this->Form->hour('created', TRUE, array(
+                                'empty' => false,
+                                'class' => 'input-mini',
+                                'value' => $this->Time->format('G', 'Now', TRUE, Configure::read('General.timezone'))
+                                    )
+                            );
+                            ?>
+                            <?php echo '<b> : </b>'; ?>
+                            <?php
+                            echo $this->Form->minute('created', array(
+                                'empty' => false,
+                                'class' => 'input-mini',
+                                'value' => $this->Time->format('i', 'Now', TRUE, Configure::read('General.timezone'))
+                                    )
+                            );
+                            ?>
+                            <?php echo $this->Html->tag('span', __('Minute'), array('class' => 'hr-control-label-minute')); ?>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                    <div class="hr-form-actions">
+                        <?php echo $this->Form->submit(__('Update'), array('class' => 'btn btn-primary')) ?>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet">
+                <div class="portlet-header"><?php echo __("Page Attributes"); ?></div>
+                <div class="portlet-content">
+                    <?php echo $this->Form->label('parent_id', __("Parent"), array('class' => 'hr-control-label')); ?>
+                    <?php echo $this->Form->select('parent_id', $parentPages, array('empty' => __('(No Parent)'))); ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<?php echo $this->Form->end(); ?>
