@@ -75,5 +75,7 @@ echo $this->Form->create('Category', array(
 </div>
 
 <div class="form-actions">
-    <?php echo $this->Form->button(__('Add Category'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+    <?php echo $this->Form->submit(__('Add Category'), array('class' => 'btn btn-primary')); ?>
 </div>
+
+<?php echo $this->Form->end(null); ?>
