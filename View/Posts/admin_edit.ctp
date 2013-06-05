@@ -23,14 +23,13 @@ echo $this->Form->create('Post', array(
         </div>
         <div class="control-group">
             <div class="controls">
-                <?php echo $this->Form->label('slug', Configure::read('General.site_url') . '/', array('class' => 'hr-control-label')); ?>
                 <?php
                 echo $this->Form->input('slug', array(
                     'type' => 'text',
-                    'class' => 'postSlug input-xxlarge',
-                    'value' => Formatting::esc_attr($this->Hook->applyFilters('editable_slug', $post['Post']['slug']))
-                        )
-                );
+                    'class' => 'postSlug span12',
+                    'value' => Formatting::esc_attr($this->Hook->applyFilters('editable_slug', $post['Post']['slug'])),
+                    'placeholder' => __('Enter slug here')
+                ));
                 ?>
             </div>
         </div>
