@@ -1,6 +1,6 @@
 <?php
 
-App::import('Model', 'User');
+App::uses('User', 'Model');
 
 /**
  * Description of UserTest
@@ -9,12 +9,12 @@ App::import('Model', 'User');
  */
 class UserTest extends CakeTestCase {
 
-    public $fixtures = array('user');
+    public $fixtures = array('app.user');
     public $User;
 
     public function setUp() {
 
-        $this->User = & ClassRegistry::init('User');
+        $this->User = ClassRegistry::init('User');
     }
 
     public function testGetInstance() {
@@ -25,7 +25,7 @@ class UserTest extends CakeTestCase {
     }
 
     public function testGetUserData() {
-        $result = $this->User->getUserData(1);
+        $result = $this->User->getUserData("1");
 
         $expected = array(
             array('User' => array('id' => 1, 'username' => 'Ali')),
