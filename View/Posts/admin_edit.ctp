@@ -121,7 +121,7 @@ echo $this->Form->create('Post', array(
             <div class="portlet">
                 <div class="portlet-header">Tags</div>
                 <div class="portlet-content">
-                    <?php echo $this->Form->input('Post.tags'); ?>
+                    <?php echo $this->Form->input('Post.tags', array('class' => 'input-block-level')); ?>
                 </div>
             </div>
         </div>
