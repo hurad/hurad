@@ -51,9 +51,6 @@ Posts.widget = function() {
             connectWith: ".column",
             placeholder: "ui-sortable-placeholder",
             forcePlaceholderSize: true,
-            start: function(e, ui) {
-                ui.placeholder.height(ui.item.height());
-            }
         });
         $(".portlet").find(".portlet-header")
                 .prepend("<span class='ui-icon ui-icon-minusthick'></span>")
