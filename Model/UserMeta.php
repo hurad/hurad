@@ -34,6 +34,8 @@ class UserMeta extends AppModel {
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 
