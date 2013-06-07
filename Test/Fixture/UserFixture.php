@@ -49,6 +49,9 @@ class UserFixture extends CakeTestFixture {
             'email' => 'admin@example.org',
             'url' => '',
             'role' => 'admin',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
             'created' => '2007-03-17 01:16:23',
             'modified' => '2007-03-17 01:18:31'
         ),
@@ -59,6 +62,9 @@ class UserFixture extends CakeTestFixture {
             'email' => 'editor@example.org',
             'url' => '',
             'role' => 'editor',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
             'created' => '2007-03-17 01:18:23',
             'modified' => '2007-03-17 01:20:31'
         ),
@@ -69,6 +75,9 @@ class UserFixture extends CakeTestFixture {
             'email' => 'author@example.org',
             'url' => '',
             'role' => 'author',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
             'created' => '2007-03-17 01:20:23',
             'modified' => '2007-03-17 01:22:31'
         ),
@@ -79,6 +88,9 @@ class UserFixture extends CakeTestFixture {
             'email' => 'user@example.org',
             'url' => '',
             'role' => 'user',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
             'created' => '2007-03-17 01:22:23',
             'modified' => '2007-03-17 01:24:31'
         ),
