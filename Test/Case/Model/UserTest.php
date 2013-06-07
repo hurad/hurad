@@ -94,9 +94,20 @@ class UserTest extends CakeTestCase {
     }
 
     public function testDeleteUsers() {
+        //Delete first admin
         $this->User->id = 1;
+        $result = $this->User->delete();
+        $this->assertFalse($result);
+
+        //Delete other user
+        $this->User->id = 4;
+        $result = $this->User->delete();
+        $this->assertTrue($result);
+
+        //Delete user with UserMeta records
+        $this->User->id = 2;
         $this->User->delete();
-        $result = $this->User->getUserData(1);
+        $result = $this->User->getUserData(2);
         $this->assertFalse($result);
     }
 
