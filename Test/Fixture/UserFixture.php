@@ -44,33 +44,37 @@ class UserFixture extends CakeTestFixture {
     public $records = array(
         array(
             'id' => 1,
-            'username' => 'atkrad',
+            'username' => 'admin',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
-            'email' => 'hurad@example.org',
+            'email' => 'admin@example.org',
+            'role' => 'admin',
             'created' => '2007-03-17 01:16:23',
             'modified' => '2007-03-17 01:18:31'
         ),
         array(
             'id' => 2,
-            'username' => 'rad',
+            'username' => 'editor',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
-            'email' => 'hurad@example.org',
+            'email' => 'editor@example.org',
+            'role' => 'editor',
             'created' => '2007-03-17 01:18:23',
             'modified' => '2007-03-17 01:20:31'
         ),
         array(
             'id' => 3,
-            'username' => 'mohammad',
+            'username' => 'author',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
-            'email' => 'hurad@example.org',
+            'email' => 'author@example.org',
+            'role' => 'author',
             'created' => '2007-03-17 01:20:23',
             'modified' => '2007-03-17 01:22:31'
         ),
         array(
             'id' => 4,
-            'username' => 'ali',
+            'username' => 'user',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
-            'email' => 'hurad@example.org',
+            'email' => 'user@example.org',
+            'role' => 'user',
             'created' => '2007-03-17 01:22:23',
             'modified' => '2007-03-17 01:24:31'
         ),
