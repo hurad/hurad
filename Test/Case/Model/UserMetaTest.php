@@ -23,11 +23,11 @@ class UserMetaTest extends CakeTestCase {
     }
 
     public function testAddMeta() {
-        $result = $this->UserMeta->addMeta('firstname', 'Ali', 2);
-        $this->assertEquals($result, true);
-        
-        $result = $this->UserMeta->addMeta('firstname', 'Ali', 2);
-        $this->assertNotEquals($result, true);
+        $result = $this->UserMeta->addMeta('firstname', 'Mahdi', 3);
+        $this->assertTrue($result);
+
+        $result = $this->UserMeta->addMeta('firstname', 'Mahdi', 3);
+        $this->assertFalse($result);
     }
 
 }
