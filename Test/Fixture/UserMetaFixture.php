@@ -15,10 +15,11 @@ class UserMetaFixture extends CakeTestFixture {
     /**
      * name property
      *
-     * @var string 'User'
+     * @var string
      * @access public
      */
     public $name = 'UserMeta';
+    public $table = 'user_metas';
 
     /**
      * fields property
@@ -40,11 +41,36 @@ class UserMetaFixture extends CakeTestFixture {
      * @access public
      */
     public $records = array(
-        array('user_id' => 1, 'meta_key' => 'firstname', 'meta_value' => 'Hasan'),
-        array('user_id' => 1, 'meta_key' => 'lastname', 'meta_value' => 'Davood'),
-        array('user_id' => 1, 'meta_key' => 'nickname', 'meta_value' => 'Mohammad'),
-        array('user_id' => 1, 'meta_key' => 'description', 'meta_value' => 'Ali'),
-        array('user_id' => 1, 'meta_key' => 'display_name', 'meta_value' => 'Ali')
+        array(
+            'id' => 1,
+            'user_id' => 1,
+            'meta_key' => 'firstname',
+            'meta_value' => 'Mohammad'
+        ),
+        array(
+            'id' => 2,
+            'user_id' => 1,
+            'meta_key' => 'lastname',
+            'meta_value' => 'Abdoli Rad'
+        ),
+        array(
+            'id' => 3,
+            'user_id' => 1,
+            'meta_key' => 'nickname',
+            'meta_value' => 'atkrad'
+        ),
+        array(
+            'id' => 4,
+            'user_id' => 1,
+            'meta_key' => 'bio',
+            'meta_value' => ''
+        ),
+        array(
+            'id' => 5,
+            'user_id' => 1,
+            'meta_key' => 'display_name',
+            'meta_value' => 'Mohammad'
+        )
     );
 
 }
