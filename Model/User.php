@@ -141,6 +141,14 @@ class User extends AppModel {
         }
     }
 
+    public function beforeDelete($cascade = true) {
+        parent::beforeDelete($cascade);
+
+        if ($this->id == 1) {
+            return false;
+        }
+    }
+
     public function afterDelete() {
         parent::afterDelete();
 
