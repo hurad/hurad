@@ -9,7 +9,7 @@ App::uses('UserMeta', 'Model');
  */
 class UserMetaTest extends CakeTestCase {
 
-    public $fixtures = array('app.userMeta');
+    public $fixtures = array('app.userMeta', 'app.user');
     public $UserMeta;
 
     public function setUp() {
@@ -20,6 +20,14 @@ class UserMetaTest extends CakeTestCase {
     public function testGetInstance() {
         $firstName = $this->UserMeta->field('meta_value', array('UserMeta.user_id' => 1, 'UserMeta.meta_key' => 'firstname'));
         $this->assertEquals($firstName, 'Mohammad', 'First name');
+    }
+
+    public function testAddMeta() {
+        $result = $this->UserMeta->addMeta('firstname', 'Ali', 2);
+        $this->assertEquals($result, true);
+        
+        $result = $this->UserMeta->addMeta('firstname', 'Ali', 2);
+        $this->assertNotEquals($result, true);
     }
 
 }
