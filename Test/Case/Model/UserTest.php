@@ -93,4 +93,11 @@ class UserTest extends CakeTestCase {
         $this->assertEquals($expected, $result);
     }
 
+    public function testDeleteUsers() {
+        $this->User->id = 1;
+        $this->User->delete();
+        $result = $this->User->getUserData(1);
+        $this->assertFalse($result);
+    }
+
 }
