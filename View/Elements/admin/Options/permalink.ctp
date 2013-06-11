@@ -33,7 +33,7 @@ echo $this->Form->create('Option', array(
                         )
                 );
                 ?>
-                <?php echo __('<code>' . $this->Link->getHomeUrl() . '/p/123</code>'); ?>
+                <?php echo __('<code>' . $this->Link->getSiteUrl() . '/p/123</code>'); ?>
             </label>
             <label class="radio">
                 <?php
@@ -45,7 +45,7 @@ echo $this->Form->create('Option', array(
                     'hiddenField' => FALSE)
                 );
                 ?>
-                <?php echo __('<code>' . $this->Link->getHomeUrl() . '/2012/09/16/sample-post/</code>'); ?>
+                <?php echo __('<code>' . $this->Link->getSiteUrl() . '/2012/09/16/sample-post/</code>'); ?>
             </label>
             <label class="radio">
                 <?php
@@ -57,7 +57,7 @@ echo $this->Form->create('Option', array(
                     'hiddenField' => FALSE)
                 );
                 ?>
-                <?php echo __('<code>' . $this->Link->getHomeUrl() . '/2012/09/sample-post/</code>'); ?>
+                <?php echo __('<code>' . $this->Link->getSiteUrl() . '/2012/09/sample-post/</code>'); ?>
             </label>
         </div>
     </div>

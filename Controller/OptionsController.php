@@ -36,6 +36,8 @@ class OptionsController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
 
+            $this->request->data['Option']['site_url'] = rtrim($this->request->data['Option']['site_url'], "/");
+
             foreach ($this->request->data as $modelName => $optionArray) {
                 foreach ($optionArray as $option => $value) {
                     $opt[Inflector::humanize($prefix) . '.' . $option] = $value;

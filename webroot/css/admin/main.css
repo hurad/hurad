@@ -148,9 +148,10 @@ tbody tr:hover .row-actions{
     background-color: #F5F5F5;
 }
 .ui-sortable-placeholder { 
-    border: 1px dotted black;
+    border: 1px #B3B3B3 dashed;
     visibility: visible !important;
-    height: 50px !important; 
+    background-color: #f4f4f4;
+    margin: 0 0 1em 0;
 }
 .ui-sortable-placeholder * { 
     visibility: hidden; 

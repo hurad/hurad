@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
 
 class UserMeta extends AppModel {
 
+    public $useTable = 'user_metas';
     public $belongsTo = array(
         'User' => array(
             'className' => 'User',
@@ -33,6 +34,8 @@ class UserMeta extends AppModel {
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 

@@ -143,7 +143,7 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
-CakePlugin::load(array('DebugKit'));
+//CakePlugin::load(array('DebugKit'));
 
 /**
  * You can attach event listeners to the request lifecyle as Dispatcher Filter . By Default CakePHP bundles two filters:
@@ -196,7 +196,7 @@ define('SCHEMA', APP . 'Config' . DS . 'Schema' . DS);
  */
 define('HURAD_CONFIG', CONFIG . 'Hurad' . DS);
 
-Configure::write('Installed', !file_exists(CONFIG . 'database.php.default'));
+Configure::write('Installed', file_exists(TMP . 'installed'));
 
 if (Configure::read('Installed')) {
     config('Hurad/bootstrap');

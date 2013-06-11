@@ -36,7 +36,6 @@ class AppController extends Controller {
     public $components = array(
         'Cookie',
         'Session',
-        'DebugKit.Toolbar',
         'Security' => array('csrfUseOnce' => false, 'csrfExpires' => '+1 hour'),
         'Auth' => array(
             //'fields' => array('username' => 'username', 'password' => 'password'),
@@ -88,7 +87,7 @@ class AppController extends Controller {
         //Set logged_in var in all view
         $this->set('logged_in', $this->Auth->loggedIn());
 
-        if ($this->Auth->loggedIn()) {
+        if ($this->Auth->loggedIn() && Configure::read('Installed')) {
             //Set current_user var in all view
             $this->set('current_user', (array) ClassRegistry::init('User')->getUserData($this->Auth->user('id')));
         }

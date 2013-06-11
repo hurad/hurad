@@ -10,7 +10,7 @@ App::uses('File', 'Utility');
  */
 class HuradPlugin {
 
-    public function getPluginData() {
+    public static function getPluginData() {
         $dir = new Folder(APP . DS . 'Plugin');
         $files = $dir->read(true, array('empty'));
         foreach ($files[0] as $i => $folder) {
@@ -25,7 +25,7 @@ class HuradPlugin {
         return $plugins;
     }
 
-    public function isActive($alias = NULL) {
+    public static function isActive($alias = NULL) {
         if (Configure::check('Plugins')) {
             $aliases = Configure::read('Plugins');
             $aliases = explode(',', $aliases);
@@ -36,7 +36,7 @@ class HuradPlugin {
         }
     }
 
-    public function activate($alias) {
+    public static function activate($alias) {
         $aliases = Configure::read('Plugins');
         if (Configure::check('Plugins') && !empty($aliases)) {
             $aliases = explode(',', $aliases);
@@ -54,7 +54,7 @@ class HuradPlugin {
         return TRUE;
     }
 
-    public function deactivate($alias) {
+    public static function deactivate($alias) {
         if (Configure::check('Plugins')) {
             $aliases = Configure::read('Plugins');
             $aliases = explode(',', $aliases);
@@ -73,7 +73,7 @@ class HuradPlugin {
         }
     }
 
-    public function delete($alias) {
+    public static function delete($alias) {
         $folder = new Folder(APP . 'Plugin' . DS . $alias);
         if ($folder->delete()) {
             return TRUE;
@@ -82,7 +82,7 @@ class HuradPlugin {
         }
     }
 
-    public function loadAll() {
+    public static function loadAll() {
         $plugins = Configure::read('Plugins');
 
         if (Configure::check('Plugins') && !empty($plugins)) {

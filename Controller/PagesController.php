@@ -9,7 +9,7 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-    public $helpers = array('Page', 'Comment', 'Text');
+    public $helpers = array('Page', 'Comment', 'Text', 'Editor');
     public $components = array('RequestHandler');
     public $paginate = array(
         'conditions' => array(
@@ -153,12 +153,22 @@ class PagesController extends AppController {
         if ($this->request->is('post')) {
             $this->request->data['Page']['type'] = 'page';
             $this->request->data['Page']['user_id'] = $this->Auth->user('id');
+
+            if (empty($this->request->data['Page']['slug'])) {
+                if (!in_array($this->request->data['Page']['status'], array('draft')))
+                    $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['title']);
+                else
+                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(__("Draft-") . $this->request->data['Page']['title']);
+            } else {
+                $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['slug']);
+            }
+
             $this->Page->create();
             if ($this->Page->save($this->request->data)) {
-                $this->Session->setFlash(__('The page has been saved'), 'flash_notice');
+                $this->Session->setFlash(__('The page has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'flash_error');
+                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'error');
             }
         }
         $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page'), null, null, '_');
@@ -178,20 +188,29 @@ class PagesController extends AppController {
                 $this->request->data['Page']['type'] = 'page';
                 $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
+                if (empty($this->request->data['Page']['slug'])) {
+                    if (!in_array($this->request->data['Page']['status'], array('draft')))
+                        $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['title']);
+                    else
+                        $this->request->data['Page']['slug'] = Formatting::sanitize_title(__("Draft-") . $this->request->data['Page']['title']);
+                } else {
+                    $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['slug']);
+                }
+
                 // save the data
                 $this->Page->create();
                 if ($this->Page->save($this->request->data)) {
-                    $this->Session->setFlash(__('The Page has been saved.'), 'flash_notice');
+                    $this->Session->setFlash(__('The Page has been saved.'), 'success');
                     $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('The Page could not be saved. Please, try again.'), 'flash_error');
+                    $this->Session->setFlash(__('The Page could not be saved. Please, try again.'), 'error');
                 }
             }
         } elseif (empty($this->request->data)) {
             $this->request->data = $this->Page->read(null, $id);
         }
 
-        $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page'), null, null, '_');
+        $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page', 'Page.id !=' => $id), null, null, '_');
         $this->set(compact('parentPages'));
     }
 

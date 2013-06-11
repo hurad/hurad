@@ -191,24 +191,24 @@ class AuthorHelper extends AppHelper {
      *
      * @since 0.1.0
      * @param intiger $author_id
-     * @param string $author_nicename Description
+     * @param string $author_nickname Description
      * @return string The URL to the author's page.
      */
-    public function getAuthorPostsUrl($author_id = null, $author_nicename = '') {
+    public function getAuthorPostsUrl($author_id = null, $author_nickname = '') {
         if (is_null($author_id)) {
             $author_id = (int) $this->user_id;
         } else {
             $this->authorData = ClassRegistry::init('User')->getUserData($author_id);
         }
 
-        if ('' == $author_nicename) {
-            if (!empty($this->authorData['nicename']))
-                $author_nicename = $this->authorData['nicename'];
+        if ('' == $author_nickname) {
+            if (!empty($this->authorData['nickname']))
+                $author_nickname = $this->authorData['nickname'];
         }
-        $file = $this->Link->homeUrl('/');
-        $link = $file . '/author/' . $author_nicename;
+        $file = $this->Link->siteUrl('/');
+        $link = $file . 'author/' . $author_nickname;
 
-        $link = $this->Hook->applyFilters('author_link', $link, $author_id, $author_nicename);
+        $link = $this->Hook->applyFilters('author_link', $link, $author_id, $author_nickname);
 
         return $link;
     }

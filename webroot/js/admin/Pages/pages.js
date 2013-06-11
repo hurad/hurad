@@ -14,6 +14,9 @@ var Pages = {};
  */
 Pages.documentReady = function() {
     Pages.search();
+    if (Hurad.params.action == 'admin_add', 'admin_edit') {
+        Pages.widget();
+    }
 }
 
 /**
@@ -40,6 +43,27 @@ Pages.search = function() {
     });
 }
 
+/**
+ * Sortable widget in posts admin
+ *
+ * @return void
+ */
+Pages.widget = function() {
+    $(function() {
+        $(".column").sortable({
+            connectWith: ".column"
+        });
+        $(".portlet").find(".portlet-header")
+                .prepend("<span class='ui-icon ui-icon-minusthick'></span>")
+                .end()
+                .find(".portlet-content");
+        $(".portlet-header .ui-icon").click(function() {
+            $(this).toggleClass("ui-icon-minusthick").toggleClass("ui-icon-plusthick");
+            $(this).parents(".portlet:first").find(".portlet-content").toggle();
+        });
+        //$(".column").disableSelection();
+    });
+}
 
 
 /**

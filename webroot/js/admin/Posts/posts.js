@@ -48,7 +48,9 @@ Posts.search = function() {
 Posts.widget = function() {
     $(function() {
         $(".column").sortable({
-            connectWith: ".column"
+            connectWith: ".column",
+            placeholder: "ui-sortable-placeholder",
+            forcePlaceholderSize: true,
         });
         $(".portlet").find(".portlet-header")
                 .prepend("<span class='ui-icon ui-icon-minusthick'></span>")

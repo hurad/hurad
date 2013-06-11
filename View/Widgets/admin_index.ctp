@@ -1,119 +1,5 @@
-<style>
-    #draggable, .sortable {
-        background-color: #F5F5F5;
-        border-color: #E3E3E3;
-        border-style: solid;
-        border-width: 0 1px 1px 1px;
-        border-radius: 0 0 4px 4px;
-        margin-bottom: 20px;
-        padding: 15px 15px 10px 15px;
-        min-height: 80px;
-    }
-    #draggable div.widget-title {
-        padding: 0 0 0 10px;
-        line-height: 30px;
-        background-color: #FAFAFA;
-        background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
-        background-repeat: repeat-x;
-        border: 1px solid #D4D4D4;
-        border-radius: 4px 4px 4px 4px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-    }
-    #draggable div.widget-item {
-        width: 250px;
-        margin: 0 20px 10px 0;
-        float: left;
-        cursor: move;
-    }
-    .sortable div.widget-item {
-        width: 100%;
-        float: left;
-        margin-bottom: 10px;
-        cursor: move;
+<?php $this->Html->css(array('admin/Widgets/widgets'), null, array('inline' => FALSE)); ?>
 
-    }
-    .sortable div.widget-title {
-        line-height: 30px;
-        background-color: #FAFAFA;
-        background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
-        background-repeat: repeat-x;
-        border: 1px solid #D4D4D4;
-        border-radius: 4px 4px 4px 4px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-        padding: 0 0 0 10px;
-        cursor: move;
-    }
-    .sortable-header, .draggable-header{
-        background: -moz-linear-gradient(center top , #EFEFEF, #CACACA) repeat scroll 0 0 transparent;
-        border:1px solid #E3E3E3;
-        border-radius: 4px 4px 0 0;
-        clear: none;
-        color: #222222;
-        display: block;
-        margin: 0;
-        padding: 4px 0 4px 8px;
-
-    }
-    .sortable-header img{
-        padding: 8px 10px 4px 0px;
-
-    }
-    .sortable-header h5, .draggable-header h5{
-        font-size: 12px;
-        line-height: 10px;
-        text-decoration: none;
-        text-shadow: 1px 1px #EEEEEE;
-    }
-    .sortable-description{
-        background-color: #F5F5F5;
-        border-color: #E3E3E3;
-        border-style: solid;
-        border-width: 0 1px 0 1px;
-        padding: 12px 15px 0 15px;
-        color: #828282;
-        font-style: italic;
-        font-size: small;
-    }
-    .in-widget-title{
-        color: #696969;
-        font-size: small;
-    }
-    .widget-inside-click{
-        float: right;
-        height: 30px;
-        width: 22px;
-        cursor: pointer !important;
-        border-left: #D4D4D4 solid 1px;
-        padding: 0 0 0 8px;
-    }
-    .widget-inside{
-        background-color: #FFFFFF;
-        border-width: 0 1px 1px 1px;
-        border-color: #D4D4D4;
-        border-style: solid;
-        border-radius: 0 0 4px 4px;
-        padding: 8px;
-    }
-    .widget-form{
-        margin: 0;
-    }
-    .ajax-feedback {
-        padding: 0 5px 0 0;
-    }
-    div.clear {
-        clear: both;
-        height: 2px;
-        line-height: 2px;
-    }
-    .placeholder{
-        float: left;
-        border: 1px dashed #a2a2a2;
-        border-radius: 4px 4px 4px 4px;
-        height: 30px;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-</style>
 <script>
     jQuery(document).ready(function() {
         //Show widget inside(div.widget-inside)
@@ -138,7 +24,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/hurad/admin/widgets/edit',
+                url: Hurad.basePath + 'admin/widgets/edit',
                 data: widget_data,
                 success: function() {
                     if ($("#form-" + id + " input[name='title']").val() != '') {
@@ -246,7 +132,7 @@
                             echo '<form id="form-' . $wgdb['unique-id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
                             if (isset($widget[$wgdb['widget-id']]['element']) && $this->Widget->formExist($widget[$wgdb['widget-id']]['element'])) {
                                 echo $this->Html->div('widget-content', NULL);
-                                echo $this->element($widget[$wgdb['widget-id']]['element'] . '-form', array('data' => HuradWidget::getWidgetData($wgdb['unique-id'])));
+                                echo $this->element('Widgets/' . $widget[$wgdb['widget-id']]['element'] . '-form', array('data' => HuradWidget::getWidgetData($wgdb['unique-id'])));
                                 echo "</div>"; //Close div.widget-content
                             }
                             echo '<input id="number" type="hidden" value="' . $wgdb['number'] . '" name="number">';
@@ -317,7 +203,7 @@
                             var sidebarID = ui.item.parent().attr("id");
                             $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "visible");
 
-                            $.post("/hurad/admin/widgets", {'<?php echo $sidebarID; ?>': order}, function(data) {
+                            $.post(Hurad.basePath + "admin/widgets", {'<?php echo $sidebarID; ?>': order}, function(data) {
                                 $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "hidden");
                             });
 

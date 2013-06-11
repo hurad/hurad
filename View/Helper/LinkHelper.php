@@ -25,7 +25,14 @@ class LinkHelper extends AppHelper {
      * @var array
      * @access public
      */
-    public $post = array();
+    public $content = array();
+    private static $model = null;
+
+    public function __construct(\View $View, $settings = array()) {
+        parent::__construct($View, $settings);
+
+        self::$model = Inflector::singularize($View->viewPath);
+    }
 
     /**
      * Display the permalink for the current post.
@@ -50,12 +57,12 @@ class LinkHelper extends AppHelper {
     function permalinkAnchor($mode = 'id') {
         switch (strtolower($mode)) {
             case 'title':
-                $title = Formatting::sanitize_title($this->post['Post']['title']) . '-' . $post->ID;
-                echo '<a id="' . $title . '"></a>';
+                $title = Formatting::sanitize_title($this->content[self::$model]['title']) . '-' . $this->content[self::$model]['id'];
+                echo $this->Html->link(null, null, array('id' => $title));
                 break;
             case 'id':
             default:
-                echo '<a id="post-' . $this->post['Post']['id'] . '"></a>';
+                echo $this->Html->link(null, null, array('id' => self::$model . '-' . $this->content[self::$model]['id']));
                 break;
         }
     }
@@ -68,83 +75,31 @@ class LinkHelper extends AppHelper {
      * @return string
      */
     function getPermalink() {
-        $year = $this->Time->format('Y', $this->post['Post']['created']);
-        $month = $this->Time->format('m', $this->post['Post']['created']);
-        $day = $this->Time->format('d', $this->post['Post']['created']);
-        if ($this->post['Post']['type'] == 'post') {
+        $year = $this->Time->format('Y', $this->content[self::$model]['created']);
+        $month = $this->Time->format('m', $this->content[self::$model]['created']);
+        $day = $this->Time->format('d', $this->content[self::$model]['created']);
+        if ($this->content[self::$model]['type'] == 'post') {
             switch (Configure::read('Permalink.common')) {
                 case 'default':
-                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/p/" . $this->post['Post']['id']);
+                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/p/" . $this->content[self::$model]['id']);
                     break;
                 case 'day_name':
-                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/" . $year . "/" . $month . "/" . $day . "/" . $this->post['Post']['slug']);
+                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/" . $year . "/" . $month . "/" . $day . "/" . $this->content[self::$model]['slug']);
                     break;
                 case 'month_name':
-                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/" . $year . "/" . $month . "/" . $this->post['Post']['slug']);
+                    $permalink = $this->Html->url(Configure::read('General.site_url') . "/" . $year . "/" . $month . "/" . $this->content[self::$model]['slug']);
                     break;
                 default:
                     break;
             }
-        } elseif ($this->post['Post']['type'] == 'page') {
+        } elseif ($this->content[self::$model]['type'] == 'page') {
             if (Configure::read('Permalink.common') == 'default') {
-                $permalink = $this->Html->url(Configure::read('General.site_url') . "/page/" . $this->post['Post']['id']);
+                $permalink = $this->Html->url(Configure::read('General.site_url') . "/page/" . $this->content[self::$model]['id']);
             } else {
-                $permalink = $this->Html->url(Configure::read('General.site_url') . "/page/" . $this->post['Post']['slug']);
+                $permalink = $this->Html->url(Configure::read('General.site_url') . "/page/" . $this->content[self::$model]['slug']);
             }
         }
         return $this->Hook->applyFilters('post_link', $permalink);
-    }
-
-    /**
-     * Retrieve the home url for the current site.
-     *
-     * Returns the 'home' option with the appropriate protocol, 'https' if
-     * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
-     * overridden.
-     *
-     * @since 1.0.0
-     *
-     * @uses getHomeUrl()
-     *
-     * @param  string $path   (optional) Path relative to the home url.
-     * @param  string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https', or 'relative'.
-     * @return string Home url link with optional path appended.
-     */
-    public function homeUrl($path = '', $scheme = null) {
-        return $this->getHomeUrl($path, $scheme);
-    }
-
-    /**
-     * Retrieve the home url for a given site.
-     *
-     * Returns the 'home' option with the appropriate protocol, 'https' if
-     * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
-     * overridden.
-     *
-     * @since 1.0.0
-     *
-     * @param  string $path   (optional) Path relative to the home url.
-     * @param  string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https', or 'relative'.
-     * @return string Home url link with optional path appended.
-     */
-    public function getHomeUrl($path = '', $scheme = null) {
-        $orig_scheme = $scheme;
-
-        $url = Configure::read('General.home_url');
-
-        if (!in_array($scheme, array('http', 'https', 'relative'))) {
-            if (Functions::is_ssl() && !Functions::is_admin())
-                $scheme = 'https';
-            else
-                $scheme = parse_url($url, PHP_URL_SCHEME);
-        }
-
-        $url = $this->setUrlScheme($url, $scheme);
-
-        if (!empty($path) && is_string($path) && strpos($path, '..') === false)
-            $url .= '/' . ltrim($path, '/');
-
-        return $this->Hook->applyFilters('home_url', $url, $path, $orig_scheme);
     }
 
     /**

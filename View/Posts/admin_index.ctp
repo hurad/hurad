@@ -31,7 +31,7 @@ echo $this->Form->create('Post', array(
     <thead>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('Post.tcheckbox', array('class' => 'check-all', 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -78,60 +78,64 @@ echo $this->Form->create('Post', array(
         ?>
     </thead>
     <tbody>
-        <?php foreach ($posts as $post): ?>
-            <?php $this->Post->setPost($post); ?>
-            <?php
-            echo $this->Html->tableCells(array(
-                array(
-                    array($this->Form->checkbox('Post.' . $this->Post->getTheID() . '.id'),
-                        array(
-                            'class' => 'check-column',
-                            'scope' => 'row')
-                    ),
-                    array($this->Html->link('<strong>' . h($this->Post->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Post->getTheID()), array('title' => __('Edit “%s”', $this->Post->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
-                        array(
-                            'class' => 'column-title'
+        <?php
+        if (count($posts) > 0) {
+            foreach ($posts as $post) {
+                $this->Post->setPost($post);
+                echo $this->Html->tableCells(array(
+                    array(
+                        array($this->Form->checkbox('Post.' . $this->Post->getTheID() . '.id'),
+                            array(
+                                'class' => 'check-column',
+                                'scope' => 'row')
+                        ),
+                        array($this->Html->link('<strong>' . h($this->Post->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Post->getTheID()), array('title' => __('Edit “%s”', $this->Post->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Posts/row_actions', array('post' => $post)),
+                            array(
+                                'class' => 'column-title'
+                            )
+                        ),
+                        array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $this->Post->getTheID())),
+                            array(
+                                'class' => 'column-author'
+                            )
+                        ),
+                        array($this->Post->the_category('', FALSE),
+                            array(
+                                'class' => 'column-categories'
+                            )
+                        ),
+                        array($this->Post->tag('', FALSE),
+                            array(
+                                'class' => 'column-tags'
+                            )
+                        ),
+                        array($this->Html->tag('span', $post['Post']['comment_count'], array('class' => 'badge')),
+                            array(
+                                'class' => 'column-comments'
+                            )
+                        ),
+                        array($this->Html->tag('abbr', $this->Post->getTheDate(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
+                            array(
+                                'class' => 'column-date'
+                            )
                         )
                     ),
-                    array($this->Html->link($post['User']['username'], array('controller' => 'posts', 'action' => 'listByauthor', $this->Post->getTheID())),
-                        array(
-                            'class' => 'column-author'
+                        ), array(
+                    'id' => 'post-' . $this->Post->getTheID()
+                        ), array(
+                    'id' => 'post-' . $this->Post->getTheID()
                         )
-                    ),
-                    array($this->Post->the_category('', FALSE),
-                        array(
-                            'class' => 'column-categories'
-                        )
-                    ),
-                    array($this->Post->tag('', FALSE),
-                        array(
-                            'class' => 'column-tags'
-                        )
-                    ),
-                    array($this->Html->tag('span', $post['Post']['comment_count'], array('class' => 'badge')),
-                        array(
-                            'class' => 'column-comments'
-                        )
-                    ),
-                    array($this->Html->tag('abbr', $this->Post->getTheDate(), array('title' => $post['Post']['created'])) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
-                        array(
-                            'class' => 'column-date'
-                        )
-                    )
-                ),
-                    ), array(
-                'id' => 'post-' . $this->Post->getTheID()
-                    ), array(
-                'id' => 'post-' . $this->Post->getTheID()
-                    )
-            );
-            ?>
-        <?php endforeach; ?>    
+                );
+            }
+        } else {
+            echo $this->Html->tag('tr', $this->Html->tag('td', __('No posts were found'), array('colspan' => '7', 'style' => 'text-align:center;')), array('id' => 'post-0'));
+        }
+        ?>
     </tbody>
     <tfoot>
         <?php
         echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+            array($this->Form->checkbox('Post.bcheckbox', array('class' => 'check-all', 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
@@ -181,7 +185,7 @@ echo $this->Form->create('Post', array(
 
 <section>
     <?php
-    echo $this->Form->input('Post.action.bot', array(
+    echo $this->Form->input('Post.action', array(
         'label' => false,
         'options' => array(
             'publish' => __('Publish'),
@@ -191,8 +195,8 @@ echo $this->Form->create('Post', array(
         ),
         'empty' => __('Bulk Actions'),
     ));
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
+    echo $this->Form->submit(__('Apply'), array('class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
 
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end(null); ?>

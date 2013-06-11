@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of UserFixture
  *
@@ -30,10 +25,6 @@ class UserFixture extends CakeTestFixture {
         'id' => array('type' => 'integer', 'key' => 'primary'),
         'username' => array('type' => 'string', 'length' => 60, 'null' => false),
         'password' => array('type' => 'string', 'length' => 64, 'null' => false),
-        'firstname' => array('type' => 'string', 'length' => 100, 'null' => false),
-        'lastname' => array('type' => 'string', 'length' => 100, 'null' => false),
-        'nicename' => array('type' => 'string', 'length' => 50, 'null' => false),
-        'display_name' => array('type' => 'string', 'length' => 250, 'null' => false),
         'email' => array('type' => 'string', 'length' => 100, 'null' => false),
         'url' => array('type' => 'string', 'length' => 100, 'null' => false),
         'role' => array('type' => 'string', 'length' => 20, 'null' => false),
@@ -51,12 +42,58 @@ class UserFixture extends CakeTestFixture {
      * @access public
      */
     public $records = array(
-        array('username' => 'atkrad', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'firstname' => 'Hasan', 'lastname' => 'Abdolirad', 'created' => '2007-03-17 01:16:23', 'modified' => '2007-03-17 01:18:31'),
-        array('username' => 'rad', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'firstname' => 'Davood', 'lastname' => 'Abdoli Rad', 'created' => '2007-03-17 01:18:23', 'modified' => '2007-03-17 01:20:31'),
-        array('username' => 'mohammad', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'firstname' => 'Mohammad', 'lastname' => 'Abdolirad', 'created' => '2007-03-17 01:20:23', 'modified' => '2007-03-17 01:22:31'),
-        array('username' => 'ali', 'password' => '5f4dcc3b5aa765d61d8327deb882cf99', 'firstname' => 'Ali', 'lastname' => 'Abdolirad', 'created' => '2007-03-17 01:22:23', 'modified' => '2007-03-17 01:24:31'),
+        array(
+            'id' => 1,
+            'username' => 'admin',
+            'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
+            'email' => 'admin@example.org',
+            'url' => '',
+            'role' => 'admin',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
+            'created' => '2007-03-17 01:16:23',
+            'modified' => '2007-03-17 01:18:31'
+        ),
+        array(
+            'id' => 2,
+            'username' => 'editor',
+            'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
+            'email' => 'editor@example.org',
+            'url' => '',
+            'role' => 'editor',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
+            'created' => '2007-03-17 01:18:23',
+            'modified' => '2007-03-17 01:20:31'
+        ),
+        array(
+            'id' => 3,
+            'username' => 'author',
+            'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
+            'email' => 'author@example.org',
+            'url' => '',
+            'role' => 'author',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
+            'created' => '2007-03-17 01:20:23',
+            'modified' => '2007-03-17 01:22:31'
+        ),
+        array(
+            'id' => 4,
+            'username' => 'user',
+            'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
+            'email' => 'user@example.org',
+            'url' => '',
+            'role' => 'user',
+            'activation_key' => '',
+            'reset_key' => '',
+            'status' => 0,
+            'created' => '2007-03-17 01:22:23',
+            'modified' => '2007-03-17 01:24:31'
+        ),
     );
 
 }
-
-?>

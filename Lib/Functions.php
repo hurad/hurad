@@ -10,7 +10,7 @@ class Functions {
      * @param string $path File path
      * @return bool True if path is absolute, false is not absolute.
      */
-    public function path_is_absolute($path) {
+    public static function path_is_absolute($path) {
         // this is definitive if true but fails if $path does not exist or contains a symbolic link
         if (realpath($path) == $path)
             return true;
@@ -37,7 +37,7 @@ class Functions {
      * @param string $path
      * @return string The path with the base or absolute path.
      */
-    public function path_join($base, $path) {
+    public static function path_join($base, $path) {
         if (Functions::path_is_absolute($path))
             return $path;
 
@@ -53,7 +53,7 @@ class Functions {
      *
      * @return array Array of allowed protocols
      */
-    public function allowed_protocols() {
+    public static function allowed_protocols() {
         static $protocols;
 
         if (empty($protocols)) {
@@ -70,7 +70,7 @@ class Functions {
      *
      * @return bool True if SSL, false if not used.
      */
-    public function is_ssl() {
+    public static function is_ssl() {
         if (isset($_SERVER['HTTPS'])) {
             if ('on' == strtolower($_SERVER['HTTPS']))
                 return true;
@@ -92,7 +92,7 @@ class Functions {
      *
      * @return bool True if inside Hurad administration pages.
      */
-    public function is_admin() {
+    public static function is_admin() {
         $pos = strpos($_SERVER['REQUEST_URI'], 'admin');
 
         if ($pos === false) {
@@ -111,9 +111,9 @@ class Functions {
      * @param int $decimals Precision of the number of decimal places.
      * @return string Converted number in string format.
      */
-    public function number_format_i18n($number, $decimals = 0) {
+    public static function number_format_i18n($number, $decimals = 0) {
         $formatted = number_format($number, Functions::absint($decimals), Configure::read('decimal_point'), Configure::read('thousands_sep'));
-        return Configure::read('HuradHook.obj')->apply_filters('number_format_i18n', $formatted);
+        return HuradHook::apply_filters('number_format_i18n', $formatted);
     }
 
     /**
@@ -124,7 +124,7 @@ class Functions {
      * @param mixed $maybeint Data you wish to have converted to a nonnegative integer
      * @return int An nonnegative integer
      */
-    public function absint($maybeint) {
+    public static function absint($maybeint) {
         return abs(intval($maybeint));
     }
 
@@ -135,73 +135,73 @@ class Functions {
      *
      * @return array Array of mime types keyed by the file extension regex corresponding to those types.
      */
-    public function get_allowed_mime_types() {
+    public static function get_allowed_mime_types() {
         static $mimes = false;
 
         if (!$mimes) {
             // Accepted MIME types are set here as PCRE unless provided.
-            $mimes = apply_filters('upload_mimes', array(
-                'jpg|jpeg|jpe' => 'image/jpeg',
-                'gif' => 'image/gif',
-                'png' => 'image/png',
-                'bmp' => 'image/bmp',
-                'tif|tiff' => 'image/tiff',
-                'ico' => 'image/x-icon',
-                'asf|asx|wax|wmv|wmx' => 'video/asf',
-                'avi' => 'video/avi',
-                'divx' => 'video/divx',
-                'flv' => 'video/x-flv',
-                'mov|qt' => 'video/quicktime',
-                'mpeg|mpg|mpe' => 'video/mpeg',
-                'txt|asc|c|cc|h' => 'text/plain',
-                'csv' => 'text/csv',
-                'tsv' => 'text/tab-separated-values',
-                'ics' => 'text/calendar',
-                'rtx' => 'text/richtext',
-                'css' => 'text/css',
-                'htm|html' => 'text/html',
-                'mp3|m4a|m4b' => 'audio/mpeg',
-                'mp4|m4v' => 'video/mp4',
-                'ra|ram' => 'audio/x-realaudio',
-                'wav' => 'audio/wav',
-                'ogg|oga' => 'audio/ogg',
-                'ogv' => 'video/ogg',
-                'mid|midi' => 'audio/midi',
-                'wma' => 'audio/wma',
-                'mka' => 'audio/x-matroska',
-                'mkv' => 'video/x-matroska',
-                'rtf' => 'application/rtf',
-                'js' => 'application/javascript',
-                'pdf' => 'application/pdf',
-                'doc|docx' => 'application/msword',
-                'pot|pps|ppt|pptx|ppam|pptm|sldm|ppsm|potm' => 'application/vnd.ms-powerpoint',
-                'wri' => 'application/vnd.ms-write',
-                'xla|xls|xlsx|xlt|xlw|xlam|xlsb|xlsm|xltm' => 'application/vnd.ms-excel',
-                'mdb' => 'application/vnd.ms-access',
-                'mpp' => 'application/vnd.ms-project',
-                'docm|dotm' => 'application/vnd.ms-word',
-                'pptx|sldx|ppsx|potx' => 'application/vnd.openxmlformats-officedocument.presentationml',
-                'xlsx|xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml',
-                'docx|dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml',
-                'onetoc|onetoc2|onetmp|onepkg' => 'application/onenote',
-                'swf' => 'application/x-shockwave-flash',
-                'class' => 'application/java',
-                'tar' => 'application/x-tar',
-                'zip' => 'application/zip',
-                'gz|gzip' => 'application/x-gzip',
-                'rar' => 'application/rar',
-                '7z' => 'application/x-7z-compressed',
-                'exe' => 'application/x-msdownload',
-                // openoffice formats
-                'odt' => 'application/vnd.oasis.opendocument.text',
-                'odp' => 'application/vnd.oasis.opendocument.presentation',
-                'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-                'odg' => 'application/vnd.oasis.opendocument.graphics',
-                'odc' => 'application/vnd.oasis.opendocument.chart',
-                'odb' => 'application/vnd.oasis.opendocument.database',
-                'odf' => 'application/vnd.oasis.opendocument.formula',
-                // wordperfect formats
-                'wp|wpd' => 'application/wordperfect',
+            $mimes = HuradHook::apply_filters('upload_mimes', array(
+                        'jpg|jpeg|jpe' => 'image/jpeg',
+                        'gif' => 'image/gif',
+                        'png' => 'image/png',
+                        'bmp' => 'image/bmp',
+                        'tif|tiff' => 'image/tiff',
+                        'ico' => 'image/x-icon',
+                        'asf|asx|wax|wmv|wmx' => 'video/asf',
+                        'avi' => 'video/avi',
+                        'divx' => 'video/divx',
+                        'flv' => 'video/x-flv',
+                        'mov|qt' => 'video/quicktime',
+                        'mpeg|mpg|mpe' => 'video/mpeg',
+                        'txt|asc|c|cc|h' => 'text/plain',
+                        'csv' => 'text/csv',
+                        'tsv' => 'text/tab-separated-values',
+                        'ics' => 'text/calendar',
+                        'rtx' => 'text/richtext',
+                        'css' => 'text/css',
+                        'htm|html' => 'text/html',
+                        'mp3|m4a|m4b' => 'audio/mpeg',
+                        'mp4|m4v' => 'video/mp4',
+                        'ra|ram' => 'audio/x-realaudio',
+                        'wav' => 'audio/wav',
+                        'ogg|oga' => 'audio/ogg',
+                        'ogv' => 'video/ogg',
+                        'mid|midi' => 'audio/midi',
+                        'wma' => 'audio/wma',
+                        'mka' => 'audio/x-matroska',
+                        'mkv' => 'video/x-matroska',
+                        'rtf' => 'application/rtf',
+                        'js' => 'application/javascript',
+                        'pdf' => 'application/pdf',
+                        'doc|docx' => 'application/msword',
+                        'pot|pps|ppt|pptx|ppam|pptm|sldm|ppsm|potm' => 'application/vnd.ms-powerpoint',
+                        'wri' => 'application/vnd.ms-write',
+                        'xla|xls|xlsx|xlt|xlw|xlam|xlsb|xlsm|xltm' => 'application/vnd.ms-excel',
+                        'mdb' => 'application/vnd.ms-access',
+                        'mpp' => 'application/vnd.ms-project',
+                        'docm|dotm' => 'application/vnd.ms-word',
+                        'pptx|sldx|ppsx|potx' => 'application/vnd.openxmlformats-officedocument.presentationml',
+                        'xlsx|xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml',
+                        'docx|dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml',
+                        'onetoc|onetoc2|onetmp|onepkg' => 'application/onenote',
+                        'swf' => 'application/x-shockwave-flash',
+                        'class' => 'application/java',
+                        'tar' => 'application/x-tar',
+                        'zip' => 'application/zip',
+                        'gz|gzip' => 'application/x-gzip',
+                        'rar' => 'application/rar',
+                        '7z' => 'application/x-7z-compressed',
+                        'exe' => 'application/x-msdownload',
+                        // openoffice formats
+                        'odt' => 'application/vnd.oasis.opendocument.text',
+                        'odp' => 'application/vnd.oasis.opendocument.presentation',
+                        'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+                        'odg' => 'application/vnd.oasis.opendocument.graphics',
+                        'odc' => 'application/vnd.oasis.opendocument.chart',
+                        'odb' => 'application/vnd.oasis.opendocument.database',
+                        'odf' => 'application/vnd.oasis.opendocument.formula',
+                        // wordperfect formats
+                        'wp|wpd' => 'application/wordperfect',
             ));
         }
 
@@ -221,7 +221,7 @@ class Functions {
      * @param array $defaults Array that serves as the defaults.
      * @return array Merged user defined values with defaults.
      */
-    public function hr_parse_args($args, $defaults = '') {
+    public static function hr_parse_args($args, $defaults = '') {
         if (is_object($args))
             $r = get_object_vars($args);
         elseif (is_array($args))
@@ -242,7 +242,7 @@ class Functions {
      * @param string|bool $force Optional.
      * @return bool True if forced, false if not forced.
      */
-    public function force_ssl_login($force = null) {
+    public static function force_ssl_login($force = null) {
         static $forced = false;
 
         if (!is_null($force)) {
@@ -262,7 +262,7 @@ class Functions {
      * @param string|bool $force
      * @return bool True if forced, false if not forced.
      */
-    public function force_ssl_admin($force = null) {
+    public static function force_ssl_admin($force = null) {
         static $forced = false;
 
         if (!is_null($force)) {
@@ -283,7 +283,7 @@ class Functions {
      * @param array $keys The list of keys
      * @return array The array slice
      */
-    public function hr_array_slice_assoc($array, $keys) {
+    public static function hr_array_slice_assoc($array, $keys) {
         $slice = array();
         foreach ($keys as $key)
             if (isset($array[$key]))

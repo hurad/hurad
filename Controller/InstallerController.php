@@ -20,7 +20,7 @@ class InstallerController extends AppController {
     }
 
     public function index() {
-        $this->set('title_for_layout', __('First step'));
+        $this->set('title_for_layout', __('Welcome to Hurad installer'));
     }
 
     public function database() {
@@ -41,35 +41,28 @@ class InstallerController extends AppController {
             try {
                 ConnectionManager::create('install', $config);
                 $db = ConnectionManager::getDataSource('install');
-            } catch (MissingConnectionException $exc) {
-                $this->Session->setFlash($exc->getMessage(), 'error');
-            }
-        }
-        //debug($db);
-        if ($db->connected) {
-            if ($this->__executeSQL('hurad.sql', $db)) {
-                $file = new File(CONFIG . 'database.php', true, 0644);
 
-                debug($file);
-                if ($file->exists() && $file->writable()) {
-                    $default = '$default';
-                    $test = '$test';
-                    $data = <<<EOF
+                if ($db->connected) {
+                    if ($this->__executeSQL('hurad.sql', $db, array('$[prefix]' => $config['prefix']))) {
+                        $file = new File(CONFIG . 'database.php', true, 0644);
+
+                        if ($file->exists() && $file->writable()) {
+                            $databaseConfig = <<<EOF
 <?php
 
 class DATABASE_CONFIG {
 
-    public $default = array(
+    public \$default = array(
         'datasource' => 'Database/Mysql',
         'persistent' => false,
         'host' => '{$config['host']}',
         'login' => '{$config['login']}',
         'password' => '{$config['password']}',
         'database' => '{$config['database']}',
-        'prefix' => 'hr_',
+        'prefix' => '{$config['prefix']}',
     );
     
-    public $test = array(
+    public \$test = array(
         'datasource' => 'Database/Mysql',
         'persistent' => false,
         'host' => 'localhost',
@@ -80,69 +73,87 @@ class DATABASE_CONFIG {
 
 }
 EOF;
-                    $file->write($data);
+                            $file->write($databaseConfig);
+                        }
+                        $this->Session->setFlash(__('Database successfuly installed'), 'success');
+                        $this->redirect(array('action' => 'finalize'));
+                    }
                 }
-                $this->Session->setFlash(__('Database successfuly installed'), 'success');
-                $this->redirect(array('action' => 'finalize'));
+            } catch (MissingConnectionException $exc) {
+                $this->Session->setFlash($exc->getMessage(), 'error');
             }
         }
     }
 
     public function finalize() {
-        $this->set('title_for_layout', __('Final Step'));
+        $this->set('title_for_layout', __('Hurad Configuration'));
         $config = get_class_vars('DATABASE_CONFIG');
 
         if ($this->request->is('post')) {
             ConnectionManager::create('install', $config['default']);
             $db = ConnectionManager::getDataSource('install');
 
+            $search = array();
+
+            $search['$[prefix]'] = $config['default']['prefix'];
+
             App::uses('CakeTime', 'Utility');
-            $created = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
-            $modified = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
+            $search['$[created]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
+            $search['$[modified]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
 
             $request = new CakeRequest();
+            $search['$[client_ip]'] = $request->clientIp();
+            $search['$[user_agent]'] = $request::header('USER_AGENT');
 
-            $password = AuthComponent::password($this->request->data['Installer']['password']);
+            $search['$[username]'] = $this->request->data['Installer']['username'];
+            $search['$[email]'] = $this->request->data['Installer']['email'];
+            $search['$[password]'] = AuthComponent::password($this->request->data['Installer']['password']);
+            $search['$[title]'] = $this->request->data['Installer']['title'];
+
+            $serverName = env("SERVER_NAME");
+            $url = Router::url('/');
+            $search['$[site_url]'] = rtrim("http://" . $serverName . $url, '/');
 
             if ($db->connected) {
-                //Insert Uncategorized category
-                $db->query("INSERT INTO `hr_categories`(`id`, `parent_id`, `name`, `slug`, `lft`, `rght`, `description`, `post_count`, `path`, `created`, `modified`) VALUES (1,NULL,'Uncategorized','uncategorized',1,2,'Default Description',1,'Uncategorized','$created','$modified')");
-
-                //Insert "Sample Post"
-                $db->query("INSERT INTO `hr_posts`(`id`, `parent_id`, `user_id`, `title`, `slug`, `content`, `excerpt`, `status`, `comment_status`, `comment_count`, `type`, `lft`, `rght`, `created`, `modified`) VALUES (1,NULL,1,'Sample Post','sample-post','Sample Post','','publish','open',1,'post',1,2,'$created','$modified')");
-
-                //Insert relation row between category and post
-                $db->query("INSERT INTO `hr_categories_posts`(`category_id`, `post_id`) VALUES (1,1)");
-
-                //Insert first comment
-                $db->query("INSERT INTO `hr_comments`(`id`, `parent_id`,
-                    `post_id`, `user_id`, `author`, `author_email`,
-                    `author_url`, `author_ip`, `content`, `approved`, `agent`,
-                    `lft`, `rght`, `created`, `modified`)
-                    VALUES (1,NULL,1,1,'{$this->request->data['Installer']['username']}',
-                    '{$this->request->data['Installer']['email']}','','{$request->clientIp()}',
-                        'This comment has been sent for testing, you can delete it',
-                        1,'{$request::header('USER_AGENT')}',1,2,'$created','$modified')");
-
-                //Insert Admin user
-                $db->query("INSERT INTO `hr_users`(`id`, `username`, `password`, `nicename`, `email`, `url`, `role`, `status`, `created`, `modified`) VALUES (1,'{$this->request->data['Installer']['username']}','$password','','{$this->request->data['Installer']['email']}','','admin',0,'$created','$modified')");
+                if ($this->__executeSQL("hurad_defaults.sql", $db, $search)) {
+                    $this->Session->setFlash(__('Hurad successfully installed.'), 'success');
+                    $this->redirect(array('action' => 'welcome'));
+                }
             } else {
                 $this->Session->setFlash(__('Not connected to database.'), 'error');
             }
         }
     }
 
-    private function __executeSQL($fileName, $object) {
+    public function welcome() {
+        $this->set('title_for_layout', __('Welcome to Hurad'));
+
+        $file = new File(TMP . 'installed', true, 0644);
+    }
+
+    private function __executeSQL($fileName, $object, $search = null) {
         if (file_exists(SCHEMA . $fileName)) {
             $sql = file_get_contents(SCHEMA . $fileName);
-            $sql = explode(';', $sql);
+            $contents = explode(';', $sql);
 
-            foreach ($sql as $statement) {
+            if ($search && count($search) > 0) {
+                foreach ($contents as $content) {
+                    $statements[] = str_replace(array_keys($search), array_values($search), $content);
+                }
+            } else {
+                $statements = $contents;
+            }
+
+            foreach ($statements as $statement) {
                 if (trim($statement) != '') {
                     $object->query($statement);
                 }
             }
+
             return true;
+        } else {
+            $this->Session->setFlash(__('File "Config/Schema/%s" not exists.', $fileName), 'error');
+            return false;
         }
     }
 

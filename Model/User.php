@@ -131,7 +131,7 @@ class User extends AppModel {
             $userMetaData = array(
                 'firstname' => '',
                 'lastname' => '',
-                'nickname' => '',
+                'nickname' => $this->data['User']['username'],
                 'bio' => '',
                 'display_name' => $this->data['User']['username']
             );
@@ -141,9 +141,22 @@ class User extends AppModel {
         }
     }
 
+    public function beforeDelete($cascade = true) {
+        parent::beforeDelete($cascade);
+
+        if ($this->id == 1) {
+            return false;
+        }
+    }
+
     public function afterDelete() {
         parent::afterDelete();
-        $this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false);
+
+        if ($this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function checkPasswords() {
@@ -172,21 +185,25 @@ class User extends AppModel {
                 )
         );
 
-        $user = $user['User'];
+        if ($user) {
+            $user = $user['User'];
 
-        $metaList = $this->UserMeta->find('list', array(
-            'conditions' => array(
-                'UserMeta.user_id' => $user_id
-            ),
-            'fields' => array(
-                'UserMeta.meta_key',
-                'UserMeta.meta_value'
-            ),
-        ));
+            $metaList = $this->UserMeta->find('list', array(
+                'conditions' => array(
+                    'UserMeta.user_id' => $user_id
+                ),
+                'fields' => array(
+                    'UserMeta.meta_key',
+                    'UserMeta.meta_value'
+                ),
+            ));
 
-        $user = Set::merge($user, $metaList);
+            $user = Set::merge($user, $metaList);
 
-        return $user;
+            return $user;
+        } else {
+            return false;
+        }
     }
 
     function password_old() {

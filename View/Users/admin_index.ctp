@@ -146,8 +146,8 @@ echo $this->Form->create('User', array(
         ),
         'empty' => __('Bulk Actions'),
     ));
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
+    echo $this->Form->submit(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
     ?>
 </section>
 
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end(null); ?>

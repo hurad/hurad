@@ -1,5 +1,5 @@
 <div class="well installer">
-    <?php echo $this->element('Installer/header'); ?>
+    <?php echo $this->element('Installer/header', array('message' => __("Database configuration"))); ?>
     <div class="container-fluid">
         <div class="row">
             <?php
