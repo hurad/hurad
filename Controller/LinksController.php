@@ -19,21 +19,7 @@ class LinksController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
-        //$this->isAuthorized();
-    }
-
-    public function isAuthorized() {
-        switch ($this->Auth->user('role')) {
-            case 'admin':
-                $this->Auth->allow('*');
-                break;
-            case 'user':
-                $this->Auth->allow('index', 'profile', 'change_password', 'login', 'logout');
-            default :
-                $this->Auth->allow('login', 'logout', 'view', 'register');
-                break;
-        }
+        $this->Auth->allow('index');
     }
 
     /**
@@ -44,20 +30,6 @@ class LinksController extends AppController {
     public function index() {
         $this->Link->recursive = 0;
         $this->set('links', $this->paginate());
-    }
-
-    /**
-     * view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null) {
-        $this->Link->id = $id;
-        if (!$this->Link->exists()) {
-            throw new NotFoundException(__('Invalid link'));
-        }
-        $this->set('link', $this->Link->read(null, $id));
     }
 
     /**
@@ -91,20 +63,6 @@ class LinksController extends AppController {
         $this->set('title_for_layout', sprintf(__('Links: %s'), $menu['Menu']['name']));
         $this->set('links', $this->paginate('Link', array('Link.menu_id' => $menu_id)));
         $this->render('admin_index');
-    }
-
-    /**
-     * admin_view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function admin_view($id = null) {
-        $this->Link->id = $id;
-        if (!$this->Link->exists()) {
-            throw new NotFoundException(__('Invalid link'));
-        }
-        $this->set('link', $this->Link->read(null, $id));
     }
 
     /**
