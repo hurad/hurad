@@ -72,6 +72,7 @@ echo $this->Form->create('Link', array(
         ?>
     </thead>
     <tbody>
+       <?php global $link; ?>
         <?php foreach ($links as $link): ?>
             <?php
             echo $this->Html->tableCells(array(
