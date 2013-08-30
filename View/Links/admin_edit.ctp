@@ -13,10 +13,10 @@ echo $this->Form->create('Link', array(
 ?>
 
 <div class="control-group">
-    <?php echo $this->Form->label('menu_id', __('Select Category'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('menuId', __('Select Category'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('id'); ?>
-        <?php echo $this->Form->select('menu_id', $linkcats, array('empty' => FALSE)); ?>
+        <?php echo $this->Form->select('menuId', $linkCats, array('empty' => FALSE)); ?>
         <span class="help-block">
             <?php echo __('The description is not prominent by default; however, some themes may show it.'); ?>
         </span>
@@ -119,3 +119,5 @@ echo $this->Form->create('Link', array(
 <div class="form-actions">
     <?php echo $this->Form->button(__('Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
+
+<?php echo $this->Form->end(); ?>
