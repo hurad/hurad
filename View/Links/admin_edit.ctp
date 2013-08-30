@@ -3,20 +3,23 @@
 </div>
 
 <?php
-echo $this->Form->create('Link', array(
-    'class' => 'form-horizontal',
-    'inputDefaults' => array(
-        'label' => false,
-        'div' => false
+echo $this->Form->create(
+    'Link',
+    array(
+        'class' => 'form-horizontal',
+        'inputDefaults' => array(
+            'label' => false,
+            'div' => false
+        )
     )
-));
+);
 ?>
 
 <div class="control-group">
     <?php echo $this->Form->label('menuId', __('Select Category'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('id'); ?>
-        <?php echo $this->Form->select('menuId', $linkCats, array('empty' => FALSE)); ?>
+        <?php echo $this->Form->select('menuId', $linkCats, array('empty' => false)); ?>
         <span class="help-block">
             <?php echo __('The description is not prominent by default; however, some themes may show it.'); ?>
         </span>
@@ -26,16 +29,19 @@ echo $this->Form->create('Link', array(
     <?php echo $this->Form->label('name', __('Name'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
-        echo $this->Form->input('name', array(
-            'error' => array(
-                'nameRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
-                'attributes' => array(
-                    'wrap' => 'span',
-                    'class' => 'help-inline'
-                )
-            ),
-            'required' => FALSE, //For disable HTML5 validation
-            'type' => 'text')
+        echo $this->Form->input(
+            'name',
+            array(
+                'error' => array(
+                    'nameRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
+                    'attributes' => array(
+                        'wrap' => 'span',
+                        'class' => 'help-inline'
+                    )
+                ),
+                'required' => false, //For disable HTML5 validation
+                'type' => 'text'
+            )
         );
         ?>
         <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
@@ -48,7 +54,9 @@ echo $this->Form->create('Link', array(
     <div class="controls">
         <?php echo $this->Form->input('description', array('class' => 'span5')); ?>
         <span class="help-block">
-            <?php echo __('This will be shown when someone hovers over the link in the blogroll, or optionally below the link.'); ?>
+            <?php echo __(
+                'This will be shown when someone hovers over the link in the blogroll, or optionally below the link.'
+            ); ?>
         </span>
     </div>
 </div>
@@ -56,21 +64,26 @@ echo $this->Form->create('Link', array(
     <?php echo $this->Form->label('url', __('Web Address'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
-        echo $this->Form->input('url', array(
-            'error' => array(
-                'urlRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
-                'urlRule-2' => __('This URL not valid.'), //url rule message
-                'attributes' => array(
-                    'wrap' => 'span',
-                    'class' => 'help-inline'
-                )
-            ),
-            'required' => FALSE, //For disable HTML5 validation
-            'type' => 'text')
+        echo $this->Form->input(
+            'url',
+            array(
+                'error' => array(
+                    'urlRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
+                    'urlRule-2' => __('This URL not valid.'), //url rule message
+                    'attributes' => array(
+                        'wrap' => 'span',
+                        'class' => 'help-inline'
+                    )
+                ),
+                'required' => false, //For disable HTML5 validation
+                'type' => 'text'
+            )
         );
         ?>
         <span class="help-block <?php echo $this->Form->isFieldError('url') ? 'hr-help-block' : ''; ?>">
-            <?php echo __('Example: <code>http://magzilla.org/</code> &mdash; don’t forget the <code>http://</code>'); ?>
+            <?php echo __(
+                'Example: <code>http://magzilla.org/</code> &mdash; don’t forget the <code>http://</code>'
+            ); ?>
         </span>
     </div>
 </div>
@@ -78,13 +91,16 @@ echo $this->Form->create('Link', array(
     <?php echo $this->Form->label('target', __('Target'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
-        echo $this->Form->input('target', array(
-            'options' => array(
-                '_blank' => __('New window or tab. (_blank)'),
-                '_top' => __('Current window or tab, with no frames. (_top)'),
-                '_none' => __('Same window or tab. (_none)')
+        echo $this->Form->input(
+            'target',
+            array(
+                'options' => array(
+                    '_blank' => __('New window or tab. (_blank)'),
+                    '_top' => __('Current window or tab, with no frames. (_top)'),
+                    '_none' => __('Same window or tab. (_none)')
+                )
             )
-        ));
+        );
         ?>
         <span class="help-block">
             <?php echo __('Choose the target frame for your link.'); ?>
@@ -95,12 +111,15 @@ echo $this->Form->create('Link', array(
     <?php echo $this->Form->label('visible', __('Visible'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
-        echo $this->Form->input('visible', array(
-            'options' => array(
-                'Y' => __('Yes'),
-                'N' => __('No'),
+        echo $this->Form->input(
+            'visible',
+            array(
+                'options' => array(
+                    'Y' => __('Yes'),
+                    'N' => __('No'),
+                )
             )
-        ));
+        );
         ?>
     </div>
 </div>
@@ -108,10 +127,13 @@ echo $this->Form->create('Link', array(
     <?php echo $this->Form->label('rating', __('Rating'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
-        echo $this->Form->input('rating', array(
-            'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-            'empty' => __('(Choose one)')
-        ));
+        echo $this->Form->input(
+            'rating',
+            array(
+                'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+                'empty' => __('(Choose one)')
+            )
+        );
         ?>
     </div>
 </div>
