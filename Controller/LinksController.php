@@ -11,6 +11,10 @@ class LinksController extends AppController
 {
 
     public $helpers = array('AdminLayout');
+    /**
+     * Paginate option
+     * @var array
+     */
     public $paginate = array(
         'limit' => 25,
         'order' => array(
@@ -25,9 +29,7 @@ class LinksController extends AppController
     }
 
     /**
-     * index method
-     *
-     * @return void
+     * Link list
      */
     public function index()
     {
@@ -36,9 +38,7 @@ class LinksController extends AppController
     }
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * Admin link list
      */
     public function admin_index()
     {
@@ -55,29 +55,36 @@ class LinksController extends AppController
         $this->set('links', $this->paginate(array('Linkcat.type' => 'link_category')));
     }
 
-    public function admin_indexBymenu($menu_id)
+    /**
+     * Admin links list by menu id
+     *
+     * @param int $menuId
+     * @throws NotFoundException
+     */
+    public function admin_indexByMenu($menuId)
     {
-        $this->Link->Menu->id = $menu_id;
+        $this->Link->Menu->id = $menuId;
         if (!$this->Link->Menu->exists()) {
             throw new NotFoundException(__('Invalid menu'));
         }
 
         $this->Link->Menu->recursive = 0;
-        $menu = $this->Link->Menu->findById($menu_id);
+        $menu = $this->Link->Menu->findById($menuId);
 
         $this->set('title_for_layout', sprintf(__('Links: %s'), $menu['Menu']['name']));
-        $this->set('links', $this->paginate('Link', array('Link.menu_id' => $menu_id)));
+        $this->set('links', $this->paginate('Link', array('Link.menu_id' => $menuId)));
         $this->render('admin_index');
     }
 
     /**
-     * admin_add method
+     * Admin add link
      *
-     * @return void
+     * @param null|int $menuId
+     * @throws NotFoundException
      */
-    public function admin_add($menu_id = null)
+    public function admin_add($menuId = null)
     {
-        if (is_null($menu_id)) {
+        if (is_null($menuId)) {
             $this->set('title_for_layout', __('Add New Link'));
             if ($this->request->is('post')) {
                 $this->Link->create();
@@ -88,48 +95,48 @@ class LinksController extends AppController
                     $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'error');
                 }
             }
-            $linkcats = $this->Link->Linkcat->find(
+            $linkCats = $this->Link->Linkcat->find(
                 'list',
                 array(
                     'conditions' => array('Linkcat.type' => 'link_category'),
                 )
             );
-            $this->set(compact('linkcats', 'menu_id'));
+            $this->set(compact('linkCats', 'menuId'));
         } else {
-            $this->Link->Menu->id = $menu_id;
+            $this->Link->Menu->id = $menuId;
             if (!$this->Link->Menu->exists()) {
-                throw new NotFoundException(__('Invaluid menu'));
+                throw new NotFoundException(__('Invalid menu'));
             }
             $this->Link->Menu->recursive = 0;
-            $menu = $this->Link->Menu->findById($menu_id);
+            $menu = $this->Link->Menu->findById($menuId);
 
             $this->set('title_for_layout', sprintf(__('Add New Link to: %s'), $menu['Menu']['name']));
             if ($this->request->is('post')) {
                 $this->Link->create();
                 if ($this->Link->save($this->request->data)) {
                     $this->Session->setFlash(__('The link has been saved', 'success'));
-                    $this->redirect(array('action' => 'indexBymenu', $menu_id));
+                    $this->redirect(array('action' => 'indexByMenu', $menuId));
                 } else {
                     $this->Session->setFlash(__('The link could not be saved. Please, try again.'), 'error');
                 }
             }
-            $linkcats = $this->Link->Menu->find(
+            $linkCats = $this->Link->Menu->find(
                 'list',
                 array(
                     'conditions' => array(
-                        'Menu.id' => $menu_id
+                        'Menu.id' => $menuId
                     ),
                 )
             );
-            $this->set(compact('linkcats', 'menu_id'));
+            $this->set(compact('linkCats', 'menuId'));
         }
     }
 
     /**
-     * admin_edit method
+     * Admin edit link
      *
-     * @param string $id
-     * @return void
+     * @param null|int $id Link id
+     * @throws NotFoundException
      */
     public function admin_edit($id = null)
     {
@@ -147,22 +154,23 @@ class LinksController extends AppController
             }
         } else {
             $this->request->data = $this->Link->read(null, $id);
-            $menu_id = $this->request->data['Link']['menu_id'];
+            $menuId = $this->request->data['Link']['menu_id'];
         }
-        $linkcats = $this->Link->Linkcat->find(
+        $linkCats = $this->Link->Linkcat->find(
             'list',
             array(
                 'conditions' => array('Linkcat.type' => 'link_category'),
             )
         );
-        $this->set(compact('linkcats', 'menu_id'));
+        $this->set(compact('linkCats', 'menuId'));
     }
 
     /**
-     * admin_delete method
+     * Admin delete link
      *
-     * @param string $id
-     * @return void
+     * @param null|int $id
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function admin_delete($id = null)
     {
@@ -181,6 +189,9 @@ class LinksController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    /**
+     * Admin link process
+     */
     public function admin_process()
     {
         $this->autoRender = false;
