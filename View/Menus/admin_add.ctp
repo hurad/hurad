@@ -21,7 +21,7 @@ echo $this->Form->create('Menu', array(
 <div class="control-group">
     <?php echo $this->Form->label('alias', __('Alias'), array('class' => 'control-label')); ?>
     <div class="controls">
-        <?php echo $this->Form->input('alias', array('type' => 'text')); ?>
+        <?php echo $this->Form->input('slug', array('type' => 'text')); ?>
     </div>
 </div>
 <div class="control-group">
