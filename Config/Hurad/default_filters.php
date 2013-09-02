@@ -25,7 +25,7 @@ HuradHook::add_filter('sanitize_title', 'Formatting::sanitize_title_with_dashes'
 
 //HuradHook::add_filter( 'the_excerpt', 'wptexturize' );
 //HuradHook::add_filter( 'the_excerpt', 'convert_smilies' );
-HuradHook::add_filter( 'the_excerpt', 'Formatting::convert_chars' );
-HuradHook::add_filter( 'the_excerpt', 'Formatting::hrautop' );
+HuradHook::add_filter('the_excerpt', 'Formatting::convert_chars');
+HuradHook::add_filter('the_excerpt', 'Formatting::hrautop');
 //HuradHook::add_filter( 'the_excerpt', 'shortcode_unautop');
 //HuradHook::add_filter( 'get_the_excerpt', 'wp_trim_excerpt' );

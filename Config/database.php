@@ -28,10 +28,10 @@
  * You can specify multiple configurations for production, development and testing.
  *
  * datasource => The name of a supported datasource; valid options are as follows:
- *		Database/Mysql 		- MySQL 4 & 5,
- *		Database/Sqlite		- SQLite (PHP5 only),
- *		Database/Postgres	- PostgreSQL 7 and higher,
- *		Database/Sqlserver	- Microsoft SQL Server 2005 and higher
+ *        Database/Mysql        - MySQL 4 & 5,
+ *        Database/Sqlite        - SQLite (PHP5 only),
+ *        Database/Postgres    - PostgreSQL 7 and higher,
+ *        Database/Sqlserver    - Microsoft SQL Server 2005 and higher
  *
  * You can add custom database datasources (or override existing datasources) by adding the
  * appropriate file to app/Model/Datasource/Database.  Datasources should be named 'MyDatasource.php',
@@ -57,27 +57,28 @@
  * unix_socket =>
  * For MySQL to connect via socket specify the `unix_socket` parameter instead of `host` and `port`
  */
-class DATABASE_CONFIG {
+class DATABASE_CONFIG
+{
 
-	public $default = array(
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'database_name',
-		'prefix' => '',
-		//'encoding' => 'utf8',
-	);
+    public $default = array(
+        'datasource' => 'Database/Mysql',
+        'persistent' => false,
+        'host' => 'localhost',
+        'login' => 'atkrad',
+        'password' => '3180418',
+        'database' => 'hurad',
+        'prefix' => 'hrts_',
+        //'encoding' => 'utf8',
+    );
 
-	public $test = array(
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'test_database_name',
-		'prefix' => '',
-		//'encoding' => 'utf8',
-	);
+    public $test = array(
+        'datasource' => 'Database/Mysql',
+        'persistent' => false,
+        'host' => 'localhost',
+        'login' => 'atkrad',
+        'password' => '3180418',
+        'database' => 'hurad_test',
+        'prefix' => '',
+        //'encoding' => 'utf8',
+    );
 }
