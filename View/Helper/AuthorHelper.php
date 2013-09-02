@@ -7,7 +7,8 @@ App::uses('AppHelper', 'View/Helper');
  *
  * @author mohammad
  */
-class AuthorHelper extends AppHelper {
+class AuthorHelper extends AppHelper
+{
 
     /**
      * Other helpers used by this helper
@@ -41,7 +42,8 @@ class AuthorHelper extends AppHelper {
      */
     public $authorData = array();
 
-    public function setAuthor($user_id, $post_id = NULL) {
+    public function setAuthor($user_id, $post_id = null)
+    {
         $this->post_id = $post_id;
         $this->user_id = $user_id;
         $this->authorData = ClassRegistry::init('User')->getUserData($this->user_id);
@@ -56,8 +58,12 @@ class AuthorHelper extends AppHelper {
      *
      * @return string The author's display name.
      */
-    public function getTheAuthor() {
-        return $this->Hook->applyFilters('the_author', is_array($this->authorData) ? $this->authorData['display_name'] : null);
+    public function getTheAuthor()
+    {
+        return $this->Hook->applyFilters(
+            'the_author',
+            is_array($this->authorData) ? $this->authorData['display_name'] : null
+        );
     }
 
     /**
@@ -69,7 +75,8 @@ class AuthorHelper extends AppHelper {
      *
      * @return string The author's display name, from get_the_author().
      */
-    public function theAuthor() {
+    public function theAuthor()
+    {
         echo $this->getTheAuthor();
     }
 
@@ -80,10 +87,11 @@ class AuthorHelper extends AppHelper {
      * @uses getPostMeta() Retrieves the ID of the author who last edited the current post.
      * @uses apply_filters() Calls 'the_modified_author' hook on the author display name.
      * @link https://github.com/hurad/hurad/wiki/get_the_modified_author
-     * 
+     *
      * @return string The author's display name.
      */
-    public function getTheModifiedAuthor() {
+    public function getTheModifiedAuthor()
+    {
         if ($last_id = ClassRegistry::init('PostMeta')->getPostMeta($this->post_id, '_edit_last')) {
             $last_user = ClassRegistry::init('User')->getUserData($last_id['PostMeta']['meta_value']);
             return $this->Hook->applyFilters('the_modified_author', $last_user['display_name']);
@@ -97,20 +105,27 @@ class AuthorHelper extends AppHelper {
      * @see get_the_author()
      * @return string The author's display name, from get_the_modified_author().
      */
-    public function theModifiedAuthor() {
+    public function theModifiedAuthor()
+    {
         echo $this->getTheModifiedAuthor();
     }
 
     /**
      * Retrieve the requested data of the author of the current post.
-     * 
+     *
      * @since 0.1.0
-
+     *
      * @param string $field selects the field of the users record.
+     *
      * @return string The author's field from the current author's DB.
      */
-    public function getTheAuthorMeta($field = '') {
-        if (in_array($field, array('username', 'password', 'nicename', 'email', 'url', 'created', 'activation_key', 'status'))) {
+    public function getTheAuthorMeta($field = '')
+    {
+        if (in_array(
+            $field,
+            array('username', 'password', 'nicename', 'email', 'url', 'created', 'activation_key', 'status')
+        )
+        ) {
             $field = $field;
         }
 
@@ -121,13 +136,15 @@ class AuthorHelper extends AppHelper {
 
     /**
      * Retrieve the requested data of the author of the current post.
-     * 
+     *
      * @since 0.1.0
-     * 
+     *
      * @param string $field selects the field of the users record.
+     *
      * @echo string The author's field from the current author's DB.
      */
-    public function theAuthorMeta($field = '') {
+    public function theAuthorMeta($field = '')
+    {
         echo $this->Hook->applyFilters('the_author_' . $field, $this->getTheAuthorMeta($field), $this->user_id);
     }
 
@@ -136,15 +153,20 @@ class AuthorHelper extends AppHelper {
      *
      * If the author has a home page set, return an HTML link, otherwise just return the
      * author's name.
-     * 
+     *
      * @since 0.1.0
      *
      * @uses get_the_author_meta()
      * @uses get_the_author()
      */
-    public function getTheAuthorLink() {
+    public function getTheAuthorLink()
+    {
         if ($this->getTheAuthorMeta('url')) {
-            return $this->Html->link($this->getTheAuthor(), Formatting::esc_url($this->getTheAuthorMeta('url')), array('title' => __("Visit %s&#8217;s website", $this->getTheAuthor()), 'rel' => 'author external'));
+            return $this->Html->link(
+                $this->getTheAuthor(),
+                Formatting::esc_url($this->getTheAuthorMeta('url')),
+                array('title' => __("Visit %s&#8217;s website", $this->getTheAuthor()), 'rel' => 'author external')
+            );
         } else {
             return $this->getTheAuthor();
         }
@@ -159,7 +181,8 @@ class AuthorHelper extends AppHelper {
      * @since 0.1.0
      * @uses get_the_author_link()
      */
-    public function theAuthorLink() {
+    public function theAuthorLink()
+    {
         echo $this->getTheAuthorLink();
     }
 
@@ -167,11 +190,12 @@ class AuthorHelper extends AppHelper {
      * Retrieve the number of posts by the author of the current post.
      *
      * @since 0.1.0
-     * 
+     *
      * @uses countUserPosts()
      * @return int The number of posts by the author.
      */
-    public function getTheAuthorPosts() {
+    public function getTheAuthorPosts()
+    {
         return ClassRegistry::init('Post')->countUserPosts($this->user_id);
     }
 
@@ -179,10 +203,11 @@ class AuthorHelper extends AppHelper {
      * Display the number of posts by the author of the current post.
      *
      * @since 0.1.0
-     * 
+     *
      * @uses get_the_author_posts() Echoes returned value from function.
      */
-    public function theAuthorPosts() {
+    public function theAuthorPosts()
+    {
         echo $this->getTheAuthorPosts();
     }
 
@@ -190,20 +215,24 @@ class AuthorHelper extends AppHelper {
      * Retrieve the URL to the author page for the user with the ID provided.
      *
      * @since 0.1.0
+     *
      * @param intiger $author_id
      * @param string $author_nickname Description
+     *
      * @return string The URL to the author's page.
      */
-    public function getAuthorPostsUrl($author_id = null, $author_nickname = '') {
+    public function getAuthorPostsUrl($author_id = null, $author_nickname = '')
+    {
         if (is_null($author_id)) {
-            $author_id = (int) $this->user_id;
+            $author_id = (int)$this->user_id;
         } else {
             $this->authorData = ClassRegistry::init('User')->getUserData($author_id);
         }
 
         if ('' == $author_nickname) {
-            if (!empty($this->authorData['nickname']))
+            if (!empty($this->authorData['nickname'])) {
                 $author_nickname = $this->authorData['nickname'];
+            }
         }
         $file = $this->Link->siteUrl('/');
         $link = $file . 'author/' . $author_nickname;
@@ -236,11 +265,13 @@ class AuthorHelper extends AppHelper {
      * </code>
      *
      * @since 0.1.0
-     * 
+     *
      * @param array $args The argument array.
+     *
      * @return null|string The output, if echo is set to false.
      */
-    public function hrListAuthors($args = '') {
+    public function hrListAuthors($args = '')
+    {
         //global $wpdb;
 
         $defaults = array(
@@ -275,22 +306,25 @@ class AuthorHelper extends AppHelper {
         foreach ($authors as $key => $author) {
             $author = ClassRegistry::init('User')->getUserData($author['User']['id']);
 
-            if ($exclude_admin && 'admin' == $author['display_name'])
+            if ($exclude_admin && 'admin' == $author['display_name']) {
                 continue;
+            }
 
             //$posts = isset($author_count[$author->ID]) ? $author_count[$author->ID] : 0;
             $posts = ClassRegistry::init('Post')->countUserPosts($author['id']);
 
 
-            if (!$posts && $hide_empty)
+            if (!$posts && $hide_empty) {
                 continue;
+            }
 
             $link = '';
 
-            if ($show_fullname && $author['firstname'] && $author['lastname'])
+            if ($show_fullname && $author['firstname'] && $author['lastname']) {
                 $name = "{$author['firstname']} {$author['lastname']}";
-            else
+            } else {
                 $name = $author['display_name'];
+            }
 
             if (!$html) {
                 $return .= $name . ', ';
@@ -303,7 +337,11 @@ class AuthorHelper extends AppHelper {
             }
 
             //$link = '<a href="' . get_author_posts_url($author->ID, $author->user_nicename) . '" title="' . esc_attr(sprintf(__("Posts by %s"), $author->display_name)) . '">' . $name . '</a>';
-            $link = $this->Html->link($name, $this->getAuthorPostsUrl($author['id'], $author['nicename']), array('title' => __("Posts by %s", $author['display_name'])));
+            $link = $this->Html->link(
+                $name,
+                $this->getAuthorPostsUrl($author['id'], $author['nicename']),
+                array('title' => __("Posts by %s", $author['display_name']))
+            );
 
 //            if (!empty($feed_image) || !empty($feed)) {
 //                $link .= ' ';
@@ -334,17 +372,19 @@ class AuthorHelper extends AppHelper {
 //                    $link .= ')';
 //            }
 
-            if ($optioncount)
+            if ($optioncount) {
                 $link .= ' (' . $posts . ')';
+            }
 
             $return .= $link;
-            $return .= ( 'list' == $style ) ? '</li>' : ', ';
+            $return .= ('list' == $style) ? '</li>' : ', ';
         }
 
         $return = rtrim($return, ', ');
 
-        if (!$echo)
+        if (!$echo) {
             return $return;
+        }
 
         echo $return;
     }

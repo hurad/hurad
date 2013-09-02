@@ -3,13 +3,16 @@
     <div class="container-fluid">
         <div class="row">
             <?php
-            echo $this->Form->create('Installer', array(
-                'class' => 'form-horizontal',
-                'inputDefaults' => array(
-                    'div' => false,
-                    'label' => false
+            echo $this->Form->create(
+                'Installer',
+                array(
+                    'class' => 'form-horizontal',
+                    'inputDefaults' => array(
+                        'div' => false,
+                        'label' => false
+                    )
                 )
-            ));
+            );
             ?>
             <div class="control-group">
                 <?php echo $this->Form->label('database', __('Database name'), array('class' => 'control-label')); ?>
@@ -24,7 +27,11 @@
                 </div>
             </div>
             <div class="control-group">
-                <?php echo $this->Form->label('password', __('Database password'), array('class' => 'control-label')); ?>
+                <?php echo $this->Form->label(
+                    'password',
+                    __('Database password'),
+                    array('class' => 'control-label')
+                ); ?>
                 <div class="controls">
                     <?php echo $this->Form->input('password', array('placeholder' => __('Database password'))); ?>
                 </div>
@@ -33,10 +40,13 @@
                 <?php echo $this->Form->label('host', __('Database host'), array('class' => 'control-label')); ?>
                 <div class="controls">
                     <?php
-                    echo $this->Form->input('host', array(
-                        'placeholder' => __('Database host'),
-                        'value' => 'localhost'
-                    ));
+                    echo $this->Form->input(
+                        'host',
+                        array(
+                            'placeholder' => __('Database host'),
+                            'value' => 'localhost'
+                        )
+                    );
                     ?>
                 </div>
             </div>
@@ -44,14 +54,22 @@
                 <?php echo $this->Form->label('prefix', __('Tables prefix'), array('class' => 'control-label')); ?>
                 <div class="controls">
                     <?php
-                    echo $this->Form->input('prefix', array('placeholder' => __('Tables prefix'),
-                        'value' => 'hr_'));
+                    echo $this->Form->input(
+                        'prefix',
+                        array(
+                            'placeholder' => __('Tables prefix'),
+                            'value' => 'hr_'
+                        )
+                    );
                     ?>
                 </div>
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <?php echo $this->Form->button(__('Install Database'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+                    <?php echo $this->Form->button(
+                        __('Install Database'),
+                        array('type' => 'submit', 'class' => 'btn btn-primary')
+                    ); ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>

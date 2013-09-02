@@ -9,8 +9,10 @@
 </div>
 <div class="pageing_counter">
     <?php
-    echo $this->Paginator->counter(array(
-        'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
-    ));
-    ?>	
+    echo $this->Paginator->counter(
+        array(
+            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+        )
+    );
+    ?>
 </div>

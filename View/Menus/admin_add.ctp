@@ -3,13 +3,16 @@
 </div>
 
 <?php
-echo $this->Form->create('Menu', array(
-    'class' => 'form-horizontal',
-    'inputDefaults' => array(
-        'label' => false,
-        'div' => false
+echo $this->Form->create(
+    'Menu',
+    array(
+        'class' => 'form-horizontal',
+        'inputDefaults' => array(
+            'label' => false,
+            'div' => false
+        )
     )
-));
+);
 ?>
 
 <div class="control-group">

@@ -1,15 +1,15 @@
-<?php $this->Html->css(array('admin/Widgets/widgets'), null, array('inline' => FALSE)); ?>
+<?php $this->Html->css(array('admin/Widgets/widgets'), null, array('inline' => false)); ?>
 
 <script>
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         //Show widget inside(div.widget-inside)
-        $(document).on("click", "span.widget-inside-click", function(event) {
+        $(document).on("click", "span.widget-inside-click", function (event) {
             var item_id = $(this).parent().parent().attr("id");
             $("#" + item_id).children(".widget-inside").slideToggle("slow");
             return false;
         });
         //Edit widget data
-        $(document).on("submit", "form", function(event) {
+        $(document).on("submit", "form", function (event) {
             //Get img.ajax-feedback
             var ajax_feedback = $(this).children(".widget-control-actions").children("div.pull-right").children("img");
             //Visible img.ajax-feedback
@@ -26,7 +26,7 @@
                 type: 'POST',
                 url: Hurad.basePath + 'admin/widgets/edit',
                 data: widget_data,
-                success: function() {
+                success: function () {
                     if ($("#form-" + id + " input[name='title']").val() != '') {
                         $("#" + id).children(".widget-title").children(".in-widget-title").text(": " + $("#form-" + id + " input[name='title']").val());
                     }
@@ -45,27 +45,32 @@
         <div id="draggable">
             <?php
             foreach (Configure::read('widgets') as $widget_id => $widget) {
-                echo $this->Html->div('widget-item', NULL, array('value' => $widget['id'], 'id' => $widget['id']));
-                echo $this->Html->div('widget-title', NULL);
+                echo $this->Html->div('widget-item', null, array('value' => $widget['id'], 'id' => $widget['id']));
+                echo $this->Html->div('widget-title', null);
                 echo $widget['title'];
                 echo '<span class="in-widget-title"></span>';
                 if ($this->Widget->formExist($widget['element'])) {
                     echo '<span class="widget-inside-click" style="display: none;"><i class="icon-chevron-down"></i></span>';
                 }
                 echo '</div>'; //Close div.widget-title
-                echo $this->Html->div('widget-inside', NULL, array('style' => 'display: none;'));
+                echo $this->Html->div('widget-inside', null, array('style' => 'display: none;'));
                 echo '<form id="form-' . $widget['id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
                 if (isset($widget['element']) && $this->Widget->formExist($widget['element'])) {
-                    echo $this->Html->div('widget-content', NULL);
+                    echo $this->Html->div('widget-content', null);
                     echo $this->element('Widgets/' . $widget['element'] . '-form', array('data' => array()));
                     echo "</div>"; //Close div.widget-content
                 }
-                echo '<input id="number" type="hidden" value="' . HuradWidget::maxNumber($widget['id']) . '" name="number">';
+                echo '<input id="number" type="hidden" value="' . HuradWidget::maxNumber(
+                        $widget['id']
+                    ) . '" name="number">';
                 echo '<input id="widget-id" type="hidden" value="' . $widget['id'] . '" name="widget-id">';
                 echo '<input id="unique-id" type="hidden" value="" name="unique-id">';
-                echo $this->Html->div('widget-control-actions', NULL);
-                echo $this->Html->div('pull-right', NULL);
-                echo $this->Html->image('ajax-fb.gif', array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;'));
+                echo $this->Html->div('widget-control-actions', null);
+                echo $this->Html->div('pull-right', null);
+                echo $this->Html->image(
+                    'ajax-fb.gif',
+                    array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;')
+                );
                 echo '<input id="submit-' . $widget['id'] . '" type="submit" class="btn widget-submit" value="Save">';
                 echo '</div>'; //Close div.pull-right
                 echo '<div class="clear"></div>';
@@ -85,7 +90,7 @@
             }
             ?>
             <script>
-                $(function() {
+                $(function () {
                     $("#draggable div.widget-item").draggable({
                         connectToSortable: "<?php echo implode(', ', array_values($side)); ?>",
                         helper: "clone",
@@ -106,7 +111,10 @@
                         <h5><?php echo $sidebar['name']; ?></h5>
                     </div>
                     <div class="pull-right">
-                        <?php echo $this->Html->image('ajax-fb.gif', array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;')); ?>
+                        <?php echo $this->Html->image(
+                            'ajax-fb.gif',
+                            array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;')
+                        ); ?>
                     </div>
                     <div class="clear"></div>
                 </div>
@@ -128,19 +136,28 @@
                                 echo '<span class="widget-inside-click"><i class="icon-chevron-down"></i></span>';
                             }
                             echo "</div>"; //Close div.widget-title
-                            echo $this->Html->div('widget-inside', NULL, array('style' => 'display: none;'));
+                            echo $this->Html->div('widget-inside', null, array('style' => 'display: none;'));
                             echo '<form id="form-' . $wgdb['unique-id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
-                            if (isset($widget[$wgdb['widget-id']]['element']) && $this->Widget->formExist($widget[$wgdb['widget-id']]['element'])) {
-                                echo $this->Html->div('widget-content', NULL);
-                                echo $this->element('Widgets/' . $widget[$wgdb['widget-id']]['element'] . '-form', array('data' => HuradWidget::getWidgetData($wgdb['unique-id'])));
+                            if (isset($widget[$wgdb['widget-id']]['element']) && $this->Widget->formExist(
+                                    $widget[$wgdb['widget-id']]['element']
+                                )
+                            ) {
+                                echo $this->Html->div('widget-content', null);
+                                echo $this->element(
+                                    'Widgets/' . $widget[$wgdb['widget-id']]['element'] . '-form',
+                                    array('data' => HuradWidget::getWidgetData($wgdb['unique-id']))
+                                );
                                 echo "</div>"; //Close div.widget-content
                             }
                             echo '<input id="number" type="hidden" value="' . $wgdb['number'] . '" name="number">';
                             echo '<input id="widget-id" type="hidden" value="' . $wgdb['widget-id'] . '" name="widget-id">';
                             echo '<input id="unique-id" type="hidden" value="' . $wgdb['unique-id'] . '" name="unique-id">';
                             echo '<div class="widget-control-actions">';
-                            echo $this->Html->div('pull-right', NULL);
-                            echo $this->Html->image('ajax-fb.gif', array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;'));
+                            echo $this->Html->div('pull-right', null);
+                            echo $this->Html->image(
+                                'ajax-fb.gif',
+                                array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;')
+                            );
                             echo '<input id="submit-' . $wgdb['unique-id'] . '" type="submit" class="btn widget-submit" value="Save">';
                             echo '</div>'; //Close div.pull-right
                             echo '<div class="clear"></div>';
@@ -158,64 +175,64 @@
                 <script>
 
                     $("#<?php echo $sidebarID; ?>").sortable({
-                        revert: true,
-                        placeholder: "placeholder",
-                        beforeStop: function(event, ui) {
-                            var widget = {};
-                            //Get input number
-                            widget.number = ui.item.children().children().children('#number').val();
-                            //Get div.widget-item value attribute
-                            widget.darg_value = ui.item.attr('value');
-                            //Change div.widget-item id attribute
-                            widget.id = ui.item.attr("id", widget.darg_value + "-" + widget.number);
-
-                            //Update input#number value attribute
-                            $("#draggable #" + widget.darg_value).children().children().children("#number").attr("value", parseInt(widget.number) + 1);
-                            //Set form id
-                            ui.item.children().children("form").attr("id", "form-" + widget.darg_value + "-" + widget.number);
-                            //Set submit id
-                            ui.item.children().children().children("input[type='submit']").attr("id", "submit-" + widget.darg_value + "-" + widget.number);
-                            //Set input#unique-id value
-                            ui.item.children().children().children("#unique-id").attr("value", widget.darg_value + "-" + widget.number);
-
-                            ui.item.children(".widget-title").children("span").removeAttr("style");
-
-                            if (ui.item.hasClass("ui-draggable")) {
-                                ui.item.removeClass("ui-draggable");
-                            }
-                            $("#<?php echo $sidebarID; ?> .clearfix").remove();
-                            $("#<?php echo $sidebarID; ?>").append('<span class="clearfix"></span>');
-                        },
-                        update: function(event, ui) {
-                            //Create order array
-                            var order = [];
-                            $('#<?php echo $sidebarID; ?> div.widget-item').each(function() {
-                                var item = $(this).children(".widget-inside").children("form").serializeArray();
-                                //get the widget id
-                                var id = $(this).attr('id');
-                                //Create widget object
+                            revert: true,
+                            placeholder: "placeholder",
+                            beforeStop: function (event, ui) {
                                 var widget = {};
-                                widget[id] = item;
-                                //Push object to array
-                                order.push(widget);
-                            });
+                                //Get input number
+                                widget.number = ui.item.children().children().children('#number').val();
+                                //Get div.widget-item value attribute
+                                widget.darg_value = ui.item.attr('value');
+                                //Change div.widget-item id attribute
+                                widget.id = ui.item.attr("id", widget.darg_value + "-" + widget.number);
 
-                            var sidebarID = ui.item.parent().attr("id");
-                            $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "visible");
+                                //Update input#number value attribute
+                                $("#draggable #" + widget.darg_value).children().children().children("#number").attr("value", parseInt(widget.number) + 1);
+                                //Set form id
+                                ui.item.children().children("form").attr("id", "form-" + widget.darg_value + "-" + widget.number);
+                                //Set submit id
+                                ui.item.children().children().children("input[type='submit']").attr("id", "submit-" + widget.darg_value + "-" + widget.number);
+                                //Set input#unique-id value
+                                ui.item.children().children().children("#unique-id").attr("value", widget.darg_value + "-" + widget.number);
 
-                            $.post(Hurad.basePath + "admin/widgets", {'<?php echo $sidebarID; ?>': order}, function(data) {
-                                $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "hidden");
-                            });
+                                ui.item.children(".widget-title").children("span").removeAttr("style");
 
-                        },
-                    }
+                                if (ui.item.hasClass("ui-draggable")) {
+                                    ui.item.removeClass("ui-draggable");
+                                }
+                                $("#<?php echo $sidebarID; ?> .clearfix").remove();
+                                $("#<?php echo $sidebarID; ?>").append('<span class="clearfix"></span>');
+                            },
+                            update: function (event, ui) {
+                                //Create order array
+                                var order = [];
+                                $('#<?php echo $sidebarID; ?> div.widget-item').each(function () {
+                                    var item = $(this).children(".widget-inside").children("form").serializeArray();
+                                    //get the widget id
+                                    var id = $(this).attr('id');
+                                    //Create widget object
+                                    var widget = {};
+                                    widget[id] = item;
+                                    //Push object to array
+                                    order.push(widget);
+                                });
+
+                                var sidebarID = ui.item.parent().attr("id");
+                                $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "visible");
+
+                                $.post(Hurad.basePath + "admin/widgets", {'<?php echo $sidebarID; ?>': order}, function (data) {
+                                    $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "hidden");
+                                });
+
+                            },
+                        }
 
                     );
 
                 </script>
 
 
-                <?php
+            <?php
             endforeach;
         } else {
             ?>

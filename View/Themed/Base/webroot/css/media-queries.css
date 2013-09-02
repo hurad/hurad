@@ -26,25 +26,30 @@
     .col4-3,
     .col3-1,
     .col3-2,
-    .col2-1
-    {
+    .col2-1 {
         margin-left: 2%;
     }
+
     .first {
         margin-left: 0;
     }
+
     .col4-1 {
         max-width: 23%;
     }
+
     .col4-2, .col2-1 {
         max-width: 48%;
     }
+
     .col4-3 {
         max-width: 72%;
     }
+
     .col3-1 {
         max-width: 31%;
     }
+
     .col3-2 {
         max-width: 62%;
     }
@@ -75,7 +80,7 @@
     HEADER
     *************************************************************************************/
     /* reset absolute elements to static */
-    #site-logo, #site-description, #main-nav  {
+    #site-logo, #site-description, #main-nav {
         position: static;
         float: none;
         clear: both;
@@ -101,10 +106,12 @@
         top: 20px;
         width: 150px;
     }
+
     #header #searchform #s {
         float: right;
         width: 50px;
     }
+
     #header #searchform input#s:focus {
         width: 150px;
     }
@@ -148,7 +155,7 @@
     .col4-2, .col2-1,
     .col4-3,
     .col3-1,
-    .col3-2	 {
+    .col3-2 {
         margin-left: 0;
         width: 100%;
         max-width: 100%;
@@ -167,6 +174,7 @@
         float: right;
         cursor: pointer;
     }
+
     .mobile-button:after {
         border: solid 1px #7a7a7a;
         padding: 1px;
@@ -180,13 +188,13 @@
 
         background-color: #c3c3c3;
 
-        background-image: -moz-linear-gradient(top,  #d8d8d8 0%, #999898 100%);
-        background-image: -webkit-linear-gradient(top,  #d8d8d8 0%,#999898 100%);
-        background-image: linear-gradient(top,  #d8d8d8 0%,#999898 100%);
+        background-image: -moz-linear-gradient(top, #d8d8d8 0%, #999898 100%);
+        background-image: -webkit-linear-gradient(top, #d8d8d8 0%, #999898 100%);
+        background-image: linear-gradient(top, #d8d8d8 0%, #999898 100%);
 
-        -webkit-box-shadow: inset 0 0 1px rgba(255,255,255,.4), inset 0 1px rgba(255,255,255,.5), 0 1px 2px rgba(0,0,0,.2);
-        -moz-box-shadow: inset 0 0 1px rgba(255,255,255,.4), inset 0 1px rgba(255,255,255,.5), 0 1px 2px rgba(0,0,0,.2);
-        box-shadow: inset 0 0 1px rgba(255,255,255,.4), inset 0 1px rgba(255,255,255,.5), 0 1px 2px rgba(0,0,0,.2);
+        -webkit-box-shadow: inset 0 0 1px rgba(255, 255, 255, .4), inset 0 1px rgba(255, 255, 255, .5), 0 1px 2px rgba(0, 0, 0, .2);
+        -moz-box-shadow: inset 0 0 1px rgba(255, 255, 255, .4), inset 0 1px rgba(255, 255, 255, .5), 0 1px 2px rgba(0, 0, 0, .2);
+        box-shadow: inset 0 0 1px rgba(255, 255, 255, .4), inset 0 1px rgba(255, 255, 255, .5), 0 1px 2px rgba(0, 0, 0, .2);
 
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -219,14 +227,15 @@
         border: solid 1px #999;
         display: none; /* visibility will be toggled with jquery */
 
-        -webkit-box-shadow: 1px 2px 0 rgba(0,0,0,.2);
-        -moz-box-shadow: 1px 2px 0 rgba(0,0,0,.2);
-        box-shadow: 1px 2px 0 rgba(0,0,0,.2);
+        -webkit-box-shadow: 1px 2px 0 rgba(0, 0, 0, .2);
+        -moz-box-shadow: 1px 2px 0 rgba(0, 0, 0, .2);
+        box-shadow: 1px 2px 0 rgba(0, 0, 0, .2);
 
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
     }
+
     #main-nav li {
         clear: both;
         float: none;
@@ -239,7 +248,8 @@
         -moz-box-shadow: none;
         box-shadow: none;
     }
-    #main-nav a, 
+
+    #main-nav a,
     #main-nav ul a {
         font: inherit;
         text-transform: inherit;
@@ -256,7 +266,8 @@
         -moz-box-shadow: none;
         box-shadow: none;
     }
-    #main-nav a:hover, 
+
+    #main-nav a:hover,
     #main-nav ul a:hover {
         background: none;
         color: #000 !important;
@@ -289,6 +300,7 @@
         right: 40px;
         z-index: 1000;
     }
+
     #search-icon {
         background: url(images/search-icon.png) no-repeat center center;
     }
@@ -307,10 +319,11 @@
         -moz-border-radius: 5px;
         border-radius: 5px;
 
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.3);
-        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.3);
-        box-shadow: 0 1px 2px rgba(0,0,0,.3);
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
     }
+
     #header #searchform #s {
         background: #eee;
         color: #444;
@@ -343,9 +356,11 @@
     .commentlist {
         padding-left: 0;
     }
+
     .commentlist .commententry {
         clear: left;
     }
+
     .commentlist .avatar {
         float: left;
         width: 40px;

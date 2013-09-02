@@ -1,14 +1,16 @@
 <?php
 if (!isset($channel)) {
-	$channel = array();
+    $channel = array();
 }
 if (!isset($channel['title'])) {
-	$channel['title'] = $title_for_layout;
+    $channel['title'] = $title_for_layout;
 }
 
 echo $this->Rss->document(
-	$this->Rss->channel(
-		array(), $channel, $content_for_layout
-	)
+    $this->Rss->channel(
+        array(),
+        $channel,
+        $content_for_layout
+    )
 );
 ?>

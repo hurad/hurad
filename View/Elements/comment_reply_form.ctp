@@ -18,7 +18,7 @@
         //echo $this->Form->input('parent_id', array('type' => 'hidden', 'value' => $urls[1]));
         ?>
     </fieldset>
-    <?php echo $this->Form->end(__('Submit Comment')); ?>    
+    <?php echo $this->Form->end(__('Submit Comment')); ?>
 <?php } else { ?>
     <?php echo $this->Form->create(null, array('url' => '/comments/reply/' . $urls[0] . '/' . $urls[1] . '/')); ?>
     <fieldset>
@@ -33,5 +33,5 @@
         echo $this->Form->input('content');
         ?>
     </fieldset>
-    <?php echo $this->Form->end(__('Submit Comment')); ?>  
+    <?php echo $this->Form->end(__('Submit Comment')); ?>
 <?php } ?>

@@ -1,5 +1,8 @@
 <div class="users form">
-    <?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'reset', $key))); ?>
+    <?php echo $this->Form->create(
+        'User',
+        array('url' => array('controller' => 'users', 'action' => 'reset', $key))
+    ); ?>
     <fieldset>
         <legend><?php echo __('Add User'); ?></legend>
         <?php

@@ -1,5 +1,5 @@
 <p>
-<!--    <label for="title"><?php //echo __('Title:'); ?></label>-->
+    <!--    <label for="title"><?php //echo __('Title:'); ?></label>-->
     <?php $this->Widget->label('title', __('Title:')); ?>
     <?php $this->Widget->input('title', $data); ?>
 

@@ -3,13 +3,16 @@
     <div class="container-fluid">
         <div class="row">
             <?php
-            echo $this->Form->create('Installer', array(
-                'class' => 'form-horizontal',
-                'inputDefaults' => array(
-                    'div' => false,
-                    'label' => false
+            echo $this->Form->create(
+                'Installer',
+                array(
+                    'class' => 'form-horizontal',
+                    'inputDefaults' => array(
+                        'div' => false,
+                        'label' => false
+                    )
                 )
-            ));
+            );
             ?>
             <div class="control-group">
                 <?php echo $this->Form->label('title', __('Weblog Title'), array('class' => 'control-label')); ?>
@@ -30,9 +33,16 @@
                 </div>
             </div>
             <div class="control-group">
-                <?php echo $this->Form->label('confirm_password', __('Confirm Password'), array('class' => 'control-label')); ?>
+                <?php echo $this->Form->label(
+                    'confirm_password',
+                    __('Confirm Password'),
+                    array('class' => 'control-label')
+                ); ?>
                 <div class="controls">
-                    <?php echo $this->Form->input('confirm_password', array('type' => 'password', 'placeholder' => __('Confirm Password'))); ?>
+                    <?php echo $this->Form->input(
+                        'confirm_password',
+                        array('type' => 'password', 'placeholder' => __('Confirm Password'))
+                    ); ?>
                 </div>
             </div>
             <div class="control-group">
@@ -43,7 +53,10 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <?php echo $this->Form->button(__('Finish :)'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+                    <?php echo $this->Form->button(
+                        __('Finish :)'),
+                        array('type' => 'submit', 'class' => 'btn btn-primary')
+                    ); ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>

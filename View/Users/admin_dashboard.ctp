@@ -1,4 +1,4 @@
-<?php $this->Html->css(array('admin/Users/dashboard'), null, array('inline' => FALSE)); ?>
+<?php $this->Html->css(array('admin/Users/dashboard'), null, array('inline' => false)); ?>
 <?php $this->Html->script(array('admin/Users/dashboard'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
