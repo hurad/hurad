@@ -10,7 +10,7 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class UsersController extends AppController {
 
-    public $components = array('Cookie', 'Session');
+    public $components = array('Cookie', 'Session', 'Hurad', 'RequestHandler');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
     public $uses = array('User', 'UserMeta');
 
@@ -18,39 +18,6 @@ class UsersController extends AppController {
         parent::beforeFilter();
         //For not logged user's
         $this->Auth->allow(array('register', 'login', 'logout', 'forgot'));
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return TRUE;
-                break;
-            case 'editor':
-                if (
-                        $action == 'admin_index' ||
-                        $action == 'admin_edit' ||
-                        $action == 'admin_dashboard' ||
-                        $action == 'admin_profile' ||
-                        $action == 'register' ||
-                        $action == 'login' ||
-                        $action == 'logout'
-                ) {
-                    return TRUE;
-                }
-                break;
-            case 'author':
-            case 'user':
-                if (
-                        $action == 'login' ||
-                        $action == 'logout' ||
-                        $action == 'register' ||
-                        $action == 'admin_dashboard' ||
-                        $action == 'admin_profile'
-                ) {
-                    return TRUE;
-                }
-        }
     }
 
     public function admin_dashboard() {
@@ -200,24 +167,6 @@ class UsersController extends AppController {
     }
 
     /**
-     * logout method
-     *
-     * @return void
-     */
-    public function logout() {
-        if ($this->Auth->loggedIn()) {
-//$this->Cookie->delete('Hurad');
-            $this->Session->destroy();
-            $this->Cookie->destroy();
-            $this->Session->setFlash(__('You are successfully logout'), 'success');
-            $this->redirect($this->Auth->logout());
-        } else {
-            $this->Session->setFlash(__('You already logout.'), 'notice');
-            $this->redirect('/');
-        }
-    }
-
-    /**
      * Sets the cookie to remember the user
      *
      * @param array Cookie component properties as array, like array('domain' => 'yourdomain.com')
@@ -234,6 +183,24 @@ class UsersController extends AppController {
             $this->Cookie->write($cookieKey, $cookie, TRUE, '+2 weeks');
         }
         unset($this->request->data['User']['remember_me']);
+    }
+
+    /**
+     * logout method
+     *
+     * @return void
+     */
+    public function logout() {
+        if ($this->Auth->loggedIn()) {
+//$this->Cookie->delete('Hurad');
+            $this->Session->destroy();
+            $this->Cookie->destroy();
+            $this->Session->setFlash(__('You are successfully logout'), 'success');
+            $this->redirect($this->Auth->logout());
+        } else {
+            $this->Session->setFlash(__('You already logout.'), 'notice');
+            $this->redirect('/');
+        }
     }
 
     /**
@@ -293,30 +260,16 @@ class UsersController extends AppController {
                     'siteurl' => Configure::read('General.site_url'),
                     'email' => $this->request->data['User']['email']
                 ));
-                $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-                $email->to('m.abdolirad@gmail.com');
-                $email->subject('Register to CakeBlog');
+                $email->from('info@hurad.org', Configure::read('General.site_name'));
+                $email->to($this->request->data['User']['email']);
+                $email->subject(__('Register to %s', Configure::read('General.site_name')));
                 $email->send('Thank you register Cakeblog');
-                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'success');
-                $this->redirect(array('action' => 'index'));
+                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'default', array('class' => 'success'));
+                $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-    }
-
-    /**
-     * profile method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function profile($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        $this->set('user', $this->User->read(null, $id));
     }
 
     /**
