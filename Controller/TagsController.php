@@ -19,27 +19,7 @@ class TagsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Security->requirePost('admin_edit');
         $this->Auth->allow('index');
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return true;
-                break;
-
-            case 'editor':
-            case 'author':
-                if ($action == 'admin_index' || $action == 'admin_add' || $action == 'admin_edit') {
-                    
-                }
-                break;
-            case 'user':
-                return false;
-                break;
-        }
     }
 
     /**
@@ -63,86 +43,6 @@ class TagsController extends AppController {
             $this->Tag->recursive = 0;
             $this->set('tags', $this->paginate());
         }
-    }
-
-    /**
-     * view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null) {
-        $this->Tag->id = $id;
-        if (!$this->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
-        }
-        $this->set('tag', $this->Tag->read(null, $id));
-    }
-
-    /**
-     * add method
-     *
-     * @return void
-     */
-    public function add() {
-        if ($this->request->is('post')) {
-            $this->Tag->create();
-            if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__('The tag has been saved'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The tag could not be saved. Please, try again.'));
-            }
-        }
-        $posts = $this->Tag->Post->find('list');
-        $this->set(compact('posts'));
-    }
-
-    /**
-     * edit method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function edit($id = null) {
-        $this->Tag->id = $id;
-        if (!$this->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
-        }
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__('The tag has been saved'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The tag could not be saved. Please, try again.'));
-            }
-        } else {
-            $this->request->data = $this->Tag->read(null, $id);
-        }
-        $posts = $this->Tag->Post->find('list');
-        $this->set(compact('posts'));
-    }
-
-    /**
-     * delete method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function delete($id = null) {
-        if (!$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
-        $this->Tag->id = $id;
-        if (!$this->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
-        }
-        if ($this->Tag->delete()) {
-            $this->Session->setFlash(__('Tag deleted'));
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('Tag was not deleted'));
-        $this->redirect(array('action' => 'index'));
     }
 
     /**
