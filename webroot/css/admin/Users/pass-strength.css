@@ -9,22 +9,27 @@
     background-color: #EEEEEE;
     border-color: #DDDDDD;
 }
+
 #pass-strength-result.short {
     background-color: #FFA0A0;
     border-color: #F04040 !important;
 }
+
 #pass-strength-result.bad {
     background-color: #FFB78C;
     border-color: #FF853C !important;
 }
+
 #pass-strength-result.good {
     background-color: #FFEC8B;
     border-color: #FFCC00 !important;
 }
+
 #pass-strength-result.strong {
     background-color: #C3FF88;
     border-color: #8DFF1C !important;
 }
+
 .indicator-hint {
     padding-top: 8px;
 }

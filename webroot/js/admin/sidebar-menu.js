@@ -1,5 +1,4 @@
-$(document).ready(function()
-{
+$(document).ready(function () {
 //    $('li.top-menu').click(function() {
 //
 //        $(this).toggleClass("active");

@@ -5,14 +5,17 @@
     width: 100%;
     border-collapse: separate;
 }
+
 .list-table thead, .list-table tfoot {
     text-align: left;
 }
+
 .list-table tr td {
     border-bottom: 1px solid #DFDFDF;
     padding: 3px 7px;
     vertical-align: top;
 }
+
 .list-table tr th {
     background: -moz-linear-gradient(center bottom, #D7D7D7, #E4E4E4) repeat scroll 0 0 transparent;
     color: #333333;
@@ -20,6 +23,7 @@
     line-height: 1.3em;
     padding: 7px 7px 8px;
 }
+
 .list-table th, .list-table td {
     font-size: 11px;
     overflow: hidden;
@@ -28,54 +32,70 @@
 .list-table thead tr th:first-of-type {
     border-radius: 5px 0px 0px 0px;
 }
+
 .list-table thead tr th:last-of-type {
     border-radius: 0px 5px 0px 0px;
 }
+
 .list-table tfoot tr th:first-of-type {
     border-radius: 0px 0px 0px 5px;
 }
+
 .list-table tfoot tr th:last-of-type {
     border-radius: 0px 0px 5px 0px;
 }
+
 th a.asc:after {
     content: " ⇣";
 }
+
 th a.desc:after {
     content: " ⇡";
 }
+
 .check-column {
     padding: 0;
     width: 0em;
 }
+
 .column-status {
     width: 10%;
 }
+
 .column-actions {
     width: 18%;
 }
+
 .action-view a, .action-delete a, .action-edit a {
     text-decoration: none;
 }
+
 .action-delete a {
     color: #BC0B0B !important;
 }
+
 .action-approved a {
     color: #2ccc42 !important;
 }
+
 .list-table a:hover, .list-table a:active, .list-table a:focus {
     color: #D54E21;
 }
-.row-actions{
+
+.row-actions {
     font-size: 10px;
     visibility: hidden;
 }
-tbody tr:hover .row-actions{
+
+tbody tr:hover .row-actions {
     visibility: visible;
 }
+
 .form-wrap {
     margin: 10px 0;
     width: 97%;
 }
+
 .alternate {
     background-color: #FFF
 }

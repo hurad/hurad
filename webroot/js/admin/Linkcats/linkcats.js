@@ -12,7 +12,7 @@ var Linkcats = {};
  *
  * @return void
  */
-Linkcats.documentReady = function() {
+Linkcats.documentReady = function () {
     Linkcats.search();
 }
 
@@ -21,9 +21,9 @@ Linkcats.documentReady = function() {
  *
  * @return void
  */
-Linkcats.search = function() {
+Linkcats.search = function () {
 
-    $('#AdminSearchForm').submit(function() {
+    $('#AdminSearchForm').submit(function () {
         var q = '';
 
         //query string
@@ -45,7 +45,7 @@ Linkcats.search = function() {
  *
  * @return void
  */
-$(document).ready(function() {
+$(document).ready(function () {
     if (Hurad.params.controller == 'linkcats') {
         Linkcats.documentReady();
     }
