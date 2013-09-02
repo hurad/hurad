@@ -5,21 +5,26 @@ App::uses('AppController', 'Controller');
 /**
  * Description of PluginsController
  *
+ * @todo complete phpDoc
+ *
  * @author mohammad
  */
-class PluginsController extends AppController {
+class PluginsController extends AppController
+{
 
     public $uses = array();
 
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Plugins'));
 
         $plugins = HuradPlugin::getPluginData();
         $this->set(compact('plugins'));
     }
 
-    public function admin_toggle($alias) {
-        $this->autoRender = FALSE;
+    public function admin_toggle($alias)
+    {
+        $this->autoRender = false;
         if (HuradPlugin::isActive($alias)) {
             if (HuradPlugin::deactivate($alias)) {
                 $this->Session->setFlash(__('Plugin deactivate'), 'success');
@@ -39,4 +44,7 @@ class PluginsController extends AppController {
         }
     }
 
+    /*
+     * @todo add admin_delete method
+     */
 }
