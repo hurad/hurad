@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  *
  * @property Post $Post
  */
-class PagesController extends AppController {
+class PagesController extends AppController
+{
 
     public $helpers = array('Page', 'Comment', 'Text', 'Editor');
     public $components = array('RequestHandler', 'Role');
@@ -22,7 +23,8 @@ class PagesController extends AppController {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         $this->Auth->allow('index', 'view');
     }
@@ -32,7 +34,8 @@ class PagesController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         if ($this->RequestHandler->isRss()) {
             $posts = $this->Page->find('all', array('limit' => 20, 'order' => 'Page.created DESC'));
             return $this->set(compact('pages'));
@@ -49,14 +52,17 @@ class PagesController extends AppController {
         }
     }
 
-    public function pageIndex() {
+    public function pageIndex()
+    {
         //$pages = $this->Post->generateTreeList(array('type' => 'page'));
         //debug($this->request->named['sort']);
-        $pages = $this->Post->find('threaded', array(
-            'conditions' => array('Post.type' => 'page'),
-            'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
+        $pages = $this->Post->find(
+            'threaded',
+            array(
+                'conditions' => array('Post.type' => 'page'),
+                'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
                 //'limit' => $this->request->named['limit'],
-                )
+            )
         );
 
         if (!empty($this->request->params['requested'])) {
@@ -75,9 +81,11 @@ class PagesController extends AppController {
      * view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function view($slug = null) {
+    public function view($slug = null)
+    {
         $this->Page->slug = $slug;
         if (is_null($slug) && !$this->Page->exists()) {
             throw new NotFoundException(__('Invalid page'));
@@ -92,7 +100,8 @@ class PagesController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Pages'));
         $this->Page->recursive = 0;
         if (isset($this->request->params['named']['q'])) {
@@ -112,17 +121,23 @@ class PagesController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
+    public function admin_add()
+    {
         $this->set('title_for_layout', __('Add Page'));
         if ($this->request->is('post')) {
             $this->request->data['Page']['type'] = 'page';
             $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
             if (empty($this->request->data['Page']['slug'])) {
-                if (!in_array($this->request->data['Page']['status'], array('draft')))
-                    $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['title']);
-                else
-                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(__("Draft-") . $this->request->data['Page']['title']);
+                if (!in_array($this->request->data['Page']['status'], array('draft'))) {
+                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(
+                        $this->request->data['Page']['title']
+                    );
+                } else {
+                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(
+                        __("Draft-") . $this->request->data['Page']['title']
+                    );
+                }
             } else {
                 $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['slug']);
             }
@@ -143,9 +158,11 @@ class PagesController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->set('title_for_layout', __('Edit Page'));
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
@@ -153,12 +170,19 @@ class PagesController extends AppController {
                 $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
                 if (empty($this->request->data['Page']['slug'])) {
-                    if (!in_array($this->request->data['Page']['status'], array('draft')))
-                        $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['title']);
-                    else
-                        $this->request->data['Page']['slug'] = Formatting::sanitize_title(__("Draft-") . $this->request->data['Page']['title']);
+                    if (!in_array($this->request->data['Page']['status'], array('draft'))) {
+                        $this->request->data['Page']['slug'] = Formatting::sanitize_title(
+                            $this->request->data['Page']['title']
+                        );
+                    } else {
+                        $this->request->data['Page']['slug'] = Formatting::sanitize_title(
+                            __("Draft-") . $this->request->data['Page']['title']
+                        );
+                    }
                 } else {
-                    $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['slug']);
+                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(
+                        $this->request->data['Page']['slug']
+                    );
                 }
 
                 // save the data
@@ -174,7 +198,12 @@ class PagesController extends AppController {
             $this->request->data = $this->Page->read(null, $id);
         }
 
-        $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page', 'Page.id !=' => $id), null, null, '_');
+        $parentPages = $this->Page->generateTreeList(
+            array('Page.type' => 'page', 'Page.id !=' => $id),
+            null,
+            null,
+            '_'
+        );
         $this->set(compact('parentPages'));
     }
 
@@ -182,9 +211,11 @@ class PagesController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -201,7 +232,8 @@ class PagesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    public function admin_listByauthor($userId = null) {
+    public function admin_listByauthor($userId = null)
+    {
         $this->set('title_for_layout', __('Pages'));
         $this->Page->user_id = $userId;
         if (is_null($userId) && !$this->Page->exists()) {
@@ -223,9 +255,11 @@ class PagesController extends AppController {
      * admin_filter method
      *
      * @param string $action
+     *
      * @return void
      */
-    public function admin_filter($action = null) {
+    public function admin_filter($action = null)
+    {
         $this->Page->recursive = 0;
         $this->paginate = array();
         $this->paginate['limit'] = 25;
@@ -268,9 +302,10 @@ class PagesController extends AppController {
         $this->render('admin_index');
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
-        $action = NULL;
+        $action = null;
         if ($this->request->data['Page']['action']['top']) {
             $action = $this->request->data['Page']['action']['top'];
         } elseif ($this->request->data['Page']['action']['bot']) {
@@ -323,10 +358,16 @@ class PagesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    private function _fallbackView($viewName) {
-        if (file_exists(APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS . 'Pages' . DS . 'view-' . $viewName . '.ctp')) {
+    private function _fallbackView($viewName)
+    {
+        if (file_exists(
+            APP . 'View' . DS . 'Themed' . DS . Configure::read(
+                'template'
+            ) . DS . 'Pages' . DS . 'view-' . $viewName . '.ctp'
+        )
+        ) {
             $this->render('view-' . $viewName);
-            return TRUE;
+            return true;
         }
     }
 
