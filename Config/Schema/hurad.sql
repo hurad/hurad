@@ -65,7 +65,7 @@ CREATE TABLE `$[prefix]links` (
 	`target` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	`rel` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	`visible` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`rating` int(11) NOT NULL,
+	`rating` int(11) NULL DEFAULT NULL,
 	`lft` int(11) NOT NULL,
 	`rght` int(11) NOT NULL,
 	`created` datetime NOT NULL,
