@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  *
  * @property Post $Post
  */
-class PostsController extends AppController {
+class PostsController extends AppController
+{
 
     public $helpers = array('Post', 'Comment', 'Text', 'Editor');
     public $components = array('RequestHandler', 'Role');
@@ -22,7 +23,8 @@ class PostsController extends AppController {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         $this->Auth->allow('index', 'view', 'viewById');
         $this->Security->unlockedFields = array('Post.tcheckbox', 'Post.bcheckbox');
@@ -33,15 +35,19 @@ class PostsController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         if ($this->RequestHandler->isRss()) {
-            $posts = $this->Post->find('all', array(
-                'limit' => 20,
-                'order' => 'Post.created DESC',
-                'conditions' => array(
-                    'Post.status' => 'publish',
-                    'Post.type' => 'post',)
+            $posts = $this->Post->find(
+                'all',
+                array(
+                    'limit' => 20,
+                    'order' => 'Post.created DESC',
+                    'conditions' => array(
+                        'Post.status' => 'publish',
+                        'Post.type' => 'post',
                     )
+                )
             );
             $this->set(compact('posts'));
         } else {
@@ -59,14 +65,17 @@ class PostsController extends AppController {
         }
     }
 
-    public function pageIndex() {
+    public function pageIndex()
+    {
         //$pages = $this->Post->generateTreeList(array('type' => 'page'));
         //debug($this->request->named['sort']);
-        $pages = $this->Post->find('threaded', array(
-            'conditions' => array('Post.type' => 'page'),
-            'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
+        $pages = $this->Post->find(
+            'threaded',
+            array(
+                'conditions' => array('Post.type' => 'page'),
+                'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
                 //'limit' => $this->request->named['limit'],
-                )
+            )
         );
 
         if (!empty($this->request->params['requested'])) {
@@ -85,9 +94,11 @@ class PostsController extends AppController {
      * view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function view($slug = null) {
+    public function view($slug = null)
+    {
         $slug = Formatting::sanitize_title($slug);
         $this->Post->slug = $slug;
         if (is_null($slug) && !$this->Post->exists()) {
@@ -98,7 +109,8 @@ class PostsController extends AppController {
         }
     }
 
-    public function viewById($id = null) {
+    public function viewById($id = null)
+    {
         $this->Post->id = $id;
         if (is_null($id) && !$this->Post->exists()) {
             throw new NotFoundException(__('Invalid post'));
@@ -111,7 +123,8 @@ class PostsController extends AppController {
         }
     }
 
-    public function admin_listByauthor($userId = null) {
+    public function admin_listByauthor($userId = null)
+    {
         $this->set('title_for_layout', __('Posts'));
         $this->Post->User->id = $userId;
         if (is_null($userId) || !$this->Post->User->exists()) {
@@ -133,7 +146,8 @@ class PostsController extends AppController {
         $this->render('admin_index');
     }
 
-    public function admin_listBycategory($categoryId = null) {
+    public function admin_listBycategory($categoryId = null)
+    {
         $this->set('title_for_layout', __('Posts'));
         $this->Post->Category->id = $categoryId;
         if (is_null($categoryId) || !$this->Post->Category->exists()) {
@@ -155,7 +169,8 @@ class PostsController extends AppController {
         $this->render('admin_index');
     }
 
-    public function admin_listBytag($tagId = null) {
+    public function admin_listBytag($tagId = null)
+    {
         $this->set('title_for_layout', __('Posts'));
         $this->Post->Tag->id = $tagId;
         if (is_null($tagId) || !$this->Post->Tag->exists()) {
@@ -182,7 +197,8 @@ class PostsController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Posts'));
         $this->Post->recursive = 1;
         if (isset($this->request->params['named']['q'])) {
@@ -204,11 +220,12 @@ class PostsController extends AppController {
      *
      * @return void
      */
-    public function admin_add($type = 'post') {
+    public function admin_add($type = 'post')
+    {
         $this->set('title_for_layout', __('Add Post'));
 
         $defaults = array(
-            'parent_id' => NULL,
+            'parent_id' => null,
             'user_id' => $this->Auth->user('id'),
             'title' => '',
             'slug' => '',
@@ -230,10 +247,13 @@ class PostsController extends AppController {
             $this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
 
             if (empty($this->request->data['Post']['slug'])) {
-                if (!in_array($this->request->data['Post']['status'], array('draft')))
-                    $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['title']);
-                else
+                if (!in_array($this->request->data['Post']['status'], array('draft'))) {
+                    $this->request->data['Post']['slug'] = Formatting::sanitize_title(
+                        $this->request->data['Post']['title']
+                    );
+                } else {
                     $this->request->data['Post']['slug'] = '';
+                }
             } else {
                 $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['slug']);
             }
@@ -254,13 +274,15 @@ class PostsController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->set('title_for_layout', __('Edit Post'));
 
         $defaults = array(
-            'parent_id' => NULL,
+            'parent_id' => null,
             'user_id' => $this->Auth->user('id'),
             'title' => '',
             'slug' => '',
@@ -284,10 +306,13 @@ class PostsController extends AppController {
             $this->_saveTags();
 
             if (empty($this->request->data['Post']['slug'])) {
-                if (!in_array($this->request->data['Post']['status'], array('draft')))
-                    $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['title']);
-                else
+                if (!in_array($this->request->data['Post']['status'], array('draft'))) {
+                    $this->request->data['Post']['slug'] = Formatting::sanitize_title(
+                        $this->request->data['Post']['title']
+                    );
+                } else {
                     $this->request->data['Post']['slug'] = '';
+                }
             } else {
                 $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['slug']);
             }
@@ -317,9 +342,11 @@ class PostsController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -336,7 +363,8 @@ class PostsController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    private function _saveTags() {
+    private function _saveTags()
+    {
         // get the tags from the text data
         $tags = explode(',', $this->request->data['Post']['tags']);
         foreach ($tags as $_tag) {
@@ -363,7 +391,8 @@ class PostsController extends AppController {
         }
     }
 
-    private function _loadTags() {
+    private function _loadTags()
+    {
         // load the habtm data for the textarea
         $tags = array();
         if (isset($this->request->data['Tag']) && !empty($this->request->data['Tag'])) {
@@ -374,10 +403,16 @@ class PostsController extends AppController {
         }
     }
 
-    private function _fallbackView($viewName) {
-        if (file_exists(APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS . 'Posts' . DS . 'view-' . $viewName . '.ctp')) {
+    private function _fallbackView($viewName)
+    {
+        if (file_exists(
+            APP . 'View' . DS . 'Themed' . DS . Configure::read(
+                'template'
+            ) . DS . 'Posts' . DS . 'view-' . $viewName . '.ctp'
+        )
+        ) {
             $this->render('view-' . $viewName);
-            return TRUE;
+            return true;
         }
     }
 
@@ -385,9 +420,11 @@ class PostsController extends AppController {
      * admin_filter method
      *
      * @param string $action
+     *
      * @return void
      */
-    public function admin_filter($action = null) {
+    public function admin_filter($action = null)
+    {
         $this->Post->recursive = 1;
         $this->paginate = array();
         $this->paginate['limit'] = 25;
@@ -430,9 +467,10 @@ class PostsController extends AppController {
         $this->render('admin_index');
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
-        $action = NULL;
+        $action = null;
         if ($this->request->data['Post']['action']) {
             $action = $this->request->data['Post']['action'];
         }

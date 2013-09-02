@@ -5,11 +5,13 @@ App::uses('ConnectionManager', 'Model');
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 
-class InstallerController extends AppController {
+class InstallerController extends AppController
+{
 
     public $uses = array();
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
 
         if (Configure::read('Installed')) {
@@ -19,11 +21,13 @@ class InstallerController extends AppController {
         $this->layout = 'install';
     }
 
-    public function index() {
+    public function index()
+    {
         $this->set('title_for_layout', __('Welcome to Hurad installer'));
     }
 
-    public function database() {
+    public function database()
+    {
         $this->set('title_for_layout', __('Database Configuration'));
         $defaults = array(
             'datasource' => 'Database/Mysql',
@@ -85,7 +89,8 @@ EOF;
         }
     }
 
-    public function finalize() {
+    public function finalize()
+    {
         $this->set('title_for_layout', __('Hurad Configuration'));
         $config = get_class_vars('DATABASE_CONFIG');
 
@@ -125,13 +130,15 @@ EOF;
         }
     }
 
-    public function welcome() {
+    public function welcome()
+    {
         $this->set('title_for_layout', __('Welcome to Hurad'));
 
         $file = new File(TMP . 'installed', true, 0644);
     }
 
-    private function __executeSQL($fileName, $object, $search = null) {
+    private function __executeSQL($fileName, $object, $search = null)
+    {
         if (file_exists(SCHEMA . $fileName)) {
             $sql = file_get_contents(SCHEMA . $fileName);
             $contents = explode(';', $sql);
