@@ -7,20 +7,24 @@ App::uses('UsersController', 'Controller');
  *
  * @author mohammad
  */
-class UsersControllerTest extends ControllerTestCase {
+class UsersControllerTest extends ControllerTestCase
+{
 
     public $fixtures = array('app.user', 'app.userMeta');
     public $User;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
     }
 
-    public function startTest($method) {
+    public function startTest($method)
+    {
         parent::startTest($method);
     }
 
-    public function testAdminIndex() {
+    public function testAdminIndex()
+    {
         $this->testAction('/admin/users/index');
         $this->assertInternalType('array', $this->vars['users']);
         debug($this->vars['users']);

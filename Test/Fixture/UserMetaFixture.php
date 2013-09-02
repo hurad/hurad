@@ -5,7 +5,8 @@
  *
  * @author mohammad
  */
-class UserMetaFixture extends CakeTestFixture {
+class UserMetaFixture extends CakeTestFixture
+{
 
     /**
      * name property
