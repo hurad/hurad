@@ -7,16 +7,13 @@ App::uses('AppController', 'Controller');
  *
  * @property Option $Option
  */
-class OptionsController extends AppController {
+class OptionsController extends AppController
+{
 
     public $helpers = array('Link');
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-        $this->Auth->allow();
-    }
-
-    public function admin_prefix($prefix = null) {
+    public function admin_prefix($prefix = null)
+    {
         $prefix_name = array(
             'general' => __('General'),
             'comment' => __('Comment'),
@@ -24,19 +21,25 @@ class OptionsController extends AppController {
         );
         $this->set('title_for_layout', sprintf(__('%s Option'), $prefix_name[$prefix]));
 
-        $options = $this->Option->find('all', array(
-            'conditions' => array(
-                'Option.name LIKE' => $prefix . '.%',
-            ),
-        ));
-        //'conditions' => "Option.name LIKE '".$prefix."%'"));
+        $options = $this->Option->find(
+            'all',
+            array(
+                'conditions' => array(
+                    'Option.name LIKE' => $prefix . '.%',
+                ),
+            )
+        );
+
         if (count($options) == 0) {
             $this->Session->setFlash(__("Invalid Option name"), 'error');
             $this->redirect('/admin');
         }
+
         if ($this->request->is('post') || $this->request->is('put')) {
 
             $this->request->data['Option']['site_url'] = rtrim($this->request->data['Option']['site_url'], "/");
+
+            $opt = array();
 
             foreach ($this->request->data as $modelName => $optionArray) {
                 foreach ($optionArray as $option => $value) {
@@ -47,10 +50,12 @@ class OptionsController extends AppController {
 
             if ($this->Option->update($optionData)) {
                 $this->Session->setFlash(__('Options have been updated!'), 'success');
-                //Cache::delete('Option.getOptions');
-                //Configure::write($prefix, $this->request->data['Option']);
             } else {
-                $this->Session->setFlash(__('Unable to update ' . $prefix . ' options.'), 'error-option', array('errors' => $this->Option->validationErrors));
+                $this->Session->setFlash(
+                    __('Unable to update ' . $prefix . ' options.'),
+                    'error-option',
+                    array('errors' => $this->Option->validationErrors)
+                );
             }
         } else {
             $this->request->data['Option'] = Configure::read(Inflector::humanize($prefix));
