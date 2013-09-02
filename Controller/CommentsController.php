@@ -24,16 +24,7 @@ class CommentsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'reply');
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return TRUE;
-                break;
-        }
+        $this->Auth->allow('index', 'add', 'reply');
     }
 
     /**
@@ -44,20 +35,6 @@ class CommentsController extends AppController {
     public function index() {
         $this->Comment->recursive = 0;
         $this->set('comments', $this->paginate());
-    }
-
-    /**
-     * view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null) {
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        $this->set('comment', $this->Comment->read(null, $id));
     }
 
     /**
@@ -92,55 +69,6 @@ class CommentsController extends AppController {
     }
 
     /**
-     * edit method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function edit($id = null) {
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The comment has been saved'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
-            }
-        } else {
-            $this->request->data = $this->Comment->read(null, $id);
-        }
-        $parentComments = $this->Comment->ParentComment->find('list');
-        $posts = $this->Comment->Post->find('list');
-        $users = $this->Comment->User->find('list');
-        $this->set(compact('parentComments', 'posts', 'users'));
-    }
-
-    /**
-     * delete method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function delete($id = null) {
-        if (!$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        if ($this->Comment->delete()) {
-            $this->Session->setFlash(__('Comment deleted'));
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('Comment was not deleted'));
-        $this->redirect(array('action' => 'index'));
-    }
-
-    /**
      * admin_index method
      *
      * @return void
@@ -162,28 +90,28 @@ class CommentsController extends AppController {
 
         switch ($action) {
             case 'moderated':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __('Moderated comments'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 0,
                 );
                 break;
 
             case 'approved':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __('Approved comments'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 1,
                 );
                 break;
 
             case 'spam':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __('Spams'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 'spam',
                 );
                 break;
 
             case 'trash':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __('Trashes'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 'trash',
                 );
@@ -205,41 +133,6 @@ class CommentsController extends AppController {
 
         $this->set('countComments', $countComments);
         $this->set('comments', $this->paginate());
-    }
-
-    /**
-     * admin_view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function admin_view($id = null) {
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        $this->set('comment', $this->Comment->read(null, $id));
-    }
-
-    /**
-     * admin_add method
-     *
-     * @return void
-     */
-    public function admin_add() {
-        if ($this->request->is('post')) {
-            $this->Comment->create();
-            if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The comment has been saved'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
-            }
-        }
-        $parentComments = $this->Comment->ParentComment->find('list');
-        $posts = $this->Comment->Post->find('list');
-        $users = $this->Comment->User->find('list');
-        $this->set(compact('parentComments', 'posts', 'users'));
     }
 
     /**
@@ -283,7 +176,7 @@ class CommentsController extends AppController {
             throw new NotFoundException(__('Invalid comment'));
         }
         if ($this->Comment->delete()) {
-            $this->Session->setFlash(__('Comment deleted'));
+            $this->Session->setFlash(__('Comment was deleted'));
             $this->redirect(array('action' => 'index'));
         }
         $this->Session->setFlash(__('Comment was not deleted'));
@@ -303,10 +196,10 @@ class CommentsController extends AppController {
             $this->Comment->create();
 
             if (is_null($post_id) && !is_int($post_id)) {
-                $this->Session->setFlash(__('The post is not valid'));
+                $this->Session->setFlash(__('The post is invalid.'));
                 $this->redirect($this->referer());
             } elseif (is_null($comment_id) && !is_int($comment_id)) {
-                $this->Session->setFlash(__('The comment is not valid'));
+                $this->Session->setFlash(__('The comment is invalid.'));
                 $this->redirect($this->referer());
             } else {
                 $this->request->data['Comment']['parent_id'] = $comment_id;
@@ -314,7 +207,7 @@ class CommentsController extends AppController {
             }
 
             if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The reply comment has been saved'));
+                $this->Session->setFlash(__('The reply of comment has been saved.'));
                 $this->redirect(array('controller' => 'posts', 'action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
@@ -336,23 +229,23 @@ class CommentsController extends AppController {
         switch ($action) {
             case 'approved':
                 $data = array('id' => $id, 'approved' => '1');
-                $msg = __('Comment approved.');
-                $err = __('Comment not approved please try again.');
+                $msg = __('Comments are approved.');
+                $err = __('Comments are not approved, please try again.');
                 break;
             case 'disapproved':
                 $data = array('id' => $id, 'approved' => '0');
-                $msg = __('Comment unapproved.');
-                $err = __('Comment not disapproved please try again.');
+                $msg = __('Comment are unapproved.');
+                $err = __('Comment are not unapproved, please try again.');
                 break;
             case 'spam':
                 $data = array('id' => $id, 'approved' => 'spam');
-                $msg = __('Comment spam.');
-                $err = __('Comment not spam please try again.');
+                $msg = __('Comment marked as spam.');
+                $err = __('Comment didn\'t mark as spam, please try again.');
                 break;
             case 'trash':
                 $data = array('id' => $id, 'approved' => 'trash');
-                $msg = __('Comment move to trash.');
-                $err = __('Comment not move to trash please try again.');
+                $msg = __('Comment moved to trash.');
+                $err = __('Comment didn\'t move to trash, please try again.');
                 break;
             default:
                 $this->Session->setFlash(__('An error occurred.'), 'error');
@@ -383,7 +276,7 @@ class CommentsController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->Session->setFlash(__('No item selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
             $this->Session->setFlash(__('No action selected.'), 'flash_error');
@@ -393,13 +286,13 @@ class CommentsController extends AppController {
         switch ($action) {
             case 'approve':
                 if ($this->Comment->updateAll(array('Comment.approved' => '1'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments approved'), 'flash_notice');
+                    $this->Session->setFlash(__('Comments are approved'), 'flash_notice');
                 }
                 break;
 
             case 'disapprove':
                 if ($this->Comment->updateAll(array('Comment.approved' => '0'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments unapproved'), 'flash_notice');
+                    $this->Session->setFlash(__('Comments are unapproved'), 'flash_notice');
                 }
                 break;
 
@@ -411,7 +304,7 @@ class CommentsController extends AppController {
 
             case 'trash':
                 if ($this->Comment->updateAll(array('Comment.approved' => '"trash"'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments move to trash.'), 'flash_notice');
+                    $this->Session->setFlash(__('Comments moved to trash.'), 'flash_notice');
                 }
                 break;
 
