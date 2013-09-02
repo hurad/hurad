@@ -31,4 +31,3 @@ Thumbs.db
 # Config file #
 ###############
 /Config/database.php
-/Plugin/debug_kit/
