@@ -1,11 +1,28 @@
 <div class="row-actions">
-    <span class="action-view">
-        <?php echo $this->Html->link(__('View'), $this->Page->getPermalink(), array('title' => __('View “%s”', $this->Page->getTheTitle()), 'rel' => 'permalink')); ?> | 
-    </span>
-    <span class="action-edit">
-        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'pages', 'action' => 'edit', $this->Page->getTheID()), array('title' => __('Edit this item'))); ?> | 
-    </span>                 
-    <span class="action-delete">
-        <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'action' => 'delete', $this->Page->getTheID()), array('title' => __('Delete this item')), __('Are you sure you want to delete "%s"?', $this->Page->getTheTitle())); ?>
-    </span>
+    <?php
+    $viewLink = $this->Html->link(
+        __d('hurad', 'View'),
+        $this->Page->getPermalink(),
+        array('title' => __('View “%s”', $this->Page->getTheTitle()), 'rel' => 'permalink')
+    );
+    HuradRowActions::addAction('view', $viewLink, 'read');
+
+    $editLink = $this->Html->link(
+        __d('hurad', 'Edit'),
+        array('admin' => true, 'controller' => 'pages', 'action' => 'edit', $this->Page->getTheID()),
+        array('title' => __d('hurad', 'Edit this item'))
+    );
+    HuradRowActions::addAction('edit', $editLink, 'edit_published_pages');
+
+    $deleteLink = $this->Form->postLink(
+        __d('hurad', 'Delete'),
+        array('admin' => true, 'action' => 'delete', $this->Page->getTheID()),
+        array('title' => __d('hurad', 'Delete this item')),
+        __d('hurad', 'Are you sure you want to delete "%s"?', $this->Page->getTheTitle())
+    );
+    HuradRowActions::addAction('delete', $deleteLink, 'delete_pages');
+
+    $actions = HuradHook::apply_filters('page_row_actions', HuradRowActions::getActions(), $page);
+    $this->AdminLayout->rowActions($actions);
+    ?>
 </div>
