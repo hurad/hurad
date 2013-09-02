@@ -1,14 +1,17 @@
 <?php
 
-class Hurad {
+class Hurad
+{
 
     public static $behavior = array();
 
-    public static function applyBehavior($modelName, $behaviorName) {
+    public static function applyBehavior($modelName, $behaviorName)
+    {
         self::$behavior[] = array($modelName => $behaviorName);
     }
 
-    public static function applyProperty($type, $prop) {
+    public static function applyProperty($type, $prop)
+    {
 
         switch ($type) {
             case 'behavior':
