@@ -10,7 +10,8 @@ App::uses('AppModel', 'Model');
  * @property User $User
  * @property Comment $ChildComment
  */
-class Comment extends AppModel {
+class Comment extends AppModel
+{
 
     /**
      * Display field
@@ -52,54 +53,46 @@ class Comment extends AppModel {
         )
     );
 
-    /**
-     * hasMany associations
-     *
-     * @var array
-     */
-//    public $hasMany = array(
-//        'ChildComment' => array(
-//            'className' => 'Comment',
-//            'foreignKey' => 'parent_id',
-//            'dependent' => false,
-//            'conditions' => '',
-//            'fields' => '',
-//            'order' => '',
-//            'limit' => '',
-//            'offset' => '',
-//            'exclusive' => '',
-//            'finderQuery' => '',
-//            'counterQuery' => ''
-//        )
-//    );
-
-    public function countComments($type = 'all') {
-        if ($type == NULL) {
-            return FALSE;
+    public function countComments($type = 'all')
+    {
+        if ($type == null) {
+            return false;
         } elseif ($type == 'all') {
             $comments = $this->find('count');
         } elseif ($type == 'approved') {
-            $comments = $this->find('count', array('conditions' =>
-                array('Comment.approved' => 1)
-                    )
+            $comments = $this->find(
+                'count',
+                array(
+                    'conditions' =>
+                    array('Comment.approved' => 1)
+                )
             );
         } elseif ($type == 'moderated') {
-            $comments = $this->find('count', array('conditions' =>
-                array('Comment.approved' => 0)
-                    )
+            $comments = $this->find(
+                'count',
+                array(
+                    'conditions' =>
+                    array('Comment.approved' => 0)
+                )
             );
         } elseif ($type == 'spam') {
-            $comments = $this->find('count', array('conditions' =>
-                array('Comment.approved' => 'spam')
-                    )
+            $comments = $this->find(
+                'count',
+                array(
+                    'conditions' =>
+                    array('Comment.approved' => 'spam')
+                )
             );
         } elseif ($type == 'trash') {
-            $comments = $this->find('count', array('conditions' =>
-                array('Comment.approved' => 'trash')
-                    )
+            $comments = $this->find(
+                'count',
+                array(
+                    'conditions' =>
+                    array('Comment.approved' => 'trash')
+                )
             );
         } else {
-            return FALSE;
+            return false;
         }
         return $comments;
     }
