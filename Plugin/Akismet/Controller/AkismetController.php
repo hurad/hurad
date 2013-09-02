@@ -7,15 +7,18 @@ App::uses('Akismet', 'Akismet.Lib');
  *
  * @author mohammad
  */
-class AkismetController extends AkismetAppController {
+class AkismetController extends AkismetAppController
+{
 
     public $uses = array('Option');
 
-    public function isAuthorized($user) {
-        return TRUE;
+    public function isAuthorized($user)
+    {
+        return true;
     }
 
-    public function admin_index() {
+    public function admin_index()
+    {
 
         $apiKey = Configure::read('Akismet.api_key');
         if (Configure::check('Akismet.api_key') && !empty($apiKey)) {
@@ -41,5 +44,3 @@ class AkismetController extends AkismetAppController {
     }
 
 }
-
-?>
