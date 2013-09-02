@@ -17,44 +17,32 @@ App::uses('AppController', 'Controller');
 App::uses('HuradTheme', 'Lib');
 
 /**
- * ThemesController is used for managing Hurd themes.
+ * ThemesController is used for managing Hurad themes.
  *
  * @package app.Controller
  */
-class ThemesController extends AppController {
+class ThemesController extends AppController
+{
 
     /**
      * uses property
-     * 
+     *
      * @var array
      * @access public
      */
     public $uses = array();
 
     /**
-     * Called before the theme controller action.
-     * 
+     * For the list of available themes.
+     * admin_index action (admin/theme/index)
+     *
      * @since 0.1.0
      * @access public
-     * 
+     *
      * @return void
      */
-    public function beforeFilter() {
-        parent::beforeFilter();
-        $this->Auth->allow();
-    }
-
-    /**
-     * For the list of available themes.
-     * 
-     * admin_index action (admin/theme/index)
-     * 
-     * @since 0.1.0
-     * @access public
-     * 
-     * @return void 
-     */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Themes'));
 
         $currentTheme = array();
@@ -70,16 +58,17 @@ class ThemesController extends AppController {
 
     /**
      * To uninstall a theme.
-     * 
      * admin_delete action (admin/theme/delete)
-     * 
+     *
      * @since 0.1.0
      * @access public
-     * 
+     *
      * @param string $alias Theme folder
-     * @return void 
+     *
+     * @return void
      */
-    public function admin_delete($alias = null) {
+    public function admin_delete($alias = null)
+    {
         if ($alias == null) {
             $this->Session->setFlash(__('Invalid Theme.'), 'error');
             $this->redirect(array('action' => 'index'));
@@ -95,16 +84,17 @@ class ThemesController extends AppController {
 
     /**
      * To activate a theme.
-     * 
      * admin_activate action (admin/theme/activate)
-     * 
+     *
      * @since 0.1.0
      * @access public
-     * 
+     *
      * @param string $alias Theme folder
-     * @return void 
+     *
+     * @return void
      */
-    public function admin_activate($alias = null) {
+    public function admin_activate($alias = null)
+    {
         if (HuradTheme::activate($alias)) {
             $this->Session->setFlash(__('Theme activated.'), 'success');
             $this->redirect(array('action' => 'index'));
