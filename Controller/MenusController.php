@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  *
  * @property Menu $Menu
  */
-class MenusController extends AppController {
+class MenusController extends AppController
+{
 
     public $paginate = array(
         'conditions' => array(
@@ -24,7 +25,8 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $this->Menu->recursive = 0;
         $this->set('menus', $this->paginate());
     }
@@ -33,9 +35,11 @@ class MenusController extends AppController {
      * view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
             throw new NotFoundException(__('Invalid menu'));
@@ -48,7 +52,8 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function add() {
+    public function add()
+    {
         if ($this->request->is('post')) {
             $this->Menu->create();
             if ($this->Menu->save($this->request->data)) {
@@ -64,9 +69,11 @@ class MenusController extends AppController {
      * edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
             throw new NotFoundException(__('Invalid menu'));
@@ -87,9 +94,11 @@ class MenusController extends AppController {
      * delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -110,7 +119,8 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Menus'));
         $this->Menu->recursive = 0;
         $this->set('menus', $this->paginate());
@@ -120,9 +130,11 @@ class MenusController extends AppController {
      * admin_view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_view($id = null) {
+    public function admin_view($id = null)
+    {
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
             throw new NotFoundException(__('Invalid menu'));
@@ -135,7 +147,8 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
+    public function admin_add()
+    {
         $this->set('title_for_layout', __('Add Menu'));
         if ($this->request->is('post')) {
             $this->request->data['Menu']['type'] = 'nav_menu';
@@ -153,9 +166,11 @@ class MenusController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->set('title_for_layout', __('Edit Menu'));
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
@@ -177,9 +192,11 @@ class MenusController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }

@@ -8,25 +8,32 @@ App::uses('CakeEmail', 'Network/Email');
  *
  * @property User $User
  */
-class UsersController extends AppController {
+class UsersController extends AppController
+{
 
     public $components = array('Cookie', 'Session', 'Hurad', 'RequestHandler');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
     public $uses = array('User', 'UserMeta');
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         //For not logged user's
         $this->Auth->allow(array('register', 'login', 'logout', 'forgot'));
     }
 
-    public function admin_dashboard() {
+    public function admin_dashboard()
+    {
         $this->set('title_for_layout', __('Dashboard'));
-        $comments = ClassRegistry::init('Comment')->find('all', array(
-            "fields" => "Comment.id, Comment.user_id, Comment.post_id, Comment.author, Comment.author_url, Comment.author_email, Comment.content, Comment.approved, Post.title",
-            "conditions" => array('Comment.approved' => array(0, 1)),
-            "order" => "Comment.created DESC",
-            "limit" => 5));
+        $comments = ClassRegistry::init('Comment')->find(
+            'all',
+            array(
+                "fields" => "Comment.id, Comment.user_id, Comment.post_id, Comment.author, Comment.author_url, Comment.author_email, Comment.content, Comment.approved, Post.title",
+                "conditions" => array('Comment.approved' => array(0, 1)),
+                "order" => "Comment.created DESC",
+                "limit" => 5
+            )
+        );
         $this->set(compact('comments'));
     }
 
@@ -35,7 +42,8 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Users'));
 
         $this->paginate = array(
@@ -58,7 +66,8 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
+    public function admin_add()
+    {
         $this->set('title_for_layout', __('Add new user'));
         if ($this->request->is('post')) {
             $this->User->create();
@@ -75,9 +84,11 @@ class UsersController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_profile($id = null) {
+    public function admin_profile($id = null)
+    {
         $this->set('title_for_layout', __('Profile'));
         $this->User->id = $id;
 
@@ -94,7 +105,10 @@ class UsersController extends AppController {
             if (isset($this->request->data['UserMeta'])) {
                 foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
                     //Update user_metas table.
-                    $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
+                    $this->UserMeta->updateAll(
+                        array('UserMeta.meta_value' => "'$meta_value'"),
+                        array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key)
+                    );
                 }
             }
 
@@ -109,10 +123,12 @@ class UsersController extends AppController {
             $this->request->data = $this->User->read(null, $id);
 
             //Retraive user_metas table.
-            $this->request->data['UserMeta'] = $this->UserMeta->find('list', array(
-                'conditions' => array('UserMeta.user_id' => $id),
-                'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
-                    )
+            $this->request->data['UserMeta'] = $this->UserMeta->find(
+                'list',
+                array(
+                    'conditions' => array('UserMeta.user_id' => $id),
+                    'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
+                )
             );
         }
     }
@@ -121,9 +137,11 @@ class UsersController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -144,7 +162,8 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function login() {
+    public function login()
+    {
         $this->layout = "admin_login";
         $this->set('title_for_layout', __('Login to admin section'));
         if ($this->Auth->loggedIn()) {
@@ -156,7 +175,10 @@ class UsersController extends AppController {
                     if ($this->Auth->login()) {
                         $this->Session->delete('Message.auth');
                         $this->__setCookie();
-                        $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
+                        $this->Session->setFlash(
+                            __('%s you have successfully logged in', $this->Auth->user('username')),
+                            'success'
+                        );
                         $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
                         $this->Session->setFlash(__('Your username or password was incorrect.'), 'error');
@@ -171,16 +193,18 @@ class UsersController extends AppController {
      *
      * @param array Cookie component properties as array, like array('domain' => 'yourdomain.com')
      * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
+     *
      * @return void
      */
-    private function __setCookie($cookieKey = 'Auth.User') {
+    private function __setCookie($cookieKey = 'Auth.User')
+    {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
             $cookie = array();
             $cookie['User']['username'] = $this->request->data['User']['username'];
             $cookie['User']['password'] = $this->request->data['User']['password'];
-            $this->Cookie->write($cookieKey, $cookie, TRUE, '+2 weeks');
+            $this->Cookie->write($cookieKey, $cookie, true, '+2 weeks');
         }
         unset($this->request->data['User']['remember_me']);
     }
@@ -190,7 +214,8 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function logout() {
+    public function logout()
+    {
         if ($this->Auth->loggedIn()) {
 //$this->Cookie->delete('Hurad');
             $this->Session->destroy();
@@ -208,7 +233,8 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function change_password() {
+    public function change_password()
+    {
         $this->layout = "admin";
         if ($this->request->is('post')) {
 // Set User's ID in model which is needed for validation
@@ -221,16 +247,18 @@ class UsersController extends AppController {
                 $email = new CakeEmail('gmail');
                 $email->emailFormat('html');
                 $email->template('change_password');
-                $email->viewVars(array(
-                    'new_password' => $this->request->data['User']['password'],
-                    'username' => $user['User']['username']
-                ));
+                $email->viewVars(
+                    array(
+                        'new_password' => $this->request->data['User']['password'],
+                        'username' => $user['User']['username']
+                    )
+                );
                 $email->from(array('info@cakeblog.com' => 'CakeBlog'));
                 $email->to('m.abdolirad@gmail.com');
                 $email->subject('Change Password');
                 $email->send('You are change password');
                 $this->Session->setFlash(__('Your password has been updated'), 'flash_notice');
-                $this->redirect(array('admin' => TRUE, 'action' => 'index'));
+                $this->redirect(array('admin' => true, 'action' => 'index'));
             } else {
                 $this->Session->setFlash(__('Could not be changed password. Please, try again.'), 'flash_notice');
             }
@@ -242,7 +270,8 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->layout = "admin_login";
         $this->set('title_for_layout', __('Register'));
         if ($this->request->is('post')) {
@@ -253,21 +282,31 @@ class UsersController extends AppController {
                 $email = new CakeEmail('gmail');
                 $email->emailFormat('html');
                 $email->template('register');
-                $email->viewVars(array(
-                    'password' => $this->request->data['User']['password'],
-                    'username' => $this->request->data['User']['username'],
-                    'activation_key' => $this->request->data['User']['activation_key'],
-                    'siteurl' => Configure::read('General.site_url'),
-                    'email' => $this->request->data['User']['email']
-                ));
+                $email->viewVars(
+                    array(
+                        'password' => $this->request->data['User']['password'],
+                        'username' => $this->request->data['User']['username'],
+                        'activation_key' => $this->request->data['User']['activation_key'],
+                        'siteurl' => Configure::read('General.site_url'),
+                        'email' => $this->request->data['User']['email']
+                    )
+                );
                 $email->from('info@hurad.org', Configure::read('General.site_name'));
                 $email->to($this->request->data['User']['email']);
                 $email->subject(__('Register to %s', Configure::read('General.site_name')));
                 $email->send('Thank you register Cakeblog');
-                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'default', array('class' => 'success'));
+                $this->Session->setFlash(
+                    __('Congratulations, You are Successfully register'),
+                    'default',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+                $this->Session->setFlash(
+                    __('The user could not be saved. Please, try again.'),
+                    'default',
+                    array('class' => 'error')
+                );
             }
         }
     }
@@ -276,9 +315,11 @@ class UsersController extends AppController {
      * _getActivationKey method
      *
      * @param void
+     *
      * @return string activation key
      */
-    private function _getActivationKey() {
+    private function _getActivationKey()
+    {
         return Security::hash(date('Y-m-d H:i:s'), null, true);
     }
 
@@ -286,19 +327,24 @@ class UsersController extends AppController {
      * verify method
      *
      * @param void
+     *
      * @return string activation key
      */
-    public function verify($key = NULL) {
+    public function verify($key = null)
+    {
 //Find id from users table
-        $user = $this->User->find('first', array(
-            'conditions' => array('User.activation_key' => $key))
+        $user = $this->User->find(
+            'first',
+            array(
+                'conditions' => array('User.activation_key' => $key)
+            )
         );
         $this->User->id = $user['User']['id'];
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Invalid Key'));
         }
         if (is_null($key)) {
-            return FALSE;
+            return false;
         } else {
             if ($user) {
                 if ($this->User->saveField('status', '1')) {
@@ -329,7 +375,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function forgot() {
+    public function forgot()
+    {
         $this->layout = "admin_login";
         if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
             $user = $this->User->findByUsername($this->request->data['User']['username']);
@@ -352,20 +399,24 @@ class UsersController extends AppController {
             $email = new CakeEmail('default');
             $email->emailFormat('html');
             $email->template('forgot_password');
-            $email->viewVars(array(
-                'reset_key' => $resetKey,
-                'username' => $user['User']['username'],
+            $email->viewVars(
+                array(
+                    'reset_key' => $resetKey,
+                    'username' => $user['User']['username'],
                     //'email' => $this->request->data['User']['email']
-            ));
+                )
+            );
             $email->from(array('info@cakeblog.com' => 'CakeBlog'));
             $email->to($user['User']['email']);
             $email->subject(__('Reset Password'));
 //$email->send('Thank you confirm Cakeblog');
 
 
-
             if ($email->send()) {
-                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'success');
+                $this->Session->setFlash(
+                    __('An email has been sent with instructions for resetting your password.'),
+                    'success'
+                );
                 $this->redirect(array('action' => 'login'));
             } else {
                 $this->Session->setFlash(__('An error occurred. Please try again.'), 'error');
@@ -373,7 +424,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function reset($key = null) {
+    public function reset($key = null)
+    {
 //$this->set('title_for_layout', __('Reset Password'));
 
         if ($key == null) {
@@ -381,11 +433,14 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'login'));
         }
 
-        $user = $this->User->find('first', array(
-            'conditions' => array(
-                'User.reset_key' => $key,
-            ),
-        ));
+        $user = $this->User->find(
+            'first',
+            array(
+                'conditions' => array(
+                    'User.reset_key' => $key,
+                ),
+            )
+        );
         if (!isset($user['User']['id'])) {
             $this->Session->setFlash(__('An error occurred.'));
             $this->redirect(array('action' => 'login'));
@@ -406,11 +461,13 @@ class UsersController extends AppController {
         $this->set(compact('user', 'username', 'key'));
     }
 
-    function check() {
+    function check()
+    {
         $cookie = $this->Cookie->read($this->cookieName);
 
-        if (!is_array($cookie) || $this->Auth->user())
+        if (!is_array($cookie) || $this->Auth->user()) {
             return;
+        }
 
         if ($this->Auth->login($cookie)) {
             $this->Cookie->write($this->cookieName, $cookie, true, $this->period);
@@ -419,7 +476,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
         $action = $this->request->data['User']['action'];
         $ids = array();

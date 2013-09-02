@@ -13,6 +13,7 @@ class LinksController extends AppController
     public $helpers = array('AdminLayout');
     /**
      * Paginate option
+     *
      * @var array
      */
     public $paginate = array(
@@ -59,6 +60,7 @@ class LinksController extends AppController
      * Admin links list by menu id
      *
      * @param int $menuId
+     *
      * @throws NotFoundException
      */
     public function admin_indexByMenu($menuId)
@@ -80,6 +82,7 @@ class LinksController extends AppController
      * Admin add link
      *
      * @param null|int $menuId
+     *
      * @throws NotFoundException
      */
     public function admin_add($menuId = null)
@@ -136,6 +139,7 @@ class LinksController extends AppController
      * Admin edit link
      *
      * @param null|int $id Link id
+     *
      * @throws NotFoundException
      */
     public function admin_edit($id = null)
@@ -169,6 +173,7 @@ class LinksController extends AppController
      * Admin delete link
      *
      * @param null|int $id
+     *
      * @throws NotFoundException
      * @throws MethodNotAllowedException
      */
