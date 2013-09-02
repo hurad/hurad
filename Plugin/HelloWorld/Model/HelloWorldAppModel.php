@@ -2,7 +2,8 @@
 
 App::uses('AppModel', 'Model');
 
-class HelloWorldAppModel extends AppModel {
-    
+class HelloWorldAppModel extends AppModel
+{
+
 }
 

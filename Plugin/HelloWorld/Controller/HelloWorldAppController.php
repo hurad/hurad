@@ -2,7 +2,8 @@
 
 App::uses('AppController', 'Controller');
 
-class HelloWorldAppController extends AppController {
-    
+class HelloWorldAppController extends AppController
+{
+
 }
 
