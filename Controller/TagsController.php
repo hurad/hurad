@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  *
  * @property Tag $Tag
  */
-class TagsController extends AppController {
+class TagsController extends AppController
+{
 
     public $components = array('RequestHandler');
     public $paginate = array(
@@ -17,7 +18,8 @@ class TagsController extends AppController {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         $this->Auth->allow('index');
     }
@@ -27,7 +29,8 @@ class TagsController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         if ($this->RequestHandler->isAjax()) {
             Configure::write('debug', 0);
             $this->autoRender = false;
@@ -50,7 +53,8 @@ class TagsController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Tags'));
         $this->Tag->recursive = 0;
         $this->set('tags', $this->paginate());
@@ -60,9 +64,11 @@ class TagsController extends AppController {
      * admin_view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_view($id = null) {
+    public function admin_view($id = null)
+    {
         $this->Tag->id = $id;
         if (!$this->Tag->exists()) {
             throw new NotFoundException(__('Invalid tag'));
@@ -75,11 +81,14 @@ class TagsController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
+    public function admin_add()
+    {
         $this->set('title_for_layout', __('Add Tag'));
         if ($this->request->is('post')) {
             if ($this->request->data['Tag']['slug']) {
-                $this->request->data['Tag']['slug'] = strtolower(Inflector::slug($this->request->data['Tag']['slug'], '-'));
+                $this->request->data['Tag']['slug'] = strtolower(
+                    Inflector::slug($this->request->data['Tag']['slug'], '-')
+                );
             }
             $this->Tag->create();
             if ($this->Tag->save($this->request->data)) {
@@ -95,9 +104,11 @@ class TagsController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->set('title_for_layout', __('Edit Tag'));
         $this->Tag->id = $id;
         if (!$this->Tag->exists()) {
@@ -121,9 +132,11 @@ class TagsController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -139,7 +152,8 @@ class TagsController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
         $action = $this->request->data['Tag']['action'];
         $ids = array();
