@@ -10,7 +10,7 @@ App::uses('AppController', 'Controller');
 class PostsController extends AppController {
 
     public $helpers = array('Post', 'Comment', 'Text', 'Editor');
-    public $components = array('RequestHandler');
+    public $components = array('RequestHandler', 'Role');
     public $paginate = array(
         'conditions' => array(
             'Post.status' => array('publish', 'draft'),
@@ -26,24 +26,6 @@ class PostsController extends AppController {
         parent::beforeFilter();
         $this->Auth->allow('index', 'view', 'viewById');
         $this->Security->unlockedFields = array('Post.tcheckbox', 'Post.bcheckbox');
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return true;
-                break;
-            case 'editor':
-                $this->Auth->allow('admin_index', 'admin_add', 'admin_edit', 'index', 'view');
-                break;
-            case 'user':
-                $this->Auth->allow('index', 'view');
-                break;
-            default :
-                $this->Auth->allow('index', 'view');
-                break;
-        }
     }
 
     /**
