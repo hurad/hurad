@@ -31,9 +31,11 @@ App::uses('Controller', 'Controller');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends Controller
+{
 
     public $components = array(
+        'Role',
         'Cookie',
         'Session',
         'Security' => array('csrfUseOnce' => false, 'csrfExpires' => '+1 hour'),
@@ -64,7 +66,8 @@ class AppController extends Controller {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
 
         //Cookie Configuration
@@ -89,7 +92,7 @@ class AppController extends Controller {
 
         if ($this->Auth->loggedIn() && Configure::read('Installed')) {
             //Set current_user var in all view
-            $this->set('current_user', (array) ClassRegistry::init('User')->getUserData($this->Auth->user('id')));
+            $this->set('current_user', (array)ClassRegistry::init('User')->getUserData($this->Auth->user('id')));
         }
 
         //Set url var in all view
@@ -114,26 +117,48 @@ class AppController extends Controller {
         $this->set('themePath', APP . 'View' . DS . 'Themed' . DS . Configure::read('template') . DS);
     }
 
-    private function isAdmin() {
-        $admin = FALSE;
-        if (!is_null($this->Auth->user()) && $this->Auth->user('role') == 'admin') {
-            $admin = TRUE;
+    /**
+     * Called before the all controller action
+     *
+     * @param array $user Current user
+     *
+     * @return mixed
+     */
+    public function isAuthorized($user)
+    {
+        return $this->Role->checkAuthorization($user);
+    }
+
+    /**
+     * Check current user
+     *
+     * @return bool if current user is admin return true else return false
+     */
+    private function isAdmin()
+    {
+        $admin = false;
+        if (!is_null($this->Auth->user()) && $this->Auth->user('role') == 'administrator') {
+            $admin = true;
         }
         return $admin;
     }
 
-    private function __cookieCheck() {
+    private function __cookieCheck()
+    {
         $cookie = $this->Cookie->read('Auth.User');
         if (!is_array($cookie) || $this->Auth->user()) {
             return;
         }
-        $user = ClassRegistry::init('User')->find('first', array(
-            'fields' => array('User.username', 'User.password', 'User.role', 'User.email', 'User.url'),
-            'conditions' => array(
-                'User.username' => $cookie['User']['username'],
-                'User.password' => AuthComponent::password($cookie['User']['password'])
-            ),
-            'recursive' => 0)
+        $user = ClassRegistry::init('User')->find(
+            'first',
+            array(
+                'fields' => array('User.username', 'User.password', 'User.role', 'User.email', 'User.url'),
+                'conditions' => array(
+                    'User.username' => $cookie['User']['username'],
+                    'User.password' => AuthComponent::password($cookie['User']['password'])
+                ),
+                'recursive' => 0
+            )
         );
         if ($this->Auth->login($user['User'])) {
             $this->Cookie->write('Auth.User', $cookie, true, '+2 weeks');
