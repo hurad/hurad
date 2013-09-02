@@ -76,7 +76,7 @@ echo $this->Form->create('Page', array(
                                 'class' => 'check-column',
                                 'scope' => 'row')
                         ),
-                        array($this->Html->link('<strong>' . h($this->Page->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Page->getTheID()), array('title' => __('Edit “%s”', $this->Page->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Pages/row_actions', array('post' => $page)),
+                        array($this->Html->link('<strong>' . h($this->Page->getTheTitle()) . '</strong>', array('action' => 'edit', $this->Page->getTheID()), array('title' => __('Edit “%s”', $this->Page->getTheTitle()), 'escape' => FALSE)) . $this->element('admin/Pages/row_actions', array('page' => $page)),
                             array(
                                 'class' => 'column-title'
                             )
