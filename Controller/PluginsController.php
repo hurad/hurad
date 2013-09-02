@@ -11,11 +11,6 @@ class PluginsController extends AppController {
 
     public $uses = array();
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-        $this->Auth->allow();
-    }
-
     public function admin_index() {
         $this->set('title_for_layout', __('Plugins'));
 
