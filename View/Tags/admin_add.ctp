@@ -68,3 +68,5 @@ echo $this->Form->create('Tag', array(
 <div class="form-actions">
     <?php echo $this->Form->button(__('Add Tag'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
+
+<?php echo $this->Form->end(); ?>
