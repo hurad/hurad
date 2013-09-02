@@ -19,32 +19,6 @@ class MenusController extends AppController {
         )
     );
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return true;
-                break;
-            case 'editor':
-                if ($action == 'admin_add' || $action == 'admin_edit' || $action == 'admin_index') {
-                    return true;
-                }
-                break;
-            case 'author':
-                if ($action == 'admin_index') {
-                    return true;
-                }
-                break;
-            case 'user':
-                return false;
-                break;
-        }
-    }
-
     /**
      * index method
      *
@@ -164,6 +138,7 @@ class MenusController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Menu'));
         if ($this->request->is('post')) {
+            $this->request->data['Menu']['type'] = 'nav_menu';
             $this->Menu->create();
             if ($this->Menu->save($this->request->data)) {
                 $this->Session->setFlash(__('The menu has been saved'), 'success');
