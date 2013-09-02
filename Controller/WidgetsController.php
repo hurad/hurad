@@ -14,7 +14,6 @@ class WidgetsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow();
         $this->Security->unlockedActions = array('admin_index', 'admin_edit');
     }
 
