@@ -7,20 +7,17 @@ App::uses('AppController', 'Controller');
  *
  * @author mohammad
  */
-class WidgetsController extends AppController
-{
+class WidgetsController extends AppController {
 
     public $components = array('RequestHandler');
     public $uses = array('Option');
 
-    public function beforeFilter()
-    {
+    public function beforeFilter() {
         parent::beforeFilter();
         $this->Security->unlockedActions = array('admin_index', 'admin_edit');
     }
 
-    public function admin_index()
-    {
+    public function admin_index() {
         if ($this->RequestHandler->isAjax()) {
             $option_name = Configure::read('template') . '.widgets';
             $widgets_db = unserialize(Configure::read(Configure::read('template') . '.widgets'));
@@ -43,8 +40,7 @@ class WidgetsController extends AppController
         }
     }
 
-    public function admin_edit()
-    {
+    public function admin_edit() {
         $this->autoRender = false;
 
         if ($this->RequestHandler->isAjax()) {
