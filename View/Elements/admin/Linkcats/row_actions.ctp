@@ -1,8 +1,20 @@
 <div class="row-actions">
-    <span class="action-edit">
-        <?php echo $this->Html->link(__('Edit'), array('admin' => TRUE, 'controller' => 'linkcats', 'action' => 'edit', $linkcat['Linkcat']['id'])); ?> | 
-    </span>                 
-    <span class="action-delete">
-        <?php echo $this->Form->postLink(__('Delete'), array('admin' => TRUE, 'controller' => 'linkcats', 'action' => 'delete', $linkcat['Linkcat']['id']), null, __('Are you sure you want to delete " %s " ?', $linkcat['Linkcat']['name'])); ?>
-    </span>
+    <?php
+    $editLink = $this->Html->link(
+        __d('hurad', 'Edit'),
+        array('admin' => true, 'controller' => 'linkcats', 'action' => 'edit', $linkcat['Linkcat']['id'])
+    );
+    HuradRowActions::addAction('edit', $editLink, 'manage_links');
+
+    $deleteLink = $this->Form->postLink(
+        __d('hurad', 'Delete'),
+        array('admin' => true, 'controller' => 'linkcats', 'action' => 'delete', $linkcat['Linkcat']['id']),
+        null,
+        __d('hurad', 'Are you sure you want to delete “%s”?', $linkcat['Linkcat']['name'])
+    );
+    HuradRowActions::addAction('delete', $deleteLink, 'manage_links');
+
+    $actions = HuradHook::apply_filters('linkcat_row_actions', HuradRowActions::getActions(), $linkcat);
+    $this->AdminLayout->rowActions($actions);
+    ?>
 </div>
