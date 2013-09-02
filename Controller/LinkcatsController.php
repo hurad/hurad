@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  *
  * @property Menu $Menu
  */
-class LinkcatsController extends AppController {
+class LinkcatsController extends AppController
+{
 
     public $paginate = array(
         'limit' => 25,
@@ -16,41 +17,13 @@ class LinkcatsController extends AppController {
         )
     );
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return TRUE;
-                break;
-            case 'editor':
-                if (
-                        $action == 'admin_index' ||
-                        $action == 'admin_edit' ||
-                        $action == 'admin_add'
-                ) {
-                    return TRUE;
-                }
-                break;
-            case 'author':
-                if ($action == 'admin_index') {
-                    return TRUE;
-                }
-                break;
-            case 'user':
-                return false;
-        }
-    }
-
     /**
      * admin_index method
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index()
+    {
         $this->set('title_for_layout', __('Link Categories'));
         $this->Linkcat->recursive = 0;
         if (isset($this->request->params['named']['q'])) {
@@ -70,7 +43,8 @@ class LinkcatsController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
+    public function admin_add()
+    {
         $this->set('title_for_layout', __('Add New Link Category'));
         if ($this->request->is('post')) {
             $this->Linkcat->create();
@@ -88,9 +62,11 @@ class LinkcatsController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->set('title_for_layout', __('Edit Link Category'));
         $this->Linkcat->id = $id;
         if (!$this->Linkcat->exists()) {
@@ -112,9 +88,11 @@ class LinkcatsController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -130,7 +108,8 @@ class LinkcatsController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
         $action = $this->request->data['Linkcat']['action'];
         $ids = array();
