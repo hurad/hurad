@@ -69,3 +69,5 @@ echo $this->Form->create('Linkcat', array(
 <div class="form-actions">
     <?php echo $this->Form->button(__('Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
+
+<?php echo $this->Form->end(); ?>
