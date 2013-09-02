@@ -10,7 +10,7 @@ App::uses('AppController', 'Controller');
 class PagesController extends AppController {
 
     public $helpers = array('Page', 'Comment', 'Text', 'Editor');
-    public $components = array('RequestHandler');
+    public $components = array('RequestHandler', 'Role');
     public $paginate = array(
         'conditions' => array(
             'Page.status' => array('publish', 'draft'),
@@ -25,42 +25,6 @@ class PagesController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('index', 'view');
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return TRUE;
-                break;
-            case 'editor':
-                if (
-                        $action == 'admin_index' ||
-                        $action == 'admin_edit' ||
-                        $action == 'admin_add' ||
-                        $action == 'admin_filter' ||
-                        $action == 'index' ||
-                        $action == 'view'
-                ) {
-                    return TRUE;
-                }
-                break;
-            case 'author':
-                if (
-                        $action == 'admin_index' ||
-                        $action == 'admin_add' ||
-                        $action == 'index' ||
-                        $action == 'view'
-                ) {
-                    return TRUE;
-                }
-                break;
-            case 'user':
-                if ($action == 'index' || $action == 'view') {
-                    return TRUE;
-                }
-                break;
-        }
     }
 
     /**
