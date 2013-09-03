@@ -3,10 +3,7 @@
 App::uses('Component', 'Controller');
 
 /**
- * Description of RoleComponent
- *
- * @todo Complete phpDoc
- * @author mohammad
+ * Class RoleComponent
  */
 class RoleComponent extends Component
 {
@@ -242,29 +239,51 @@ class RoleComponent extends Component
         }
     }
 
+    /**
+     * @param null|array|string $methods
+     *
+     * @return bool
+     */
     private function denyAuth($methods = null)
     {
         if (is_null($methods)) {
             return false;
-        } elseif (is_array($methods)) {
+        }
+
+        $methods = array($methods);
+
+        if (is_array($methods)) {
             if (in_array(Router::getParam("action"), $methods)) {
                 return false;
             } else {
                 return true;
             }
+        } else {
+            return false;
         }
     }
 
+    /**
+     * @param null|array|string $methods
+     *
+     * @return bool
+     */
     private function allowAuth($methods = null)
     {
         if (is_null($methods)) {
             return true;
-        } elseif (is_array($methods)) {
+        }
+
+        $methods = array($methods);
+
+        if (is_array($methods)) {
             if (in_array(Router::getParam("action"), $methods)) {
                 return true;
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 
