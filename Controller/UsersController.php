@@ -85,6 +85,7 @@ class UsersController extends AppController
      *
      * @param string $id
      *
+     * @throws NotFoundException
      * @return void
      */
     public function admin_profile($id = null)
@@ -138,6 +139,8 @@ class UsersController extends AppController
      *
      * @param string $id
      *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      * @return void
      */
     public function admin_delete($id = null)
@@ -191,9 +194,9 @@ class UsersController extends AppController
     /**
      * Sets the cookie to remember the user
      *
-     * @param array Cookie component properties as array, like array('domain' => 'yourdomain.com')
-     * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
+     * @param string $cookieKey Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
      *
+     * @internal param \Cookie $array component properties as array, like array('domain' => 'yourdomain.com')
      * @return void
      */
     private function __setCookie($cookieKey = 'Auth.User')
@@ -217,7 +220,6 @@ class UsersController extends AppController
     public function logout()
     {
         if ($this->Auth->loggedIn()) {
-//$this->Cookie->delete('Hurad');
             $this->Session->destroy();
             $this->Cookie->destroy();
             $this->Session->setFlash(__('You are successfully logout'), 'success');
@@ -237,26 +239,19 @@ class UsersController extends AppController
     {
         $this->layout = "admin";
         if ($this->request->is('post')) {
-// Set User's ID in model which is needed for validation
             $this->User->id = $this->Auth->user('id');
             if ($this->User->save($this->request->data)) {
-                debug($this->request->data);
-//Find user by id
                 $user = $this->User->findById($this->Auth->user('id'));
-
-                $email = new CakeEmail('gmail');
-                $email->emailFormat('html');
-                $email->template('change_password');
-                $email->viewVars(
+                $this->Hurad->sendEmail(
+                    $this->request->data['User']['email'],
+                    __('Change Password'),
+                    'change_password',
+                    __('You are change password'),
                     array(
                         'new_password' => $this->request->data['User']['password'],
                         'username' => $user['User']['username']
                     )
                 );
-                $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-                $email->to('m.abdolirad@gmail.com');
-                $email->subject('Change Password');
-                $email->send('You are change password');
                 $this->Session->setFlash(__('Your password has been updated'), 'flash_notice');
                 $this->redirect(array('admin' => true, 'action' => 'index'));
             } else {
@@ -279,22 +274,19 @@ class UsersController extends AppController
             $this->request->data['User']['activation_key'] = $this->_getActivationKey();
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $email = new CakeEmail('gmail');
-                $email->emailFormat('html');
-                $email->template('register');
-                $email->viewVars(
+                $this->Hurad->sendEmail(
+                    $this->request->data['User']['email'],
+                    __('Register to %s', Configure::read('General.site_name')),
+                    'register',
+                    null,
                     array(
                         'password' => $this->request->data['User']['password'],
                         'username' => $this->request->data['User']['username'],
-                        'activation_key' => $this->request->data['User']['activation_key'],
-                        'siteurl' => Configure::read('General.site_url'),
+                        'activationKey' => $this->request->data['User']['activation_key'],
+                        'siteUrl' => Configure::read('General.site_url'),
                         'email' => $this->request->data['User']['email']
                     )
                 );
-                $email->from('info@hurad.org', Configure::read('General.site_name'));
-                $email->to($this->request->data['User']['email']);
-                $email->subject(__('Register to %s', Configure::read('General.site_name')));
-                $email->send('Thank you register Cakeblog');
                 $this->Session->setFlash(
                     __('Congratulations, You are Successfully register'),
                     'default',
@@ -328,11 +320,11 @@ class UsersController extends AppController
      *
      * @param void
      *
+     * @throws NotFoundException
      * @return string activation key
      */
     public function verify($key = null)
     {
-//Find id from users table
         $user = $this->User->find(
             'first',
             array(
@@ -348,20 +340,12 @@ class UsersController extends AppController
         } else {
             if ($user) {
                 if ($this->User->saveField('status', '1')) {
-                    $email = new CakeEmail('gmail');
-                    $email->emailFormat('html');
-                    $email->template('verify');
-//                    $email->viewVars(array(
-//                        'password' => $this->request->data['User']['password'],
-//                        'username' => $this->request->data['User']['username'],
-//                        'activation_key' => $this->request->data['User']['activation_key'],
-//                        'siteurl' => $option['Option']['value'],
-//                        'email' => $this->request->data['User']['email']
-//                    ));
-                    $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-                    $email->to('m.abdolirad@gmail.com');
-                    $email->subject('Confirmed your account');
-                    $email->send('Thank you confirm Cakeblog');
+                    $this->Hurad->sendEmail(
+                        $this->request->data['User']['email'],
+                        __('Confirmed your account'),
+                        'verify',
+                        __('Thank you confirm your account')
+                    );
                     $this->Session->setFlash(__('User confirm.'));
                     $this->redirect(array('action' => 'index'));
                 } else {
@@ -388,45 +372,29 @@ class UsersController extends AppController
             $this->User->id = $user['User']['id'];
             $resetKey = md5(uniqid());
             $this->User->saveField('reset_key', $resetKey);
-//$this->set(compact('user', 'resetKey'));
-//            $this->Email->from = Configure::read('Site.title') . ' '
-//                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
-//            $this->Email->to = $user['User']['email'];
-//            $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password');
-//            $this->Email->template = 'forgot_password';
 
-
-            $email = new CakeEmail('default');
-            $email->emailFormat('html');
-            $email->template('forgot_password');
-            $email->viewVars(
+            $this->Hurad->sendEmail(
+                $user['User']['email'],
+                __('Reset Password'),
+                'forgot_password',
+                null,
                 array(
                     'reset_key' => $resetKey,
-                    'username' => $user['User']['username'],
-                    //'email' => $this->request->data['User']['email']
+                    'username' => $user['User']['username']
                 )
             );
-            $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-            $email->to($user['User']['email']);
-            $email->subject(__('Reset Password'));
-//$email->send('Thank you confirm Cakeblog');
 
-
-            if ($email->send()) {
-                $this->Session->setFlash(
-                    __('An email has been sent with instructions for resetting your password.'),
-                    'success'
-                );
-                $this->redirect(array('action' => 'login'));
-            } else {
-                $this->Session->setFlash(__('An error occurred. Please try again.'), 'error');
-            }
+            $this->Session->setFlash(
+                __('An email has been sent with instructions for resetting your password.'),
+                'success'
+            );
+            $this->redirect(array('action' => 'login'));
         }
     }
 
     public function reset($key = null)
     {
-//$this->set('title_for_layout', __('Reset Password'));
+        $this->set('title_for_layout', __('Reset Password'));
 
         if ($key == null) {
             $this->Session->setFlash(__('An error occurred.'));
