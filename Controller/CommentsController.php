@@ -7,8 +7,10 @@ App::uses('CakeEmail', 'Network/Email');
  * Comments Controller
  *
  * @property Comment $Comment
+ * @property HuradComponent $Hurad
  */
-class CommentsController extends AppController {
+class CommentsController extends AppController
+{
 
     public $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
     public $components = array('RequestHandler');
@@ -22,7 +24,8 @@ class CommentsController extends AppController {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         $this->Auth->allow('index', 'add', 'reply');
     }
@@ -32,7 +35,8 @@ class CommentsController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $this->Comment->recursive = 0;
         $this->set('comments', $this->paginate());
     }
@@ -42,7 +46,8 @@ class CommentsController extends AppController {
      *
      * @return void
      */
-    public function add() {
+    public function add()
+    {
         if ($this->request->is('post')) {
             $this->Comment->create();
             $this->request->data['Comment']['author_ip'] = CakeRequest::clientIp();
@@ -50,18 +55,19 @@ class CommentsController extends AppController {
             $this->request->data['Comment']['approved'] = 0;
 
             $format = new Formatting();
-            $this->request->data['Comment']['author_url'] = $format->esc_url($this->request->data['Comment']['author_url']);
+            $this->request->data['Comment']['author_url'] = $format->esc_url(
+                $this->request->data['Comment']['author_url']
+            );
             if ($this->Comment->save($this->request->data)) {
                 $this->redirect($this->referer());
-//                $email = new CakeEmail('gmail');
-//                $email->emailFormat('html');
-//                $email->template('add_comment');
-//                $email->from(array('info@hurad.org' => 'Hurad'));
-//                $email->to($this->request->data['Comment']['author_email']);
-//                $email->subject('Comment Submit');
-//                $email->send('Your comment submit in blog waiting to approve by admin.');
-//                $this->Session->setFlash(__('The comment has been saved'));
-//                $this->redirect(array('action' => 'index'));
+                $this->Hurad->sendEmail(
+                    $this->request->data['Comment']['author_email'],
+                    __('Comment Submit'),
+                    'add_comment',
+                    __('Your comment submit in blog waiting to approve by admin.')
+                );
+                $this->Session->setFlash(__('The comment has been saved'));
+                $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
             }
@@ -71,9 +77,12 @@ class CommentsController extends AppController {
     /**
      * admin_index method
      *
+     * @param null $action
+     *
      * @return void
      */
-    public function admin_index($action = null) {
+    public function admin_index($action = null)
+    {
         $this->set('title_for_layout', __('Comments'));
         $this->Comment->recursive = 0;
 
@@ -139,9 +148,11 @@ class CommentsController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->Comment->id = $id;
         if (!$this->Comment->exists()) {
             throw new NotFoundException(__('Invalid comment'));
@@ -165,9 +176,11 @@ class CommentsController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -191,7 +204,8 @@ class CommentsController extends AppController {
      *
      * @return void
      */
-    public function reply($post_id = NULL, $comment_id = NULL) {
+    public function reply($post_id = null, $comment_id = null)
+    {
         if ($this->request->is('post')) {
             $this->Comment->create();
 
@@ -218,11 +232,12 @@ class CommentsController extends AppController {
         $this->set(compact('urls'));
     }
 
-    public function admin_action($action = null, $id = null) {
-        $this->autoRender = FALSE;
+    public function admin_action($action = null, $id = null)
+    {
+        $this->autoRender = false;
         $this->Comment->id = $id;
         if (is_null($action)) {
-            return FALSE;
+            return false;
         } elseif (!$this->Comment->exists()) {
             throw new NotFoundException(__('Invalid comment'));
         }
@@ -252,7 +267,7 @@ class CommentsController extends AppController {
                 break;
         }
 
-        if ($this->RequestHandler->isAjax()) {
+        if ($this->request->is('ajax')) {
             $this->Comment->save($data);
         } else {
             if ($this->Comment->save($data)) {
@@ -265,7 +280,8 @@ class CommentsController extends AppController {
         }
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
         $action = $this->request->data['Comment']['action'];
         $ids = array();
