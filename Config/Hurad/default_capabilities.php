@@ -2,10 +2,10 @@
 /**
  * Add default roles
  */
-HuradRole::addRole('administrator', __('Administrator'));
-HuradRole::addRole('editor', __('Editor'));
-HuradRole::addRole('author', __('Author'));
-HuradRole::addRole('user', __('User'));
+HuradRole::addRole('administrator', __d('hurad', 'Administrator'));
+HuradRole::addRole('editor', __d('hurad', 'Editor'));
+HuradRole::addRole('author', __d('hurad', 'Author'));
+HuradRole::addRole('user', __d('hurad', 'User'));
 
 /*
  * Administrator Capabilities
