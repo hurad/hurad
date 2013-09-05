@@ -46,19 +46,19 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('author', __('Author')) => array(
+                $this->Paginator->sort('author', __d('hurad', 'Author')) => array(
                     'class' => 'column-author column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('content', __('Content')) => array(
+                $this->Paginator->sort('content', __d('hurad', 'Content')) => array(
                     'class' => 'column-content column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('Post.title', __('Reply to')) => array(
+                $this->Paginator->sort('Post.title', __d('hurad', 'Reply to')) => array(
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
@@ -134,19 +134,19 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('author', __('Author')) => array(
+                $this->Paginator->sort('author', __d('hurad', 'Author')) => array(
                     'class' => 'column-author column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('content', __('Content')) => array(
+                $this->Paginator->sort('content', __d('hurad', 'Content')) => array(
                     'class' => 'column-content column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('Post.title', __('Reply to')) => array(
+                $this->Paginator->sort('Post.title', __d('hurad', 'Reply to')) => array(
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
@@ -164,15 +164,15 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'approve' => __('Approve'),
-                'disapprove' => __('Disapprove'),
-                'delete' => __('Delete'),
-                'spam' => __('Spam'),
-                'trash' => __('Move to trash'),
+                'approve' => __d('hurad', 'Approve'),
+                'disapprove' => __d('hurad', 'Disapprove'),
+                'delete' => __d('hurad', 'Delete'),
+                'spam' => __d('hurad', 'Spam'),
+                'trash' => __d('hurad', 'Move to trash'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 </section>

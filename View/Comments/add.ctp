@@ -1,7 +1,7 @@
 <div class="comments form">
     <?php echo $this->Form->create('Comment'); ?>
     <fieldset>
-        <legend><?php echo __('Add Comment'); ?></legend>
+        <legend><?php echo __d('hurad', 'Add Comment'); ?></legend>
         <?php
         echo $this->Form->input('parent_id');
         echo $this->Form->input('post_id');
@@ -17,30 +17,30 @@
         echo $this->Form->input('rght');
         ?>
     </fieldset>
-    <?php echo $this->Form->end(__('Submit')); ?>
+    <?php echo $this->Form->end(__d('hurad', 'Submit')); ?>
 </div>
 <div class="actions">
-    <h3><?php echo __('Actions'); ?></h3>
+    <h3><?php echo __d('hurad', 'Actions'); ?></h3>
     <ul>
 
-        <li><?php echo $this->Html->link(__('List Comments'), array('action' => 'index')); ?></li>
+        <li><?php echo $this->Html->link(__d('hurad', 'List Comments'), array('action' => 'index')); ?></li>
         <li><?php echo $this->Html->link(
-                __('List Comments'),
+                __d('hurad', 'List Comments'),
                 array('controller' => 'comments', 'action' => 'index')
             ); ?> </li>
         <li><?php echo $this->Html->link(
-                __('New Parent Comment'),
+                __d('hurad', 'New Parent Comment'),
                 array('controller' => 'comments', 'action' => 'add')
             ); ?> </li>
         <li><?php echo $this->Html->link(
-                __('List Posts'),
+                __d('hurad', 'List Posts'),
                 array('controller' => 'posts', 'action' => 'index')
             ); ?> </li>
-        <li><?php echo $this->Html->link(__('New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('hurad', 'New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
         <li><?php echo $this->Html->link(
-                __('List Users'),
+                __d('hurad', 'List Users'),
                 array('controller' => 'users', 'action' => 'index')
             ); ?> </li>
-        <li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('hurad', 'New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
     </ul>
 </div>
