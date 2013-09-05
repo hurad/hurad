@@ -46,28 +46,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('link_count', __('Link Count')) => array(
+                $this->Paginator->sort('link_count', __d('hurad', 'Link Count')) => array(
                     'id' => 'link-count',
                     'class' => 'column-link-count column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
@@ -95,7 +95,7 @@ echo $this->Form->create(
                             $this->Html->link(
                                 '<strong>' . h($menu['Menu']['name']) . '</strong>',
                                 array('action' => 'edit', $menu['Menu']['id']),
-                                array('title' => __('Edit “%s”', $menu['Menu']['name']), 'escape' => false)
+                                array('title' => __d('hurad', 'Edit “%s”', $menu['Menu']['name']), 'escape' => false)
                             ) . $this->element('admin/Menus/row_actions', array('menu' => $menu)),
                             array(
                                 'class' => 'column-name'
@@ -132,7 +132,7 @@ echo $this->Form->create(
     } else {
         echo $this->Html->tag(
             'tr',
-            $this->Html->tag('td', __('No menus were found'), array('colspan' => '5', 'style' => 'text-align:center;')),
+            $this->Html->tag('td', __d('hurad', 'No menus were found'), array('colspan' => '5', 'style' => 'text-align:center;')),
             array('id' => 'menu-0')
         );
     }
@@ -154,28 +154,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('link_count', __('Link Count')) => array(
+                $this->Paginator->sort('link_count', __d('hurad', 'Link Count')) => array(
                     'id' => 'link-count',
                     'class' => 'column-link-count column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
@@ -194,11 +194,11 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'delete' => __('Delete')
+                'delete' => __d('hurad', 'Delete')
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->submit(__('Apply'), array('class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->submit(__d('hurad', 'Apply'), array('class' => 'btn btn-info', 'div' => false));
     ?>
 </section>

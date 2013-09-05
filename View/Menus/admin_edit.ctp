@@ -32,7 +32,7 @@ echo $this->Form->create(
             </tr>
             </tbody>
         </table>
-        <?php echo $this->Form->end(__('Submit')); ?>
+        <?php echo $this->Form->end(__d('hurad', 'Submit')); ?>
     </div>
 </div>
 

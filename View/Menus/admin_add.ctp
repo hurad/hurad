@@ -16,26 +16,26 @@ echo $this->Form->create(
 ?>
 
 <div class="control-group">
-    <?php echo $this->Form->label('name', __('Name'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('name', array('type' => 'text')); ?>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('alias', __('Alias'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('alias', __d('hurad', 'Alias'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('slug', array('type' => 'text')); ?>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('description', __('Description'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('description', array('class' => 'span5')); ?>
     </div>
 </div>
 
 <div class="form-actions">
-    <?php echo $this->Form->submit(__('Add menu'), array('class' => 'btn btn-primary')); ?>
+    <?php echo $this->Form->submit(__d('hurad', 'Add menu'), array('class' => 'btn btn-primary')); ?>
 </div>
 
 <?php echo $this->Form->end(null); ?>
