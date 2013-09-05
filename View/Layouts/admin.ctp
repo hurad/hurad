@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo $title_for_layout; ?> &#8212; <?php echo __('Huard'); ?></title>
+    <title><?php echo $title_for_layout; ?> &#8212; <?php echo __d('hurad', 'Huard'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php echo $this->Html->charset(); ?>
     <?php echo $this->Html->css(array('admin/bootstrap.min.css', 'admin/main')); ?>

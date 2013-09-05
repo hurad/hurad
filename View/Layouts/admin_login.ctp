@@ -1,7 +1,7 @@
 <?php echo $this->Html->docType('html5'); ?>
 <html lang="en">
 <head>
-    <title><?php echo $title_for_layout; ?> &#8212; <?php echo __('Huard'); ?></title>
+    <title><?php echo $title_for_layout; ?> &#8212; <?php echo __d('hurad', 'Huard'); ?></title>
     <?php echo $this->Html->charset(); ?>
     <?php echo $this->Html->css(array('bootstrap.min.css', 'login')); ?>
     <?php echo $this->Html->script(
