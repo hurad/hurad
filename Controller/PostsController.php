@@ -102,7 +102,7 @@ class PostsController extends AppController
         $slug = Formatting::sanitize_title($slug);
         $this->Post->slug = $slug;
         if (is_null($slug) && !$this->Post->exists()) {
-            throw new NotFoundException(__('Invalid post'));
+            throw new NotFoundException(__d('hurad', 'Invalid post'));
         } else {
             $this->set('post', $this->Post->findBySlug($slug));
             $this->_fallbackView($slug);
@@ -113,7 +113,7 @@ class PostsController extends AppController
     {
         $this->Post->id = $id;
         if (is_null($id) && !$this->Post->exists()) {
-            throw new NotFoundException(__('Invalid post'));
+            throw new NotFoundException(__d('hurad', 'Invalid post'));
         }
 
         $this->set('post', $this->Post->read(null, $id));
@@ -125,10 +125,10 @@ class PostsController extends AppController
 
     public function admin_listByauthor($userId = null)
     {
-        $this->set('title_for_layout', __('Posts'));
+        $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->User->id = $userId;
         if (is_null($userId) || !$this->Post->User->exists()) {
-            throw new NotFoundException(__('Invalid author'));
+            throw new NotFoundException(__d('hurad', 'Invalid author'));
         }
         $this->Post->recursive = 1;
         $this->paginate = array(
@@ -148,10 +148,10 @@ class PostsController extends AppController
 
     public function admin_listBycategory($categoryId = null)
     {
-        $this->set('title_for_layout', __('Posts'));
+        $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->Category->id = $categoryId;
         if (is_null($categoryId) || !$this->Post->Category->exists()) {
-            throw new NotFoundException(__('Invalid category'));
+            throw new NotFoundException(__d('hurad', 'Invalid category'));
         }
         $this->paginate = array(
             'Post' => array(
@@ -171,10 +171,10 @@ class PostsController extends AppController
 
     public function admin_listBytag($tagId = null)
     {
-        $this->set('title_for_layout', __('Posts'));
+        $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->Tag->id = $tagId;
         if (is_null($tagId) || !$this->Post->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
+            throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
         $this->paginate = array(
             'Post' => array(
@@ -199,7 +199,7 @@ class PostsController extends AppController
      */
     public function admin_index()
     {
-        $this->set('title_for_layout', __('Posts'));
+        $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->recursive = 1;
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
@@ -222,7 +222,7 @@ class PostsController extends AppController
      */
     public function admin_add($type = 'post')
     {
-        $this->set('title_for_layout', __('Add Post'));
+        $this->set('title_for_layout', __d('hurad', 'Add Post'));
 
         $defaults = array(
             'parent_id' => null,
@@ -260,10 +260,10 @@ class PostsController extends AppController
 
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__('The post has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The post has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The post could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The post could not be saved. Please, try again.'), 'error');
             }
         }
         $categories = $this->Post->Category->generateTreeList(null, null, null, '_');
@@ -279,7 +279,7 @@ class PostsController extends AppController
      */
     public function admin_edit($id = null)
     {
-        $this->set('title_for_layout', __('Edit Post'));
+        $this->set('title_for_layout', __d('hurad', 'Edit Post'));
 
         $defaults = array(
             'parent_id' => null,
@@ -320,10 +320,10 @@ class PostsController extends AppController
             // save the data
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__('The Post has been saved.'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The Post has been saved.'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The Post could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The Post could not be saved. Please, try again.'), 'error');
             }
         }
         if (empty($this->request->data)) {
@@ -352,14 +352,14 @@ class PostsController extends AppController
         }
         $this->Post->id = $id;
         if (!$this->Post->exists()) {
-            throw new NotFoundException(__('Invalid post'));
+            throw new NotFoundException(__d('hurad', 'Invalid post'));
             $this->redirect(array('action' => 'index'));
         }
         if ($this->Post->delete()) {
-            $this->Session->setFlash(__('Post deleted'), 'flash_notice');
+            $this->Session->setFlash(__d('hurad', 'Post deleted'), 'flash_notice');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Post was not deleted'), 'flash_error');
+        $this->Session->setFlash(__d('hurad', 'Post was not deleted'), 'flash_error');
         $this->redirect(array('action' => 'index'));
     }
 
@@ -430,7 +430,7 @@ class PostsController extends AppController
         $this->paginate['limit'] = 25;
         switch ($action) {
             case 'publish':
-                $this->set('title_for_layout', __('Posts Published'));
+                $this->set('title_for_layout', __d('hurad', 'Posts Published'));
                 $this->paginate['conditions'] = array(
                     'Post.status' => 'publish',
                     'Post.type' => 'post'
@@ -438,7 +438,7 @@ class PostsController extends AppController
                 break;
 
             case 'draft':
-                $this->set('title_for_layout', __('Draft Posts'));
+                $this->set('title_for_layout', __d('hurad', 'Draft Posts'));
                 $this->paginate['conditions'] = array(
                     'Post.status' => 'draft',
                     'Post.type' => 'post'
@@ -446,7 +446,7 @@ class PostsController extends AppController
                 break;
 
             case 'trash':
-                $this->set('title_for_layout', __('Posts'));
+                $this->set('title_for_layout', __d('hurad', 'Posts'));
                 $this->paginate['conditions'] = array(
                     'Post.status' => 'trash',
                     'Post.type' => 'post'
@@ -454,7 +454,7 @@ class PostsController extends AppController
                 break;
 
             default:
-                $this->set('title_for_layout', __('Posts'));
+                $this->set('title_for_layout', __d('hurad', 'Posts'));
                 $this->paginate['conditions'] = array(
                     'Post.status' => array('publish', 'draft'),
                     'Post.type' => 'post'
@@ -482,40 +482,40 @@ class PostsController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Post->deleteAll(array('Post.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Posts deleted.'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Posts deleted.'), 'flash_notice');
                 }
                 break;
 
             case 'publish':
                 if ($this->Post->updateAll(array('Post.status' => "'publish'"), array('Post.id' => $ids))) {
-                    $this->Session->setFlash(__('Posts published'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Posts published'), 'flash_notice');
                 }
                 break;
 
             case 'draft':
                 if ($this->Post->updateAll(array('Post.status' => "'draft'"), array('Post.id' => $ids))) {
-                    $this->Session->setFlash(__('Posts drafted'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Posts drafted'), 'flash_notice');
                 }
                 break;
 
             case 'trash':
                 if ($this->Post->updateAll(array('Post.status' => "'trash'"), array('Post.id' => $ids))) {
-                    $this->Session->setFlash(__('Posts move to trash'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Posts move to trash'), 'flash_notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_error');
                 break;
         }
         $this->redirect(array('action' => 'index'));

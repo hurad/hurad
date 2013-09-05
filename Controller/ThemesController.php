@@ -43,7 +43,7 @@ class ThemesController extends AppController
      */
     public function admin_index()
     {
-        $this->set('title_for_layout', __('Themes'));
+        $this->set('title_for_layout', __d('hurad', 'Themes'));
 
         $currentTheme = array();
         $themes = HuradTheme::getThemeData();
@@ -70,14 +70,17 @@ class ThemesController extends AppController
     public function admin_delete($alias = null)
     {
         if ($alias == null) {
-            $this->Session->setFlash(__('Invalid Theme.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'Invalid Theme.'), 'error');
             $this->redirect(array('action' => 'index'));
         }
         if (HuradTheme::delete($alias)) {
-            $this->Session->setFlash(__('%s Theme successfuly deleted.', Configure::read('template')), 'success');
+            $this->Session->setFlash(
+                __d('hurad', '%s Theme successfuly deleted.', Configure::read('template')),
+                'success'
+            );
             $this->redirect(array('action' => 'index'));
         } else {
-            $this->Session->setFlash(__('Occured error.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'Occured error.'), 'error');
             $this->redirect(array('action' => 'index'));
         }
     }
@@ -96,10 +99,10 @@ class ThemesController extends AppController
     public function admin_activate($alias = null)
     {
         if (HuradTheme::activate($alias)) {
-            $this->Session->setFlash(__('Theme activated.'), 'success');
+            $this->Session->setFlash(__d('hurad', 'Theme activated.'), 'success');
             $this->redirect(array('action' => 'index'));
         } else {
-            $this->Session->setFlash(__('Theme activation failed.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'Theme activation failed.'), 'error');
             $this->redirect(array('action' => 'index'));
         }
     }

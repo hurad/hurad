@@ -55,7 +55,7 @@ class TagsController extends AppController
      */
     public function admin_index()
     {
-        $this->set('title_for_layout', __('Tags'));
+        $this->set('title_for_layout', __d('hurad', 'Tags'));
         $this->Tag->recursive = 0;
         $this->set('tags', $this->paginate());
     }
@@ -71,7 +71,7 @@ class TagsController extends AppController
     {
         $this->Tag->id = $id;
         if (!$this->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
+            throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
         $this->set('tag', $this->Tag->read(null, $id));
     }
@@ -83,7 +83,7 @@ class TagsController extends AppController
      */
     public function admin_add()
     {
-        $this->set('title_for_layout', __('Add Tag'));
+        $this->set('title_for_layout', __d('hurad', 'Add Tag'));
         if ($this->request->is('post')) {
             if ($this->request->data['Tag']['slug']) {
                 $this->request->data['Tag']['slug'] = strtolower(
@@ -92,10 +92,10 @@ class TagsController extends AppController
             }
             $this->Tag->create();
             if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__('The tag has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The tag has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tag could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The tag could not be saved. Please, try again.'), 'error');
             }
         }
     }
@@ -109,17 +109,17 @@ class TagsController extends AppController
      */
     public function admin_edit($id = null)
     {
-        $this->set('title_for_layout', __('Edit Tag'));
+        $this->set('title_for_layout', __d('hurad', 'Edit Tag'));
         $this->Tag->id = $id;
         if (!$this->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
+            throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__('The tag has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The tag has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tag could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The tag could not be saved. Please, try again.'), 'error');
             }
         } else {
             $this->request->data = $this->Tag->read(null, $id);
@@ -142,13 +142,13 @@ class TagsController extends AppController
         }
         $this->Tag->id = $id;
         if (!$this->Tag->exists()) {
-            throw new NotFoundException(__('Invalid tag'));
+            throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
         if ($this->Tag->delete()) {
-            $this->Session->setFlash(__('Tag deleted'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'Tag deleted'), 'notice');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Tag was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'Tag was not deleted'), 'error');
         $this->redirect(array('action' => 'index'));
     }
 
@@ -166,12 +166,12 @@ class TagsController extends AppController
         switch ($action) {
             case 'delete':
                 if ($this->Tag->deleteAll(array('Tag.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Tags deleted.'), 'notice');
+                    $this->Session->setFlash(__d('hurad', 'Tags deleted.'), 'notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
                 break;
         }
 

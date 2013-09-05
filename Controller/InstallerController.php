@@ -23,12 +23,12 @@ class InstallerController extends AppController
 
     public function index()
     {
-        $this->set('title_for_layout', __('Welcome to Hurad installer'));
+        $this->set('title_for_layout', __d('hurad', 'Welcome to Hurad installer'));
     }
 
     public function database()
     {
-        $this->set('title_for_layout', __('Database Configuration'));
+        $this->set('title_for_layout', __d('hurad', 'Database Configuration'));
         $defaults = array(
             'datasource' => 'Database/Mysql',
             'persistent' => false,
@@ -79,7 +79,7 @@ class DATABASE_CONFIG {
 EOF;
                             $file->write($databaseConfig);
                         }
-                        $this->Session->setFlash(__('Database successfuly installed'), 'success');
+                        $this->Session->setFlash(__d('hurad', 'Database successfuly installed'), 'success');
                         $this->redirect(array('action' => 'finalize'));
                     }
                 }
@@ -91,7 +91,7 @@ EOF;
 
     public function finalize()
     {
-        $this->set('title_for_layout', __('Hurad Configuration'));
+        $this->set('title_for_layout', __d('hurad', 'Hurad Configuration'));
         $config = get_class_vars('DATABASE_CONFIG');
 
         if ($this->request->is('post')) {
@@ -121,18 +121,18 @@ EOF;
 
             if ($db->connected) {
                 if ($this->__executeSQL("hurad_defaults.sql", $db, $search)) {
-                    $this->Session->setFlash(__('Hurad successfully installed.'), 'success');
+                    $this->Session->setFlash(__d('hurad', 'Hurad successfully installed.'), 'success');
                     $this->redirect(array('action' => 'welcome'));
                 }
             } else {
-                $this->Session->setFlash(__('Not connected to database.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'Not connected to database.'), 'error');
             }
         }
     }
 
     public function welcome()
     {
-        $this->set('title_for_layout', __('Welcome to Hurad'));
+        $this->set('title_for_layout', __d('hurad', 'Welcome to Hurad'));
 
         $file = new File(TMP . 'installed', true, 0644);
     }
@@ -159,7 +159,7 @@ EOF;
 
             return true;
         } else {
-            $this->Session->setFlash(__('File "Config/Schema/%s" not exists.', $fileName), 'error');
+            $this->Session->setFlash(__d('hurad', 'File "Config/Schema/%s" not exists.', $fileName), 'error');
             return false;
         }
     }

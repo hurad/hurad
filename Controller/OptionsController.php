@@ -15,11 +15,11 @@ class OptionsController extends AppController
     public function admin_prefix($prefix = null)
     {
         $prefix_name = array(
-            'general' => __('General'),
-            'comment' => __('Comment'),
-            'permalink' => __('Permalink'),
+            'general' => __d('hurad', 'General'),
+            'comment' => __d('hurad', 'Comment'),
+            'permalink' => __d('hurad', 'Permalink'),
         );
-        $this->set('title_for_layout', sprintf(__('%s Option'), $prefix_name[$prefix]));
+        $this->set('title_for_layout', sprintf(__d('hurad', '%s Option'), $prefix_name[$prefix]));
 
         $options = $this->Option->find(
             'all',
@@ -49,10 +49,10 @@ class OptionsController extends AppController
             $optionData['Option'] = $opt;
 
             if ($this->Option->update($optionData)) {
-                $this->Session->setFlash(__('Options have been updated!'), 'success');
+                $this->Session->setFlash(__d('hurad', 'Options have been updated!'), 'success');
             } else {
                 $this->Session->setFlash(
-                    __('Unable to update ' . $prefix . ' options.'),
+                    __d('hurad', 'Unable to update ' . $prefix . ' options.'),
                     'error-option',
                     array('errors' => $this->Option->validationErrors)
                 );

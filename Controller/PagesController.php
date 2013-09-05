@@ -88,7 +88,7 @@ class PagesController extends AppController
     {
         $this->Page->slug = $slug;
         if (is_null($slug) && !$this->Page->exists()) {
-            throw new NotFoundException(__('Invalid page'));
+            throw new NotFoundException(__d('hurad', 'Invalid page'));
         } else {
             $this->set('page', $this->Page->findBySlug($slug));
             $this->_fallbackView($slug);
@@ -102,7 +102,7 @@ class PagesController extends AppController
      */
     public function admin_index()
     {
-        $this->set('title_for_layout', __('Pages'));
+        $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->recursive = 0;
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
@@ -123,7 +123,7 @@ class PagesController extends AppController
      */
     public function admin_add()
     {
-        $this->set('title_for_layout', __('Add Page'));
+        $this->set('title_for_layout', __d('hurad', 'Add Page'));
         if ($this->request->is('post')) {
             $this->request->data['Page']['type'] = 'page';
             $this->request->data['Page']['user_id'] = $this->Auth->user('id');
@@ -144,10 +144,10 @@ class PagesController extends AppController
 
             $this->Page->create();
             if ($this->Page->save($this->request->data)) {
-                $this->Session->setFlash(__('The page has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The page has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The page could not be saved. Please, try again.'), 'error');
             }
         }
         $parentPages = $this->Page->generateTreeList(array('Page.type' => 'page'), null, null, '_');
@@ -163,7 +163,7 @@ class PagesController extends AppController
      */
     public function admin_edit($id = null)
     {
-        $this->set('title_for_layout', __('Edit Page'));
+        $this->set('title_for_layout', __d('hurad', 'Edit Page'));
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
                 $this->request->data['Page']['type'] = 'page';
@@ -188,10 +188,10 @@ class PagesController extends AppController
                 // save the data
                 $this->Page->create();
                 if ($this->Page->save($this->request->data)) {
-                    $this->Session->setFlash(__('The Page has been saved.'), 'success');
+                    $this->Session->setFlash(__d('hurad', 'The Page has been saved.'), 'success');
                     $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('The Page could not be saved. Please, try again.'), 'error');
+                    $this->Session->setFlash(__d('hurad', 'The Page could not be saved. Please, try again.'), 'error');
                 }
             }
         } elseif (empty($this->request->data)) {
@@ -221,23 +221,23 @@ class PagesController extends AppController
         }
         $this->Page->id = $id;
         if (!$this->Page->exists()) {
-            throw new NotFoundException(__('Invalid page'));
+            throw new NotFoundException(__d('hurad', 'Invalid page'));
             $this->redirect(array('action' => 'index'));
         }
         if ($this->Page->delete()) {
-            $this->Session->setFlash(__('Page deleted.'), 'flash_notice');
+            $this->Session->setFlash(__d('hurad', 'Page deleted.'), 'flash_notice');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Page was not deleted.'), 'flash_error');
+        $this->Session->setFlash(__d('hurad', 'Page was not deleted.'), 'flash_error');
         $this->redirect(array('action' => 'index'));
     }
 
     public function admin_listByauthor($userId = null)
     {
-        $this->set('title_for_layout', __('Pages'));
+        $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->user_id = $userId;
         if (is_null($userId) && !$this->Page->exists()) {
-            throw new NotFoundException(__('Invalid author'));
+            throw new NotFoundException(__d('hurad', 'Invalid author'));
         }
         $this->Page->recursive = 0;
         $this->paginate['Page']['limit'] = 25;
@@ -265,7 +265,7 @@ class PagesController extends AppController
         $this->paginate['limit'] = 25;
         switch ($action) {
             case 'publish':
-                $this->set('title_for_layout', __('Pages Published'));
+                $this->set('title_for_layout', __d('hurad', 'Pages Published'));
                 $this->paginate['conditions'] = array(
                     'Page.status' => 'publish',
                     'Page.type' => 'page'
@@ -273,7 +273,7 @@ class PagesController extends AppController
                 break;
 
             case 'draft':
-                $this->set('title_for_layout', __('Draft Pages'));
+                $this->set('title_for_layout', __d('hurad', 'Draft Pages'));
                 $this->paginate['conditions'] = array(
                     'Page.status' => 'draft',
                     'Page.type' => 'page'
@@ -281,7 +281,7 @@ class PagesController extends AppController
                 break;
 
             case 'trash':
-                $this->set('title_for_layout', __('Pages'));
+                $this->set('title_for_layout', __d('hurad', 'Pages'));
                 $this->paginate['conditions'] = array(
                     'Page.status' => 'trash',
                     'Page.type' => 'page'
@@ -289,7 +289,7 @@ class PagesController extends AppController
                 break;
 
             default:
-                $this->set('title_for_layout', __('Pages'));
+                $this->set('title_for_layout', __d('hurad', 'Pages'));
                 $this->paginate['conditions'] = array(
                     'Page.status' => array('publish', 'draft'),
                     'Page.type' => 'page'
@@ -319,40 +319,40 @@ class PagesController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Page->deleteAll(array('Page.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Posts deleted.'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Posts deleted.'), 'flash_notice');
                 }
                 break;
 
             case 'publish':
                 if ($this->Page->updateAll(array('Page.status' => "'publish'"), array('Page.id' => $ids))) {
-                    $this->Session->setFlash(__('Pages published'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Pages published'), 'flash_notice');
                 }
                 break;
 
             case 'draft':
                 if ($this->Page->updateAll(array('Page.status' => "'draft'"), array('Page.id' => $ids))) {
-                    $this->Session->setFlash(__('Pages drafted'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Pages drafted'), 'flash_notice');
                 }
                 break;
 
             case 'trash':
                 if ($this->Page->updateAll(array('Page.status' => "'trash'"), array('Page.id' => $ids))) {
-                    $this->Session->setFlash(__('Pages move to trash'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Pages move to trash'), 'flash_notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_error');
                 break;
         }
         $this->redirect(array('action' => 'index'));
