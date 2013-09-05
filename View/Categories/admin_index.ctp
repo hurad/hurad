@@ -4,7 +4,7 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__('Add New'), '/admin/categories/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/categories/add', array('class' => 'btn btn-mini')); ?>
     </h2>
 </div>
 
@@ -39,28 +39,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('post_count', __('Posts')) => array(
+                $this->Paginator->sort('post_count', __d('hurad', 'Posts')) => array(
                     'id' => 'posts',
                     'class' => 'column-posts column-manage',
                     'scope' => 'col'
@@ -87,7 +87,7 @@ echo $this->Form->create(
                         $this->Html->link(
                             '<strong>' . h($category['Category']['path']) . '</strong>',
                             array('action' => 'edit', $category['Category']['id']),
-                            array('title' => __('Edit “%s”', $category['Category']['path']), 'escape' => false)
+                            array('title' => __d('hurad', 'Edit “%s”', $category['Category']['path']), 'escape' => false)
                         ) . $this->element('admin/Categories/row_actions', array('category' => $category)),
                         array(
                             'class' => 'column-path'
@@ -144,28 +144,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('post_count', __('Posts')) => array(
+                $this->Paginator->sort('post_count', __d('hurad', 'Posts')) => array(
                     'id' => 'posts',
                     'class' => 'column-posts column-manage',
                     'scope' => 'col'
@@ -184,18 +184,18 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'delete' => __('Delete'),
+                'delete' => __d('hurad', 'Delete'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 </section>
 
 <div class="form-wrap">
     <p>
-        <strong><?php echo __('Note:'); ?></strong>
+        <strong><?php echo __d('hurad', 'Note:'); ?></strong>
         <br>
         <?php echo __(
             'Deleting a category does not delete the posts in that category. Instead, posts that were only assigned to the deleted category are set to the category <strong>Uncategorized</strong>.'
