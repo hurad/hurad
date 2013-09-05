@@ -1,9 +1,9 @@
 <div class="row-actions">
     <?php
     if (HuradPlugin::isActive($alias)) {
-        $toggleText = __('Deactivate');
+        $toggleText = __d('hurad', 'Deactivate');
     } else {
-        $toggleText = __('Activate');
+        $toggleText = __d('hurad', 'Activate');
     }
 
     $toggleLink = $this->Html->Link(
@@ -13,10 +13,10 @@
     HuradRowActions::addAction('toggle', $toggleLink, 'activate_plugins');
 
     $deleteLink = $this->Form->postLink(
-        __('Delete'),
+        __d('hurad', 'Delete'),
         array('admin' => true, 'action' => 'delete', $alias),
         null,
-        __('Are you sure you want to delete "%s"?', $alias)
+        __d('hurad', 'Are you sure you want to delete "%s"?', $alias)
     );
     HuradRowActions::addAction('delete', $deleteLink, 'delete_plugins');
 

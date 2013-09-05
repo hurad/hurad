@@ -21,7 +21,7 @@ echo $this->Form->create(
 ?>
 
 <fieldset>
-    <legend><?php echo __('Avatar Display'); ?></legend>
+    <legend><?php echo __d('hurad', 'Avatar Display'); ?></legend>
     <div class="control-group">
         <div class="controls">
             <label class="radio">
@@ -29,8 +29,8 @@ echo $this->Form->create(
                 echo $this->Form->radio(
                     'show_avatars',
                     array(
-                        '0' => __('Don’t show Avatars'),
-                        '1' => __('Show Avatars')
+                        '0' => __d('hurad', 'Don’t show Avatars'),
+                        '1' => __d('hurad', 'Show Avatars')
                     ),
                     array(
                         'legend' => false,
@@ -43,7 +43,7 @@ echo $this->Form->create(
     </div>
 </fieldset>
 <fieldset>
-    <legend><?php echo __('Maximum Rating'); ?></legend>
+    <legend><?php echo __d('hurad', 'Maximum Rating'); ?></legend>
     <div class="control-group">
         <div class="controls">
             <label class="radio" for="OptionAvatarRatingG">
@@ -59,7 +59,7 @@ echo $this->Form->create(
                         'hiddenField' => false
                     )
                 );
-                echo __('G &mdash; Suitable for all audiences');
+                echo __d('hurad', 'G &mdash; Suitable for all audiences');
                 ?>
             </label>
         </div>
@@ -77,7 +77,7 @@ echo $this->Form->create(
                         'hiddenField' => false
                     )
                 );
-                echo __('PG &mdash; Possibly offensive, usually for audiences 13 and above');
+                echo __d('hurad', 'PG &mdash; Possibly offensive, usually for audiences 13 and above');
                 ?>
             </label>
         </div>
@@ -95,7 +95,7 @@ echo $this->Form->create(
                         'hiddenField' => false
                     )
                 );
-                echo __('R &mdash; Intended for adult audiences above 17');
+                echo __d('hurad', 'R &mdash; Intended for adult audiences above 17');
                 ?>
             </label>
         </div>
@@ -113,7 +113,7 @@ echo $this->Form->create(
                         'hiddenField' => false
                     )
                 );
-                echo __('X &mdash; Even more mature than above');
+                echo __d('hurad', 'X &mdash; Even more mature than above');
                 ?>
             </label>
         </div>
@@ -121,7 +121,7 @@ echo $this->Form->create(
 </fieldset>
 
 <fieldset>
-    <legend><?php echo __('Default Avatar'); ?></legend>
+    <legend><?php echo __d('hurad', 'Default Avatar'); ?></legend>
     <div class="control-group">
         <div class="controls">
             <label class="radio" for="OptionAvatarDefaultMystery">
@@ -141,7 +141,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('Mystery Man');
+                echo '&nbsp;' . __d('hurad', 'Mystery Man');
                 ?>
             </label>
         </div>
@@ -163,7 +163,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=http%3A%2F%2Fdemo.opensourcecms.com%2Fwordpress%2Fwp-includes%2Fimages%2Fblank.gif&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('Blank');
+                echo '&nbsp;' . __d('hurad', 'Blank');
                 ?>
             </label>
         </div>
@@ -185,7 +185,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('Gravatar Logo');
+                echo '&nbsp;' . __d('hurad', 'Gravatar Logo');
                 ?>
             </label>
         </div>
@@ -207,7 +207,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=identicon&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('Identicon (Generated)');
+                echo '&nbsp;' . __d('hurad', 'Identicon (Generated)');
                 ?>
             </label>
         </div>
@@ -229,7 +229,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=wavatar&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('Wavatar (Generated)');
+                echo '&nbsp;' . __d('hurad', 'Wavatar (Generated)');
                 ?>
             </label>
         </div>
@@ -251,7 +251,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=monsterid&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('MonsterID (Generated)');
+                echo '&nbsp;' . __d('hurad', 'MonsterID (Generated)');
                 ?>
             </label>
         </div>
@@ -273,7 +273,7 @@ echo $this->Form->create(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=retro&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __('Retro (Generated)');
+                echo '&nbsp;' . __d('hurad', 'Retro (Generated)');
                 ?>
             </label>
         </div>
@@ -281,7 +281,7 @@ echo $this->Form->create(
 </fieldset>
 
 <div class="form-actions">
-    <?php echo $this->Form->button(__('Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+    <?php echo $this->Form->button(__d('hurad', 'Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
 
 <?php echo $this->Form->end(); ?>

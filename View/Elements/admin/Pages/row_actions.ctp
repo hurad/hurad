@@ -3,7 +3,7 @@
     $viewLink = $this->Html->link(
         __d('hurad', 'View'),
         $this->Page->getPermalink(),
-        array('title' => __('View “%s”', $this->Page->getTheTitle()), 'rel' => 'permalink')
+        array('title' => __d('hurad', 'View “%s”', $this->Page->getTheTitle()), 'rel' => 'permalink')
     );
     HuradRowActions::addAction('view', $viewLink, 'read');
 

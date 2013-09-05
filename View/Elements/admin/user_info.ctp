@@ -6,7 +6,7 @@
         </button>
         <ul class="dropdown-menu">
             <li><?php echo $this->Html->link(
-                    $this->Html->tag('i', null, array('class' => 'icon-user')) . '</i>' . ' ' . __('Profile'),
+                    $this->Html->tag('i', null, array('class' => 'icon-user')) . '</i>' . ' ' . __d('hurad', 'Profile'),
                     array(
                         'admin' => true,
                         'controller' => 'users',
@@ -17,7 +17,7 @@
                 ); ?></li>
             <li class="divider"></li>
             <li><?php echo $this->Html->link(
-                    $this->Html->tag('i', null, array('class' => 'icon-off')) . '</i>' . ' ' . __('Logout'),
+                    $this->Html->tag('i', null, array('class' => 'icon-off')) . '</i>' . ' ' . __d('hurad', 'Logout'),
                     array('plugin' => null, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
                     array('escape' => false)
                 ); ?></li>

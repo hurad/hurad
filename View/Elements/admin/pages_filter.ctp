@@ -10,13 +10,13 @@ $trashpages = ClassRegistry::init('Page')->count_pages('trash');
             <?php
             if ($url == "admin/pages" || $url == "admin/pages/filter") {
                 echo $this->Html->link(
-                    __('All ') . $this->Html->tag('span', '(' . $allpages . ')', array('class' => 'count')),
+                    __d('hurad', 'All ') . $this->Html->tag('span', '(' . $allpages . ')', array('class' => 'count')),
                     array('admin' => true, 'action' => 'index'),
                     array('class' => 'current', 'escape' => false)
                 );
             } else {
                 echo $this->Html->link(
-                    __('All ') . $this->Html->tag('span', '(' . $allpages . ')', array('class' => 'count')),
+                    __d('hurad', 'All ') . $this->Html->tag('span', '(' . $allpages . ')', array('class' => 'count')),
                     array('admin' => true, 'action' => 'index'),
                     array('escape' => false)
                 );
@@ -31,7 +31,7 @@ $trashpages = ClassRegistry::init('Page')->count_pages('trash');
                 <?php
                 if (stripos($url, "admin/pages/filter/publish") !== false) {
                     echo $this->Html->link(
-                        __('Published ') . $this->Html->tag(
+                        __d('hurad', 'Published ') . $this->Html->tag(
                             'span',
                             '(' . $publishpages . ')',
                             array('class' => 'count')
@@ -41,7 +41,7 @@ $trashpages = ClassRegistry::init('Page')->count_pages('trash');
                     );
                 } else {
                     echo $this->Html->link(
-                        __('Published ') . $this->Html->tag(
+                        __d('hurad', 'Published ') . $this->Html->tag(
                             'span',
                             '(' . $publishpages . ')',
                             array('class' => 'count')
@@ -63,13 +63,13 @@ $trashpages = ClassRegistry::init('Page')->count_pages('trash');
                 <?php
                 if (stripos($url, "admin/pages/filter/draft") !== false) {
                     echo $this->Html->link(
-                        __('Draft ') . $this->Html->tag('span', '(' . $draftpages . ')', array('class' => 'count')),
+                        __d('hurad', 'Draft ') . $this->Html->tag('span', '(' . $draftpages . ')', array('class' => 'count')),
                         array('admin' => true, 'action' => 'filter', 'draft'),
                         array('class' => 'current', 'escape' => false)
                     );
                 } else {
                     echo $this->Html->link(
-                        __('Draft ') . $this->Html->tag('span', '(' . $draftpages . ')', array('class' => 'count')),
+                        __d('hurad', 'Draft ') . $this->Html->tag('span', '(' . $draftpages . ')', array('class' => 'count')),
                         array('admin' => true, 'action' => 'filter', 'draft'),
                         array('escape' => false)
                     );
@@ -87,13 +87,13 @@ $trashpages = ClassRegistry::init('Page')->count_pages('trash');
                 <?php
                 if (stripos($url, "admin/pages/filter/trash") !== false) {
                     echo $this->Html->link(
-                        __('Trash ') . $this->Html->tag('span', '(' . $trashpages . ')', array('class' => 'count')),
+                        __d('hurad', 'Trash ') . $this->Html->tag('span', '(' . $trashpages . ')', array('class' => 'count')),
                         array('admin' => true, 'action' => 'filter', 'trash'),
                         array('class' => 'current', 'escape' => false)
                     );
                 } else {
                     echo $this->Html->link(
-                        __('Trash ') . $this->Html->tag('span', '(' . $trashpages . ')', array('class' => 'count')),
+                        __d('hurad', 'Trash ') . $this->Html->tag('span', '(' . $trashpages . ')', array('class' => 'count')),
                         array('admin' => true, 'action' => 'filter', 'trash'),
                         array('escape' => false)
                     );

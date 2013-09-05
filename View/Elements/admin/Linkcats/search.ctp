@@ -20,9 +20,9 @@ echo $this->Form->create(
 echo $this->Html->div('input-append');
 echo $this->Form->input(
     'Linkcat.q',
-    array('value' => $query, 'class' => 'span9 search-query', 'placeholder' => __('Link category name'))
+    array('value' => $query, 'class' => 'span9 search-query', 'placeholder' => __d('hurad', 'Link category name'))
 );
-echo $this->Form->button(__('Search'), array('type' => 'submit', 'class' => 'btn', 'div' => false));
+echo $this->Form->button(__d('hurad', 'Search'), array('type' => 'submit', 'class' => 'btn', 'div' => false));
 echo '</div>';
 echo $this->Form->end();
 ?>

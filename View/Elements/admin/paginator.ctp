@@ -1,9 +1,9 @@
 <div class="paging">
     <?php
     if ($this->Paginator->numbers()) {
-        echo $this->Paginator->prev('« ' . __('Previous'), array(), null, array('class' => 'prev disabled'));
+        echo $this->Paginator->prev('« ' . __d('hurad', 'Previous'), array(), null, array('class' => 'prev disabled'));
         echo $this->Paginator->numbers(array('separator' => ''));
-        echo $this->Paginator->next(__('Next') . ' »', array(), null, array('class' => 'next disabled'));
+        echo $this->Paginator->next(__d('hurad', 'Next') . ' »', array(), null, array('class' => 'next disabled'));
     }
     ?>
 </div>
@@ -11,7 +11,7 @@
     <?php
     echo $this->Paginator->counter(
         array(
-            'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total')
+            'format' => __d('hurad', 'Page {:page} of {:pages}, showing {:current} records out of {:count} total')
         )
     );
     ?>

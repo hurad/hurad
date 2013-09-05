@@ -3,14 +3,14 @@
     if ($url == "admin/comments") {
         echo $this->Html->tag('li', NULL, array('class' => 'active'));
         echo $this->Html->link(
-            __('All ') . $this->Html->tag('span', $countComments['all'], array('class' => 'badge')),
+            __d('hurad', 'All ') . $this->Html->tag('span', $countComments['all'], array('class' => 'badge')),
             array('admin' => TRUE, 'action' => 'index'),
             array('escape' => false)
         );
     } else {
         echo $this->Html->tag('li', NULL);
         echo $this->Html->link(
-            __('All ') . $this->Html->tag('span', $countComments['all'], array('class' => 'badge')),
+            __d('hurad', 'All ') . $this->Html->tag('span', $countComments['all'], array('class' => 'badge')),
             array('admin' => TRUE, 'action' => 'index'),
             array('escape' => false)
         );
@@ -20,7 +20,7 @@
         if (stripos($url, "admin/comments/index/moderated") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
-                __('Pending ') . $this->Html->tag(
+                __d('hurad', 'Pending ') . $this->Html->tag(
                     'span',
                     $countComments['moderated'],
                     array('class' => 'badge badge-info')
@@ -31,7 +31,7 @@
         } else {
             echo $this->Html->tag('li', NULL);
             echo $this->Html->link(
-                __('Pending ') . $this->Html->tag(
+                __d('hurad', 'Pending ') . $this->Html->tag(
                     'span',
                     $countComments['moderated'],
                     array('class' => 'badge badge-info')
@@ -46,7 +46,7 @@
         if (stripos($url, "admin/comments/index/approved") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
-                __('Approved ') . $this->Html->tag(
+                __d('hurad', 'Approved ') . $this->Html->tag(
                     'span',
                     $countComments['approved'],
                     array('class' => 'badge badge-success')
@@ -57,7 +57,7 @@
         } else {
             echo $this->Html->tag('li', NULL);
             echo $this->Html->link(
-                __('Approved ') . $this->Html->tag(
+                __d('hurad', 'Approved ') . $this->Html->tag(
                     'span',
                     $countComments['approved'],
                     array('class' => 'badge badge-success')
@@ -72,14 +72,14 @@
         if (stripos($url, "admin/comments/index/spam") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
-                __('Spam ') . $this->Html->tag('span', $countComments['spam'], array('class' => 'badge badge-warning')),
+                __d('hurad', 'Spam ') . $this->Html->tag('span', $countComments['spam'], array('class' => 'badge badge-warning')),
                 array('admin' => TRUE, 'action' => 'index', 'spam'),
                 array('class' => 'current', 'escape' => false)
             );
         } else {
             echo $this->Html->tag('li', NULL);
             echo $this->Html->link(
-                __('Spam ') . $this->Html->tag('span', $countComments['spam'], array('class' => 'badge badge-warning')),
+                __d('hurad', 'Spam ') . $this->Html->tag('span', $countComments['spam'], array('class' => 'badge badge-warning')),
                 array('admin' => TRUE, 'action' => 'index', 'spam'),
                 array('escape' => false)
             );
@@ -90,7 +90,7 @@
         if (stripos($url, "admin/comments/index/trash") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
-                __('Trash ') . $this->Html->tag(
+                __d('hurad', 'Trash ') . $this->Html->tag(
                     'span',
                     $countComments['trash'],
                     array('class' => 'badge badge-important')
@@ -101,7 +101,7 @@
         } else {
             echo $this->Html->tag('li', NULL);
             echo $this->Html->link(
-                __('Trash ') . $this->Html->tag(
+                __d('hurad', 'Trash ') . $this->Html->tag(
                     'span',
                     $countComments['trash'],
                     array('class' => 'badge badge-important')

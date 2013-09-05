@@ -16,7 +16,7 @@
         )
     );
     echo $this->Form->input('Page.q', array('value' => $filterSearch));
-    echo $this->Form->submit(__('Search'), array('div' => false));
+    echo $this->Form->submit(__d('hurad', 'Search'), array('div' => false));
     echo $this->Form->end();
     ?>
 </div>
