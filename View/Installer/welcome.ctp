@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row">
             <?php echo $this->Html->link(
-                __('Enter to admin section'),
+                __d('hurad', 'Enter to admin section'),
                 '/admin',
                 array('class' => 'btn btn-large btn-block btn-success')
             ); ?>
             <?php echo $this->Html->link(
-                __('View site'),
+                __d('hurad', 'View site'),
                 '/',
                 array('class' => 'btn btn-large btn-block btn-primary')
             ); ?>

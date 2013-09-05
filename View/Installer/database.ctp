@@ -15,35 +15,35 @@
             );
             ?>
             <div class="control-group">
-                <?php echo $this->Form->label('database', __('Database name'), array('class' => 'control-label')); ?>
+                <?php echo $this->Form->label('database', __d('hurad', 'Database name'), array('class' => 'control-label')); ?>
                 <div class="controls">
-                    <?php echo $this->Form->input('database', array('placeholder' => __('Database name'))); ?>
+                    <?php echo $this->Form->input('database', array('placeholder' => __d('hurad', 'Database name'))); ?>
                 </div>
             </div>
             <div class="control-group">
-                <?php echo $this->Form->label('login', __('Database username'), array('class' => 'control-label')); ?>
+                <?php echo $this->Form->label('login', __d('hurad', 'Database username'), array('class' => 'control-label')); ?>
                 <div class="controls">
-                    <?php echo $this->Form->input('login', array('placeholder' => __('Database username'))); ?>
+                    <?php echo $this->Form->input('login', array('placeholder' => __d('hurad', 'Database username'))); ?>
                 </div>
             </div>
             <div class="control-group">
                 <?php echo $this->Form->label(
                     'password',
-                    __('Database password'),
+                    __d('hurad', 'Database password'),
                     array('class' => 'control-label')
                 ); ?>
                 <div class="controls">
-                    <?php echo $this->Form->input('password', array('placeholder' => __('Database password'))); ?>
+                    <?php echo $this->Form->input('password', array('placeholder' => __d('hurad', 'Database password'))); ?>
                 </div>
             </div>
             <div class="control-group">
-                <?php echo $this->Form->label('host', __('Database host'), array('class' => 'control-label')); ?>
+                <?php echo $this->Form->label('host', __d('hurad', 'Database host'), array('class' => 'control-label')); ?>
                 <div class="controls">
                     <?php
                     echo $this->Form->input(
                         'host',
                         array(
-                            'placeholder' => __('Database host'),
+                            'placeholder' => __d('hurad', 'Database host'),
                             'value' => 'localhost'
                         )
                     );
@@ -51,13 +51,13 @@
                 </div>
             </div>
             <div class="control-group">
-                <?php echo $this->Form->label('prefix', __('Tables prefix'), array('class' => 'control-label')); ?>
+                <?php echo $this->Form->label('prefix', __d('hurad', 'Tables prefix'), array('class' => 'control-label')); ?>
                 <div class="controls">
                     <?php
                     echo $this->Form->input(
                         'prefix',
                         array(
-                            'placeholder' => __('Tables prefix'),
+                            'placeholder' => __d('hurad', 'Tables prefix'),
                             'value' => 'hr_'
                         )
                     );
@@ -67,7 +67,7 @@
             <div class="control-group">
                 <div class="controls">
                     <?php echo $this->Form->button(
-                        __('Install Database'),
+                        __d('hurad', 'Install Database'),
                         array('type' => 'submit', 'class' => 'btn btn-primary')
                     ); ?>
                 </div>

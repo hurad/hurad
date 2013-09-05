@@ -6,10 +6,10 @@
                 <?php
                 if (version_compare(PHP_VERSION, '5.3.0', '>=')):
                     echo '<span class="label label-success">';
-                    echo __('Your version of PHP is 5.3.0 or higher.');
+                    echo __d('hurad', 'Your version of PHP is 5.3.0 or higher.');
                     echo '</span>'; else:
                     echo '<span class="label label-warning">';
-                    echo __('Your version of PHP is too low. You need PHP 5.3.0 or higher to use Hurad.');
+                    echo __d('hurad', 'Your version of PHP is too low. You need PHP 5.3.0 or higher to use Hurad.');
                     echo '</span>';
                 endif;
                 ?>
@@ -18,10 +18,10 @@
                 <?php
                 if (is_writable(TMP)):
                     echo '<span class="label label-success">';
-                    echo __('Your tmp directory is writable.');
+                    echo __d('hurad', 'Your tmp directory is writable.');
                     echo '</span>'; else:
                     echo '<span class="label label-warning">';
-                    echo __('Your tmp directory is NOT writable.');
+                    echo __d('hurad', 'Your tmp directory is NOT writable.');
                     echo '</span>';
                 endif;
                 ?>
@@ -37,7 +37,7 @@
                     );
                     echo '</span>'; else:
                     echo '<span class="label label-warning">';
-                    echo __('Your cache is NOT working. Please check the settings in APP/Config/core.php');
+                    echo __d('hurad', 'Your cache is NOT working. Please check the settings in APP/Config/core.php');
                     echo '</span>';
                 endif;
                 ?>
@@ -47,14 +47,14 @@
             //                $filePresent = null;
             //                if (file_exists(APP . 'Config' . DS . 'database.php')):
             //                    echo '<p><span class="label label-success">';
-            //                    echo __('Your database configuration file is present.');
+            //                    echo __d('hurad', 'Your database configuration file is present.');
             //                    $filePresent = true;
             //                    echo '</span></p>';
             //                else:
             //                    echo '<p><span class="label label-warning">';
-            //                    echo __('Your database configuration file is NOT present.');
+            //                    echo __d('hurad', 'Your database configuration file is NOT present.');
             //                    echo '<br/>';
-            //                    echo __('Rename APP/Config/database.php.default to APP/Config/database.php');
+            //                    echo __d('hurad', 'Rename APP/Config/database.php.default to APP/Config/database.php');
             //                    echo '</span></p>';
             //                endif;
             ?>
@@ -78,11 +78,11 @@
             <?php
             //                    if ($connected && $connected->isConnected()):
             //                        echo '<p><span class="label label-success">';
-            //                        echo __('Hurad is able to connect to the database.');
+            //                        echo __d('hurad', 'Hurad is able to connect to the database.');
             //                        echo '</span></p>';
             //                    else:
             //                        echo '<p><span class="label label-warning">';
-            //                        echo __('Hurad is NOT able to connect to the database.');
+            //                        echo __d('hurad', 'Hurad is NOT able to connect to the database.');
             //                        echo '<br /><br />';
             //                        echo $errorMsg;
             //                        echo '</span></p>';
@@ -93,7 +93,7 @@
             App::uses('Validation', 'Utility');
             if (!Validation::alphaNumeric('hurad')) {
                 echo '<p><span class="label label-warning">';
-                echo __('PCRE has not been compiled with Unicode support.');
+                echo __d('hurad', 'PCRE has not been compiled with Unicode support.');
                 echo '<br/>';
                 echo __(
                     'Recompile PCRE with Unicode support by adding <code>--enable-unicode-properties</code> when configuring'
@@ -106,33 +106,33 @@
             <div class="info">
                 <ul>
                     <li>
-                        <a href="http://www.hurad.org"><?php echo __('Hurad'); ?> </a>
+                        <a href="http://www.hurad.org"><?php echo __d('hurad', 'Hurad'); ?> </a>
                         <ul>
-                            <li><?php echo __('Official website'); ?></li>
+                            <li><?php echo __d('hurad', 'Official website'); ?></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="http://docs.hurad.org"><?php echo __('Hurad Documentation'); ?> </a>
+                        <a href="http://docs.hurad.org"><?php echo __d('hurad', 'Hurad Documentation'); ?> </a>
                         <ul>
-                            <li><?php echo __('Your Development Document'); ?></li>
+                            <li><?php echo __d('hurad', 'Your Development Document'); ?></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="http://api.hurad.org"><?php echo __('Hurad API'); ?> </a>
+                        <a href="http://api.hurad.org"><?php echo __d('hurad', 'Hurad API'); ?> </a>
                         <ul>
-                            <li><?php echo __('Quick Reference'); ?></li>
+                            <li><?php echo __d('hurad', 'Quick Reference'); ?></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="http://github.com/hurad/"><?php echo __('Hurad Code'); ?> </a>
+                        <a href="http://github.com/hurad/"><?php echo __d('hurad', 'Hurad Code'); ?> </a>
                         <ul>
-                            <li><?php echo __('For the Development of Hurad Git repository, Downloads'); ?></li>
+                            <li><?php echo __d('hurad', 'For the Development of Hurad Git repository, Downloads'); ?></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="http://github.com/hurad/hurad/issues"><?php echo __('Hurad Issues'); ?> </a>
+                        <a href="http://github.com/hurad/hurad/issues"><?php echo __d('hurad', 'Hurad Issues'); ?> </a>
                         <ul>
-                            <li><?php echo __('Hurad issue tracking system'); ?></li>
+                            <li><?php echo __d('hurad', 'Hurad issue tracking system'); ?></li>
                         </ul>
                     </li>
                 </ul>
@@ -140,7 +140,7 @@
         </div>
         <div class="row">
             <?php echo $this->Html->link(
-                __('If you are ready to install, then click here'),
+                __d('hurad', 'If you are ready to install, then click here'),
                 array('controller' => 'installer', 'action' => 'database'),
                 array('class' => 'btn btn-success')
             ); ?>
