@@ -3,7 +3,7 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__('Add New'), '/admin/linkcats/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/linkcats/add', array('class' => 'btn btn-mini')); ?>
     </h2>
 </div>
 
@@ -46,28 +46,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('link_count', __('Links')) => array(
+                $this->Paginator->sort('link_count', __d('hurad', 'Links')) => array(
                     'id' => 'posts',
                     'class' => 'column-link_count column-manage',
                     'scope' => 'col'
@@ -147,28 +147,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('link_count', __('Links')) => array(
+                $this->Paginator->sort('link_count', __d('hurad', 'Links')) => array(
                     'id' => 'posts',
                     'class' => 'column-link_count column-manage',
                     'scope' => 'col'
@@ -187,11 +187,11 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'delete' => __('Delete'),
+                'delete' => __d('hurad', 'Delete'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 </section>

@@ -17,14 +17,14 @@ echo $this->Form->create(
 
 <div class="control-group <?php echo $this->Form->isFieldError('name') ? 'error' : ''; ?>">
     <?php echo $this->Form->input('id'); ?>
-    <?php echo $this->Form->label('name', __('Name'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'name',
             array(
                 'error' => array(
-                    'nameRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
+                    'nameRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
                     'attributes' => array(
                         'wrap' => 'span',
                         'class' => 'help-inline'
@@ -36,20 +36,20 @@ echo $this->Form->create(
         );
         ?>
         <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
-            <?php echo __('The name is how it appears on your site.'); ?>
+            <?php echo __d('hurad', 'The name is how it appears on your site.'); ?>
         </span>
     </div>
 </div>
 <div class="control-group <?php echo $this->Form->isFieldError('slug') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('slug', __('Slug'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('slug', __d('hurad', 'Slug'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'slug',
             array(
                 'error' => array(
-                    'slugRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
-                    'slugRule-2' => __('This slug has already exist.'), //isUnique rule message
+                    'slugRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
+                    'slugRule-2' => __d('hurad', 'This slug has already exist.'), //isUnique rule message
                     'attributes' => array(
                         'wrap' => 'span',
                         'class' => 'help-inline'
@@ -68,17 +68,17 @@ echo $this->Form->create(
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('description', __('Description'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('description', array('class' => 'span5')); ?>
         <span class="help-block">
-            <?php echo __('The description is not prominent by default; however, some themes may show it.'); ?>
+            <?php echo __d('hurad', 'The description is not prominent by default; however, some themes may show it.'); ?>
         </span>
     </div>
 </div>
 
 <div class="form-actions">
-    <?php echo $this->Form->button(__('Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+    <?php echo $this->Form->button(__d('hurad', 'Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
 
 <?php echo $this->Form->end(); ?>
