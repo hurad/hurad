@@ -13,7 +13,7 @@ class GravatarHelper extends AppHelper
             'size' => 45,
             'default' => Configure::read('Comment-avatar_default'),
             'rating' => Configure::read('Comment-avatar_rating'),
-            'alt' => __('Avatar'),
+            'alt' => __d('hurad', 'Avatar'),
             'class' => 'avatar',
             'echo' => true
         );

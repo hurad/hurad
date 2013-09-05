@@ -22,7 +22,7 @@ class DashboardHelper extends AppHelper
             }
             echo '</div>';
         } else {
-            echo '<p>' . __('No comments yet.') . '</p>';
+            echo '<p>' . __d('hurad', 'No comments yet.') . '</p>';
         }
     }
 
@@ -37,7 +37,7 @@ class DashboardHelper extends AppHelper
             <?php echo $this->Gravatar->image($this->Comment->getCommentAuthorEmail(), array('size' => '50')); ?>
             <div class="dashboard-comment-wrap">
                 <h4 class="comment-meta">
-                    <?php echo __('From'); ?>
+                    <?php echo __d('hurad', 'From'); ?>
                     <cite class="comment-author">
                         <?php echo $this->Html->link(
                             $this->Comment->getCommentAuthor(),
@@ -45,7 +45,7 @@ class DashboardHelper extends AppHelper
                             array('class' => 'url', 'rel' => 'external nofollow')
                         ); ?>
                     </cite>
-                    <?php echo __('on'); ?>
+                    <?php echo __d('hurad', 'on'); ?>
                     <a href="http://localhost/wp3en/wp-admin/post.php?post=1&action=edit"><?php echo $comment['Post']['title']; ?></a>
                     <a class="comment-link" href="http://localhost/wp3en/?p=1#comment-3">#</a>
                     <span
@@ -62,7 +62,7 @@ class DashboardHelper extends AppHelper
                         class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>>
                         <?php
                         echo $this->Js->link(
-                            __('Approve'),
+                            __d('hurad', 'Approve'),
                             array(
                                 'controller' => 'comments',
                                 'action' => 'action',
@@ -79,7 +79,7 @@ class DashboardHelper extends AppHelper
                         class="unapprove" <?php echo ($comment['Comment']['approved']) ? 'style=""' : 'style="display: none;"'; ?>>
                         <?php
                         echo $this->Js->link(
-                            __('Unapprove'),
+                            __d('hurad', 'Unapprove'),
                             array(
                                 'controller' => 'comments',
                                 'action' => 'action',
@@ -99,7 +99,7 @@ class DashboardHelper extends AppHelper
                     <span class="edit">
                         |
                         <?php echo $this->Html->link(
-                            __('Edit'),
+                            __d('hurad', 'Edit'),
                             array(
                                 'admin' => true,
                                 'controller' => 'comments',
@@ -113,7 +113,7 @@ class DashboardHelper extends AppHelper
                         |
                         <?php
                         echo $this->Js->link(
-                            __('Spam'),
+                            __d('hurad', 'Spam'),
                             array(
                                 'controller' => 'comments',
                                 'action' => 'action',
@@ -130,7 +130,7 @@ class DashboardHelper extends AppHelper
                         |
                         <?php
                         echo $this->Js->link(
-                            __('Trash'),
+                            __d('hurad', 'Trash'),
                             array(
                                 'controller' => 'comments',
                                 'action' => 'action',
@@ -161,7 +161,7 @@ class DashboardHelper extends AppHelper
         $num_spam_comment = ClassRegistry::init('Comment')->count_comments('spam');
         ?>
         <div class="table table_content">
-            <p class="sub"><?php echo __('Content'); ?></p>
+            <p class="sub"><?php echo __d('hurad', 'Content'); ?></p>
             <table>
                 <tbody>
                 <tr class="first">
@@ -173,7 +173,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="t posts">
                         <?php echo $this->Html->link(
-                            __('Post'),
+                            __d('hurad', 'Post'),
                             array('controller' => 'posts', 'action' => 'index')
                         ); ?>
                     </td>
@@ -187,7 +187,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="t pages">
                         <?php echo $this->Html->link(
-                            __('Page'),
+                            __d('hurad', 'Page'),
                             array('controller' => 'pages', 'action' => 'index')
                         ); ?>
                     </td>
@@ -201,7 +201,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="t cats">
                         <?php echo $this->Html->link(
-                            __('Category'),
+                            __d('hurad', 'Category'),
                             array('controller' => 'categories', 'action' => 'index')
                         ); ?>
                     </td>
@@ -211,14 +211,14 @@ class DashboardHelper extends AppHelper
                         <?php echo $this->Html->link($num_tags, array('controller' => 'tags', 'action' => 'index')); ?>
                     </td>
                     <td class="t tags">
-                        <?php echo $this->Html->link(__('Tags'), array('controller' => 'tags', 'action' => 'index')); ?>
+                        <?php echo $this->Html->link(__d('hurad', 'Tags'), array('controller' => 'tags', 'action' => 'index')); ?>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="table table_discussion">
-            <p class="sub"><?php echo __('Discussion'); ?></p>
+            <p class="sub"><?php echo __d('hurad', 'Discussion'); ?></p>
             <table>
                 <tbody>
                 <tr class="first">
@@ -233,7 +233,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="last t comments">
                         <?php echo $this->Html->link(
-                            __('Comments'),
+                            __d('hurad', 'Comments'),
                             array('controller' => 'comments', 'action' => 'index')
                         ); ?>
                     </td>
@@ -250,7 +250,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="last t">
                         <?php echo $this->Html->link(
-                            __('Approved'),
+                            __d('hurad', 'Approved'),
                             array('controller' => 'comments', 'action' => 'filter', 'approved'),
                             array('class' => 'approved')
                         ); ?>
@@ -268,7 +268,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="last t">
                         <?php echo $this->Html->link(
-                            __('Pending'),
+                            __d('hurad', 'Pending'),
                             array('controller' => 'comments', 'action' => 'filter', 'moderated'),
                             array('class' => 'waiting')
                         ); ?>
@@ -286,7 +286,7 @@ class DashboardHelper extends AppHelper
                     </td>
                     <td class="last t">
                         <?php echo $this->Html->link(
-                            __('Spam'),
+                            __d('hurad', 'Spam'),
                             array('controller' => 'comments', 'action' => 'filter', 'spam'),
                             array('class' => 'spam')
                         ); ?>

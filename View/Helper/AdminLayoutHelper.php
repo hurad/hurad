@@ -36,13 +36,13 @@ class AdminLayoutHelper extends AppHelper
     public function postStatus($value)
     {
         if ($value == 'publish') {
-            $output = $this->Html->tag('span', __('Publish'), array('class' => 'label label-success'));
+            $output = $this->Html->tag('span', __d('hurad', 'Publish'), array('class' => 'label label-success'));
         } elseif ($value == 'draft') {
-            $output = $this->Html->tag('span', __('Draft'), array('class' => 'label label-warning'));
+            $output = $this->Html->tag('span', __d('hurad', 'Draft'), array('class' => 'label label-warning'));
         } elseif ($value == 'trash') {
-            $output = $this->Html->tag('span', __('Trash'), array('class' => 'label label-important'));
+            $output = $this->Html->tag('span', __d('hurad', 'Trash'), array('class' => 'label label-important'));
         } else {
-            $output = __('Unknown');
+            $output = __d('hurad', 'Unknown');
         }
         return $output;
     }
@@ -50,11 +50,11 @@ class AdminLayoutHelper extends AppHelper
     public function linkVisible($value)
     {
         if ($value == 'Y') {
-            $output = __('Yes');
+            $output = __d('hurad', 'Yes');
         } elseif ($value == 'N') {
-            $output = __('No');
+            $output = __d('hurad', 'No');
         } else {
-            $output = __('Unknown');
+            $output = __d('hurad', 'Unknown');
         }
         return $output;
     }
@@ -78,11 +78,11 @@ class AdminLayoutHelper extends AppHelper
     {
         if ($valid === true) {
             $output = '<p class="akismet_notice">';
-            $output .= __('This key is valid.');
+            $output .= __d('hurad', 'This key is valid.');
             $output .= '</p>';
         } elseif ($valid === false) {
             $output = '<p class="akismet_error">';
-            $output .= __('This key is not valid.');
+            $output .= __d('hurad', 'This key is not valid.');
             $output .= '</p>';
         }
         return $output;
@@ -133,16 +133,16 @@ class AdminLayoutHelper extends AppHelper
     {
         switch ($role) {
             case "administrator":
-                return __('Administrator');
+                return __d('hurad', 'Administrator');
                 break;
             case "editor":
-                return __('Editor');
+                return __d('hurad', 'Editor');
                 break;
             case "author":
-                return __('Author');
+                return __d('hurad', 'Author');
                 break;
             case "user":
-                return __('User');
+                return __d('hurad', 'User');
                 break;
         }
     }
@@ -151,11 +151,11 @@ class AdminLayoutHelper extends AppHelper
     {
         switch ($approved) {
             case '1':
-                return $this->Html->link(__('Disapprove'), array('action' => 'action', 'disapproved', $comment_id));
+                return $this->Html->link(__d('hurad', 'Disapprove'), array('action' => 'action', 'disapproved', $comment_id));
                 break;
 
             case '0':
-                return $this->Html->link(__('Approve'), array('action' => 'action', 'approved', $comment_id));
+                return $this->Html->link(__d('hurad', 'Approve'), array('action' => 'action', 'approved', $comment_id));
                 break;
 
             default:

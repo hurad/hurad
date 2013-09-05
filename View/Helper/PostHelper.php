@@ -194,7 +194,7 @@ class PostHelper extends AppHelper
     public function getTheContent($more_link_text = null)
     {
         if (null === $more_link_text) {
-            $more_link_text = __('(more...)');
+            $more_link_text = __d('hurad', '(more...)');
         }
         $more = false;
         $output = '';
@@ -330,7 +330,7 @@ class PostHelper extends AppHelper
                 $cat[] = $this->Html->link(
                     $category['name'],
                     array('admin' => true, 'controller' => 'posts', 'action' => 'listBycategory', $category['id']),
-                    array('title' => __('View all posts in %s', $category['name']), 'rel' => 'category')
+                    array('title' => __d('hurad', 'View all posts in %s', $category['name']), 'rel' => 'category')
                 );
             } else {
                 $cat[] = '<a href="http://localhost/hurad/category/' . $category['slug'] . '" title="' . __(
@@ -356,7 +356,7 @@ class PostHelper extends AppHelper
                 $term[] = $this->Html->link(
                     $tag['name'],
                     array('admin' => true, 'controller' => 'posts', 'action' => 'listBytag', $tag['id']),
-                    array('title' => __('View all posts in %s', $tag['name']), 'rel' => 'tag')
+                    array('title' => __d('hurad', 'View all posts in %s', $tag['name']), 'rel' => 'tag')
                 );
             } else {
                 $term[] = '<a href="http://localhost/hurad/tag/' . $tag['slug'] . '" title="' . __(

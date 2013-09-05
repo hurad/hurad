@@ -116,7 +116,7 @@ class CommentHelper extends AppHelper
                 $user = $this->MUser->getUserData($this->comment['user_id']);
                 $author = $user['username'];
             } else {
-                $author = __('Anonymous');
+                $author = __d('hurad', 'Anonymous');
             }
         } else {
             $author = $this->comment['author'];
@@ -619,13 +619,13 @@ class CommentHelper extends AppHelper
             $output = str_replace(
                 '%',
                 Functions::number_format_i18n($number),
-                (false === $more) ? __('% Comments') : $more
+                (false === $more) ? __d('hurad', '% Comments') : $more
             );
         } elseif ($number == 0) {
-            $output = (false === $zero) ? __('No Comments') : $zero;
+            $output = (false === $zero) ? __d('hurad', 'No Comments') : $zero;
         } else // must be one
         {
-            $output = (false === $one) ? __('1 Comment') : $one;
+            $output = (false === $one) ? __d('hurad', '1 Comment') : $one;
         }
 
         echo $this->Hook->applyFilters('commentsNumber', $output, $number);
@@ -756,16 +756,16 @@ class CommentHelper extends AppHelper
     public function commentsPopupLink($zero = false, $one = false, $more = false, $css_class = '', $none = false)
     {
         if (false === $zero) {
-            $zero = __('No Comments');
+            $zero = __d('hurad', 'No Comments');
         }
         if (false === $one) {
-            $one = __('1 Comment');
+            $one = __d('hurad', '1 Comment');
         }
         if (false === $more) {
-            $more = __('% Comments');
+            $more = __d('hurad', '% Comments');
         }
         if (false === $none) {
-            $none = __('Comments Off');
+            $none = __d('hurad', 'Comments Off');
         }
 
         $number = $this->getCommentsNumber();
@@ -798,7 +798,7 @@ class CommentHelper extends AppHelper
 
         echo $this->Hook->applyFilters('comments_popup_link_attributes', '');
 
-        echo ' title="' . Formatting::esc_attr(sprintf(__('Comment on %s'), $title)) . '">';
+        echo ' title="' . Formatting::esc_attr(sprintf(__d('hurad', 'Comment on %s'), $title)) . '">';
         $this->commentsNumber($zero, $one, $more);
         echo '</a>';
     }
@@ -813,14 +813,14 @@ class CommentHelper extends AppHelper
                 $this->_loggedout_comment_form();
             }
         } else {
-            echo __('Comment Closed');
+            echo __d('hurad', 'Comment Closed');
         }
     }
 
     protected function _loggedin_comment_form()
     {
         echo '<div id="respond">';
-        echo '<h3 id="reply-title">' . __('Leave a Reply') . '</h3>';
+        echo '<h3 id="reply-title">' . __d('hurad', 'Leave a Reply') . '</h3>';
 
         echo $this->Form->create(
             'Comment',
@@ -842,7 +842,7 @@ class CommentHelper extends AppHelper
                 array('admin' => true, 'controller' => 'users', 'action' => 'profile', $this->current_user['id'])
             )
         );
-        echo $this->Html->link(__('Log out?'), '/logout', array('title' => __('Log out of this account')));
+        echo $this->Html->link(__d('hurad', 'Log out?'), '/logout', array('title' => __d('hurad', 'Log out of this account')));
         echo '</p>';
 
         echo '<p>';
@@ -858,7 +858,7 @@ class CommentHelper extends AppHelper
         echo '</p>';
 
         echo '<p>';
-        echo $this->Form->end(array('label' => __('Post Comment'), 'div' => false, 'tabindex' => '5'));
+        echo $this->Form->end(array('label' => __d('hurad', 'Post Comment'), 'div' => false, 'tabindex' => '5'));
         echo '</p>';
 
         echo '<div style = "clear: both;"></div>';
@@ -868,7 +868,7 @@ class CommentHelper extends AppHelper
     protected function _loggedout_comment_form()
     {
         echo '<div id="respond">';
-        echo '<h3 id="reply-title">' . __('Leave a Reply') . '</h3>';
+        echo '<h3 id="reply-title">' . __d('hurad', 'Leave a Reply') . '</h3>';
 
         echo $this->Form->create(
             'Comment',
@@ -884,21 +884,21 @@ class CommentHelper extends AppHelper
         echo '<p>';
         echo $this->Form->input('author', array('tabindex' => '1', 'size' => '22'));
         echo '<label for="CommentAuthor">';
-        echo '<small>' . __('Name (Required)') . '</small>';
+        echo '<small>' . __d('hurad', 'Name (Required)') . '</small>';
         echo '</label>';
         echo '</p>';
 
         echo '<p>';
         echo $this->Form->input('author_email', array('tabindex' => '2', 'size' => '22'));
         echo '<label for="CommentAuthorEmail">';
-        echo '<small>' . __('eMail (Required)') . '</small>';
+        echo '<small>' . __d('hurad', 'eMail (Required)') . '</small>';
         echo '</label>';
         echo '</p>';
 
         echo '<p>';
         echo $this->Form->input('author_url', array('tabindex' => '3', 'size' => '22'));
         echo '<label for="CommentAuthorUrl">';
-        echo '<small>' . __('URL') . '</small>';
+        echo '<small>' . __d('hurad', 'URL') . '</small>';
         echo '</label>';
         echo '</p>';
 
@@ -912,7 +912,7 @@ class CommentHelper extends AppHelper
         echo '</p>';
 
         echo '<p>';
-        echo $this->Form->end(array('label' => __('Post Comment'), 'div' => false, 'tabindex' => '5'));
+        echo $this->Form->end(array('label' => __d('hurad', 'Post Comment'), 'div' => false, 'tabindex' => '5'));
         echo '</p>';
 
         echo '<div style = "clear: both;"></div>';
