@@ -40,7 +40,7 @@
 <div class="row-fluid">
     <div class="span8">
         <div class="draggable-header">
-            <h5><?php echo __('Available Widgets'); ?></h5>
+            <h5><?php echo __d('hurad', 'Available Widgets'); ?></h5>
         </div>
         <div id="draggable">
             <?php
@@ -238,12 +238,12 @@
             ?>
             <div class="sortable-header">
                 <div class="pull-left">
-                    <h5><?php echo __('Disable Sidebar'); ?></h5>
+                    <h5><?php echo __d('hurad', 'Disable Sidebar'); ?></h5>
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="sortable-description">
-                <?php echo __('In this theme not supported dynamic sidebar.'); ?>
+                <?php echo __d('hurad', 'In this theme not supported dynamic sidebar.'); ?>
             </div>
             <div class="sortable">
                 <span class="clearfix"></span>
