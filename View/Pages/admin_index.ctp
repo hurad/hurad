@@ -4,7 +4,7 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__('Add New'), '/admin/pages/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/pages/add', array('class' => 'btn btn-mini')); ?>
     </h2>
 </div>
 
@@ -44,28 +44,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('title', __('Title')) => array(
+                $this->Paginator->sort('title', __d('hurad', 'Title')) => array(
                     'id' => 'title',
                     'class' => 'column-title column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('User.username', __('Author')) => array(
+                $this->Paginator->sort('User.username', __d('hurad', 'Author')) => array(
                     'id' => 'author',
                     'class' => 'column-author column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('comment_count', __('Comments')) => array(
+                $this->Paginator->sort('comment_count', __d('hurad', 'Comments')) => array(
                     'id' => 'comments',
                     'class' => 'column-comments column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('created', __('Date')) => array(
+                $this->Paginator->sort('created', __d('hurad', 'Date')) => array(
                     'id' => 'date',
                     'class' => 'column-date column-manage',
                     'scope' => 'col'
@@ -94,7 +94,7 @@ echo $this->Form->create(
                             $this->Html->link(
                                 '<strong>' . h($this->Page->getTheTitle()) . '</strong>',
                                 array('action' => 'edit', $this->Page->getTheID()),
-                                array('title' => __('Edit “%s”', $this->Page->getTheTitle()), 'escape' => false)
+                                array('title' => __d('hurad', 'Edit “%s”', $this->Page->getTheTitle()), 'escape' => false)
                             ) . $this->element('admin/Pages/row_actions', array('page' => $page)),
                             array(
                                 'class' => 'column-title'
@@ -138,7 +138,7 @@ echo $this->Form->create(
     } else {
         echo $this->Html->tag(
             'tr',
-            $this->Html->tag('td', __('No pages were found'), array('colspan' => '5', 'style' => 'text-align:center;')),
+            $this->Html->tag('td', __d('hurad', 'No pages were found'), array('colspan' => '5', 'style' => 'text-align:center;')),
             array('id' => 'post-0')
         );
     }
@@ -157,28 +157,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('title', __('Title')) => array(
+                $this->Paginator->sort('title', __d('hurad', 'Title')) => array(
                     'id' => 'title',
                     'class' => 'column-title column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('User.username', __('Author')) => array(
+                $this->Paginator->sort('User.username', __d('hurad', 'Author')) => array(
                     'id' => 'author',
                     'class' => 'column-author column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('comment_count', __('Comments')) => array(
+                $this->Paginator->sort('comment_count', __d('hurad', 'Comments')) => array(
                     'id' => 'comments',
                     'class' => 'column-comments column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('created', __('Date')) => array(
+                $this->Paginator->sort('created', __d('hurad', 'Date')) => array(
                     'id' => 'date',
                     'class' => 'column-date column-manage',
                     'scope' => 'col'
@@ -197,14 +197,14 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'publish' => __('Publish'),
-                'draft' => __('Draft'),
-                'delete' => __('Delete'),
-                'trash' => __('Move to Trash'),
+                'publish' => __d('hurad', 'Publish'),
+                'draft' => __d('hurad', 'Draft'),
+                'delete' => __d('hurad', 'Delete'),
+                'trash' => __d('hurad', 'Move to Trash'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 </section>
