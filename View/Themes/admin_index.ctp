@@ -1,5 +1,5 @@
 <?php $this->Html->script(array('holder'), array('block' => 'scriptHeader')); ?>
-<h3><?php echo __('Current Theme'); ?></h3>
+<h3><?php echo __d('hurad', 'Current Theme'); ?></h3>
 <style>
     ul.thumbnails li.span4:nth-child(3n + 4) {
         margin-left: 0px;
@@ -44,7 +44,7 @@
                                 $name = $this->Html->link(
                                     $currentTheme['name'],
                                     $currentTheme['theme_url'],
-                                    array('title' => __('Visit theme url'))
+                                    array('title' => __d('hurad', 'Visit theme url'))
                                 );
                             } else {
                                 $name = $currentTheme['name'];
@@ -54,12 +54,12 @@
                                 $author = $this->Html->link(
                                     $currentTheme['author'],
                                     $currentTheme['author_url'],
-                                    array('title' => __('Visit author url'))
+                                    array('title' => __d('hurad', 'Visit author url'))
                                 );
                             } else {
                                 $author = $currentTheme['author'];
                             }
-                            echo $name . ' ' . $currentTheme['version'] . ' ' . __('by') . ' ' . $author;
+                            echo $name . ' ' . $currentTheme['version'] . ' ' . __d('hurad', 'by') . ' ' . $author;
                             ?>
                         </span>
                     </div>
@@ -67,14 +67,14 @@
                         <p><?php echo $currentTheme['description']; ?></p>
                     <?php } ?>
                     <?php if (isset($currentTheme['tags']) && !empty($currentTheme['tags'])) { ?>
-                        <p><?php echo __('Tags: ') . $currentTheme['tags']; ?></p>
+                        <p><?php echo __d('hurad', 'Tags: ') . $currentTheme['tags']; ?></p>
                     <?php } ?>
                 </div>
             </div>
         </li>
     </ul>
 </div>
-<h3><?php echo __('Available Themes') ?></h3>
+<h3><?php echo __d('hurad', 'Available Themes') ?></h3>
 <div class="available-theme">
     <ul class="thumbnails">
         <?php foreach ($themes as $alias => $theme) { ?>
@@ -109,7 +109,7 @@
                                     $name = $this->Html->link(
                                         $theme['name'],
                                         $theme['theme_url'],
-                                        array('title' => __('Visit theme url'))
+                                        array('title' => __d('hurad', 'Visit theme url'))
                                     );
                                 } else {
                                     $name = $theme['name'];
@@ -119,12 +119,12 @@
                                     $author = $this->Html->link(
                                         $theme['author'],
                                         $theme['author_url'],
-                                        array('title' => __('Visit author url'))
+                                        array('title' => __d('hurad', 'Visit author url'))
                                     );
                                 } else {
                                     $author = $theme['author'];
                                 }
-                                echo $name . ' ' . $theme['version'] . ' ' . __('by') . ' ' . $author;
+                                echo $name . ' ' . $theme['version'] . ' ' . __d('hurad', 'by') . ' ' . $author;
                                 ?>
                             </span>
                         </div>
@@ -132,19 +132,19 @@
                             <p><?php echo $theme['description']; ?></p>
                         <?php } ?>
                         <?php if (isset($theme['tags']) && !empty($theme['tags'])) { ?>
-                            <p><?php echo __('Tags: ') . $theme['tags']; ?></p>
+                            <p><?php echo __d('hurad', 'Tags: ') . $theme['tags']; ?></p>
                         <?php } ?>
                         <p>
                             <?php echo $this->Form->postLink(
-                                __('Activate'),
+                                __d('hurad', 'Activate'),
                                 array('admin' => true, 'action' => 'activate', $alias),
-                                array('title' => __('Activate "%s"', $theme['name']), 'class' => 'btn btn-success')
+                                array('title' => __d('hurad', 'Activate "%s"', $theme['name']), 'class' => 'btn btn-success')
                             ); ?>
                             <?php echo $this->Form->postLink(
-                                __('Delete'),
+                                __d('hurad', 'Delete'),
                                 array('admin' => true, 'action' => 'delete', $alias),
-                                array('title' => __('Delete "%s"', $theme['name']), 'class' => 'btn btn-danger'),
-                                __('Are you sure delete "%s"', $theme['name'])
+                                array('title' => __d('hurad', 'Delete "%s"', $theme['name']), 'class' => 'btn btn-danger'),
+                                __d('hurad', 'Are you sure delete "%s"', $theme['name'])
                             ); ?>
                         </p>
                     </div>
