@@ -16,9 +16,9 @@ echo $this->Form->create(
         'username',
         array(
             'error' => array(
-                'usernameRule-1' => __('Minimum length of 5 characters.'), //minLength rule message
-                'usernameRule-2' => __('This username has already been taken.'), //isUnique rule message
-                'usernameRule-3' => __('This field cannot be left blank.'), //notEmpty rule message
+                'usernameRule-1' => __d('hurad', 'Minimum length of 5 characters.'), //minLength rule message
+                'usernameRule-2' => __d('hurad', 'This username has already been taken.'), //isUnique rule message
+                'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
                 'attributes' => array(
                     'wrap' => 'span',
                     'class' => 'help-inline'
@@ -27,7 +27,7 @@ echo $this->Form->create(
             'required' => false, //For disable HTML5 validation
             'type' => 'text',
             'class' => 'input-block-level',
-            'placeholder' => __('Username')
+            'placeholder' => __d('hurad', 'Username')
         )
     );
     ?>
@@ -39,7 +39,7 @@ echo $this->Form->create(
         'password',
         array(
             'error' => array(
-                'passwordRule-1' => __('Passwords must be between 5 and 32 characters long.'), //between rule message
+                'passwordRule-1' => __d('hurad', 'Passwords must be between 5 and 32 characters long.'), //between rule message
                 'attributes' => array(
                     'wrap' => 'span',
                     'class' => 'help-inline'
@@ -48,7 +48,7 @@ echo $this->Form->create(
             'required' => false, //For disable HTML5 validation
             'type' => 'password',
             'class' => 'input-block-level',
-            'placeholder' => __('Password')
+            'placeholder' => __d('hurad', 'Password')
         )
     );
     ?>
@@ -60,7 +60,7 @@ echo $this->Form->create(
         'confirm_password',
         array(
             'error' => array(
-                'confirmPasswordRule-1' => __('Entered passwords do not match.'), //checkPasswords rule message
+                'confirmPasswordRule-1' => __d('hurad', 'Entered passwords do not match.'), //checkPasswords rule message
                 'attributes' => array(
                     'wrap' => 'span',
                     'class' => 'help-inline'
@@ -69,7 +69,7 @@ echo $this->Form->create(
             'required' => false, //For disable HTML5 validation
             'type' => 'password',
             'class' => 'input-block-level',
-            'placeholder' => __('Confirm Password')
+            'placeholder' => __d('hurad', 'Confirm Password')
         )
     );
     ?>
@@ -81,8 +81,8 @@ echo $this->Form->create(
         'email',
         array(
             'error' => array(
-                'emailRule-1' => __('Please enter valid email.'), //email rule message
-                'emailRule-2' => __('This email has already exist.'), //isUnique rule message
+                'emailRule-1' => __d('hurad', 'Please enter valid email.'), //email rule message
+                'emailRule-2' => __d('hurad', 'This email has already exist.'), //isUnique rule message
                 'attributes' => array(
                     'wrap' => 'span',
                     'class' => 'help-inline'
@@ -91,14 +91,14 @@ echo $this->Form->create(
             'required' => false, //For disable HTML5 validation
             'type' => 'text',
             'class' => 'input-block-level',
-            'placeholder' => __('Email')
+            'placeholder' => __d('hurad', 'Email')
         )
     );
     ?>
 </div>
 
 <?php echo $this->Form->button(
-    __('Register'),
+    __d('hurad', 'Register'),
     array('div' => false, 'type' => 'submit', 'class' => 'btn btn-info btn-block')
 ); ?>
 

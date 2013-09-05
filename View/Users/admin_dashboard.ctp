@@ -2,19 +2,19 @@
 <?php $this->Html->script(array('admin/Users/dashboard'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
-    <h2><?php echo __('Dashboard'); ?></h2>
+    <h2><?php echo __d('hurad', 'Dashboard'); ?></h2>
 </div>
 
 
 <!--<div class="row-fluid">
     <div class="span8">
         <div class="well well-small">
-            <h3><?php //echo __('Recent Comment'); ?></h3>
+            <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
     <div class="span4">
         <div class="well well-small">
-            <h3><?php //echo __('Recent Comment'); ?></h3>
+            <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
 </div>
@@ -22,22 +22,22 @@
 <div class="row-fluid">
     <div class="span3">
         <div class="well well-small">
-            <h3><?php //echo __('Recent Comment'); ?></h3>
+            <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
     <div class="span3">
         <div class="well well-small">
-            <h3><?php //echo __('Recent Comment'); ?></h3>
+            <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
     <div class="span3">
         <div class="well well-small">
-            <h3><?php //echo __('Recent Comment'); ?></h3>
+            <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
     <div class="span3">
         <div class="well well-small">
-            <h3><?php //echo __('Recent Comment'); ?></h3>
+            <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
 </div>-->
@@ -51,12 +51,12 @@
             <div id="normal-sortables" class="meta-box-sortables">
                 <div id="dashboard_recent_comments" class="portlet">
                     <div class="portlet-header">
-                        <h3><?php //echo __('Recent Comment'); ?></h3>
+                        <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
                     </div>
                     <div class="portlet-content">
                         <?php //$this->Dashboard->dashboard_recent_comments(); ?>
                         <p class="textright" style="padding: 0 15px;">
-                            <?php //echo $this->Html->link(__('View all'), '/admin/comments', array('class' => 'add_button')); ?>
+                            <?php //echo $this->Html->link(__d('hurad', 'View all'), '/admin/comments', array('class' => 'add_button')); ?>
                         </p>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             <div id="normal-sortables" class="meta-box-sortables">
                 <div  id="dashboard_right_now" class="portlet">
                     <div class="portlet-header">
-                        <h3><?php //echo __('Right Now'); ?></h3>
+                        <h3><?php //echo __d('hurad', 'Right Now'); ?></h3>
                     </div>
                     <div class="portlet-content">
                         <div class="inside">

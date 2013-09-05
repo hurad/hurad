@@ -36,28 +36,28 @@ echo $this->Form->create(
                     )
                 ),
                 array(
-                    $this->Paginator->sort('username', __('Username')) => array(
+                    $this->Paginator->sort('username', __d('hurad', 'Username')) => array(
                         'id' => 'username',
                         'class' => 'column-username column-manage',
                         'scope' => 'col'
                     )
                 ),
                 array(
-                    $this->Paginator->sort('firstname', __('Name')) => array(
+                    $this->Paginator->sort('firstname', __d('hurad', 'Name')) => array(
                         'id' => 'name',
                         'class' => 'column-name column-manage',
                         'scope' => 'col'
                     )
                 ),
                 array(
-                    $this->Paginator->sort('email', __('e-Mail')) => array(
+                    $this->Paginator->sort('email', __d('hurad', 'e-Mail')) => array(
                         'id' => 'email',
                         'class' => 'column-email column-manage',
                         'scope' => 'col'
                     )
                 ),
                 array(
-                    $this->Paginator->sort('role', __('Role')) => array(
+                    $this->Paginator->sort('role', __d('hurad', 'Role')) => array(
                         'id' => 'role',
                         'class' => 'column-role column-manage',
                         'scope' => 'col'
@@ -153,28 +153,28 @@ echo $this->Form->create(
                     )
                 ),
                 array(
-                    $this->Paginator->sort('username', __('Username')) => array(
+                    $this->Paginator->sort('username', __d('hurad', 'Username')) => array(
                         'id' => 'username',
                         'class' => 'column-username column-manage',
                         'scope' => 'col'
                     )
                 ),
                 array(
-                    $this->Paginator->sort('firstname', __('Name')) => array(
+                    $this->Paginator->sort('firstname', __d('hurad', 'Name')) => array(
                         'id' => 'name',
                         'class' => 'column-name column-manage',
                         'scope' => 'col'
                     )
                 ),
                 array(
-                    $this->Paginator->sort('email', __('e-Mail')) => array(
+                    $this->Paginator->sort('email', __d('hurad', 'e-Mail')) => array(
                         'id' => 'email',
                         'class' => 'column-email column-manage',
                         'scope' => 'col'
                     )
                 ),
                 array(
-                    $this->Paginator->sort('role', __('Role')) => array(
+                    $this->Paginator->sort('role', __d('hurad', 'Role')) => array(
                         'id' => 'role',
                         'class' => 'column-role column-manage',
                         'scope' => 'col'
@@ -193,12 +193,12 @@ echo $this->Form->create(
             array(
                 'label' => false,
                 'options' => array(
-                    'delete' => __('Delete')
+                    'delete' => __d('hurad', 'Delete')
                 ),
-                'empty' => __('Bulk Actions'),
+                'empty' => __d('hurad', 'Bulk Actions'),
             )
         );
-        echo $this->Form->submit(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+        echo $this->Form->submit(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
         ?>
     </section>
 

@@ -19,14 +19,14 @@ echo $this->Form->create(
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
                 'class' => 'input-block-level',
-                'placeholder' => __('Username')
+                'placeholder' => __d('hurad', 'Username')
             )
         );
         ?>
     </div>
 
 <?php echo $this->Form->button(
-    __('Submit'),
+    __d('hurad', 'Submit'),
     array('div' => false, 'type' => 'submit', 'class' => 'btn btn-info btn-block')
 ); ?>
 
