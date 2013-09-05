@@ -19,6 +19,7 @@ App::uses('AppController', 'Controller');
  * CategoriesController is used for managing Hurd categories.
  *
  * @package app.Controller
+ * @property Category $Category
  */
 class CategoriesController extends AppController {
 
@@ -81,10 +82,10 @@ class CategoriesController extends AppController {
             $this->Category->create();
             //$this->request->data['Category']['parent_id'] = $this->ModelName->getInsertID();
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash(__('The category has been saved'), 'success');
+                $this->Session->setFlash(__('The category has been saved'), 'default', array('class'=>'success'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'default', array('class'=> 'error'));
             }
         }
         $parentCategories = $this->Category->generateTreeList();
@@ -106,10 +107,10 @@ class CategoriesController extends AppController {
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash(__('The category has been saved'), 'success');
+                $this->Session->setFlash(__('The category has been saved'), 'default', array('class'=> 'success'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'default', array('class'=>'error'));
             }
         } else {
             $this->request->data = $this->Category->read(null, $id);
@@ -132,16 +133,16 @@ class CategoriesController extends AppController {
         $this->Category->id = $id;
         if (!$this->Category->exists()) {
             throw new NotFoundException(__('Invalid category'));
-        } elseif ($id == '37') {
-            $this->Session->setFlash(__('You could not delete Uncategorized category.'), 'notice');
+        } elseif ($id == '1') {
+            $this->Session->setFlash(__('You could not delete Uncategorized category.'), 'default');
             $this->redirect(array('action' => 'index'));
         }
 
         if ($this->Category->removeFromTree($id, true)) {
-            $this->Session->setFlash(__('Category was deleted'), 'success');
+            $this->Session->setFlash(__('Category was deleted'), 'default', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         } else {
-            $this->Session->setFlash(__('Category was not deleted'), 'error');
+            $this->Session->setFlash(__('Category was not deleted'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
     }
@@ -162,10 +163,10 @@ class CategoriesController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No item selected.'), 'notice');
+            $this->Session->setFlash(__('No item selected.'), 'default');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'notice');
+            $this->Session->setFlash(__('No action selected.'), 'default');
             $this->redirect(array('action' => 'index'));
         }
 
@@ -175,12 +176,12 @@ class CategoriesController extends AppController {
                     $this->Category->removeFromTree($value);
                 }
                 // if ($this->Category->deleteAll(array('Category.id' => $ids), true, true)) {
-                $this->Session->setFlash(__('Categories was deleted.'), 'success');
+                $this->Session->setFlash(__('Categories was deleted.'), 'default', array('class' => 'success'));
                 //}
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
                 break;
         }
         $this->redirect(array('action' => 'index'));
