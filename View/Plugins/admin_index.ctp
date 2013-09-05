@@ -39,14 +39,14 @@ echo $this->Form->create(
                 )
             ),
             array(
-                __('Name') => array(
+                __d('hurad', 'Name') => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                __('Description') => array(
+                __d('hurad', 'Description') => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
@@ -106,14 +106,14 @@ echo $this->Form->create(
                 )
             ),
             array(
-                __('Name') => array(
+                __d('hurad', 'Name') => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                __('Description') => array(
+                __d('hurad', 'Description') => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
@@ -132,13 +132,13 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'activate' => __('Activate'),
-                'deactivate' => __('Deactivate'),
-                'delete' => __('Delete'),
+                'activate' => __d('hurad', 'Activate'),
+                'deactivate' => __d('hurad', 'Deactivate'),
+                'delete' => __d('hurad', 'Delete'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 </section>
