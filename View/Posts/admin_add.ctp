@@ -22,7 +22,7 @@ echo $this->Form->create(
                 <div class="controls">
                     <?php echo $this->Form->input(
                         'title',
-                        array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __('Enter title here'))
+                        array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __d('hurad', 'Enter title here'))
                     ); ?>
                 </div>
             </div>
@@ -34,7 +34,7 @@ echo $this->Form->create(
                             array(
                                 'type' => 'text',
                                 'class' => 'span12 postSlug',
-                                'placeholder' => __('Enter slug here')
+                                'placeholder' => __d('hurad', 'Enter slug here')
                             )
                         ); ?>
                     </div>
@@ -48,7 +48,7 @@ echo $this->Form->create(
 
             <div class="column">
                 <div class="portlet">
-                    <div class="portlet-header"><?php echo __('Excerpt'); ?></div>
+                    <div class="portlet-header"><?php echo __d('hurad', 'Excerpt'); ?></div>
                     <div class="portlet-content">
                         <div class="control-group">
                             <div class="controls">
@@ -65,13 +65,13 @@ echo $this->Form->create(
         <div class="span4">
             <div class="column">
                 <div class="portlet">
-                    <div class="portlet-header"><?php echo __('Publish'); ?></div>
+                    <div class="portlet-header"><?php echo __d('hurad', 'Publish'); ?></div>
                     <div class="portlet-content publish-widget">
                         <ul class="unstyled">
                             <li>
                                 <?php echo $this->Form->label(
                                     'status',
-                                    __('Post Status:'),
+                                    __d('hurad', 'Post Status:'),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <div class="hr-control">
@@ -81,8 +81,8 @@ echo $this->Form->create(
                                         array(
                                             'class' => 'input-medium',
                                             'options' => array(
-                                                'publish' => __('Publish'),
-                                                'draft' => __('Draft')
+                                                'publish' => __d('hurad', 'Publish'),
+                                                'draft' => __d('hurad', 'Draft')
                                             )
                                         )
                                     );
@@ -92,7 +92,7 @@ echo $this->Form->create(
                             <li>
                                 <?php echo $this->Form->label(
                                     'comment_status',
-                                    __('Comment Status:'),
+                                    __d('hurad', 'Comment Status:'),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <div class="hr-control">
@@ -102,9 +102,9 @@ echo $this->Form->create(
                                         array(
                                             'class' => 'input-medium',
                                             'options' => array(
-                                                'open' => __('Open'),
-                                                'close' => __('Close'),
-                                                'disable' => __('Disable')
+                                                'open' => __d('hurad', 'Open'),
+                                                'close' => __d('hurad', 'Close'),
+                                                'disable' => __d('hurad', 'Disable')
                                             )
                                         )
                                     );
@@ -115,7 +115,7 @@ echo $this->Form->create(
                             <li class="text-right">
                                 <?php echo $this->Html->tag(
                                     'span',
-                                    __('Date: '),
+                                    __d('hurad', 'Date: '),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <?php
@@ -143,7 +143,7 @@ echo $this->Form->create(
                             <li class="text-center">
                                 <?php echo $this->Html->tag(
                                     'span',
-                                    __('Hour: '),
+                                    __d('hurad', 'Hour: '),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <?php
@@ -180,7 +180,7 @@ echo $this->Form->create(
                                 ?>
                                 <?php echo $this->Html->tag(
                                     'span',
-                                    __('Minute'),
+                                    __d('hurad', 'Minute'),
                                     array('class' => 'hr-control-label-minute')
                                 ); ?>
                             </li>
@@ -188,20 +188,20 @@ echo $this->Form->create(
                         </ul>
                         <div class="hr-form-actions">
                             <?php echo $this->Form->button(
-                                __('Publish'),
+                                __d('hurad', 'Publish'),
                                 array('type' => 'submit', 'class' => 'btn btn-primary')
                             ) ?>
                         </div>
                     </div>
                 </div>
                 <div class="portlet">
-                    <div class="portlet-header"><?php echo __('Categories'); ?></div>
+                    <div class="portlet-header"><?php echo __d('hurad', 'Categories'); ?></div>
                     <div class="portlet-content">
                         <?php echo $this->Form->input('Category', array('multiple' => 'checkbox')); ?>
                     </div>
                 </div>
                 <div class="portlet">
-                    <div class="portlet-header"><?php echo __('Tags'); ?></div>
+                    <div class="portlet-header"><?php echo __d('hurad', 'Tags'); ?></div>
                     <div class="portlet-content">
                         <?php echo $this->Form->input('Post.tags', array('class' => 'input-block-level')); ?>
                     </div>

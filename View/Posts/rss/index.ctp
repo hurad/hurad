@@ -7,7 +7,7 @@ $homeUrl = $this->Html->url('/', true);
 $this->set(
     'channel',
     array(
-        'title' => __('My Recent Posts'),
+        'title' => __d('hurad', 'My Recent Posts'),
         'link' => $homeUrl,
         'description' => 'Hurad CMS',
         'language' => 'en-us',

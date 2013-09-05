@@ -23,7 +23,7 @@ echo $this->Form->create(
                     <?php echo $this->Form->input('id'); ?>
                     <?php echo $this->Form->input(
                         'title',
-                        array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __('Enter title here'))
+                        array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __d('hurad', 'Enter title here'))
                     ); ?>
                 </div>
             </div>
@@ -38,7 +38,7 @@ echo $this->Form->create(
                             'value' => Formatting::esc_attr(
                                 $this->Hook->applyFilters('editable_slug', $post['Post']['slug'])
                             ),
-                            'placeholder' => __('Enter slug here')
+                            'placeholder' => __d('hurad', 'Enter slug here')
                         )
                     );
                     ?>
@@ -51,7 +51,7 @@ echo $this->Form->create(
             </div>
             <div class="column">
                 <div class="portlet">
-                    <div class="portlet-header"><?php echo __('Excerpt'); ?></div>
+                    <div class="portlet-header"><?php echo __d('hurad', 'Excerpt'); ?></div>
                     <div class="portlet-content">
                         <div class="control-group">
                             <div class="controls">
@@ -74,7 +74,7 @@ echo $this->Form->create(
                             <li>
                                 <?php echo $this->Form->label(
                                     'status',
-                                    __('Post Status:'),
+                                    __d('hurad', 'Post Status:'),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <div class="hr-control">
@@ -95,7 +95,7 @@ echo $this->Form->create(
                             <li>
                                 <?php echo $this->Form->label(
                                     'comment_status',
-                                    __('Comment Status:'),
+                                    __d('hurad', 'Comment Status:'),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <div class="hr-control">
@@ -117,7 +117,7 @@ echo $this->Form->create(
                             <li class="text-right">
                                 <?php echo $this->Html->tag(
                                     'span',
-                                    __('Date: '),
+                                    __d('hurad', 'Date: '),
                                     array('class' => 'hr-control-label')
                                 ); ?>
                                 <?php
@@ -145,7 +145,7 @@ echo $this->Form->create(
                             <li class="text-center">
                                 <?php echo $this->Html->tag(
                                     'span',
-                                    __('Hour: '),
+                                    __d('hurad', 'Hour: '),
                                     array('class' => 'hr-control-label')
                                 ); ?> <?php echo $this->Form->hour(
                                     'created',
@@ -158,7 +158,7 @@ echo $this->Form->create(
                                     array('empty' => false, 'class' => 'input-mini')
                                 ); ?><?php echo $this->Html->tag(
                                     'span',
-                                    __('Minute'),
+                                    __d('hurad', 'Minute'),
                                     array('class' => 'hr-control-label-minute')
                                 ); ?>
                             </li>
@@ -166,7 +166,7 @@ echo $this->Form->create(
                         </ul>
                         <div class="hr-form-actions">
                             <?php echo $this->Form->button(
-                                __('Update'),
+                                __d('hurad', 'Update'),
                                 array('type' => 'submit', 'class' => 'btn btn-primary')
                             ) ?>
                         </div>

@@ -38,16 +38,16 @@
 </div>
 
 <div class="related">
-    <h3><?php echo __('Related Tags'); ?></h3>
+    <h3><?php echo __d('hurad', 'Related Tags'); ?></h3>
     <?php if (!empty($post['Tag'])): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th><?php echo __('Id'); ?></th>
-                <th><?php echo __('Name'); ?></th>
-                <th><?php echo __('Slug'); ?></th>
-                <th><?php echo __('Created'); ?></th>
-                <th><?php echo __('Modified'); ?></th>
-                <th class="actions"><?php echo __('Actions'); ?></th>
+                <th><?php echo __d('hurad', 'Id'); ?></th>
+                <th><?php echo __d('hurad', 'Name'); ?></th>
+                <th><?php echo __d('hurad', 'Slug'); ?></th>
+                <th><?php echo __d('hurad', 'Created'); ?></th>
+                <th><?php echo __d('hurad', 'Modified'); ?></th>
+                <th class="actions"><?php echo __d('hurad', 'Actions'); ?></th>
             </tr>
             <?php
             $i = 0;
@@ -60,18 +60,18 @@
                     <td><?php echo $tag['modified']; ?></td>
                     <td class="actions">
                         <?php echo $this->Html->link(
-                            __('View'),
+                            __d('hurad', 'View'),
                             array('controller' => 'tags', 'action' => 'view', $tag['id'])
                         ); ?>
                         <?php echo $this->Html->link(
-                            __('Edit'),
+                            __d('hurad', 'Edit'),
                             array('controller' => 'tags', 'action' => 'edit', $tag['id'])
                         ); ?>
                         <?php echo $this->Form->postLink(
-                            __('Delete'),
+                            __d('hurad', 'Delete'),
                             array('controller' => 'tags', 'action' => 'delete', $tag['id']),
                             null,
-                            __('Are you sure you want to delete # %s?', $tag['id'])
+                            __d('hurad', 'Are you sure you want to delete # %s?', $tag['id'])
                         ); ?>
                     </td>
                 </tr>
@@ -81,7 +81,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $this->Html->link(__('New Tag'), array('controller' => 'tags', 'action' => 'add')); ?> </li>
+            <li><?php echo $this->Html->link(__d('hurad', 'New Tag'), array('controller' => 'tags', 'action' => 'add')); ?> </li>
         </ul>
     </div>
 </div>
