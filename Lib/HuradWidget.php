@@ -15,8 +15,8 @@ class HuradWidget {
 
         $defaults = array(
             'id' => "sidebar-$i",
-            'name' => __('Sidebar %d', $i),
-            'description' => __('Default description for this sidebar'),
+            'name' => __d('hurad', 'Sidebar %d', $i),
+            'description' => __d('hurad', 'Default description for this sidebar'),
         );
 
         $sidebar = Functions::hr_parse_args($args, $defaults);
@@ -35,8 +35,8 @@ class HuradWidget {
 
         $defaults = array(
             'id' => "widget-$i",
-            'title' => __('Widget %d', $i),
-            'description' => __('Default description for this widget'),
+            'title' => __d('hurad', 'Widget %d', $i),
+            'description' => __d('hurad', 'Default description for this widget'),
             'element' => '',
         );
 

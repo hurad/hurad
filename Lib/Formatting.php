@@ -2077,11 +2077,11 @@ class Formatting {
         // Translate and filter the delimiter set (avoid ampersands and entities here)
         $l = HuradHook::apply_filters('hr_sprintf_l', array(
             /* translators: used between list items, there is a space after the comma */
-            'between' => __(', '),
+            'between' => __d('hurad', ', '),
             /* translators: used between list items, there is a space after the and */
-            'between_last_two' => __(', and '),
+            'between_last_two' => __d('hurad', ', and '),
             /* translators: used between only two list items, there is a space after the and */
-            'between_only_two' => __(' and '),
+            'between_only_two' => __d('hurad', ' and '),
         ));
 
         $args = (array) $args;
