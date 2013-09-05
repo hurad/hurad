@@ -4,7 +4,7 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__('Add New'), '/admin/tags/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/tags/add', array('class' => 'btn btn-mini')); ?>
     </h2>
 </div>
 
@@ -35,28 +35,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('post_count', __('Posts')) => array(
+                $this->Paginator->sort('post_count', __d('hurad', 'Posts')) => array(
                     'id' => 'posts',
                     'class' => 'column-posts column-manage',
                     'scope' => 'col'
@@ -83,7 +83,7 @@ echo $this->Form->create(
                         $this->Html->link(
                             '<strong>' . h($tag['Tag']['name']) . '</strong>',
                             array('action' => 'edit', $tag['Tag']['id']),
-                            array('title' => __('Edit “%s”', $tag['Tag']['name']), 'escape' => false)
+                            array('title' => __d('hurad', 'Edit “%s”', $tag['Tag']['name']), 'escape' => false)
                         ) . $this->element('admin/Tags/row_actions', array('tag' => $tag)),
                         array(
                             'class' => 'column-name'
@@ -136,28 +136,28 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('description', __('Description')) => array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('slug', __('Slug')) => array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('post_count', __('Posts')) => array(
+                $this->Paginator->sort('post_count', __d('hurad', 'Posts')) => array(
                     'id' => 'posts',
                     'class' => 'column-posts column-manage',
                     'scope' => 'col'
@@ -176,12 +176,12 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'delete' => __('Delete'),
+                'delete' => __d('hurad', 'Delete'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 
     <div class="pagination pull-right">
@@ -189,7 +189,7 @@ echo $this->Form->create(
             <?php
             if ($this->Paginator->numbers()) {
                 echo $this->Paginator->prev(
-                    '« ' . __('Previous'),
+                    '« ' . __d('hurad', 'Previous'),
                     array('tag' => 'li'),
                     null,
                     array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled')
@@ -198,7 +198,7 @@ echo $this->Form->create(
                     array('separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'a')
                 );
                 echo $this->Paginator->next(
-                    __('Next') . ' »',
+                    __d('hurad', 'Next') . ' »',
                     array('tag' => 'li'),
                     null,
                     array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled')
