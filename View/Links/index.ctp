@@ -1,5 +1,5 @@
 <div class="links index">
-    <h2><?php echo __('Links'); ?></h2>
+    <h2><?php echo __d('hurad', 'Links'); ?></h2>
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th><?php echo $this->Paginator->sort('id'); ?></th>
@@ -14,7 +14,7 @@
             <th><?php echo $this->Paginator->sort('rating'); ?></th>
             <th><?php echo $this->Paginator->sort('created'); ?></th>
             <th><?php echo $this->Paginator->sort('modified'); ?></th>
-            <th class="actions"><?php echo __('Actions'); ?></th>
+            <th class="actions"><?php echo __d('hurad', 'Actions'); ?></th>
         </tr>
         <?php
         foreach ($links as $link): ?>
@@ -42,13 +42,13 @@
                 <td><?php echo h($link['Link']['created']); ?>&nbsp;</td>
                 <td><?php echo h($link['Link']['modified']); ?>&nbsp;</td>
                 <td class="actions">
-                    <?php echo $this->Html->link(__('View'), array('action' => 'view', $link['Link']['id'])); ?>
-                    <?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $link['Link']['id'])); ?>
+                    <?php echo $this->Html->link(__d('hurad', 'View'), array('action' => 'view', $link['Link']['id'])); ?>
+                    <?php echo $this->Html->link(__d('hurad', 'Edit'), array('action' => 'edit', $link['Link']['id'])); ?>
                     <?php echo $this->Form->postLink(
-                        __('Delete'),
+                        __d('hurad', 'Delete'),
                         array('action' => 'delete', $link['Link']['id']),
                         null,
-                        __('Are you sure you want to delete # %s?', $link['Link']['id'])
+                        __d('hurad', 'Are you sure you want to delete # %s?', $link['Link']['id'])
                     ); ?>
                 </td>
             </tr>
@@ -67,28 +67,28 @@
 
     <div class="paging">
         <?php
-        echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+        echo $this->Paginator->prev('< ' . __d('hurad', 'previous'), array(), null, array('class' => 'prev disabled'));
         echo $this->Paginator->numbers(array('separator' => ''));
-        echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+        echo $this->Paginator->next(__d('hurad', 'next') . ' >', array(), null, array('class' => 'next disabled'));
         ?>
     </div>
 </div>
 <div class="actions">
-    <h3><?php echo __('Actions'); ?></h3>
+    <h3><?php echo __d('hurad', 'Actions'); ?></h3>
     <ul>
-        <li><?php echo $this->Html->link(__('New Link'), array('action' => 'add')); ?></li>
+        <li><?php echo $this->Html->link(__d('hurad', 'New Link'), array('action' => 'add')); ?></li>
         <li><?php echo $this->Html->link(
-                __('List Links'),
+                __d('hurad', 'List Links'),
                 array('controller' => 'links', 'action' => 'index')
             ); ?> </li>
         <li><?php echo $this->Html->link(
-                __('New Parent Link'),
+                __d('hurad', 'New Parent Link'),
                 array('controller' => 'links', 'action' => 'add')
             ); ?> </li>
         <li><?php echo $this->Html->link(
-                __('List Menus'),
+                __d('hurad', 'List Menus'),
                 array('controller' => 'menus', 'action' => 'index')
             ); ?> </li>
-        <li><?php echo $this->Html->link(__('New Menu'), array('controller' => 'menus', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('hurad', 'New Menu'), array('controller' => 'menus', 'action' => 'add')); ?> </li>
     </ul>
 </div>

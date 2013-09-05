@@ -44,35 +44,35 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'title',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('url', __('URL')) => array(
+                $this->Paginator->sort('url', __d('hurad', 'URL')) => array(
                     'id' => 'author',
                     'class' => 'column-url column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('Menu.name', __('Category')) => array(
+                $this->Paginator->sort('Menu.name', __d('hurad', 'Category')) => array(
                     'id' => 'menu',
                     'class' => 'column-menu column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('visible', __('Visible')) => array(
+                $this->Paginator->sort('visible', __d('hurad', 'Visible')) => array(
                     'id' => 'visible',
                     'class' => 'column-visible column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('rating', __('Rating')) => array(
+                $this->Paginator->sort('rating', __d('hurad', 'Rating')) => array(
                     'id' => 'rating',
                     'class' => 'column-rating column-manage',
                     'scope' => 'col'
@@ -100,7 +100,7 @@ echo $this->Form->create(
                         $this->Html->link(
                             '<strong>' . h($link['Link']['name']) . '</strong>',
                             array('action' => 'edit', $link['Link']['id']),
-                            array('title' => __('Edit “%s”', $link['Link']['name']), 'escape' => false)
+                            array('title' => __d('hurad', 'Edit “%s”', $link['Link']['name']), 'escape' => false)
                         ) . $this->element('admin/Links/row_actions', array('link' => $link)),
                         array(
                             'class' => 'column-name'
@@ -110,7 +110,7 @@ echo $this->Form->create(
                         $this->Html->link(
                             $this->AdminLayout->linkUrl($link['Link']['url']),
                             $link['Link']['url'],
-                            array('target' => '_blank', 'title' => __('Visit %s', $link['Link']['name']))
+                            array('target' => '_blank', 'title' => __d('hurad', 'Visit %s', $link['Link']['name']))
                         ),
                         array(
                             'class' => 'column-url'
@@ -167,35 +167,35 @@ echo $this->Form->create(
                 )
             ),
             array(
-                $this->Paginator->sort('name', __('Name')) => array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'title',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('url', __('URL')) => array(
+                $this->Paginator->sort('url', __d('hurad', 'URL')) => array(
                     'id' => 'author',
                     'class' => 'column-url column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('Menu.name', __('Category')) => array(
+                $this->Paginator->sort('Menu.name', __d('hurad', 'Category')) => array(
                     'id' => 'menu',
                     'class' => 'column-menu column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('visible', __('Visible')) => array(
+                $this->Paginator->sort('visible', __d('hurad', 'Visible')) => array(
                     'id' => 'visible',
                     'class' => 'column-visible column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                $this->Paginator->sort('rating', __('Rating')) => array(
+                $this->Paginator->sort('rating', __d('hurad', 'Rating')) => array(
                     'id' => 'rating',
                     'class' => 'column-rating column-manage',
                     'scope' => 'col'
@@ -214,13 +214,13 @@ echo $this->Form->create(
         array(
             'label' => false,
             'options' => array(
-                'visible' => __('Visible'),
-                'invisible' => __('Invisible'),
-                'delete' => __('Delete'),
+                'visible' => __d('hurad', 'Visible'),
+                'invisible' => __d('hurad', 'Invisible'),
+                'delete' => __d('hurad', 'Delete'),
             ),
-            'empty' => __('Bulk Actions'),
+            'empty' => __d('hurad', 'Bulk Actions'),
         )
     );
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
+    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
     ?>
 </section>

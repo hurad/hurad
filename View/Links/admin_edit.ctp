@@ -16,24 +16,24 @@ echo $this->Form->create(
 ?>
 
 <div class="control-group">
-    <?php echo $this->Form->label('menuId', __('Select Category'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('menuId', __d('hurad', 'Select Category'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('id'); ?>
         <?php echo $this->Form->select('menuId', $linkCats, array('empty' => false)); ?>
         <span class="help-block">
-            <?php echo __('The description is not prominent by default; however, some themes may show it.'); ?>
+            <?php echo __d('hurad', 'The description is not prominent by default; however, some themes may show it.'); ?>
         </span>
     </div>
 </div>
 <div class="control-group <?php echo $this->Form->isFieldError('name') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('name', __('Name'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'name',
             array(
                 'error' => array(
-                    'nameRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
+                    'nameRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
                     'attributes' => array(
                         'wrap' => 'span',
                         'class' => 'help-inline'
@@ -45,12 +45,12 @@ echo $this->Form->create(
         );
         ?>
         <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
-            <?php echo __('Example: Nifty blogging software'); ?>
+            <?php echo __d('hurad', 'Example: Nifty blogging software'); ?>
         </span>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('description', __('Description'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php echo $this->Form->input('description', array('class' => 'span5')); ?>
         <span class="help-block">
@@ -61,15 +61,15 @@ echo $this->Form->create(
     </div>
 </div>
 <div class="control-group <?php echo $this->Form->isFieldError('url') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('url', __('Web Address'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('url', __d('hurad', 'Web Address'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'url',
             array(
                 'error' => array(
-                    'urlRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
-                    'urlRule-2' => __('This URL not valid.'), //url rule message
+                    'urlRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
+                    'urlRule-2' => __d('hurad', 'This URL not valid.'), //url rule message
                     'attributes' => array(
                         'wrap' => 'span',
                         'class' => 'help-inline'
@@ -88,35 +88,35 @@ echo $this->Form->create(
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('target', __('Target'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('target', __d('hurad', 'Target'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'target',
             array(
                 'options' => array(
-                    '_blank' => __('New window or tab. (_blank)'),
-                    '_top' => __('Current window or tab, with no frames. (_top)'),
-                    '_none' => __('Same window or tab. (_none)')
+                    '_blank' => __d('hurad', 'New window or tab. (_blank)'),
+                    '_top' => __d('hurad', 'Current window or tab, with no frames. (_top)'),
+                    '_none' => __d('hurad', 'Same window or tab. (_none)')
                 )
             )
         );
         ?>
         <span class="help-block">
-            <?php echo __('Choose the target frame for your link.'); ?>
+            <?php echo __d('hurad', 'Choose the target frame for your link.'); ?>
         </span>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('visible', __('Visible'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('visible', __d('hurad', 'Visible'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'visible',
             array(
                 'options' => array(
-                    'Y' => __('Yes'),
-                    'N' => __('No'),
+                    'Y' => __d('hurad', 'Yes'),
+                    'N' => __d('hurad', 'No'),
                 )
             )
         );
@@ -124,14 +124,14 @@ echo $this->Form->create(
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('rating', __('Rating'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('rating', __d('hurad', 'Rating'), array('class' => 'control-label')); ?>
     <div class="controls">
         <?php
         echo $this->Form->input(
             'rating',
             array(
                 'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-                'empty' => __('(Choose one)')
+                'empty' => __d('hurad', '(Choose one)')
             )
         );
         ?>
@@ -139,7 +139,7 @@ echo $this->Form->create(
 </div>
 
 <div class="form-actions">
-    <?php echo $this->Form->button(__('Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+    <?php echo $this->Form->button(__d('hurad', 'Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 </div>
 
 <?php echo $this->Form->end(); ?>
