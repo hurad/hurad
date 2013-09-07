@@ -6,36 +6,36 @@
 </div>
 
 
-<!--<div class="row-fluid">
-    <div class="span8">
+<!--<div class="row">
+    <div class="col-md-8">
         <div class="well well-small">
             <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
-    <div class="span4">
+    <div class="col-md-4">
         <div class="well well-small">
             <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
 </div>
 
-<div class="row-fluid">
-    <div class="span3">
+<div class="row">
+    <div class="col-md-3">
         <div class="well well-small">
             <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
         <div class="well well-small">
             <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
         <div class="well well-small">
             <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
         <div class="well well-small">
             <h3><?php //echo __d('hurad', 'Recent Comment'); ?></h3>
         </div>

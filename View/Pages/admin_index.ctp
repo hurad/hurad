@@ -4,13 +4,19 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/pages/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(
+            __d('hurad', 'Add New'),
+            '/admin/pages/add',
+            array('class' => 'btn btn-default btn-xs')
+        ); ?>
     </h2>
 </div>
 
 <section class="top-table">
-    <?php echo $this->element('admin/Pages/filter'); ?>
-    <?php echo $this->element('admin/Pages/search'); ?>
+    <div class="row">
+        <div class="col-md-8"><?php echo $this->element('admin/Pages/filter'); ?></div>
+        <div class="col-md-4"><?php echo $this->element('admin/Pages/search'); ?></div>
+    </div>
 </section>
 
 <?php
@@ -93,8 +99,14 @@ echo $this->Form->create(
                         array(
                             $this->Html->link(
                                 '<strong>' . h($this->Page->getTheTitle()) . '</strong>',
-                                array('action' => 'edit', $this->Page->getTheID()),
-                                array('title' => __d('hurad', 'Edit “%s”', $this->Page->getTheTitle()), 'escape' => false)
+                                array(
+                                    'action' => 'edit',
+                                    $this->Page->getTheID()
+                                ),
+                                array(
+                                    'title' => __d('hurad', 'Edit “%s”', $this->Page->getTheTitle()),
+                                    'escape' => false
+                                )
                             ) . $this->element('admin/Pages/row_actions', array('page' => $page)),
                             array(
                                 'class' => 'column-title'
@@ -138,7 +150,11 @@ echo $this->Form->create(
     } else {
         echo $this->Html->tag(
             'tr',
-            $this->Html->tag('td', __d('hurad', 'No pages were found'), array('colspan' => '5', 'style' => 'text-align:center;')),
+            $this->Html->tag(
+                'td',
+                __d('hurad', 'No pages were found'),
+                array('colspan' => '5', 'style' => 'text-align:center;')
+            ),
             array('id' => 'post-0')
         );
     }
@@ -190,21 +206,34 @@ echo $this->Form->create(
     </tfoot>
 </table>
 
-<section>
-    <?php
-    echo $this->Form->input(
-        'Page.action.bot',
-        array(
-            'label' => false,
-            'options' => array(
-                'publish' => __d('hurad', 'Publish'),
-                'draft' => __d('hurad', 'Draft'),
-                'delete' => __d('hurad', 'Delete'),
-                'trash' => __d('hurad', 'Move to Trash'),
-            ),
-            'empty' => __d('hurad', 'Bulk Actions'),
-        )
-    );
-    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
-    ?>
+<section class="bottom-table">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Page.action.bot',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'publish' => __d('hurad', 'Publish'),
+                            'draft' => __d('hurad', 'Draft'),
+                            'delete' => __d('hurad', 'Delete'),
+                            'trash' => __d('hurad', 'Move to Trash'),
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
+            <?php
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
+            ?>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
+    </div>
 </section>

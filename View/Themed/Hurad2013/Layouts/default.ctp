@@ -14,13 +14,13 @@
 </style>
 
 <div class="container">
-    <div class="row-fluid">
-        <div class="span12">
+    <div class="row">
+        <div class="col-md-12">
             <h1>Test Site</h1>
 
             <div class="navbar">
                 <div class="navbar-inner">
-                    <a class="brand" href="#">Home</a>
+                    <a class="navbar-brand" href="#">Home</a>
                     <ul class="nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -38,11 +38,11 @@
             </div>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span8">
+    <div class="row">
+        <div class="col-md-8">
             <?php echo $this->fetch('content'); ?>
         </div>
-        <div class="span4">
+        <div class="col-md-4">
             <?php $this->Widget->sidebar('right-sidebar'); ?>
         </div>
     </div>

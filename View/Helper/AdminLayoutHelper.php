@@ -151,7 +151,10 @@ class AdminLayoutHelper extends AppHelper
     {
         switch ($approved) {
             case '1':
-                return $this->Html->link(__d('hurad', 'Disapprove'), array('action' => 'action', 'disapproved', $comment_id));
+                return $this->Html->link(
+                    __d('hurad', 'Disapprove'),
+                    array('action' => 'action', 'disapproved', $comment_id)
+                );
                 break;
 
             case '0':
@@ -206,11 +209,12 @@ class AdminLayoutHelper extends AppHelper
 
     public function adminMenus($options = array())
     {
-        echo $this->Html->tag('div', null, array('id' => 'accordion2', 'class' => 'accordion'));
+        echo $this->Html->tag('div', null, array('id' => 'accordion', 'class' => 'panel-group'));
         foreach ($options as $value => $val) {
             if ($this->Role->currentUserCan($val['capability'])) {
-                echo $this->Html->tag('div', null, array('class' => 'accordion-group'));
-                echo $this->Html->tag('div', null, array('class' => 'accordion-heading'));
+                echo $this->Html->tag('div', null, array('class' => 'panel panel-default'));
+                echo $this->Html->tag('div', null, array('class' => 'panel-heading'));
+                echo $this->Html->tag('h4', null, array('class' => 'panel-title'));
                 echo $this->Html->tag(
                     'a',
                     null,
@@ -228,26 +232,32 @@ class AdminLayoutHelper extends AppHelper
                 } elseif ($val['icon']['url']) {
                     echo $this->Html->image($val['icon']['url']);
                 }
-                echo $this->Html->tag('b', ' ' . $val['title']);
+                echo ' ' . $val['title'];
                 echo '</a>'; //a.accordion-toggle
-                echo '</div>'; //div.accordion-heading
+                echo '</h4>'; //h4.panel-title
+                echo '</div>'; //div.panel-heading
 
                 if (isset($val['sub_menus']) && is_array($val['sub_menus'])) {
                     echo $this->Html->tag(
                         'div',
                         null,
-                        array('id' => 'collapse-' . $value, 'class' => 'accordion-body collapse')
+                        array(
+                            'id' => 'collapse-' . $value,
+                            'class' => 'panel-collapse collapse',
+                            'style' => 'height: auto;'
+                        )
                     );
-                    echo $this->Html->tag('div', null, array('class' => 'accordion-inner'));
-                    echo $this->Html->tag('ul', null, array('class' => 'nav nav-list'));
+                    echo $this->Html->tag('div', null, array('class' => 'panel-body'));
+
+                    echo $this->Html->tag('ul', null, array('class' => 'list-group'));
                     foreach ($val['sub_menus'] as $key => $value) {
                         if ($this->Role->currentUserCan($value['capability'])) {
-                            echo $this->Html->tag('li', $this->Html->link($value['title'], $value['url']));
+                            echo $this->Html->link($value['title'], $value['url'], array('class' => 'list-group-item'));
                         }
                     }
                     echo '</ul>'; //ul.nav .nav-list
-                    echo '</div>'; //div.accordion-inner
-                    echo '</div>'; //div.accordion-body .collapse
+                    echo '</div>'; //div.panel-body
+                    echo '</div>'; //div.panel-collapse .collapse .in
                 }
                 echo '</div>'; //div.accordion-group
             }

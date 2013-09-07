@@ -1,6 +1,6 @@
 <div class="well installer">
     <?php echo $this->element('Installer/header', array('message' => __("Welcome to Hurad installer"))); ?>
-    <div class="container-fluid checking">
+    <div class="container checking">
         <div class="row">
             <div class="check-item php-version">
                 <?php

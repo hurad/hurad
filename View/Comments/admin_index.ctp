@@ -6,12 +6,12 @@
 </div>
 
 <section class="top-table">
-    <div class="row-fluid">
-        <div class="span6"><?php echo $this->element(
+    <div class="row">
+        <div class="col-md-8"><?php echo $this->element(
                 'admin/Comments/filter',
                 array('countComments' => $countComments)
             ); ?></div>
-        <div class="span6"><?php echo $this->element('admin/Comments/search'); ?></div>
+        <div class="col-md-4"><?php echo $this->element('admin/Comments/search'); ?></div>
     </div>
 </section>
 
@@ -157,22 +157,35 @@ echo $this->Form->create(
     </tfoot>
 </table>
 
-<section>
-    <?php
-    echo $this->Form->input(
-        'Comment.action',
-        array(
-            'label' => false,
-            'options' => array(
-                'approve' => __d('hurad', 'Approve'),
-                'disapprove' => __d('hurad', 'Disapprove'),
-                'delete' => __d('hurad', 'Delete'),
-                'spam' => __d('hurad', 'Spam'),
-                'trash' => __d('hurad', 'Move to trash'),
-            ),
-            'empty' => __d('hurad', 'Bulk Actions'),
-        )
-    );
-    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
-    ?>
+<section class="bottom-table">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Comment.action',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'approve' => __d('hurad', 'Approve'),
+                            'disapprove' => __d('hurad', 'Disapprove'),
+                            'delete' => __d('hurad', 'Delete'),
+                            'spam' => __d('hurad', 'Spam'),
+                            'trash' => __d('hurad', 'Move to trash'),
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
+            <?php
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
+            ?>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
+    </div>
 </section>

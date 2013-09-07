@@ -22,7 +22,7 @@ echo $this->Form->create(
 );
 ?>
 
-    <table class="table table-stripede">
+    <table class="table table-striped">
         <thead>
         <?php
         echo $this->Html->tableHeaders(
@@ -186,20 +186,33 @@ echo $this->Form->create(
         </tfoot>
     </table>
 
-    <section>
-        <?php
-        echo $this->Form->input(
-            'User.action',
-            array(
-                'label' => false,
-                'options' => array(
-                    'delete' => __d('hurad', 'Delete')
-                ),
-                'empty' => __d('hurad', 'Bulk Actions'),
-            )
-        );
-        echo $this->Form->submit(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
-        ?>
+    <section class="bottom-table">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <?php
+                    echo $this->Form->input(
+                        'User.action',
+                        array(
+                            'label' => false,
+                            'options' => array(
+                                'delete' => __d('hurad', 'Delete')
+                            ),
+                            'empty' => __d('hurad', 'Bulk Actions'),
+                            'class' => 'form-control'
+                        )
+                    );
+                    ?>
+                </div>
+                <?php
+                echo $this->Form->submit(
+                    __d('hurad', 'Apply'),
+                    array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+                );
+                ?>
+            </div>
+            <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
+        </div>
     </section>
 
 <?php echo $this->Form->end(null); ?>

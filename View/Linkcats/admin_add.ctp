@@ -69,7 +69,7 @@ echo $this->Form->create(
 <div class="control-group">
     <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label')); ?>
     <div class="controls">
-        <?php echo $this->Form->input('description', array('class' => 'span5')); ?>
+        <?php echo $this->Form->input('description', array('class' => 'col-md-5')); ?>
         <span class="help-block">
             <?php echo __d('hurad', 'The description is not prominent by default; however, some themes may show it.'); ?>
         </span>

@@ -4,7 +4,11 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/tags/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(
+            __d('hurad', 'Add New'),
+            '/admin/tags/add',
+            array('class' => 'btn btn-default btn-xs')
+        ); ?>
     </h2>
 </div>
 
@@ -170,41 +174,30 @@ echo $this->Form->create(
 </table>
 
 <section class="bottom-table">
-    <?php
-    echo $this->Form->input(
-        'Tag.action.bot',
-        array(
-            'label' => false,
-            'options' => array(
-                'delete' => __d('hurad', 'Delete'),
-            ),
-            'empty' => __d('hurad', 'Bulk Actions'),
-        )
-    );
-    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
-    ?>
-
-    <div class="pagination pull-right">
-        <ul>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Tag.action',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'delete' => __d('hurad', 'Delete'),
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
             <?php
-            if ($this->Paginator->numbers()) {
-                echo $this->Paginator->prev(
-                    '« ' . __d('hurad', 'Previous'),
-                    array('tag' => 'li'),
-                    null,
-                    array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled')
-                );
-                echo $this->Paginator->numbers(
-                    array('separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'a')
-                );
-                echo $this->Paginator->next(
-                    __d('hurad', 'Next') . ' »',
-                    array('tag' => 'li'),
-                    null,
-                    array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled')
-                );
-            }
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
             ?>
-        </ul>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
     </div>
 </section>

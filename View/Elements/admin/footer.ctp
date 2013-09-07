@@ -1,6 +1,6 @@
-<div class="navbar navbar-fixed-bottom">
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
     <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container">
             <p class="navbar-text"><?php echo __d(
                     'hurad',
                     'Powered by %s <small>(%s)</small>',
@@ -9,4 +9,4 @@
                 ); ?></p>
         </div>
     </div>
-</div>
+</nav>

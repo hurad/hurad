@@ -10,15 +10,15 @@
 </head>
 <body>
 <div id="content">
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="row-fluid">
-                <div class="span4 offset4">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
                     <?php echo $this->Session->flash('flash'); ?>
                 </div>
             </div>
-            <div class="row-fluid">
-                <div class="span4 offset4 well">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 well">
                     <div class="login-logo">
                         <?php echo $this->Html->image('hurad.png', array('width' => '80px')); ?>
                         <h1>Hurad

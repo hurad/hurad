@@ -5,9 +5,9 @@
 </div>
 
 <section class="top-table">
-    <div class="row-fluid">
-        <div class="span6"><!-- Filter --></div>
-        <div class="span6"><!-- Search --></div>
+    <div class="row">
+        <div class="col-md-6"><!-- Filter --></div>
+        <div class="col-md-6"><!-- Search --></div>
     </div>
 </section>
 
@@ -132,7 +132,11 @@ echo $this->Form->create(
     } else {
         echo $this->Html->tag(
             'tr',
-            $this->Html->tag('td', __d('hurad', 'No menus were found'), array('colspan' => '5', 'style' => 'text-align:center;')),
+            $this->Html->tag(
+                'td',
+                __d('hurad', 'No menus were found'),
+                array('colspan' => '5', 'style' => 'text-align:center;')
+            ),
             array('id' => 'menu-0')
         );
     }
@@ -187,18 +191,31 @@ echo $this->Form->create(
     </tfoot>
 </table>
 
-<section>
-    <?php
-    echo $this->Form->input(
-        'Menu.action',
-        array(
-            'label' => false,
-            'options' => array(
-                'delete' => __d('hurad', 'Delete')
-            ),
-            'empty' => __d('hurad', 'Bulk Actions'),
-        )
-    );
-    echo $this->Form->submit(__d('hurad', 'Apply'), array('class' => 'btn btn-info', 'div' => false));
-    ?>
+<section class="bottom-table">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Menu.action',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'delete' => __d('hurad', 'Delete')
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
+            <?php
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
+            ?>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
+    </div>
 </section>

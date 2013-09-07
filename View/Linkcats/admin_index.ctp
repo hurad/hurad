@@ -3,14 +3,18 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/linkcats/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(
+            __d('hurad', 'Add New'),
+            '/admin/linkcats/add',
+            array('class' => 'btn btn-default btn-xs')
+        ); ?>
     </h2>
 </div>
 
 <section class="top-table">
-    <div class="row-fluid">
-        <div class="span6"><!-- --></div>
-        <div class="span6"><?php echo $this->element('admin/Linkcats/search'); ?></div>
+    <div class="row">
+        <div class="col-md-8"><!-- --></div>
+        <div class="col-md-4"><?php echo $this->element('admin/Linkcats/search'); ?></div>
     </div>
 </section>
 
@@ -180,18 +184,31 @@ echo $this->Form->create(
     </tfoot>
 </table>
 
-<section>
-    <?php
-    echo $this->Form->input(
-        'Linkcat.action',
-        array(
-            'label' => false,
-            'options' => array(
-                'delete' => __d('hurad', 'Delete'),
-            ),
-            'empty' => __d('hurad', 'Bulk Actions'),
-        )
-    );
-    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
-    ?>
+<section class="bottom-table">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Linkcat.action',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'delete' => __d('hurad', 'Delete'),
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
+            <?php
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
+            ?>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
+    </div>
 </section>

@@ -4,7 +4,11 @@
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__d('hurad', 'Add New'), '/admin/categories/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(
+            __d('hurad', 'Add New'),
+            '/admin/categories/add',
+            array('class' => 'btn btn-default btn-xs')
+        ); ?>
     </h2>
 </div>
 
@@ -86,8 +90,14 @@ echo $this->Form->create(
                     array(
                         $this->Html->link(
                             '<strong>' . h($category['Category']['path']) . '</strong>',
-                            array('action' => 'edit', $category['Category']['id']),
-                            array('title' => __d('hurad', 'Edit “%s”', $category['Category']['path']), 'escape' => false)
+                            array(
+                                'action' => 'edit',
+                                $category['Category']['id']
+                            ),
+                            array(
+                                'title' => __d('hurad', 'Edit “%s”', $category['Category']['path']),
+                                'escape' => false
+                            )
                         ) . $this->element('admin/Categories/row_actions', array('category' => $category)),
                         array(
                             'class' => 'column-path'
@@ -177,20 +187,33 @@ echo $this->Form->create(
     </tfoot>
 </table>
 
-<section>
-    <?php
-    echo $this->Form->input(
-        'Category.action.bot',
-        array(
-            'label' => false,
-            'options' => array(
-                'delete' => __d('hurad', 'Delete'),
-            ),
-            'empty' => __d('hurad', 'Bulk Actions'),
-        )
-    );
-    echo $this->Form->button(__d('hurad', 'Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false));
-    ?>
+<section class="bottom-table">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Category.action',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'delete' => __d('hurad', 'Delete'),
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
+            <?php
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
+            ?>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
+    </div>
 </section>
 
 <div class="form-wrap">

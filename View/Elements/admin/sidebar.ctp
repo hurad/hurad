@@ -1,9 +1,9 @@
 <?php
 
-HuradNavigation::addMenu('dashboard', __d('hurad', 'Dashboard'), null, 'index', array('class' => 'icon-home'));
+HuradNavigation::addMenu('dashboard', __d('hurad', 'Dashboard'), null, 'index', array('class' => 'glyphicon glyphicon-home'));
 HuradNavigation::addSubMenu('dashboard', 'admin_home', __d('hurad', 'Home'), '/admin', 'index');
 
-HuradNavigation::addMenu('posts', __d('hurad', 'Posts'), '#', 'manage_posts', array('class' => 'icon-pencil'));
+HuradNavigation::addMenu('posts', __d('hurad', 'Posts'), '#', 'manage_posts', array('class' => 'glyphicon glyphicon-pencil'));
 HuradNavigation::addSubMenu(
     'posts',
     'all_posts',
@@ -33,7 +33,7 @@ HuradNavigation::addSubMenu(
     'manage_tags'
 );
 
-HuradNavigation::addMenu('links', __d('hurad', 'Links'), '#', 'manage_links', array('class' => 'icon-globe'));
+HuradNavigation::addMenu('links', __d('hurad', 'Links'), '#', 'manage_links', array('class' => 'glyphicon glyphicon-globe'));
 HuradNavigation::addSubMenu(
     'links',
     'all_links',
@@ -56,7 +56,7 @@ HuradNavigation::addSubMenu(
     'manage_links'
 );
 
-HuradNavigation::addMenu('pages', __d('hurad', 'Pages'), '#', 'manage_pages', array('class' => 'icon-file'));
+HuradNavigation::addMenu('pages', __d('hurad', 'Pages'), '#', 'manage_pages', array('class' => 'glyphicon glyphicon-file'));
 HuradNavigation::addSubMenu(
     'pages',
     'all_pages',
@@ -72,7 +72,7 @@ HuradNavigation::addSubMenu(
     'publish_pages'
 );
 
-HuradNavigation::addMenu('comments', __d('hurad', 'Comments'), '#', 'manage_comments', array('class' => 'icon-comment'));
+HuradNavigation::addMenu('comments', __d('hurad', 'Comments'), '#', 'manage_comments', array('class' => 'glyphicon glyphicon-comment'));
 HuradNavigation::addSubMenu(
     'comments',
     'all_comments',
@@ -81,7 +81,7 @@ HuradNavigation::addSubMenu(
     'manage_comments'
 );
 
-HuradNavigation::addMenu('appearance', __d('hurad', 'Appearance'), '#', 'manage_themes', array('class' => 'icon-asterisk'));
+HuradNavigation::addMenu('appearance', __d('hurad', 'Appearance'), '#', 'manage_themes', array('class' => 'glyphicon glyphicon-asterisk'));
 HuradNavigation::addSubMenu(
     'appearance',
     'themes',
@@ -111,7 +111,7 @@ HuradNavigation::addSubMenu(
     'manage_menus'
 );
 
-HuradNavigation::addMenu('plugins', __d('hurad', 'Plugins'), '#', 'manage_plugins', array('class' => 'icon-asterisk'));
+HuradNavigation::addMenu('plugins', __d('hurad', 'Plugins'), '#', 'manage_plugins', array('class' => 'glyphicon glyphicon-pushpin'));
 HuradNavigation::addSubMenu(
     'plugins',
     'all_plugins',
@@ -120,7 +120,7 @@ HuradNavigation::addSubMenu(
     'activate_plugins'
 );
 
-HuradNavigation::addMenu('users', __d('hurad', 'Users'), '#', 'manage_users', array('class' => 'icon-user'));
+HuradNavigation::addMenu('users', __d('hurad', 'Users'), '#', 'manage_users', array('class' => 'glyphicon glyphicon-user'));
 HuradNavigation::addSubMenu(
     'users',
     'all_users',
@@ -143,7 +143,7 @@ HuradNavigation::addSubMenu(
     'read'
 );
 
-HuradNavigation::addMenu('options', __d('hurad', 'Options'), '#', 'manage_options', array('class' => 'icon-user'));
+HuradNavigation::addMenu('options', __d('hurad', 'Options'), '#', 'manage_options', array('class' => 'glyphicon glyphicon-wrench'));
 HuradNavigation::addSubMenu(
     'options',
     'general',

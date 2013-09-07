@@ -1,15 +1,15 @@
 <?php $this->Html->script(array('holder'), array('block' => 'scriptHeader')); ?>
 <h3><?php echo __d('hurad', 'Current Theme'); ?></h3>
 <style>
-    ul.thumbnails li.span4:nth-child(3n + 4) {
+    ul.thumbnails li.col-md-4:nth-child(3n + 4) {
         margin-left: 0px;
     }
 
-    ul.thumbnails li.span3:nth-child(4n + 5) {
+    ul.thumbnails li.col-md-3:nth-child(4n + 5) {
         margin-left: 0px;
     }
 
-    ul.thumbnails li.span12 + li {
+    ul.thumbnails li.col-md-12 + li {
         margin-left: 0px;
     }
 
@@ -19,7 +19,7 @@
 </style>
 <div class="current-theme">
     <ul class="thumbnails">
-        <li class="span4">
+        <li class="col-md-4">
             <div class="thumbnail">
                 <?php
                 $viewPath = App::path('View');
@@ -83,7 +83,7 @@
                 continue;
             }
             ?>
-            <li class="span4">
+            <li class="col-md-4">
                 <div class="thumbnail">
                     <?php
                     $viewPath = App::path('View');

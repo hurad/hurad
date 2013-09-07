@@ -16,14 +16,14 @@ echo $this->Form->create(
 );
 ?>
 
-    <div class="row-fluid">
-        <div class="span8">
+    <div class="row">
+        <div class="col-md-8">
             <div class="control-group">
                 <div class="controls">
                     <?php echo $this->Form->input('id'); ?>
                     <?php echo $this->Form->input(
                         'title',
-                        array('type' => 'text', 'class' => 'span12 postTitle', 'placeholder' => __d('hurad', 'Enter title here'))
+                        array('type' => 'text', 'class' => 'col-md-12 postTitle', 'placeholder' => __d('hurad', 'Enter title here'))
                     ); ?>
                 </div>
             </div>
@@ -34,7 +34,7 @@ echo $this->Form->create(
                         'slug',
                         array(
                             'type' => 'text',
-                            'class' => 'postSlug span12',
+                            'class' => 'postSlug col-md-12',
                             'value' => Formatting::esc_attr(
                                 $this->Hook->applyFilters('editable_slug', $post['Post']['slug'])
                             ),
@@ -57,7 +57,7 @@ echo $this->Form->create(
                             <div class="controls">
                                 <?php echo $this->Form->input(
                                     'excerpt',
-                                    array('class' => 'span12', 'type' => 'textarea')
+                                    array('class' => 'col-md-12', 'type' => 'textarea')
                                 ); ?>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ echo $this->Form->create(
                 </div>
             </div>
         </div>
-        <div class="span4">
+        <div class="col-md-4">
             <div class="column">
                 <div class="portlet">
                     <div class="portlet-header">Publish</div>
@@ -127,7 +127,7 @@ echo $this->Form->create(
                                     date('Y', strtotime('+20 Years'))
                                     ,
                                     array(
-                                        'class' => 'input-small',
+                                        'class' => 'input-sm',
                                         'orderYear' => 'asc',
                                         'empty' => false
                                     )
@@ -135,7 +135,7 @@ echo $this->Form->create(
                                 ?>
                                 <?php echo $this->Form->month(
                                     'created',
-                                    array('empty' => false, 'class' => 'input-small')
+                                    array('empty' => false, 'class' => 'input-sm')
                                 ); ?>
                                 <?php echo $this->Form->day(
                                     'created',
