@@ -5,13 +5,13 @@ App::uses('AppController', 'Controller');
 /**
  * Posts Controller
  *
- * @property Post $Post
+ * @property Page $Page
  */
 class PagesController extends AppController
 {
 
     public $helpers = array('Page', 'Comment', 'Text', 'Editor');
-    public $components = array('RequestHandler', 'Role');
+    public $components = array('RequestHandler', 'Role', 'Hurad');
     public $paginate = array(
         'conditions' => array(
             'Page.status' => array('publish', 'draft'),
@@ -80,7 +80,10 @@ class PagesController extends AppController
     /**
      * view method
      *
-     * @param string $id
+     * @param null $slug
+     *
+     * @throws NotFoundException
+     * @internal param string $id
      *
      * @return void
      */
@@ -125,6 +128,7 @@ class PagesController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Add Page'));
         if ($this->request->is('post')) {
+            $this->request->data['Page']['created'] = $this->Hurad->dateParse($this->request->data['Page']['created']);
             $this->request->data['Page']['type'] = 'page';
             $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
@@ -212,6 +216,8 @@ class PagesController extends AppController
      *
      * @param string $id
      *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      * @return void
      */
     public function admin_delete($id = null)
