@@ -74,7 +74,9 @@ class AppController extends Controller
         //Cookie Configuration
         $this->Cookie->name = 'Hurad';
 
-        $this->theme = Configure::read('template');
+        if (!isset($this->params['admin'])) {
+            $this->theme = Configure::read('template');
+        }
 
         if (!Configure::read('Installed')) {
             $this->layout = 'install';
