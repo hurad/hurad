@@ -9,7 +9,8 @@ App::uses('AppModel', 'Model');
  * @property Category $ChildCategory
  * @property Post $Post
  */
-class Category extends AppModel {
+class Category extends AppModel
+{
 
     /**
      * Display field
@@ -100,36 +101,47 @@ class Category extends AppModel {
         )
     );
 
-    public function beforeDelete($cascade = true) {
+    public function beforeDelete($cascade = true)
+    {
         parent::beforeDelete($cascade);
         $action = $this->request->params['action'];
         if ($action == 'admin_delete') {
-            $cat = $this->find('first', array(
-                'conditions' => array('Category.id' => $this->request->params['pass'][0])
-            ));
+            $cat = $this->find(
+                'first',
+                array(
+                    'conditions' => array('Category.id' => $this->request->params['pass'][0])
+                )
+            );
             if (count($cat['Post']) > 0) {
                 foreach ($cat['Post'] as $key => $value) {
                     $this->query("DELETE FROM `categories_posts` WHERE `categories_posts`.`post_id` = " . $value['id']);
-                    $this->query("INSERT INTO `categories_posts` (`category_id`, `post_id`) VALUES ('37', '" . $value['id'] . "');");
+                    $this->query(
+                        "INSERT INTO `categories_posts` (`category_id`, `post_id`) VALUES ('37', '" . $value['id'] . "');"
+                    );
                 }
             }
-            $post_count = $this->find('count', array(
-                'joins' => array(
-                    array('table' => 'categories_posts',
-                        'alias' => 'CategoriesPost',
-                        'type' => 'INNER',
-                        'conditions' => array(
-                            'CategoriesPost.category_id' => 37,
+            $post_count = $this->find(
+                'count',
+                array(
+                    'joins' => array(
+                        array(
+                            'table' => 'categories_posts',
+                            'alias' => 'CategoriesPost',
+                            'type' => 'INNER',
+                            'conditions' => array(
+                                'CategoriesPost.category_id' => 37,
+                            )
                         )
-                    )
-                ),
-                'group' => 'post_id'
-            ));
+                    ),
+                    'group' => 'post_id'
+                )
+            );
             $this->query("UPDATE `categories` SET `post_count` = '" . $post_count . "' WHERE `categories`.`id` =37;");
         }
     }
 
-    public function afterSave($created) {
+    public function afterSave($created)
+    {
         parent::afterSave($created);
         $action = $this->request->params['action'];
         if ($action == 'admin_add' || $action == 'admin_edit') {
@@ -146,7 +158,8 @@ class Category extends AppModel {
                 $path_field = $this->data['Category']['name'];
             }
             $this->updateAll(
-                    array('Category.path' => "'$path_field'"), array('Category.id' => $this->data['Category']['id'])
+                array('Category.path' => "'$path_field'"),
+                array('Category.id' => $this->data['Category']['id'])
             );
         }
         if ($action == 'admin_process') {
@@ -163,12 +176,14 @@ class Category extends AppModel {
                 $path_field = $category['Category']['name'];
             }
             $this->updateAll(
-                    array('Category.path' => "'$path_field'"), array('Category.id' => $this->data['Category']['id'])
+                array('Category.path' => "'$path_field'"),
+                array('Category.id' => $this->data['Category']['id'])
             );
         }
     }
 
-    public function count_cats() {
+    public function count_cats()
+    {
 
         $cats = $this->find('count');
 
