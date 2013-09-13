@@ -1,17 +1,36 @@
 <?php
-
+/**
+ * Options Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Options Controller
+ * Class OptionsController
  *
  * @property Option $Option
  */
 class OptionsController extends AppController
 {
-
+    /**
+     * An array containing the names of helpers this controller uses.
+     *
+     * @var array
+     */
     public $helpers = array('Link');
 
+    /**
+     * List of options
+     *
+     * @param null|string $prefix
+     */
     public function admin_prefix($prefix = null)
     {
         $prefix_name = array(
@@ -31,7 +50,8 @@ class OptionsController extends AppController
         );
 
         if (count($options) == 0) {
-            $this->Session->setFlash(__("Invalid Option name"), 'error');
+            $this->Session->setFlash(__d('hurad', 'Invalid Option name'), 'error');
+            /* @todo Set admin prefix config */
             $this->redirect('/admin');
         }
 
@@ -41,7 +61,7 @@ class OptionsController extends AppController
 
             $opt = array();
 
-            foreach ($this->request->data as $modelName => $optionArray) {
+            foreach ($this->request->data as $optionArray) {
                 foreach ($optionArray as $option => $value) {
                     $opt[Inflector::humanize($prefix) . '.' . $option] = $value;
                 }

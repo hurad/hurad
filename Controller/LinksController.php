@@ -1,28 +1,52 @@
 <?php
-
+/**
+ * Links Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Links Controller
+ * Class LinksController
  *
  * @property Link $Link
  */
 class LinksController extends AppController
 {
-
+    /**
+     * An array containing the names of helpers this controller uses.
+     *
+     * @var array
+     */
     public $helpers = array('AdminLayout');
     /**
-     * Paginate option
+     * Other components utilized by CommentsController
+     *
+     * @var array
+     */
+    public $components = array('Paginator');
+    /**
+     * Paginate settings
      *
      * @var array
      */
     public $paginate = array(
+        'conditions' => array('Linkcat.type' => 'link_category'),
         'limit' => 25,
         'order' => array(
             'Link.created' => 'desc'
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -30,16 +54,16 @@ class LinksController extends AppController
     }
 
     /**
-     * Link list
+     * List of links
      */
     public function index()
     {
         $this->Link->recursive = 0;
-        $this->set('links', $this->paginate());
+        $this->set('links', $this->Paginator->paginate('Link'));
     }
 
     /**
-     * Admin link list
+     * List of links
      */
     public function admin_index()
     {
@@ -48,16 +72,22 @@ class LinksController extends AppController
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
-            $this->paginate['Link']['limit'] = 25;
-            $this->paginate['Link']['conditions'] = array(
-                'Link.name LIKE' => '%' . $q . '%',
+            $this->Paginator->settings = Hash::merge(
+                $this->paginate,
+                array(
+                    'Link' => array(
+                        'conditions' => array(
+                            'Link.name LIKE' => '%' . $q . '%',
+                        )
+                    )
+                )
             );
         }
-        $this->set('links', $this->paginate(array('Linkcat.type' => 'link_category')));
+        $this->set('links', $this->Paginator->paginate('Link'));
     }
 
     /**
-     * Admin links list by menu id
+     * List of links by menu id
      *
      * @param int $menuId
      *
@@ -73,13 +103,24 @@ class LinksController extends AppController
         $this->Link->Menu->recursive = 0;
         $menu = $this->Link->Menu->findById($menuId);
 
+        $this->Paginator->settings = Hash::merge(
+            $this->paginate,
+            array(
+                'Link' => array(
+                    'conditions' => array(
+                        'Link.menu_id' => $menuId,
+                    )
+                )
+            )
+        );
+
         $this->set('title_for_layout', sprintf(__d('hurad', 'Links: %s'), $menu['Menu']['name']));
-        $this->set('links', $this->paginate('Link', array('Link.menu_id' => $menuId)));
+        $this->set('links', $this->Paginator->paginate('Link'));
         $this->render('admin_index');
     }
 
     /**
-     * Admin add link
+     * Add link
      *
      * @param null|int $menuId
      *
@@ -136,9 +177,9 @@ class LinksController extends AppController
     }
 
     /**
-     * Admin edit link
+     * Edit link
      *
-     * @param null|int $id Link id
+     * @param null|int $id
      *
      * @throws NotFoundException
      */
@@ -170,7 +211,7 @@ class LinksController extends AppController
     }
 
     /**
-     * Admin delete link
+     * Delete link
      *
      * @param null|int $id
      *
@@ -195,7 +236,7 @@ class LinksController extends AppController
     }
 
     /**
-     * Admin link process
+     * Link processes
      */
     public function admin_process()
     {

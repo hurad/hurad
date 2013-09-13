@@ -1,17 +1,41 @@
 <?php
-
+/**
+ * Pages Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Posts Controller
+ * Class PagesController
  *
  * @property Page $Page
  */
 class PagesController extends AppController
 {
-
+    /**
+     * An array containing the names of helpers this controller uses.
+     *
+     * @var array
+     */
     public $helpers = array('Page', 'Comment', 'Text', 'Editor');
-    public $components = array('RequestHandler', 'Role', 'Hurad');
+    /**
+     * Other components utilized by CommentsController
+     *
+     * @var array
+     */
+    public $components = array('RequestHandler', 'Hurad');
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
         'conditions' => array(
             'Page.status' => array('publish', 'draft'),
@@ -23,6 +47,9 @@ class PagesController extends AppController
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -30,47 +57,40 @@ class PagesController extends AppController
     }
 
     /**
-     * index method
-     *
-     * @return void
+     * List of pages
      */
     public function index()
     {
         if ($this->RequestHandler->isRss()) {
-            $posts = $this->Page->find('all', array('limit' => 20, 'order' => 'Page.created DESC'));
-            return $this->set(compact('pages'));
+            $pages = $this->Page->find('all', array('limit' => 20, 'order' => 'Page.created DESC'));
+            $this->set(compact('pages'));
         } else {
-            //$this->Post->recursive = 0;
-            $this->paginate = array(
-                'conditions' => array('Page.type' => 'page'),
-                'contain' => array('User', 'Comment'),
-                'order' => array(
-                    'Page.created' => 'desc'
+            $this->Paginator->settings = Hash::merge(
+                $this->paginate,
+                array(
+                    'Page' => array(
+                        'contain' => array('User', 'Comment'),
+                        'conditions' => array(
+                            'Page.status' => array('publish'),
+                        ),
+                    )
                 )
             );
-            $this->set('pages', $this->paginate('Page'));
+            $this->set('pages', $this->Paginator->paginate('Page'));
         }
     }
 
     public function pageIndex()
     {
-        //$pages = $this->Post->generateTreeList(array('type' => 'page'));
-        //debug($this->request->named['sort']);
         $pages = $this->Post->find(
             'threaded',
             array(
                 'conditions' => array('Post.type' => 'page'),
                 'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
-                //'limit' => $this->request->named['limit'],
             )
         );
 
         if (!empty($this->request->params['requested'])) {
-//            foreach ($listpage as $id => $slug) {
-//                $pages[$id]['path'] = $slug;
-//                //$i++;
-//            }
-            //debug($pages);
             return $pages;
         } else {
             $this->set(compact($pages));
@@ -78,14 +98,11 @@ class PagesController extends AppController
     }
 
     /**
-     * view method
+     * View page
      *
-     * @param null $slug
+     * @param null|string $slug
      *
      * @throws NotFoundException
-     * @internal param string $id
-     *
-     * @return void
      */
     public function view($slug = null)
     {
@@ -99,9 +116,7 @@ class PagesController extends AppController
     }
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * List of pages
      */
     public function admin_index()
     {
@@ -110,19 +125,22 @@ class PagesController extends AppController
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
-            $this->paginate['Page']['limit'] = 25;
-            $this->paginate['Page']['conditions'] = array(
-                'Page.type' => 'page',
-                'Page.title LIKE' => '%' . $q . '%',
+            $this->Paginator->settings = Hash::merge(
+                $this->paginate,
+                array(
+                    'Page' => array(
+                        'conditions' => array(
+                            'Page.title LIKE' => '%' . $q . '%',
+                        )
+                    )
+                )
             );
         }
-        $this->set('pages', $this->paginate('Page'));
+        $this->set('pages', $this->Paginator->paginate('Page'));
     }
 
     /**
-     * admin_add method
-     *
-     * @return void
+     * Add page
      */
     public function admin_add()
     {
@@ -159,11 +177,9 @@ class PagesController extends AppController
     }
 
     /**
-     * admin_edit method
+     * Edit page
      *
-     * @param string $id
-     *
-     * @return void
+     * @param null|int $id
      */
     public function admin_edit($id = null)
     {
@@ -212,13 +228,12 @@ class PagesController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete page
      *
-     * @param string $id
+     * @param null|int $id
      *
      * @throws NotFoundException
      * @throws MethodNotAllowedException
-     * @return void
      */
     public function admin_delete($id = null)
     {
@@ -228,7 +243,6 @@ class PagesController extends AppController
         $this->Page->id = $id;
         if (!$this->Page->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid page'));
-            $this->redirect(array('action' => 'index'));
         }
         if ($this->Page->delete()) {
             $this->Session->setFlash(__d('hurad', 'Page deleted.'), 'flash_notice');
@@ -238,7 +252,14 @@ class PagesController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
-    public function admin_listByauthor($userId = null)
+    /**
+     * List of pages filtered by author
+     *
+     * @param null|int $userId
+     *
+     * @throws NotFoundException
+     */
+    public function admin_listByAuthor($userId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->user_id = $userId;
@@ -246,68 +267,82 @@ class PagesController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid author'));
         }
         $this->Page->recursive = 0;
-        $this->paginate['Page']['limit'] = 25;
-        $this->paginate['Page']['order'] = array('Page.created' => 'desc');
-        $this->paginate['Page']['conditions'] = array(
-            'Page.status' => array('publish', 'draft'),
-            'Page.type' => 'page',
-            'Page.user_id' => $userId,
+        $this->Paginator->settings = Hash::merge(
+            $this->paginate,
+            array(
+                'Page' => array(
+                    'conditions' => array(
+                        'Page.user_id' => $userId,
+                    )
+                )
+            )
         );
-        $this->set('pages', $this->paginate());
+        $this->set('pages', $this->Paginator->paginate('Page'));
         $this->render('admin_index');
     }
 
     /**
-     * admin_filter method
+     * Filter pages
      *
-     * @param string $action
-     *
-     * @return void
+     * @param null|string $action
      */
     public function admin_filter($action = null)
     {
+        $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->recursive = 0;
         $this->paginate = array();
         $this->paginate['limit'] = 25;
         switch ($action) {
             case 'publish':
                 $this->set('title_for_layout', __d('hurad', 'Pages Published'));
-                $this->paginate['conditions'] = array(
-                    'Page.status' => 'publish',
-                    'Page.type' => 'page'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    array(
+                        'Page' => array(
+                            'conditions' => array(
+                                'Page.status' => 'publish',
+                            )
+                        )
+                    )
                 );
                 break;
 
             case 'draft':
                 $this->set('title_for_layout', __d('hurad', 'Draft Pages'));
-                $this->paginate['conditions'] = array(
-                    'Page.status' => 'draft',
-                    'Page.type' => 'page'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    array(
+                        'Page' => array(
+                            'conditions' => array(
+                                'Page.status' => 'draft',
+                            )
+                        )
+                    )
                 );
                 break;
 
             case 'trash':
                 $this->set('title_for_layout', __d('hurad', 'Pages'));
-                $this->paginate['conditions'] = array(
-                    'Page.status' => 'trash',
-                    'Page.type' => 'page'
-                );
-                break;
-
-            default:
-                $this->set('title_for_layout', __d('hurad', 'Pages'));
-                $this->paginate['conditions'] = array(
-                    'Page.status' => array('publish', 'draft'),
-                    'Page.type' => 'page'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    array(
+                        'Page' => array(
+                            'conditions' => array(
+                                'Page.status' => 'trash',
+                            )
+                        )
+                    )
                 );
                 break;
         }
 
-        $this->paginate['order'] = array('Page.created' => 'desc');
-        $this->set('pages', $this->paginate('Page'));
+        $this->set('pages', $this->Paginator->paginate('Page'));
         $this->render('admin_index');
     }
 
+    /**
+     * Page processes
+     */
     public function admin_process()
     {
         $this->autoRender = false;
@@ -364,6 +399,13 @@ class PagesController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    /**
+     * Specific view file
+     *
+     * @param string $viewName Slug or page id
+     *
+     * @return bool
+     */
     private function _fallbackView($viewName)
     {
         if (file_exists(
@@ -374,6 +416,8 @@ class PagesController extends AppController
         ) {
             $this->render('view-' . $viewName);
             return true;
+        } else {
+            return false;
         }
     }
 
