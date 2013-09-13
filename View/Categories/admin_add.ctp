@@ -15,9 +15,9 @@ echo $this->Form->create(
 );
 ?>
 
-<div class="control-group <?php echo $this->Form->isFieldError('name') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('name') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'name',
@@ -26,22 +26,24 @@ echo $this->Form->create(
                     'nameRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
                     'attributes' => array(
                         'wrap' => 'span',
-                        'class' => 'help-inline'
+                        'class' => 'help-block'
                     )
                 ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             )
         );
         ?>
-        <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
+    </div>
+
+    <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
             <?php echo __d('hurad', 'The name is how it appears on your site.'); ?>
         </span>
-    </div>
 </div>
-<div class="control-group <?php echo $this->Form->isFieldError('slug') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('slug', __d('hurad', 'Slug'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group <?php echo $this->Form->isFieldError('slug') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('slug', __d('hurad', 'Slug'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'slug',
@@ -51,11 +53,12 @@ echo $this->Form->create(
                     'slugRule-2' => __d('hurad', 'This slug has already exist.'), //isUnique rule message
                     'attributes' => array(
                         'wrap' => 'span',
-                        'class' => 'help-inline'
+                        'class' => 'help-block'
                     )
                 ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             )
         );
         ?>
@@ -82,7 +85,10 @@ echo $this->Form->create(
     <div class="controls">
         <?php echo $this->Form->input('description', array('class' => 'col-md-5')); ?>
         <span class="help-block">
-            <?php echo __d('hurad', 'The description is not prominent by default; however, some themes may show it.'); ?>
+            <?php echo __d(
+                'hurad',
+                'The description is not prominent by default; however, some themes may show it.'
+            ); ?>
         </span>
     </div>
 </div>

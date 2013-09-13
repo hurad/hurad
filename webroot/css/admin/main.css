@@ -1,4 +1,4 @@
-#content {
+body {
     padding-top: 70px;
     padding-bottom: 70px;
 }
@@ -8,22 +8,25 @@
     padding-bottom: 0;
 }
 
-.accordion-inner .nav-list > li > a {
-    margin-left: -30px;
-    margin-right: -30px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+/*Start SideBar*/
+#sidebar ul.list-group {
+    margin-bottom: 0;
 }
 
-.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-    background-color: #7ba9be;
+#sidebar .panel-body {
+    padding: 0;
 }
 
-.accordion-inner {
-    padding: 0 15px;
-    border-top: none;
+#sidebar a.list-group-item {
+    border: 0;
 }
 
-.accordion-group, .table {
+#sidebar .list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.panel-group, .table {
     font-size: 12px;
 }
 
@@ -31,56 +34,12 @@ a.accordion-toggle {
     text-decoration: none;
 }
 
-.accordion-group {
+.panel-group {
     margin-bottom: 3px;
 }
 
-.nav-list > .active > a, .nav-list > li:last-of-type > a:hover {
-    border-radius: 0 0 3px 3px;
-}
-
-.accordion-heading {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background-color: #F5F5F5;
-    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
-    background-repeat: repeat-x;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #B3B3B3;
-    border-image: none;
-    border-radius: 3px 3px 3px 3px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-    color: #333333;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-    vertical-align: middle;
-}
-
-.table thead tr, .table tfoot tr {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background-color: #F5F5F5;
-    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
-    background-repeat: repeat-x;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
-    border-image: none;
-    border-radius: 3px 3px 3px 3px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-    color: #333333;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-    vertical-align: middle;
-}
-
-.table tbody tr {
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
+tbody tr:hover .row-actions {
+    visibility: visible;
 }
 
 .top-table .nav {
@@ -95,17 +54,9 @@ th a.desc:after {
     content: " ⇡";
 }
 
-.check-column {
-    padding: 0;
-    width: 0em;
-}
-
-.column-status {
-    width: 10%;
-}
-
-.column-actions {
-    width: 18%;
+.row-actions {
+    font-size: 10px;
+    visibility: hidden;
 }
 
 .action-view a, .action-delete a, .action-edit a {
@@ -122,15 +73,6 @@ th a.desc:after {
 
 .list-table a:hover, .list-table a:active, .list-table a:focus {
     color: #D54E21;
-}
-
-.row-actions {
-    font-size: 10px;
-    visibility: hidden;
-}
-
-tbody tr:hover .row-actions {
-    visibility: visible;
 }
 
 .form-wrap {
@@ -224,6 +166,10 @@ tbody tr:hover .row-actions {
     display: inline;
 }
 
+.bottom-table .paginate-counter{
+    padding-top: 8px;
+    font-size: 11px;
+}
 /*jQuery AutoComplete style*/
 .ui-autocomplete {
     position: absolute;

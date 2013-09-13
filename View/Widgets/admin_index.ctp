@@ -94,7 +94,7 @@
                 $("#draggable div.widget-item").draggable({
                     connectToSortable: "<?php echo implode(', ', array_values($side)); ?>",
                     helper: "clone",
-                    revert: "invalid",
+                    revert: "invalid"
                 });
                 $("ul, li").disableSelection();
             });
@@ -227,7 +227,7 @@
                     $(".sortable-header-" + sidebarID).children("div.pull-right").children("img").css("visibility", "hidden");
                 });
 
-            },
+            }
         }
 
     );

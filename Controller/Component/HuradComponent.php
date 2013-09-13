@@ -38,4 +38,20 @@ class HuradComponent extends Component
         $email->send($content);
     }
 
+    public function dateParse($date)
+    {
+        $output = array();
+        $dateArr = date_parse($date);
+        $output = array(
+            'year' => $dateArr['year'],
+            'month' => $dateArr['month'],
+            'day' => $dateArr['day'],
+            'hour' => $dateArr['hour'],
+            'min' => $dateArr['minute'],
+            'sec' => $dateArr['second']
+        );
+
+        return $output;
+    }
+
 }

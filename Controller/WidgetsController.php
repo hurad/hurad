@@ -26,10 +26,11 @@ class WidgetsController extends AppController
             $widgets_db = unserialize(Configure::read(Configure::read('template') . '.widgets'));
             //Before save sidebar widgets remove exist sidebar data in database.
             foreach (Configure::read('sidebars') as $id => $sidebar) {
-                if (key_exists($id, $this->request->data)) {
+                if (array_key_exists($id, $this->request->data)) {
                     unset($widgets_db[$id]);
                 }
             }
+            $wg = array();
             foreach ($this->request->data as $sidebar_id => $widgets) {
                 foreach ($widgets as $widget) {
                     foreach ($widget as $widget_id => $widget_data) {

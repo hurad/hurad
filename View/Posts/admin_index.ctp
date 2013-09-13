@@ -129,7 +129,7 @@ if (count($posts) > 0) {
                     array(
                         $this->Html->link(
                             $post['User']['username'],
-                            array('controller' => 'posts', 'action' => 'listByauthor', $this->Post->getTheID())
+                            array('controller' => 'posts', 'action' => 'listByAuthor', $post['Post']['user_id'])
                         ),
                         array(
                             'class' => 'column-author'

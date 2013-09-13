@@ -11,9 +11,15 @@ App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController
 {
 
-    public $components = array('Cookie', 'Session', 'Hurad', 'RequestHandler');
+    public $components = array('Cookie', 'Session', 'Hurad', 'RequestHandler', 'Paginator');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
     public $uses = array('User', 'UserMeta');
+    public $paginate = array(
+        'limit' => 10,
+        'order' => array(
+            'User.username' => 'desc'
+        )
+    );
 
     public function beforeFilter()
     {
@@ -46,19 +52,23 @@ class UsersController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Users'));
 
-        $this->paginate = array(
-            'contain' => array('UserMeta'),
+        $this->paginate = array_merge(
+            $this->paginate,
+            array(
+                'contain' => array('UserMeta'),
+            )
         );
+        $this->Paginator->settings = $this->paginate;
+        //$usersPaginate = $this->paginate('User');
+        $usersPaginate = $this->Paginator->paginate('User');
 
-        $users_paginate = $this->paginate('User');
-
-        foreach ($users_paginate as $key => $user) {
+        foreach ($usersPaginate as $key => $user) {
             if (isset($user['UserMeta']) && count($user['UserMeta']) >= 1) {
-                $users_paginate[$key]['UserMeta'] = Set::combine($user['UserMeta'], '{n}.meta_key', '{n}.meta_value');
+                $usersPaginate[$key]['UserMeta'] = Set::combine($user['UserMeta'], '{n}.meta_key', '{n}.meta_value');
             }
         }
 
-        $this->set('users', $users_paginate);
+        $this->set('users', $usersPaginate);
     }
 
     /**

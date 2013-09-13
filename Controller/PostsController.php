@@ -6,12 +6,15 @@ App::uses('AppController', 'Controller');
  * Posts Controller
  *
  * @property Post $Post
+ * @property Category $Category
+ * @property PostsTag $PostsTag
+ * @property Tag $Tag
  */
 class PostsController extends AppController
 {
 
     public $helpers = array('Post', 'Comment', 'Text', 'Editor');
-    public $components = array('RequestHandler', 'Role');
+    public $components = array('RequestHandler', 'Role', 'Hurad', 'Paginator');
     public $paginate = array(
         'conditions' => array(
             'Post.status' => array('publish', 'draft'),
@@ -65,35 +68,13 @@ class PostsController extends AppController
         }
     }
 
-    public function pageIndex()
-    {
-        //$pages = $this->Post->generateTreeList(array('type' => 'page'));
-        //debug($this->request->named['sort']);
-        $pages = $this->Post->find(
-            'threaded',
-            array(
-                'conditions' => array('Post.type' => 'page'),
-                'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
-                //'limit' => $this->request->named['limit'],
-            )
-        );
-
-        if (!empty($this->request->params['requested'])) {
-//            foreach ($listpage as $id => $slug) {
-//                $pages[$id]['path'] = $slug;
-//                //$i++;
-//            }
-            //debug($pages);
-            return $pages;
-        } else {
-            $this->set(compact($pages));
-        }
-    }
-
     /**
      * view method
      *
-     * @param string $id
+     * @param null $slug
+     *
+     * @throws NotFoundException
+     * @internal param string $id
      *
      * @return void
      */
@@ -123,7 +104,7 @@ class PostsController extends AppController
         }
     }
 
-    public function admin_listByauthor($userId = null)
+    public function admin_listByAuthor($userId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->User->id = $userId;
@@ -131,64 +112,61 @@ class PostsController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid author'));
         }
         $this->Post->recursive = 1;
-        $this->paginate = array(
-            'Post' => array(
-                'limit' => 25,
-                'order' => array('Post.created' => 'DESC'),
-                'conditions' => array(
-                    'Post.status' => array('publish', 'draft'),
-                    'Post.type' => 'post',
-                    'Post.user_id' => $userId,
+        $this->Paginator->settings = array_merge(
+            $this->paginate,
+            array(
+                'Post' => array(
+                    'conditions' => array(
+                        'Post.user_id' => $userId,
+                    )
                 )
             )
         );
-        $this->set('posts', $this->paginate());
+        $this->set('posts', $this->Paginator->paginate('Post'));
         $this->render('admin_index');
     }
 
-    public function admin_listBycategory($categoryId = null)
+    public function admin_listByCategory($categoryId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->Category->id = $categoryId;
         if (is_null($categoryId) || !$this->Post->Category->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid category'));
         }
-        $this->paginate = array(
-            'Post' => array(
-                'limit' => 25,
-                'order' => array('Post.created' => 'desc'),
-                'conditions' => array(
-                    'Post.status' => array('publish', 'draft'),
-                    'Post.type' => 'post',
-                    'CategoriesPost.category_id' => $categoryId,
+        $this->Paginator->settings = array_merge(
+            $this->paginate,
+            array(
+                'Post' => array(
+                    'conditions' => array(
+                        'CategoriesPost.category_id' => $categoryId,
+                    )
                 )
             )
         );
         $this->Post->bindModel(array('hasOne' => array('CategoriesPost')), false);
-        $this->set('posts', $this->paginate());
+        $this->set('posts', $this->Paginator->paginate('Post'));
         $this->render('admin_index');
     }
 
-    public function admin_listBytag($tagId = null)
+    public function admin_listByTag($tagId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->Tag->id = $tagId;
         if (is_null($tagId) || !$this->Post->Tag->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
-        $this->paginate = array(
-            'Post' => array(
-                'limit' => 25,
-                'order' => array('Post.created' => 'desc'),
-                'conditions' => array(
-                    'Post.status' => array('publish', 'draft'),
-                    'Post.type' => 'post',
-                    'PostsTag.tag_id' => $tagId,
+        $this->Paginator->settings = array_merge(
+            $this->paginate,
+            array(
+                'Post' => array(
+                    'conditions' => array(
+                        'PostsTag.tag_id' => $tagId,
+                    )
                 )
             )
         );
         $this->Post->bindModel(array('hasOne' => array('PostsTag')), false);
-        $this->set('posts', $this->paginate());
+        $this->set('posts', $this->Paginator->paginate('Post'));
         $this->render('admin_index');
     }
 
@@ -204,15 +182,16 @@ class PostsController extends AppController
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
-            $this->paginate['Post']['limit'] = 25;
-            $this->paginate['Post']['order'] = array('Post.created' => 'desc');
-            $this->paginate['Post']['conditions'] = array(
-                'Post.status' => array('publish', 'draft'),
-                'Post.type' => 'post',
-                'Post.title LIKE' => '%' . $q . '%',
+            $this->Paginator->settings = array_merge(
+                $this->paginate,
+                array(
+                    'Post' => array(
+                        'conditions' => array('Post.title LIKE' => '%' . $q . '%')
+                    )
+                )
             );
         }
-        $this->set('posts', $this->paginate('Post'));
+        $this->set('posts', $this->Paginator->paginate('Post'));
     }
 
     /**
@@ -220,7 +199,7 @@ class PostsController extends AppController
      *
      * @return void
      */
-    public function admin_add($type = 'post')
+    public function admin_add()
     {
         $this->set('title_for_layout', __d('hurad', 'Add Post'));
 
@@ -238,6 +217,7 @@ class PostsController extends AppController
         );
 
         if ($this->request->is('post')) {
+            $this->request->data['Post']['created'] = $this->Hurad->dateParse($this->request->data['Post']['created']);
             $this->request->data['Post'] = Functions::hr_parse_args($this->request->data['Post'], $defaults);
             // get the tags from the text data
             if ($this->request->data['Post']['tags']) {
@@ -343,6 +323,8 @@ class PostsController extends AppController
      *
      * @param string $id
      *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      * @return void
      */
     public function admin_delete($id = null)
@@ -353,7 +335,6 @@ class PostsController extends AppController
         $this->Post->id = $id;
         if (!$this->Post->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid post'));
-            $this->redirect(array('action' => 'index'));
         }
         if ($this->Post->delete()) {
             $this->Session->setFlash(__d('hurad', 'Post deleted'), 'flash_notice');
@@ -414,6 +395,7 @@ class PostsController extends AppController
             $this->render('view-' . $viewName);
             return true;
         }
+        return false;
     }
 
     /**

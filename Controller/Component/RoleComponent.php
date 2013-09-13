@@ -10,46 +10,11 @@ class RoleComponent extends Component
 
     public function checkAuthorization($user)
     {
-        switch (Router::getParam()) {
-            case "posts":
-                return $this->checkPostsAuthorization($user);
-                break;
-            case "categories":
-                return $this->checkCategoriesAuthorization($user);
-                break;
-            case "tags":
-                return $this->checkTagsAuthorization($user);
-                break;
-            case "links":
-                return $this->checkLinksAuthorization($user);
-                break;
-            case "linkcats":
-                return $this->checkLinkcatsAuthorization($user);
-                break;
-            case "pages":
-                return $this->checkPagesAuthorization($user);
-                break;
-            case "comments":
-                return $this->checkCommentsAuthorization($user);
-                break;
-            case "themes":
-                return $this->checkThemesAuthorization($user);
-                break;
-            case "widgets":
-                return $this->checkWidgetsAuthorization($user);
-                break;
-            case "menus":
-                return $this->checkMenusAuthorization($user);
-                break;
-            case "plugins":
-                return $this->checkPluginsAuthorization($user);
-                break;
-            case "users":
-                return $this->checkUsersAuthorization($user);
-                break;
-            case "options":
-                return $this->checkOptionsAuthorization($user);
-                break;
+        $controller = Inflector::camelize(Router::getParam());
+        if (is_callable(array($this, 'check' . $controller . 'Authorization'))) {
+            return $this->{'check' . $controller . 'Authorization'}($user);
+        } else {
+            return false;
         }
     }
 
