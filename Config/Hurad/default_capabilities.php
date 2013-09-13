@@ -60,6 +60,7 @@ HuradRole::addCap('administrator', 'manage_themes');
 HuradRole::addCap('administrator', 'switch_themes');
 HuradRole::addCap('administrator', 'delete_themes');
 HuradRole::addCap('administrator', 'manage_menus');
+HuradRole::addCap('administrator', 'manage_widgets');
 
 /*
  * Administrator Plugins Capability
