@@ -1,23 +1,16 @@
-##################
-# Temp directory #
-##################
+# tmp directory
 /tmp/
 
-############
-# NetBeans #
-############
+# IDE config files
 /nbproject/
+/.idea
 
-################################
-# Editor software auto created #
-################################
+# Editor software auto created
 *~
 *.bak
 *.swp
 
-######################
-# OS generated files #
-######################
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -27,8 +20,5 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
-###############
-# Config file #
-###############
+# Config file
 /Config/database.php
-/Plugin/debug_kit/

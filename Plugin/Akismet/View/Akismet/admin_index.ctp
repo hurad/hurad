@@ -1,5 +1,5 @@
 <style>
-    .key-valid{
+    .key-valid {
         padding: .5em;
         background-color: #2d2;
         color: #fff;
@@ -8,7 +8,8 @@
         border-radius: 4px;
         margin-top: 10px;
     }
-    .key-invalid{
+
+    .key-invalid {
         padding: .5em;
         background-color: #ff0000;
         color: #000;
@@ -26,13 +27,16 @@
 </div>
 
 <?php
-echo $this->Form->create('Akismet', array(
-    'class' => 'form-horizontal',
-    'inputDefaults' => array(
-        'label' => false,
-        'div' => false
+echo $this->Form->create(
+    'Akismet',
+    array(
+        'class' => 'form-horizontal',
+        'inputDefaults' => array(
+            'label' => false,
+            'div' => false
+        )
     )
-));
+);
 ?>
 
 <div class="control-group">
@@ -52,7 +56,6 @@ echo $this->Form->create('Akismet', array(
     </div>
 
 </div>
-
 
 
 <div class="form-actions">

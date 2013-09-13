@@ -5,7 +5,8 @@
  *
  * @author mohammad
  */
-class HelloModel extends HelloWorldAppModel {
+class HelloModel extends HelloWorldAppModel
+{
 
     public $name = 'Hello';
 

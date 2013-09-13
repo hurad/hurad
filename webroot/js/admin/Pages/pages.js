@@ -12,7 +12,7 @@ var Pages = {};
  *
  * @return void
  */
-Pages.documentReady = function() {
+Pages.documentReady = function () {
     Pages.search();
     if (Hurad.params.action == 'admin_add', 'admin_edit') {
         Pages.widget();
@@ -24,9 +24,9 @@ Pages.documentReady = function() {
  *
  * @return void
  */
-Pages.search = function() {
+Pages.search = function () {
 
-    $('#AdminSearchForm').submit(function() {
+    $('#AdminSearchForm').submit(function () {
         var q = '';
 
         //query string
@@ -48,16 +48,16 @@ Pages.search = function() {
  *
  * @return void
  */
-Pages.widget = function() {
-    $(function() {
+Pages.widget = function () {
+    $(function () {
         $(".column").sortable({
             connectWith: ".column"
         });
         $(".portlet").find(".portlet-header")
-                .prepend("<span class='ui-icon ui-icon-minusthick'></span>")
-                .end()
-                .find(".portlet-content");
-        $(".portlet-header .ui-icon").click(function() {
+            .prepend("<span class='ui-icon ui-icon-minusthick'></span>")
+            .end()
+            .find(".portlet-content");
+        $(".portlet-header .ui-icon").click(function () {
             $(this).toggleClass("ui-icon-minusthick").toggleClass("ui-icon-plusthick");
             $(this).parents(".portlet:first").find(".portlet-content").toggle();
         });
@@ -71,7 +71,7 @@ Pages.widget = function() {
  *
  * @return void
  */
-$(document).ready(function() {
+$(document).ready(function () {
     if (Hurad.params.controller == 'pages') {
         Pages.documentReady();
     }

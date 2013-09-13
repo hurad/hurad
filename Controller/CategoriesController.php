@@ -16,11 +16,13 @@
 App::uses('AppController', 'Controller');
 
 /**
- * CategoriesController is used for managing Hurd categories.
+ * CategoriesController is used for managing Hurad categories.
  *
  * @package app.Controller
+ * @property Category $Category
  */
-class CategoriesController extends AppController {
+class CategoriesController extends AppController
+{
 
     public $paginate = array(
         'limit' => 5,
@@ -29,33 +31,11 @@ class CategoriesController extends AppController {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         $this->Session->delete('Message.auth');
         $this->Auth->allow('index');
-    }
-
-    public function isAuthorized() {
-        $action = Router::getParam('action');
-        switch ($this->Auth->user('role')) {
-            case 'admin':
-                return TRUE;
-                break;
-            case 'editor':
-                if ($action == 'admin_index' || $action == 'admin_add' || $action == 'admin_edit' || $action == 'index') {
-                    return TRUE;
-                }
-                break;
-            case 'author':
-                if ($action == 'admin_index') {
-                    return TRUE;
-                }
-                break;
-            case 'user':
-            default :
-                return FALSE;
-                break;
-        }
     }
 
     /**
@@ -63,13 +43,16 @@ class CategoriesController extends AppController {
      *
      * @return void
      */
-    public function index() {
-        $this->autoRender = FALSE;
+    public function index()
+    {
+        $this->autoRender = false;
         if (!empty($this->request->params['requested'])) {
-            $cats = $this->Category->find('threaded', array(
-                'order' => array('Category.' . $this->request->named['sort'] => $this->request->named['direction']),
+            $cats = $this->Category->find(
+                'threaded',
+                array(
+                    'order' => array('Category.' . $this->request->named['sort'] => $this->request->named['direction']),
                     //'limit' => $this->request->named['limit'],
-                    )
+                )
             );
             return $cats;
         } else {
@@ -83,12 +66,13 @@ class CategoriesController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
-        $this->set('title_for_layout', __('Categories'));
+    public function admin_index()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Categories'));
         $this->paginate = array(
             'order' => array('Category.lft' => 'ASC'),
             'limit' => 20,
-            'contain' => FALSE
+            'contain' => false
         );
         $this->set('categories', $this->paginate());
     }
@@ -98,16 +82,25 @@ class CategoriesController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
-        $this->set('title_for_layout', __('Add New Category'));
+    public function admin_add()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Add New Category'));
         if ($this->request->is('post')) {
             $this->Category->create();
             //$this->request->data['Category']['parent_id'] = $this->ModelName->getInsertID();
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash(__('The category has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The category has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The category could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
         $parentCategories = $this->Category->generateTreeList();
@@ -119,20 +112,31 @@ class CategoriesController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
+     * @throws NotFoundException
      * @return void
      */
-    public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Category'));
+    public function admin_edit($id = null)
+    {
+        $this->set('title_for_layout', __d('hurad', 'Edit Category'));
         $this->Category->id = $id;
         if (!$this->Category->exists()) {
-            throw new NotFoundException(__('Invalid category'));
+            throw new NotFoundException(__d('hurad', 'Invalid category'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Category->save($this->request->data)) {
-                $this->Session->setFlash(__('The category has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The category has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The category could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The category could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'error')
+                );
             }
         } else {
             $this->request->data = $this->Category->read(null, $id);
@@ -146,31 +150,48 @@ class CategoriesController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
         $this->Category->id = $id;
         if (!$this->Category->exists()) {
-            throw new NotFoundException(__('Invalid category'));
-        } elseif ($id == '37') {
-            $this->Session->setFlash(__('You are not deleted uncategorized Category'), 'notice');
+            throw new NotFoundException(__d('hurad', 'Invalid category'));
+        } elseif ($id == '1') {
+            $this->Session->setFlash(__d('hurad', 'You could not delete Uncategorized category.'), 'flash_message');
             $this->redirect(array('action' => 'index'));
         }
 
         if ($this->Category->removeFromTree($id, true)) {
-            $this->Session->setFlash(__('Category deleted'), 'success');
+            $this->Session->setFlash(
+                __d('hurad', 'Category was deleted'),
+                'flash_message',
+                array('class' => 'success')
+            );
+            $this->redirect(array('action' => 'index'));
+        } else {
+            $this->Session->setFlash(
+                __d('hurad', 'Category was not deleted'),
+                'flash_message',
+                array('class' => 'error')
+            );
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Category was not deleted'), 'error');
-        $this->redirect(array('action' => 'index'));
     }
 
-    public function admin_process() {
+    /**
+     * admin_process method
+     */
+    public function admin_process()
+    {
         $this->autoRender = false;
-        $action = NULL;
+        $action = null;
         if ($this->request->data['Category']['action']['top']) {
             $action = $this->request->data['Category']['action']['top'];
         } elseif ($this->request->data['Category']['action']['bot']) {
@@ -184,10 +205,10 @@ class CategoriesController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'No item selected.'), 'flash_message');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message');
             $this->redirect(array('action' => 'index'));
         }
 
@@ -197,12 +218,20 @@ class CategoriesController extends AppController {
                     $this->Category->removeFromTree($value);
                 }
                 // if ($this->Category->deleteAll(array('Category.id' => $ids), true, true)) {
-                $this->Session->setFlash(__('Categories deleted.'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'Categories was deleted.'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 //}
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'error')
+                );
                 break;
         }
         $this->redirect(array('action' => 'index'));

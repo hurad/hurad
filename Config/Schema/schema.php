@@ -7,7 +7,7 @@ class AppSchema extends CakeSchema {
     }
 
     public function after($event = array()) {
-        
+
     }
 
     public $categories = array(

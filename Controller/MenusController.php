@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  *
  * @property Menu $Menu
  */
-class MenusController extends AppController {
+class MenusController extends AppController
+{
 
     public $paginate = array(
         'conditions' => array(
@@ -19,38 +20,13 @@ class MenusController extends AppController {
         )
     );
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return true;
-                break;
-            case 'editor':
-                if ($action == 'admin_add' || $action == 'admin_edit' || $action == 'admin_index') {
-                    return true;
-                }
-                break;
-            case 'author':
-                if ($action == 'admin_index') {
-                    return true;
-                }
-                break;
-            case 'user':
-                return false;
-                break;
-        }
-    }
-
     /**
      * index method
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $this->Menu->recursive = 0;
         $this->set('menus', $this->paginate());
     }
@@ -59,12 +35,14 @@ class MenusController extends AppController {
      * view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
-            throw new NotFoundException(__('Invalid menu'));
+            throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         $this->set('menu', $this->Menu->read(null, $id));
     }
@@ -74,14 +52,15 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function add() {
+    public function add()
+    {
         if ($this->request->is('post')) {
             $this->Menu->create();
             if ($this->Menu->save($this->request->data)) {
-                $this->Session->setFlash(__('The menu has been saved'));
+                $this->Session->setFlash(__d('hurad', 'The menu has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The menu could not be saved. Please, try again.'));
+                $this->Session->setFlash(__d('hurad', 'The menu could not be saved. Please, try again.'));
             }
         }
     }
@@ -90,19 +69,21 @@ class MenusController extends AppController {
      * edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
-            throw new NotFoundException(__('Invalid menu'));
+            throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Menu->save($this->request->data)) {
-                $this->Session->setFlash(__('The menu has been saved'));
+                $this->Session->setFlash(__d('hurad', 'The menu has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The menu could not be saved. Please, try again.'));
+                $this->Session->setFlash(__d('hurad', 'The menu could not be saved. Please, try again.'));
             }
         } else {
             $this->request->data = $this->Menu->read(null, $id);
@@ -113,21 +94,23 @@ class MenusController extends AppController {
      * delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
-            throw new NotFoundException(__('Invalid menu'));
+            throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         if ($this->Menu->delete()) {
-            $this->Session->setFlash(__('Menu deleted'));
+            $this->Session->setFlash(__d('hurad', 'Menu deleted'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Menu was not deleted'));
+        $this->Session->setFlash(__d('hurad', 'Menu was not deleted'));
         $this->redirect(array('action' => 'index'));
     }
 
@@ -136,8 +119,9 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
-        $this->set('title_for_layout', __('Menus'));
+    public function admin_index()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Menus'));
         $this->Menu->recursive = 0;
         $this->set('menus', $this->paginate());
     }
@@ -146,12 +130,14 @@ class MenusController extends AppController {
      * admin_view method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_view($id = null) {
+    public function admin_view($id = null)
+    {
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
-            throw new NotFoundException(__('Invalid menu'));
+            throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         $this->set('menu', $this->Menu->read(null, $id));
     }
@@ -161,15 +147,17 @@ class MenusController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
-        $this->set('title_for_layout', __('Add Menu'));
+    public function admin_add()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Add Menu'));
         if ($this->request->is('post')) {
+            $this->request->data['Menu']['type'] = 'nav_menu';
             $this->Menu->create();
             if ($this->Menu->save($this->request->data)) {
-                $this->Session->setFlash(__('The menu has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The menu has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The menu could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The menu could not be saved. Please, try again.'), 'error');
             }
         }
     }
@@ -178,20 +166,22 @@ class MenusController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Menu'));
+    public function admin_edit($id = null)
+    {
+        $this->set('title_for_layout', __d('hurad', 'Edit Menu'));
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
-            throw new NotFoundException(__('Invalid menu'));
+            throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Menu->save($this->request->data)) {
-                $this->Session->setFlash(__('The menu has been saved'), 'notice');
+                $this->Session->setFlash(__d('hurad', 'The menu has been saved'), 'notice');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The menu could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The menu could not be saved. Please, try again.'), 'error');
             }
         } else {
             $this->request->data = $this->Menu->read(null, $id);
@@ -202,21 +192,23 @@ class MenusController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
         $this->Menu->id = $id;
         if (!$this->Menu->exists()) {
-            throw new NotFoundException(__('Invalid menu'));
+            throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         if ($this->Menu->delete()) {
-            $this->Session->setFlash(__('Menu deleted'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'Menu deleted'), 'notice');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Menu was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'Menu was not deleted'), 'error');
         $this->redirect(array('action' => 'index'));
     }
 

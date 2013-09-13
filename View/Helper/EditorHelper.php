@@ -2,7 +2,8 @@
 
 App::uses('AppHelper', 'View/Helper');
 
-class EditorHelper extends AppHelper {
+class EditorHelper extends AppHelper
+{
 
     /**
      * Other helpers used by this helper
@@ -30,39 +31,48 @@ class EditorHelper extends AppHelper {
         'skin_variant' => 'silver',
     );
 
-    public function beforeRender($viewFile) {
+    public function beforeRender($viewFile)
+    {
         parent::beforeRender($viewFile);
         $this->Html->script('admin/tiny_mce/tiny_mce.js', array('block' => 'scriptHeader'));
-        $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($this->editorSettings()) . ');', array('block' => 'scriptHeader'));
+        $this->Html->scriptBlock(
+            'tinyMCE.init(' . $this->Js->object($this->editorSettings()) . ');',
+            array('block' => 'scriptHeader')
+        );
     }
 
-    public function editorSettings() {
-        $theme_buttons1 = $this->Hook->applyFilters('tiny_theme_buttons1', array(
-            array('bold', 'italic', 'underline'),
-            array('strikethrough', 'removeformat'),
-            array('bullist', 'numlist'),
-            array('outdent', 'indent', 'blockquote'),
-            array('justifyleft', 'justifycenter', 'justifyright', 'justifyfull'),
-            array('ltr', 'rtl'),
-            array('formatselect'),
-                )
+    public function editorSettings()
+    {
+        $theme_buttons1 = $this->Hook->applyFilters(
+            'tiny_theme_buttons1',
+            array(
+                array('bold', 'italic', 'underline'),
+                array('strikethrough', 'removeformat'),
+                array('bullist', 'numlist'),
+                array('outdent', 'indent', 'blockquote'),
+                array('justifyleft', 'justifycenter', 'justifyright', 'justifyfull'),
+                array('ltr', 'rtl'),
+                array('formatselect'),
+            )
         );
 
         foreach ($theme_buttons1 as $key => $value) {
             $buttons1[] = implode(',', $value);
         }
 
-        $theme_buttons2 = $this->Hook->applyFilters('tiny_theme_buttons2', array(
-            array('forecolor', 'backcolor'),
-            array('pastetext', 'pasteword'),
-            array('charmap', 'media'),
-            array('undo', 'redo'),
-            array('link', 'unlink', 'image', 'cleanup'),
-            array('backcolor'),
-            array('sub', 'sup'),
-            array('spellchecker', 'code'),
-            array('fullscreen', 'help'),
-                )
+        $theme_buttons2 = $this->Hook->applyFilters(
+            'tiny_theme_buttons2',
+            array(
+                array('forecolor', 'backcolor'),
+                array('pastetext', 'pasteword'),
+                array('charmap', 'media'),
+                array('undo', 'redo'),
+                array('link', 'unlink', 'image', 'cleanup'),
+                array('backcolor'),
+                array('sub', 'sup'),
+                array('spellchecker', 'code'),
+                array('fullscreen', 'help'),
+            )
         );
 
         foreach ($theme_buttons2 as $key => $value) {

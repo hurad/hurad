@@ -7,23 +7,27 @@ App::uses('User', 'Model');
  *
  * @author mohammad
  */
-class UserTest extends CakeTestCase {
+class UserTest extends CakeTestCase
+{
 
     public $fixtures = array('app.user', 'app.userMeta');
     public $User;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->User = ClassRegistry::init('User');
     }
 
-    public function testGetInstance() {
+    public function testGetInstance()
+    {
         $created = $this->User->field('created', array('User.username' => 'admin'));
 
         $this->assertEquals($created, '2007-03-17 01:16:23', 'Created Date');
     }
 
-    public function testGetUsers() {
+    public function testGetUsers()
+    {
         $args = array(
             'orderby' => 'created',
             'order' => 'asc',
@@ -68,7 +72,8 @@ class UserTest extends CakeTestCase {
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetUserData() {
+    public function testGetUserData()
+    {
         $result = $this->User->getUserData(1);
 
         $expected = array(
@@ -93,7 +98,8 @@ class UserTest extends CakeTestCase {
         $this->assertEquals($expected, $result);
     }
 
-    public function testDeleteUsers() {
+    public function testDeleteUsers()
+    {
         //Delete first admin
         $this->User->id = 1;
         $result = $this->User->delete();

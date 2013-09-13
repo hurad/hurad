@@ -1,4 +1,3 @@
-
 <?php if (!empty($post['Comment'])): ?>
     <?php
     $i = 0;
@@ -20,7 +19,10 @@
         <?php //echo $comment['rght']; ?>
 
         <?php //echo $comment['modified']; ?>
-        <?php echo $this->Html->link('Reply', array('controller' => 'comments', 'action' => 'reply', $post['Post']['id'], $comment['id']));
+        <?php echo $this->Html->link(
+        'Reply',
+        array('controller' => 'comments', 'action' => 'reply', $post['Post']['id'], $comment['id'])
+    );
         ?>
         <hr>
     <?php endforeach; ?>

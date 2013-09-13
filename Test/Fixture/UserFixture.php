@@ -5,7 +5,8 @@
  *
  * @author mohammad
  */
-class UserFixture extends CakeTestFixture {
+class UserFixture extends CakeTestFixture
+{
 
     /**
      * name property

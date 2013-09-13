@@ -1,159 +1,203 @@
-<?php $this->Html->css(array('admin/Tags/tags'), null, array('inline' => FALSE)); ?>
+<?php $this->Html->css(array('admin/Tags/tags'), null, array('inline' => false)); ?>
 <?php $this->Html->script(array('admin/checkbox'), array('block' => 'headerScript')); ?>
 
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
-        <?php echo $this->Html->link(__('Add New'), '/admin/tags/add', array('class' => 'btn btn-mini')); ?>
+        <?php echo $this->Html->link(
+            __d('hurad', 'Add New'),
+            '/admin/tags/add',
+            array('class' => 'btn btn-default btn-xs')
+        ); ?>
     </h2>
 </div>
 
 <?php
-echo $this->Form->create('Tag', array('url' =>
-    array('admin' => TRUE, 'controller' => 'tags', 'action' => 'process'),
-    'class' => 'form-inline',
-    'inputDefaults' =>
-    array('label' => false, 'div' => false)));
+echo $this->Form->create(
+    'Tag',
+    array(
+        'url' =>
+        array('admin' => true, 'controller' => 'tags', 'action' => 'process'),
+        'class' => 'form-inline',
+        'inputDefaults' =>
+        array('label' => false, 'div' => false)
+    )
+);
 ?>
 
 <table class="table table-striped">
     <thead>
-        <?php
-        echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+    <?php
+    echo $this->Html->tableHeaders(
+        array(
+            array(
+                $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('name', __('Name')) => array(
+            array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('description', __('Description')) => array(
+            array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('slug', __('Slug')) => array(
+            array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('post_count', __('Posts')) => array(
+            array(
+                $this->Paginator->sort('post_count', __d('hurad', 'Posts')) => array(
                     'id' => 'posts',
                     'class' => 'column-posts column-manage',
                     'scope' => 'col'
                 )
             )
-        ));
-        ?>
+        )
+    );
+    ?>
     </thead>
     <tbody>
-        <?php foreach ($tags AS $tag): ?>
-            <?php
-            echo $this->Html->tableCells(array(
+    <?php foreach ($tags AS $tag): ?>
+        <?php
+        echo $this->Html->tableCells(
+            array(
                 array(
-                    array($this->Form->checkbox('Tag.' . $tag['Tag']['id'] . '.id'),
+                    array(
+                        $this->Form->checkbox('Tag.' . $tag['Tag']['id'] . '.id'),
                         array(
                             'class' => 'check-column',
-                            'scope' => 'row')
+                            'scope' => 'row'
+                        )
                     ),
-                    array($this->Html->link('<strong>' . h($tag['Tag']['name']) . '</strong>', array('action' => 'edit', $tag['Tag']['id']), array('title' => __('Edit “%s”', $tag['Tag']['name']), 'escape' => FALSE)) . $this->element('admin/Tags/row_actions', array('tag' => $tag)),
+                    array(
+                        $this->Html->link(
+                            '<strong>' . h($tag['Tag']['name']) . '</strong>',
+                            array('action' => 'edit', $tag['Tag']['id']),
+                            array('title' => __d('hurad', 'Edit “%s”', $tag['Tag']['name']), 'escape' => false)
+                        ) . $this->element('admin/Tags/row_actions', array('tag' => $tag)),
                         array(
                             'class' => 'column-name'
                         )
                     ),
-                    array(h($tag['Tag']['description']),
+                    array(
+                        h($tag['Tag']['description']),
                         array(
                             'class' => 'column-description'
                         )
                     ),
-                    array(h($tag['Tag']['slug']),
+                    array(
+                        h($tag['Tag']['slug']),
                         array(
                             'class' => 'column-slug'
                         )
                     ),
-                    array($this->Html->link($this->Html->tag('span', $tag['Tag']['post_count'], array('class' => 'badge')), array('admin' => TRUE, 'controller' => 'posts', 'action' => 'listBytag', $tag['Tag']['id']), array('escape' => FALSE)),
+                    array(
+                        $this->Html->link(
+                            $this->Html->tag('span', $tag['Tag']['post_count'], array('class' => 'badge')),
+                            array('admin' => true, 'controller' => 'posts', 'action' => 'listBytag', $tag['Tag']['id']),
+                            array('escape' => false)
+                        ),
                         array(
                             'class' => 'column-posts'
                         )
                     )
                 ),
-                    ), array(
+            ),
+            array(
                 'id' => 'tag-' . $tag['Tag']['id']
-                    ), array(
+            ),
+            array(
                 'id' => 'tag-' . $tag['Tag']['id']
-                    )
-            );
-            ?>
-        <?php endforeach; ?>
+            )
+        );
+        ?>
+    <?php endforeach; ?>
     </tbody>
     <tfoot>
-        <?php
-        echo $this->Html->tableHeaders(array(
-            array($this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
+    <?php
+    echo $this->Html->tableHeaders(
+        array(
+            array(
+                $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
                 array(
                     'id' => 'cb',
                     'class' => 'column-cb check-column column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('name', __('Name')) => array(
+            array(
+                $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('description', __('Description')) => array(
+            array(
+                $this->Paginator->sort('description', __d('hurad', 'Description')) => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('slug', __('Slug')) => array(
+            array(
+                $this->Paginator->sort('slug', __d('hurad', 'Slug')) => array(
                     'id' => 'slug',
                     'class' => 'column-slug column-manage',
                     'scope' => 'col'
                 )
             ),
-            array($this->Paginator->sort('post_count', __('Posts')) => array(
+            array(
+                $this->Paginator->sort('post_count', __d('hurad', 'Posts')) => array(
                     'id' => 'posts',
                     'class' => 'column-posts column-manage',
                     'scope' => 'col'
                 )
             )
-        ));
-        ?>
+        )
+    );
+    ?>
     </tfoot>
 </table>
 
 <section class="bottom-table">
-    <?php
-    echo $this->Form->input('Tag.action.bot', array(
-        'label' => false,
-        'options' => array(
-            'delete' => __('Delete'),
-        ),
-        'empty' => __('Bulk Actions'),
-    ));
-    echo $this->Form->button(__('Apply'), array('type' => 'submit', 'class' => 'btn btn-info', 'div' => FALSE));
-    ?>
-
-    <div class="pagination pull-right">
-        <ul>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input(
+                    'Tag.action',
+                    array(
+                        'label' => false,
+                        'options' => array(
+                            'delete' => __d('hurad', 'Delete'),
+                        ),
+                        'empty' => __d('hurad', 'Bulk Actions'),
+                        'class' => 'form-control'
+                    )
+                );
+                ?>
+            </div>
             <?php
-            if ($this->Paginator->numbers()) {
-                echo $this->Paginator->prev('« ' . __('Previous'), array('tag' => 'li'), null, array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled'));
-                echo $this->Paginator->numbers(array('separator' => '', 'tag' => 'li', 'currentClass' => 'active', 'currentTag' => 'a'));
-                echo $this->Paginator->next(__('Next') . ' »', array('tag' => 'li'), null, array('tag' => 'li', 'disabledTag' => 'a', 'class' => 'disabled'));
-            }
+            echo $this->Form->submit(
+                __d('hurad', 'Apply'),
+                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
+            );
             ?>
-        </ul>
+        </div>
+        <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
     </div>
 </section>

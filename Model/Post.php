@@ -9,13 +9,15 @@ App::uses('AppModel', 'Model');
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
+ * @todo Edit phpDoc
  * @package Hurad
  * @category Model
  * @since 1.0.0
- * @license GPLv3 License (http://opensource.org/licenses/GPL-3.0) 
+ * @license GPLv3 License (http://opensource.org/licenses/GPL-3.0)
  * @link http://hurad.org Hurad Project
  */
-class Post extends AppModel {
+class Post extends AppModel
+{
 
     /**
      * The displayField attribute specifies which database field should be used as a label for the record.
@@ -121,7 +123,8 @@ class Post extends AppModel {
         ),
     );
 
-    public function afterDelete() {
+    public function afterDelete()
+    {
         parent::afterDelete();
         $this->UserMeta->deleteAll(array('PostMeta.post_id' => $this->id), false);
     }
@@ -131,15 +134,19 @@ class Post extends AppModel {
      *
      * @since 1.0.0
      * @access public
-     * 
+     *
      * @param intiger $post_id Post ID
+     *
      * @return array
      */
-    public function getPost($post_id) {
-        $post = $this->find('first', array(
-            "conditions" => array('Post.id' => $post_id),
-            "recursive" => 0
-                )
+    public function getPost($post_id)
+    {
+        $post = $this->find(
+            'first',
+            array(
+                "conditions" => array('Post.id' => $post_id),
+                "recursive" => 0
+            )
         );
         return $post;
     }
@@ -149,46 +156,60 @@ class Post extends AppModel {
      *
      * @since 1.0.0
      * @access public
-     * 
+     *
      * @param string $status Post status
+     *
      * @return intiger Number of all posts in specify type.
      */
-    public function countPosts($status = 'all') {
+    public function countPosts($status = 'all')
+    {
         $this->unbindModel(array('hasOne' => array('CategoriesPost', 'PostsTag')));
         switch ($status) {
             case 'all':
-                $num = $this->find('count', array(
-                    'conditions' => array(
-                        'Post.status' => array('publish', 'draft'),
-                        'Post.type' => 'post')
+                $num = $this->find(
+                    'count',
+                    array(
+                        'conditions' => array(
+                            'Post.status' => array('publish', 'draft'),
+                            'Post.type' => 'post'
                         )
+                    )
                 );
                 break;
 
             case 'publish':
-                $num = $this->find('count', array(
-                    'conditions' => array(
-                        'Post.status' => 'publish',
-                        'Post.type' => 'post')
+                $num = $this->find(
+                    'count',
+                    array(
+                        'conditions' => array(
+                            'Post.status' => 'publish',
+                            'Post.type' => 'post'
                         )
+                    )
                 );
                 break;
 
             case 'draft':
-                $num = $this->find('count', array(
-                    'conditions' => array(
-                        'Post.status' => 'draft',
-                        'Post.type' => 'post')
+                $num = $this->find(
+                    'count',
+                    array(
+                        'conditions' => array(
+                            'Post.status' => 'draft',
+                            'Post.type' => 'post'
                         )
+                    )
                 );
                 break;
 
             case 'trash':
-                $num = $this->find('count', array(
-                    'conditions' => array(
-                        'Post.status' => 'trash',
-                        'Post.type' => 'post')
+                $num = $this->find(
+                    'count',
+                    array(
+                        'conditions' => array(
+                            'Post.status' => 'trash',
+                            'Post.type' => 'post'
                         )
+                    )
                 );
                 break;
 
@@ -198,12 +219,16 @@ class Post extends AppModel {
         return $num;
     }
 
-    public function countUserPosts($user_id) {
-        $num = $this->find('count', array(
-            'conditions' => array(
-                'Post.user_id' => $user_id
+    public function countUserPosts($user_id)
+    {
+        $num = $this->find(
+            'count',
+            array(
+                'conditions' => array(
+                    'Post.user_id' => $user_id
+                )
             )
-        ));
+        );
         return $num;
     }
 

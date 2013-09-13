@@ -3,79 +3,98 @@
 </div>
 
 <?php
-echo $this->Form->create('Category', array(
-    'class' => 'form-horizontal',
-    'inputDefaults' => array(
-        'label' => false,
-        'div' => false
+echo $this->Form->create(
+    'Category',
+    array(
+        'class' => 'form-horizontal',
+        'inputDefaults' => array(
+            'label' => false,
+            'div' => false
+        )
     )
-));
+);
 ?>
 
-<div class="control-group <?php echo $this->Form->isFieldError('name') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('name', __('Name'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('name') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
-        echo $this->Form->input('name', array(
-            'error' => array(
-                'nameRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
-                'attributes' => array(
-                    'wrap' => 'span',
-                    'class' => 'help-inline'
-                )
-            ),
-            'required' => FALSE, //For disable HTML5 validation
-            'type' => 'text')
+        echo $this->Form->input(
+            'name',
+            array(
+                'error' => array(
+                    'nameRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
+                    'attributes' => array(
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    )
+                ),
+                'required' => false, //For disable HTML5 validation
+                'type' => 'text',
+                'class' => 'form-control'
+            )
         );
         ?>
-        <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
-            <?php echo __('The name is how it appears on your site.'); ?>
-        </span>
     </div>
+
+    <span class="help-block <?php echo $this->Form->isFieldError('name') ? 'hr-help-block' : ''; ?>">
+            <?php echo __d('hurad', 'The name is how it appears on your site.'); ?>
+        </span>
 </div>
-<div class="control-group <?php echo $this->Form->isFieldError('slug') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('slug', __('Slug'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group <?php echo $this->Form->isFieldError('slug') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('slug', __d('hurad', 'Slug'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
-        echo $this->Form->input('slug', array(
-            'error' => array(
-                'slugRule-1' => __('This field cannot be left blank.'), //notEmpty rule message
-                'slugRule-2' => __('This slug has already exist.'), //isUnique rule message
-                'attributes' => array(
-                    'wrap' => 'span',
-                    'class' => 'help-inline'
-                )
-            ),
-            'required' => FALSE, //For disable HTML5 validation
-            'type' => 'text')
+        echo $this->Form->input(
+            'slug',
+            array(
+                'error' => array(
+                    'slugRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
+                    'slugRule-2' => __d('hurad', 'This slug has already exist.'), //isUnique rule message
+                    'attributes' => array(
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    )
+                ),
+                'required' => false, //For disable HTML5 validation
+                'type' => 'text',
+                'class' => 'form-control'
+            )
         );
         ?>
         <span class="help-block <?php echo $this->Form->isFieldError('slug') ? 'hr-help-block' : ''; ?>">
-            <?php echo __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.'); ?>
+            <?php echo __(
+                'The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.'
+            ); ?>
         </span>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('parent_id', __('Parent Category'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('parent_id', __d('hurad', 'Parent Category'), array('class' => 'control-label')); ?>
     <div class="controls">
-        <?php echo $this->Form->select('parent_id', $parentCategories, array('empty' => __('None'))); ?>
+        <?php echo $this->Form->select('parent_id', $parentCategories, array('empty' => __d('hurad', 'None'))); ?>
         <span class="help-block">
-            <?php echo __('Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.'); ?>
+            <?php echo __(
+                'Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.'
+            ); ?>
         </span>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $this->Form->label('description', __('Description'), array('class' => 'control-label')); ?>
+    <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label')); ?>
     <div class="controls">
-        <?php echo $this->Form->input('description', array('class' => 'span5')); ?>
+        <?php echo $this->Form->input('description', array('class' => 'col-md-5')); ?>
         <span class="help-block">
-            <?php echo __('The description is not prominent by default; however, some themes may show it.'); ?>
+            <?php echo __d(
+                'hurad',
+                'The description is not prominent by default; however, some themes may show it.'
+            ); ?>
         </span>
     </div>
 </div>
 
 <div class="form-actions">
-    <?php echo $this->Form->submit(__('Add Category'), array('class' => 'btn btn-primary')); ?>
+    <?php echo $this->Form->submit(__d('hurad', 'Add Category'), array('class' => 'btn btn-primary')); ?>
 </div>
 
 <?php echo $this->Form->end(null); ?>

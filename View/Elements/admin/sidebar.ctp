@@ -1,194 +1,169 @@
 <?php
 
-HrNav::add('dashboard', array(
-    'title' => __('Dashboard'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-home',
-    'weight' => 1,
-    'child' => array(
-        'home' => array(
-            'title' => __('Home'),
-            'url' => '/admin',
-            'weight' => 1,
-        ),
-    ),
-));
-HrNav::add('posts', array(
-    'title' => __('Posts'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-pencil',
-    'weight' => 2,
-    'child' => array(
-        'posts' => array(
-            'title' => __('Posts'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'posts', 'action' => 'index'),
-            'weight' => 1,
-        ),
-        'add_new' => array(
-            'title' => __('Add New'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'posts', 'action' => 'add'),
-            'weight' => 2,
-        ),
-        'categories' => array(
-            'title' => __('Categories'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'categories', 'action' => 'index'),
-            'weight' => 3,
-        ),
-        'tags' => array(
-            'title' => __('Post Tags'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'tags', 'action' => 'index'),
-            'weight' => 4,
-        ),
-    ),
-));
-HrNav::add('links', array(
-    'title' => __('Links'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-globe',
-    'weight' => 3,
-    'child' => array(
-        'all_links' => array(
-            'title' => __('Links'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'links', 'action' => 'index'),
-            'weight' => 1,
-        ),
-        'add_link' => array(
-            'title' => __('Add New'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'links', 'action' => 'add'),
-            'weight' => 2,
-        ),
-        'link_categories' => array(
-            'title' => __('Link Categories'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'linkcats', 'action' => 'index'),
-            'weight' => 3,
-        ),
-    ),
-));
-HrNav::add('pages', array(
-    'title' => __('Pages'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-file',
-    'weight' => 4,
-    'child' => array(
-        'all_pages' => array(
-            'title' => __('All Pages'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'pages', 'action' => 'index'),
-            'weight' => 1,
-        ),
-        'add_new' => array(
-            'title' => __('Add New'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'pages', 'action' => 'add'),
-            'weight' => 2,
-        ),
-    ),
-));
-HrNav::add('comments', array(
-    'title' => __('Comments'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-comment',
-    'weight' => 5,
-    'child' => array(
-        'all_comments' => array(
-            'title' => __('All Comments'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'comments', 'action' => 'index'),
-            'weight' => 1,
-        ),
-    ),
-));
-HrNav::add('appearance', array(
-    'title' => __('Appearance'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-asterisk',
-    'weight' => 6,
-    'child' => array(
-        'themes' => array(
-            'title' => __('Themes'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'themes', 'action' => 'index'),
-            'weight' => 1,
-        ),
-        'widgets' => array(
-            'title' => __('Widgets'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'widgets', 'action' => 'index'),
-            'weight' => 2,
-        ),
-        'all_menus' => array(
-            'title' => __('All Menus'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'menus', 'action' => 'index'),
-            'weight' => 3,
-        ),
-        'add_menu' => array(
-            'title' => __('Add Menu'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'menus', 'action' => 'add'),
-            'weight' => 4,
-        ),
-    ),
-));
-HrNav::add('plugins', array(
-    'title' => __('Plugins'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-plus',
-    'weight' => 7,
-    'child' => array(
-        'plugins' => array(
-            'title' => __('Plugins'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'plugins', 'action' => 'index'),
-            'weight' => 1,
-        ),
-    ),
-));
-HrNav::add('users', array(
-    'title' => __('Users'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-user',
-    'weight' => 8,
-    'child' => array(
-        'all_users' => array(
-            'title' => __('All Users'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'index'),
-            'weight' => 1,
-        ),
-        'add_new' => array(
-            'title' => __('Add New'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'add'),
-            'weight' => 2,
-        ),
-        'profile' => array(
-            'title' => __('Edit Profile'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'users', 'action' => 'profile', $current_user['id']),
-            'weight' => 3,
-        ),
-    ),
-));
-HrNav::add('options', array(
-    'title' => __('Options'),
-    'url' => '#',
-    'img' => FALSE,
-    'icon-class' => 'icon-wrench',
-    'weight' => 9,
-    'child' => array(
-        'general' => array(
-            'title' => __('General'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', 'general'),
-            'weight' => 1,
-        ),
-        'comment' => array(
-            'title' => __('Comment'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', 'comment'),
-            'weight' => 2,
-        ),
-        'permalink' => array(
-            'title' => __('Permalinks'),
-            'url' => array('plugin' => NULL, 'admin' => TRUE, 'controller' => 'options', 'action' => 'prefix', 'permalink'),
-            'weight' => 3,
-        ),
-    ),
-));
-echo $this->AdminLayout->adminMenus(HrNav::items());
+HuradNavigation::addMenu('dashboard', __d('hurad', 'Dashboard'), null, 'index', array('class' => 'glyphicon glyphicon-home'));
+HuradNavigation::addSubMenu('dashboard', 'admin_home', __d('hurad', 'Home'), '/admin', 'index');
+
+HuradNavigation::addMenu('posts', __d('hurad', 'Posts'), '#', 'manage_posts', array('class' => 'glyphicon glyphicon-pencil'));
+HuradNavigation::addSubMenu(
+    'posts',
+    'all_posts',
+    __d('hurad', 'Posts'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'posts', 'action' => 'index'),
+    'manage_posts'
+);
+HuradNavigation::addSubMenu(
+    'posts',
+    'add_new_post',
+    __d('hurad', 'Add New'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'posts', 'action' => 'add'),
+    'publish_posts'
+);
+HuradNavigation::addSubMenu(
+    'posts',
+    'categories',
+    __d('hurad', 'Categories'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'categories', 'action' => 'index'),
+    'manage_categories'
+);
+HuradNavigation::addSubMenu(
+    'posts',
+    'tags',
+    __d('hurad', 'Post Tags'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'tags', 'action' => 'index'),
+    'manage_tags'
+);
+
+HuradNavigation::addMenu('links', __d('hurad', 'Links'), '#', 'manage_links', array('class' => 'glyphicon glyphicon-globe'));
+HuradNavigation::addSubMenu(
+    'links',
+    'all_links',
+    __d('hurad', 'Links'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'links', 'action' => 'index'),
+    'manage_links'
+);
+HuradNavigation::addSubMenu(
+    'links',
+    'add_new_link',
+    __d('hurad', 'Add New'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'links', 'action' => 'add'),
+    'manage_links'
+);
+HuradNavigation::addSubMenu(
+    'links',
+    'link_categories',
+    __d('hurad', 'Link Categories'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'linkcats', 'action' => 'index'),
+    'manage_links'
+);
+
+HuradNavigation::addMenu('pages', __d('hurad', 'Pages'), '#', 'manage_pages', array('class' => 'glyphicon glyphicon-file'));
+HuradNavigation::addSubMenu(
+    'pages',
+    'all_pages',
+    __d('hurad', 'All Pages'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'pages', 'action' => 'index'),
+    'manage_pages'
+);
+HuradNavigation::addSubMenu(
+    'pages',
+    'add_new_page',
+    __d('hurad', 'Add New'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'pages', 'action' => 'add'),
+    'publish_pages'
+);
+
+HuradNavigation::addMenu('comments', __d('hurad', 'Comments'), '#', 'manage_comments', array('class' => 'glyphicon glyphicon-comment'));
+HuradNavigation::addSubMenu(
+    'comments',
+    'all_comments',
+    __d('hurad', 'All Comments'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'comments', 'action' => 'index'),
+    'manage_comments'
+);
+
+HuradNavigation::addMenu('appearance', __d('hurad', 'Appearance'), '#', 'manage_themes', array('class' => 'glyphicon glyphicon-asterisk'));
+HuradNavigation::addSubMenu(
+    'appearance',
+    'themes',
+    __d('hurad', 'Themes'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'themes', 'action' => 'index'),
+    'switch_themes'
+);
+HuradNavigation::addSubMenu(
+    'appearance',
+    'widgets',
+    __d('hurad', 'Widgets'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'widgets', 'action' => 'index'),
+    'manage_widgets'
+);
+HuradNavigation::addSubMenu(
+    'appearance',
+    'all_menus',
+    __d('hurad', 'All Menus'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'menus', 'action' => 'index'),
+    'manage_menus'
+);
+HuradNavigation::addSubMenu(
+    'appearance',
+    'add_new_menu',
+    __d('hurad', 'Add Menu'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'menus', 'action' => 'add'),
+    'manage_menus'
+);
+
+HuradNavigation::addMenu('plugins', __d('hurad', 'Plugins'), '#', 'manage_plugins', array('class' => 'glyphicon glyphicon-pushpin'));
+HuradNavigation::addSubMenu(
+    'plugins',
+    'all_plugins',
+    __d('hurad', 'Plugins'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'plugins', 'action' => 'index'),
+    'activate_plugins'
+);
+
+HuradNavigation::addMenu('users', __d('hurad', 'Users'), '#', 'manage_users', array('class' => 'glyphicon glyphicon-user'));
+HuradNavigation::addSubMenu(
+    'users',
+    'all_users',
+    __d('hurad', 'All Users'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'users', 'action' => 'index'),
+    'edit_users'
+);
+HuradNavigation::addSubMenu(
+    'users',
+    'add_new_user',
+    __d('hurad', 'Add New'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'users', 'action' => 'add'),
+    'edit_users'
+);
+HuradNavigation::addSubMenu(
+    'users',
+    'profile',
+    __d('hurad', 'Edit Profile'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'users', 'action' => 'profile', $current_user['id']),
+    'read'
+);
+
+HuradNavigation::addMenu('options', __d('hurad', 'Options'), '#', 'manage_options', array('class' => 'glyphicon glyphicon-wrench'));
+HuradNavigation::addSubMenu(
+    'options',
+    'general',
+    __d('hurad', 'General'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'options', 'action' => 'prefix', 'general'),
+    'manage_options'
+);
+HuradNavigation::addSubMenu(
+    'options',
+    'comment',
+    __d('hurad', 'Comment'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'options', 'action' => 'prefix', 'comment'),
+    'manage_options'
+);
+HuradNavigation::addSubMenu(
+    'options',
+    'permalink',
+    __d('hurad', 'Permalinks'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'options', 'action' => 'prefix', 'permalink'),
+    'manage_options'
+);
+
+echo $this->AdminLayout->adminMenus(Configure::read('Hurad.menus'));

@@ -12,7 +12,7 @@ var Links = {};
  *
  * @return void
  */
-Links.documentReady = function() {
+Links.documentReady = function () {
     Links.search();
 }
 
@@ -21,9 +21,9 @@ Links.documentReady = function() {
  *
  * @return void
  */
-Links.search = function() {
+Links.search = function () {
 
-    $('#AdminSearchForm').submit(function() {
+    $('#AdminSearchForm').submit(function () {
         var q = '';
 
         //query string
@@ -45,7 +45,7 @@ Links.search = function() {
  *
  * @return void
  */
-$(document).ready(function() {
+$(document).ready(function () {
     if (Hurad.params.controller == 'links') {
         Links.documentReady();
     }

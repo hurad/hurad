@@ -7,27 +7,30 @@ App::uses('AppController', 'Controller');
  *
  * @author mohammad
  */
-class WidgetsController extends AppController {
+class WidgetsController extends AppController
+{
 
     public $components = array('RequestHandler');
     public $uses = array('Option');
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
-        $this->Auth->allow();
         $this->Security->unlockedActions = array('admin_index', 'admin_edit');
     }
 
-    public function admin_index() {
+    public function admin_index()
+    {
         if ($this->RequestHandler->isAjax()) {
             $option_name = Configure::read('template') . '.widgets';
             $widgets_db = unserialize(Configure::read(Configure::read('template') . '.widgets'));
             //Before save sidebar widgets remove exist sidebar data in database.
             foreach (Configure::read('sidebars') as $id => $sidebar) {
-                if (key_exists($id, $this->request->data)) {
+                if (array_key_exists($id, $this->request->data)) {
                     unset($widgets_db[$id]);
                 }
             }
+            $wg = array();
             foreach ($this->request->data as $sidebar_id => $widgets) {
                 foreach ($widgets as $widget) {
                     foreach ($widget as $widget_id => $widget_data) {
@@ -41,7 +44,8 @@ class WidgetsController extends AppController {
         }
     }
 
-    public function admin_edit() {
+    public function admin_edit()
+    {
         $this->autoRender = false;
 
         if ($this->RequestHandler->isAjax()) {

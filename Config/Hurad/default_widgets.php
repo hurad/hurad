@@ -5,22 +5,22 @@
  * Show author's list
  */
 HuradWidget::registerWidget(array(
-    'title' => __('Authors'),
+    'title' => __d('hurad', 'Authors'),
     'element' => 'authors',
         )
 );
 HuradWidget::registerWidget(array(
-    'title' => __('Categories'),
+    'title' => __d('hurad', 'Categories'),
     'element' => 'categories',
         )
 );
 HuradWidget::registerWidget(array(
-    'title' => __('Recent Posts'),
+    'title' => __d('hurad', 'Recent Posts'),
     'element' => 'recent_posts',
         )
 );
 HuradWidget::registerWidget(array(
-    'title' => __('Pages'),
+    'title' => __d('hurad', 'Pages'),
     'element' => 'pages',
         )
 );

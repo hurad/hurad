@@ -1,36 +1,53 @@
 <div class="comments form">
-<?php echo $this->Form->create('Comment');?>
-	<fieldset>
-		<legend><?php echo __('Admin Edit Comment'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('parent_id');
-		echo $this->Form->input('post_id');
-		echo $this->Form->input('user_id');
-		echo $this->Form->input('author');
-		echo $this->Form->input('author_email');
-		echo $this->Form->input('author_url');
-		echo $this->Form->input('author_ip');
-		echo $this->Form->input('content');
-		echo $this->Form->input('approved');
-		echo $this->Form->input('agent');
-		echo $this->Form->input('lft');
-		echo $this->Form->input('rght');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit'));?>
+    <?php echo $this->Form->create('Comment'); ?>
+    <fieldset>
+        <legend><?php echo __d('hurad', 'Admin Edit Comment'); ?></legend>
+        <?php
+        echo $this->Form->input('id');
+        echo $this->Form->input('parent_id');
+        echo $this->Form->input('post_id');
+        echo $this->Form->input('user_id');
+        echo $this->Form->input('author');
+        echo $this->Form->input('author_email');
+        echo $this->Form->input('author_url');
+        echo $this->Form->input('author_ip');
+        echo $this->Form->input('content');
+        echo $this->Form->input('approved');
+        echo $this->Form->input('agent');
+        echo $this->Form->input('lft');
+        echo $this->Form->input('rght');
+        ?>
+    </fieldset>
+    <?php echo $this->Form->end(__d('hurad', 'Submit')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+    <h3><?php echo __d('hurad', 'Actions'); ?></h3>
+    <ul>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Comment.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Comment.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Comments'), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Comments'), array('controller' => 'comments', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Parent Comment'), array('controller' => 'comments', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Posts'), array('controller' => 'posts', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-	</ul>
+        <li><?php echo $this->Form->postLink(
+                __d('hurad', 'Delete'),
+                array('action' => 'delete', $this->Form->value('Comment.id')),
+                null,
+                __d('hurad', 'Are you sure you want to delete # %s?', $this->Form->value('Comment.id'))
+            ); ?></li>
+        <li><?php echo $this->Html->link(__d('hurad', 'List Comments'), array('action' => 'index')); ?></li>
+        <li><?php echo $this->Html->link(
+                __d('hurad', 'List Comments'),
+                array('controller' => 'comments', 'action' => 'index')
+            ); ?> </li>
+        <li><?php echo $this->Html->link(
+                __d('hurad', 'New Parent Comment'),
+                array('controller' => 'comments', 'action' => 'add')
+            ); ?> </li>
+        <li><?php echo $this->Html->link(
+                __d('hurad', 'List Posts'),
+                array('controller' => 'posts', 'action' => 'index')
+            ); ?> </li>
+        <li><?php echo $this->Html->link(__d('hurad', 'New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(
+                __d('hurad', 'List Users'),
+                array('controller' => 'users', 'action' => 'index')
+            ); ?> </li>
+        <li><?php echo $this->Html->link(__d('hurad', 'New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+    </ul>
 </div>

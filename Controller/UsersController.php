@@ -8,82 +8,38 @@ App::uses('CakeEmail', 'Network/Email');
  *
  * @property User $User
  */
-class UsersController extends AppController {
+class UsersController extends AppController
+{
 
-    public $components = array('Cookie', 'Session');
+    public $components = array('Cookie', 'Session', 'Hurad', 'RequestHandler', 'Paginator');
     public $helpers = array('Gravatar', 'Dashboard', 'Js');
     public $uses = array('User', 'UserMeta');
+    public $paginate = array(
+        'limit' => 10,
+        'order' => array(
+            'User.username' => 'desc'
+        )
+    );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
         //For not logged user's
         $this->Auth->allow(array('register', 'login', 'logout', 'forgot'));
     }
 
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return TRUE;
-                break;
-            case 'editor':
-                if (
-                        $action == 'admin_index' ||
-                        $action == 'admin_edit' ||
-                        $action == 'admin_dashboard' ||
-                        $action == 'admin_profile' ||
-                        $action == 'register' ||
-                        $action == 'login' ||
-                        $action == 'logout'
-                ) {
-                    return TRUE;
-                }
-                break;
-            case 'author':
-            case 'user':
-                if (
-                        $action == 'login' ||
-                        $action == 'logout' ||
-                        $action == 'register' ||
-                        $action == 'admin_dashboard' ||
-                        $action == 'admin_profile'
-                ) {
-                    return TRUE;
-                }
-        }
-    }
-
-    /**
-     * index method
-     *
-     * @return void
-     */
-    public function index() {
-        $this->User->recursive = 0;
-        $this->set('users', $this->paginate());
-    }
-
-    /**
-     * view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        $this->set('user', $this->User->read(null, $id));
-    }
-
-    public function admin_dashboard() {
-        $this->set('title_for_layout', __('Dashboard'));
-        $comments = ClassRegistry::init('Comment')->find('all', array(
-            "fields" => "Comment.id, Comment.user_id, Comment.post_id, Comment.author, Comment.author_url, Comment.author_email, Comment.content, Comment.approved, Post.title",
-            "conditions" => array('Comment.approved' => array(0, 1)),
-            "order" => "Comment.created DESC",
-            "limit" => 5));
+    public function admin_dashboard()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Dashboard'));
+        $comments = ClassRegistry::init('Comment')->find(
+            'all',
+            array(
+                "fields" => "Comment.id, Comment.user_id, Comment.post_id, Comment.author, Comment.author_url, Comment.author_email, Comment.content, Comment.approved, Post.title",
+                "conditions" => array('Comment.approved' => array(0, 1)),
+                "order" => "Comment.created DESC",
+                "limit" => 5
+            )
+        );
         $this->set(compact('comments'));
     }
 
@@ -92,22 +48,27 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
-        $this->set('title_for_layout', __('Users'));
+    public function admin_index()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Users'));
 
-        $this->paginate = array(
-            'contain' => array('UserMeta'),
+        $this->paginate = array_merge(
+            $this->paginate,
+            array(
+                'contain' => array('UserMeta'),
+            )
         );
+        $this->Paginator->settings = $this->paginate;
+        //$usersPaginate = $this->paginate('User');
+        $usersPaginate = $this->Paginator->paginate('User');
 
-        $users_paginate = $this->paginate('User');
-
-        foreach ($users_paginate as $key => $user) {
+        foreach ($usersPaginate as $key => $user) {
             if (isset($user['UserMeta']) && count($user['UserMeta']) >= 1) {
-                $users_paginate[$key]['UserMeta'] = Set::combine($user['UserMeta'], '{n}.meta_key', '{n}.meta_value');
+                $usersPaginate[$key]['UserMeta'] = Set::combine($user['UserMeta'], '{n}.meta_key', '{n}.meta_value');
             }
         }
 
-        $this->set('users', $users_paginate);
+        $this->set('users', $usersPaginate);
     }
 
     /**
@@ -115,15 +76,16 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function admin_add() {
-        $this->set('title_for_layout', __('Add new user'));
+    public function admin_add()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Add new user'));
         if ($this->request->is('post')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The user has been saved'), 'success');
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The user could not be saved. Please, try again.'), 'error');
             }
         }
     }
@@ -132,18 +94,21 @@ class UsersController extends AppController {
      * admin_edit method
      *
      * @param string $id
+     *
+     * @throws NotFoundException
      * @return void
      */
-    public function admin_profile($id = null) {
-        $this->set('title_for_layout', __('Profile'));
+    public function admin_profile($id = null)
+    {
+        $this->set('title_for_layout', __d('hurad', 'Profile'));
         $this->User->id = $id;
 
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
+            throw new NotFoundException(__d('hurad', 'Invalid user'));
         }
 
         if ($this->Auth->user('role') != 'admin' && $this->Auth->user('id') != $id) {
-            $this->Session->setFlash(__('You do not have permission to access this section.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'You do not have permission to access this section.'), 'error');
             $this->redirect('/admin');
         }
 
@@ -151,25 +116,30 @@ class UsersController extends AppController {
             if (isset($this->request->data['UserMeta'])) {
                 foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
                     //Update user_metas table.
-                    $this->UserMeta->updateAll(array('UserMeta.meta_value' => "'$meta_value'"), array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key));
+                    $this->UserMeta->updateAll(
+                        array('UserMeta.meta_value' => "'$meta_value'"),
+                        array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key)
+                    );
                 }
             }
 
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved'), 'success');
+                $this->Session->setFlash(__d('hurad', 'The user has been saved'), 'success');
                 $this->redirect($this->referer());
             } else {
                 $this->set('errors', $this->User->validationErrors);
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'The user could not be saved. Please, try again.'), 'error');
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
 
             //Retraive user_metas table.
-            $this->request->data['UserMeta'] = $this->UserMeta->find('list', array(
-                'conditions' => array('UserMeta.user_id' => $id),
-                'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
-                    )
+            $this->request->data['UserMeta'] = $this->UserMeta->find(
+                'list',
+                array(
+                    'conditions' => array('UserMeta.user_id' => $id),
+                    'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
+                )
             );
         }
     }
@@ -178,21 +148,25 @@ class UsersController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
         $this->User->id = $id;
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
+            throw new NotFoundException(__d('hurad', 'Invalid user'));
         }
         if ($this->User->delete()) {
-            $this->Session->setFlash(__('User deleted'), 'success');
+            $this->Session->setFlash(__d('hurad', 'User deleted'), 'success');
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('User was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'User was not deleted'), 'error');
         $this->redirect(array('action' => 'index'));
     }
 
@@ -201,11 +175,12 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function login() {
+    public function login()
+    {
         $this->layout = "admin_login";
-        $this->set('title_for_layout', __('Login to admin section'));
+        $this->set('title_for_layout', __d('hurad', 'Login to admin section'));
         if ($this->Auth->loggedIn()) {
-            $this->Session->setFlash(__('You already login.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'You already login.'), 'notice');
             $this->redirect($this->Auth->redirectUrl('/admin'));
         } else {
             if ($this->request->is('post')) {
@@ -213,10 +188,13 @@ class UsersController extends AppController {
                     if ($this->Auth->login()) {
                         $this->Session->delete('Message.auth');
                         $this->__setCookie();
-                        $this->Session->setFlash(__('%s you have successfully logged in', $this->Auth->user('username')), 'success');
+                        $this->Session->setFlash(
+                            __d('hurad', '%s you have successfully logged in', $this->Auth->user('username')),
+                            'success'
+                        );
                         $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
-                        $this->Session->setFlash(__('Your username or password was incorrect.'), 'error');
+                        $this->Session->setFlash(__d('hurad', 'Your username or password was incorrect.'), 'error');
                     }
                 }
             }
@@ -224,40 +202,42 @@ class UsersController extends AppController {
     }
 
     /**
-     * logout method
-     *
-     * @return void
-     */
-    public function logout() {
-        if ($this->Auth->loggedIn()) {
-//$this->Cookie->delete('Hurad');
-            $this->Session->destroy();
-            $this->Cookie->destroy();
-            $this->Session->setFlash(__('You are successfully logout'), 'success');
-            $this->redirect($this->Auth->logout());
-        } else {
-            $this->Session->setFlash(__('You already logout.'), 'notice');
-            $this->redirect('/');
-        }
-    }
-
-    /**
      * Sets the cookie to remember the user
      *
-     * @param array Cookie component properties as array, like array('domain' => 'yourdomain.com')
-     * @param string Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
+     * @param string $cookieKey Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
+     *
+     * @internal param \Cookie $array component properties as array, like array('domain' => 'yourdomain.com')
      * @return void
      */
-    private function __setCookie($cookieKey = 'Auth.User') {
+    private function __setCookie($cookieKey = 'Auth.User')
+    {
         if (empty($this->request->data['User']['remember_me'])) {
             $this->Cookie->delete($cookieKey);
         } else {
             $cookie = array();
             $cookie['User']['username'] = $this->request->data['User']['username'];
             $cookie['User']['password'] = $this->request->data['User']['password'];
-            $this->Cookie->write($cookieKey, $cookie, TRUE, '+2 weeks');
+            $this->Cookie->write($cookieKey, $cookie, true, '+2 weeks');
         }
         unset($this->request->data['User']['remember_me']);
+    }
+
+    /**
+     * logout method
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        if ($this->Auth->loggedIn()) {
+            $this->Session->destroy();
+            $this->Cookie->destroy();
+            $this->Session->setFlash(__d('hurad', 'You are successfully logout'), 'success');
+            $this->redirect($this->Auth->logout());
+        } else {
+            $this->Session->setFlash(__d('hurad', 'You already logout.'), 'notice');
+            $this->redirect('/');
+        }
     }
 
     /**
@@ -265,31 +245,30 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function change_password() {
+    public function change_password()
+    {
         $this->layout = "admin";
         if ($this->request->is('post')) {
-// Set User's ID in model which is needed for validation
             $this->User->id = $this->Auth->user('id');
             if ($this->User->save($this->request->data)) {
-                debug($this->request->data);
-//Find user by id
                 $user = $this->User->findById($this->Auth->user('id'));
-
-                $email = new CakeEmail('gmail');
-                $email->emailFormat('html');
-                $email->template('change_password');
-                $email->viewVars(array(
-                    'new_password' => $this->request->data['User']['password'],
-                    'username' => $user['User']['username']
-                ));
-                $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-                $email->to('m.abdolirad@gmail.com');
-                $email->subject('Change Password');
-                $email->send('You are change password');
-                $this->Session->setFlash(__('Your password has been updated'), 'flash_notice');
-                $this->redirect(array('admin' => TRUE, 'action' => 'index'));
+                $this->Hurad->sendEmail(
+                    $this->request->data['User']['email'],
+                    __d('hurad', 'Change Password'),
+                    'change_password',
+                    __d('hurad', 'You are change password'),
+                    array(
+                        'new_password' => $this->request->data['User']['password'],
+                        'username' => $user['User']['username']
+                    )
+                );
+                $this->Session->setFlash(__d('hurad', 'Your password has been updated'), 'flash_notice');
+                $this->redirect(array('admin' => true, 'action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Could not be changed password. Please, try again.'), 'flash_notice');
+                $this->Session->setFlash(
+                    __d('hurad', 'Could not be changed password. Please, try again.'),
+                    'flash_notice'
+                );
             }
         }
     }
@@ -299,57 +278,53 @@ class UsersController extends AppController {
      *
      * @return void
      */
-    public function register() {
+    public function register()
+    {
         $this->layout = "admin_login";
-        $this->set('title_for_layout', __('Register'));
+        $this->set('title_for_layout', __d('hurad', 'Register'));
         if ($this->request->is('post')) {
             $this->request->data['User']['role'] = Configure::read('General.default_role');
             $this->request->data['User']['activation_key'] = $this->_getActivationKey();
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $email = new CakeEmail('gmail');
-                $email->emailFormat('html');
-                $email->template('register');
-                $email->viewVars(array(
-                    'password' => $this->request->data['User']['password'],
-                    'username' => $this->request->data['User']['username'],
-                    'activation_key' => $this->request->data['User']['activation_key'],
-                    'siteurl' => Configure::read('General.site_url'),
-                    'email' => $this->request->data['User']['email']
-                ));
-                $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-                $email->to('m.abdolirad@gmail.com');
-                $email->subject('Register to CakeBlog');
-                $email->send('Thank you register Cakeblog');
-                $this->Session->setFlash(__('Congratulations, You are Successfully register'), 'success');
-                $this->redirect(array('action' => 'index'));
+                $this->Hurad->sendEmail(
+                    $this->request->data['User']['email'],
+                    __d('hurad', 'Register to %s', Configure::read('General.site_name')),
+                    'register',
+                    null,
+                    array(
+                        'password' => $this->request->data['User']['password'],
+                        'username' => $this->request->data['User']['username'],
+                        'activationKey' => $this->request->data['User']['activation_key'],
+                        'siteUrl' => Configure::read('General.site_url'),
+                        'email' => $this->request->data['User']['email']
+                    )
+                );
+                $this->Session->setFlash(
+                    __d('hurad', 'Congratulations, You are Successfully register'),
+                    'default',
+                    array('class' => 'success')
+                );
+                $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The user could not be saved. Please, try again.'),
+                    'default',
+                    array('class' => 'error')
+                );
             }
         }
-    }
-
-    /**
-     * profile method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function profile($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        $this->set('user', $this->User->read(null, $id));
     }
 
     /**
      * _getActivationKey method
      *
      * @param void
+     *
      * @return string activation key
      */
-    private function _getActivationKey() {
+    private function _getActivationKey()
+    {
         return Security::hash(date('Y-m-d H:i:s'), null, true);
     }
 
@@ -357,108 +332,101 @@ class UsersController extends AppController {
      * verify method
      *
      * @param void
+     *
+     * @throws NotFoundException
      * @return string activation key
      */
-    public function verify($key = NULL) {
-//Find id from users table
-        $user = $this->User->find('first', array(
-            'conditions' => array('User.activation_key' => $key))
+    public function verify($key = null)
+    {
+        $user = $this->User->find(
+            'first',
+            array(
+                'conditions' => array('User.activation_key' => $key)
+            )
         );
         $this->User->id = $user['User']['id'];
         if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid Key'));
+            throw new NotFoundException(__d('hurad', 'Invalid Key'));
         }
         if (is_null($key)) {
-            return FALSE;
+            return false;
         } else {
             if ($user) {
                 if ($this->User->saveField('status', '1')) {
-                    $email = new CakeEmail('gmail');
-                    $email->emailFormat('html');
-                    $email->template('verify');
-//                    $email->viewVars(array(
-//                        'password' => $this->request->data['User']['password'],
-//                        'username' => $this->request->data['User']['username'],
-//                        'activation_key' => $this->request->data['User']['activation_key'],
-//                        'siteurl' => $option['Option']['value'],
-//                        'email' => $this->request->data['User']['email']
-//                    ));
-                    $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-                    $email->to('m.abdolirad@gmail.com');
-                    $email->subject('Confirmed your account');
-                    $email->send('Thank you confirm Cakeblog');
-                    $this->Session->setFlash(__('User confirm.'));
+                    $this->Hurad->sendEmail(
+                        $this->request->data['User']['email'],
+                        __d('hurad', 'Confirmed your account'),
+                        'verify',
+                        __d('hurad', 'Thank you confirm your account')
+                    );
+                    $this->Session->setFlash(__d('hurad', 'User confirm.'));
                     $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('Could not be confirm your email. Please, try again.'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Could not be confirm your email. Please, try again.'),
+                        'success'
+                    );
                     $this->redirect(array('action' => 'index'));
                 }
             } else {
-                $this->Session->setFlash(__('Your activation key not valid.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'Your activation key not valid.'), 'error');
                 $this->redirect(array('action' => 'index'));
             }
         }
     }
 
-    public function forgot() {
+    public function forgot()
+    {
         $this->layout = "admin_login";
         if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
             $user = $this->User->findByUsername($this->request->data['User']['username']);
             if (!isset($user['User']['id'])) {
-                $this->Session->setFlash(__('Invalid username.'));
+                $this->Session->setFlash(__d('hurad', 'Invalid username.'));
                 $this->redirect(array('action' => 'login'));
             }
 
             $this->User->id = $user['User']['id'];
             $resetKey = md5(uniqid());
             $this->User->saveField('reset_key', $resetKey);
-//$this->set(compact('user', 'resetKey'));
-//            $this->Email->from = Configure::read('Site.title') . ' '
-//                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
-//            $this->Email->to = $user['User']['email'];
-//            $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password');
-//            $this->Email->template = 'forgot_password';
 
+            $this->Hurad->sendEmail(
+                $user['User']['email'],
+                __d('hurad', 'Reset Password'),
+                'forgot_password',
+                null,
+                array(
+                    'reset_key' => $resetKey,
+                    'username' => $user['User']['username']
+                )
+            );
 
-            $email = new CakeEmail('default');
-            $email->emailFormat('html');
-            $email->template('forgot_password');
-            $email->viewVars(array(
-                'reset_key' => $resetKey,
-                'username' => $user['User']['username'],
-                    //'email' => $this->request->data['User']['email']
-            ));
-            $email->from(array('info@cakeblog.com' => 'CakeBlog'));
-            $email->to($user['User']['email']);
-            $email->subject(__('Reset Password'));
-//$email->send('Thank you confirm Cakeblog');
-
-
-
-            if ($email->send()) {
-                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'success');
-                $this->redirect(array('action' => 'login'));
-            } else {
-                $this->Session->setFlash(__('An error occurred. Please try again.'), 'error');
-            }
+            $this->Session->setFlash(
+                __d('hurad', 'An email has been sent with instructions for resetting your password.'),
+                'success'
+            );
+            $this->redirect(array('action' => 'login'));
         }
     }
 
-    public function reset($key = null) {
-//$this->set('title_for_layout', __('Reset Password'));
+    public function reset($key = null)
+    {
+        $this->set('title_for_layout', __d('hurad', 'Reset Password'));
 
         if ($key == null) {
-            $this->Session->setFlash(__('An error occurred.'));
+            $this->Session->setFlash(__d('hurad', 'An error occurred.'));
             $this->redirect(array('action' => 'login'));
         }
 
-        $user = $this->User->find('first', array(
-            'conditions' => array(
-                'User.reset_key' => $key,
-            ),
-        ));
+        $user = $this->User->find(
+            'first',
+            array(
+                'conditions' => array(
+                    'User.reset_key' => $key,
+                ),
+            )
+        );
         if (!isset($user['User']['id'])) {
-            $this->Session->setFlash(__('An error occurred.'));
+            $this->Session->setFlash(__d('hurad', 'An error occurred.'));
             $this->redirect(array('action' => 'login'));
         }
 
@@ -467,21 +435,23 @@ class UsersController extends AppController {
             $user['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
 //$user['User']['activation_key'] = md5(uniqid());
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('Your password has been reset successfully.'));
+                $this->Session->setFlash(__d('hurad', 'Your password has been reset successfully.'));
                 $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('An error occurred. Please try again.'));
+                $this->Session->setFlash(__d('hurad', 'An error occurred. Please try again.'));
             }
         }
 
         $this->set(compact('user', 'username', 'key'));
     }
 
-    function check() {
+    function check()
+    {
         $cookie = $this->Cookie->read($this->cookieName);
 
-        if (!is_array($cookie) || $this->Auth->user())
+        if (!is_array($cookie) || $this->Auth->user()) {
             return;
+        }
 
         if ($this->Auth->login($cookie)) {
             $this->Cookie->write($this->cookieName, $cookie, true, $this->period);
@@ -490,7 +460,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
         $action = $this->request->data['User']['action'];
         $ids = array();
@@ -501,22 +472,22 @@ class UsersController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'error');
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->User->deleteAll(array('User.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__('Users deleted.'), 'notice');
+                    $this->Session->setFlash(__d('hurad', 'Users deleted.'), 'notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
                 break;
         }
         $this->redirect(array('action' => 'index'));

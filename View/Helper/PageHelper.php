@@ -2,7 +2,8 @@
 
 App::uses('AppHelper', 'View/Helper');
 
-class PageHelper extends AppHelper {
+class PageHelper extends AppHelper
+{
 
     public $helpers = array('Html', 'Time', 'General', 'Link');
     public $page = array();
@@ -10,30 +11,34 @@ class PageHelper extends AppHelper {
     public $view = null;
     public $view_path = null;
 
-    public function __construct(View $View, $settings = array()) {
+    public function __construct(View $View, $settings = array())
+    {
         parent::__construct($View, $settings);
         $this->init();
         $this->init_page();
     }
 
-    public function init() {
+    public function init()
+    {
         $this->view = $this->_View->view;
         $this->view_path = $this->_View->viewPath;
     }
 
-    public function setPage($page) {
+    public function setPage($page)
+    {
         $this->page = $page;
         $this->General->content = $page;
         $this->Link->content = $page;
     }
 
-    protected function init_page() {
+    protected function init_page()
+    {
         if ($this->view_path == 'Pages') {
             if ($this->view == 'view' || $this->view == 'viewByid') {
                 $this->page = $this->_View->getVar('page');
             }
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -44,7 +49,8 @@ class PageHelper extends AppHelper {
      *
      * @return string
      */
-    public function getPermalink() {
+    public function getPermalink()
+    {
         return $this->Link->getPermalink();
     }
 
@@ -53,7 +59,8 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      */
-    public function thePermalink() {
+    public function thePermalink()
+    {
         echo $this->getPermalink();
     }
 
@@ -62,7 +69,8 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      */
-    public function theID() {
+    public function theID()
+    {
         echo $this->getTheID();
     }
 
@@ -71,10 +79,11 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      * @uses $page
-     * 
+     *
      * @return int
      */
-    public function getTheID() {
+    public function getTheID()
+    {
         return $this->page['Page']['id'];
     }
 
@@ -86,20 +95,24 @@ class PageHelper extends AppHelper {
      * @param string $before Optional. Content to prepend to the title.
      * @param string $after Optional. Content to append to the title.
      * @param bool $echo Optional, default to true.Whether to display or return.
+     *
      * @return null|string Null on no title. String if $echo parameter is false.
      */
-    public function theTitle($before = '', $after = '', $echo = true) {
+    public function theTitle($before = '', $after = '', $echo = true)
+    {
         $title = $this->getTheTitle();
 
-        if (strlen($title) == 0)
+        if (strlen($title) == 0) {
             return;
+        }
 
         $title = $before . $title . $after;
 
-        if ($echo)
+        if ($echo) {
             echo $title;
-        else
+        } else {
             return $title;
+        }
     }
 
     /**
@@ -115,13 +128,16 @@ class PageHelper extends AppHelper {
      * @since 1.0
      *
      * @param string|array $args Optional. Override the defaults.
+     *
      * @return string|null Null on failure or display. String when echo is false.
      */
-    function theTitleAttribute($args = '') {
+    function theTitleAttribute($args = '')
+    {
         $title = $this->getTheTitle();
 
-        if (strlen($title) == 0)
+        if (strlen($title) == 0) {
             return;
+        }
 
         $defaults = array('before' => '', 'after' => '', 'echo' => true);
         $r = $this->parse_args($args, $defaults);
@@ -129,10 +145,11 @@ class PageHelper extends AppHelper {
         $title = $r['before'] . $title . $r['after'];
         $title = strip_tags($title);
 
-        if ($r['echo'])
+        if ($r['echo']) {
             echo $title;
-        else
+        } else {
             return $title;
+        }
     }
 
     /**
@@ -142,7 +159,8 @@ class PageHelper extends AppHelper {
      *
      * @return string
      */
-    public function getTheTitle() {
+    public function getTheTitle()
+    {
         return $this->page['Page']['title'];
     }
 
@@ -152,7 +170,8 @@ class PageHelper extends AppHelper {
      * @since 0.1
      * @uses get_the_excerpt() Echos Result
      */
-    function theExcerpt() {
+    function theExcerpt()
+    {
         echo $this->getTheExcerpt();
     }
 
@@ -161,10 +180,11 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      * @uses $page
-     * 
+     *
      * @return string
      */
-    function getTheExcerpt() {
+    function getTheExcerpt()
+    {
         return $this->page['Page']['excerpt'];
     }
 
@@ -175,8 +195,9 @@ class PageHelper extends AppHelper {
      *
      * @return bool
      */
-    function hasExcerpt() {
-        return (!empty($this->page['Page']['excerpt']) );
+    function hasExcerpt()
+    {
+        return (!empty($this->page['Page']['excerpt']));
     }
 
     /**
@@ -193,13 +214,16 @@ class PageHelper extends AppHelper {
      *
      * @since 0.1
      * @uses get_the_date()
+     *
      * @param string $format Optional. PHP date format defaults to the date_format option if not specified.
      * @param string $before Optional. Output before the date.
      * @param string $after Optional. Output after the date.
      * @param bool $echo Optional, default is display. Whether to echo the date or return it.
+     *
      * @return string|null Null if displaying, string if retrieving.
      */
-    function theDate($d = '', $before = '', $after = '', $echo = true) {
+    function theDate($d = '', $before = '', $after = '', $echo = true)
+    {
         $this->General->theDate($d, $before, $after, $echo);
     }
 
@@ -211,13 +235,16 @@ class PageHelper extends AppHelper {
      * @since 0.1
      *
      * @param string $format Optional. PHP date format defaults to the date_format option if not specified.
+     *
      * @return string|null Null if displaying, string if retrieving.
      */
-    function getTheDate($d = '') {
+    function getTheDate($d = '')
+    {
         return $this->General->getTheDate($d);
     }
 
-    public function list_pages($args = '') {
+    public function list_pages($args = '')
+    {
         $defaults = array(
             'direction' => 'asc',
             'sort' => 'title',
@@ -240,11 +267,12 @@ class PageHelper extends AppHelper {
      * Returns a page nested list for data generated by find('threaded')
      *
      * @param $pages array Data generated by find('threaded')
-     * 
+     *
      * @return string HTML for nested list
      * */
-    public function page_tree_render($pages, $narr = array()) {
-        $out = NULL;
+    public function page_tree_render($pages, $narr = array())
+    {
+        $out = null;
         foreach ($pages as $page) {
             $out .= '<li class="page_item page-item-' . $page['Post']['id'] . '">';
             $out .= $this->Html->link($page['Post']['title'], '/pages/' . $page['Post']['slug']);
@@ -265,9 +293,11 @@ class PageHelper extends AppHelper {
      * array('sort' => 'title');
      *
      * @param string $string in this format: sort=title;direction=asc;
+     *
      * @return array
      */
-    public function stringToArray($string) {
+    public function stringToArray($string)
+    {
         $string = explode(';', $string);
         $stringArr = array();
         foreach ($string as $stringElement) {
@@ -284,7 +314,8 @@ class PageHelper extends AppHelper {
         return $stringArr;
     }
 
-    public function parse_args($args, $defaults = array()) {
+    public function parse_args($args, $defaults = array())
+    {
         if (is_string($args)) {
             $strArr = $this->stringToArray($args);
             return array_merge($defaults, $strArr);

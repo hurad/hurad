@@ -7,45 +7,51 @@ App::uses('HttpSocket', 'Network/Http');
  *
  * @author mohammad
  */
-class Akismet {
+class Akismet
+{
 
     public static $protocol = 'http://';
     public static $host = 'rest.akismet.com';
     public static $apiVersion = '1.1';
 
-    public function isVerifyAPIKey($data) {
+    public function isVerifyAPIKey($data)
+    {
         $result = self::_postRequest($data, null, 'verify-key');
         if ($result['body'] == 'valid') {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
-    public function isSpam($data, $key) {
+    public function isSpam($data, $key)
+    {
         $result = self::_postRequest($data, $key, 'comment-check');
         if ($result['body'] == 'true') {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
-    public function submitSpam($data, $key) {
+    public function submitSpam($data, $key)
+    {
         $result = self::_postRequest($data, $key, 'submit-spam');
         if (strlen($result['body']) == 41) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
-    public function submitHam($data, $key) {
+    public function submitHam($data, $key)
+    {
         $result = self::_postRequest($data, $key, 'submit-ham');
         if (strlen($result['body']) == 41) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
-    private function _postRequest($data, $key = null, $type = null) {
+    private function _postRequest($data, $key = null, $type = null)
+    {
         $HttpSocket = new HttpSocket();
 
         if ($type == 'verify-key') {
@@ -57,7 +63,7 @@ class Akismet {
         } elseif ($type == 'submit-ham') {
             $requestURI = self::$protocol . $key . '.' . self::$host . '/' . self::$apiVersion . '/submit-ham';
         } else {
-            return FALSE;
+            return false;
         }
 
         return $HttpSocket->post($requestURI, $data);

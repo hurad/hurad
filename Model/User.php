@@ -9,7 +9,8 @@ App::uses('UserMeta', 'Model');
  * @property Comment $Comment
  * @property Post $Post
  */
-class User extends AppModel {
+class User extends AppModel
+{
 
     /**
      * Display field
@@ -107,7 +108,8 @@ class User extends AppModel {
         )
     );
 
-    public function beforeValidate($options = array()) {
+    public function beforeValidate($options = array())
+    {
         parent::beforeValidate($options);
         if (Router::getParam('action') == 'admin_profile') {
             if ($this->data['User']['password'] == "" && $this->data['User']['confirm_password'] == "") {
@@ -117,14 +119,16 @@ class User extends AppModel {
         }
     }
 
-    public function beforeSave($options = array()) {
+    public function beforeSave($options = array())
+    {
         parent::beforeSave($options);
         if (isset($this->data['User']['password'])) {
             $this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
         }
     }
 
-    public function afterSave($created) {
+    public function afterSave($created)
+    {
         parent::afterSave($created);
 
         if ($created) {
@@ -141,7 +145,8 @@ class User extends AppModel {
         }
     }
 
-    public function beforeDelete($cascade = true) {
+    public function beforeDelete($cascade = true)
+    {
         parent::beforeDelete($cascade);
 
         if ($this->id == 1) {
@@ -149,7 +154,8 @@ class User extends AppModel {
         }
     }
 
-    public function afterDelete() {
+    public function afterDelete()
+    {
         parent::afterDelete();
 
         if ($this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false)) {
@@ -159,7 +165,8 @@ class User extends AppModel {
         }
     }
 
-    function checkPasswords() {
+    function checkPasswords()
+    {
         if ($this->data['User']['confirm_password'] === $this->data['User']['password']) {
             return true;
         } else {
@@ -167,36 +174,46 @@ class User extends AppModel {
         }
     }
 
-    public function getUsers($args) {
-        $users = $this->find('all', array(
-            'order' => array(
-                'User.' . $args['orderby'] => $args['order']
-            ),
-            'limit' => $args['number'],
-            'recursive' => 0
-        ));
+    public function getUsers($args)
+    {
+        $users = $this->find(
+            'all',
+            array(
+                'order' => array(
+                    'User.' . $args['orderby'] => $args['order']
+                ),
+                'limit' => $args['number'],
+                'recursive' => 0
+            )
+        );
         return $users;
     }
 
-    public function getUserData($user_id) {
-        $user = $this->find('first', array(
-            "conditions" => array('User.id' => $user_id),
-            "recursive" => 0
-                )
+    public function getUserData($user_id)
+    {
+        $user = $this->find(
+            'first',
+            array(
+                "conditions" => array('User.id' => $user_id),
+                "recursive" => 0
+            )
         );
 
         if ($user) {
             $user = $user['User'];
 
-            $metaList = $this->UserMeta->find('list', array(
-                'conditions' => array(
-                    'UserMeta.user_id' => $user_id
-                ),
-                'fields' => array(
-                    'UserMeta.meta_key',
-                    'UserMeta.meta_value'
-                ),
-            ));
+            $metaList = $this->UserMeta->find(
+                'list',
+                array(
+                    'conditions' => array(
+                        'UserMeta.user_id' => $user_id
+                    ),
+                    'fields' => array(
+                        'UserMeta.meta_key',
+                        'UserMeta.meta_value'
+                    ),
+                )
+            );
 
             $user = Set::merge($user, $metaList);
 
@@ -206,12 +223,13 @@ class User extends AppModel {
         }
     }
 
-    function password_old() {
+    function password_old()
+    {
         $password = $this->field('password', array('id' => $this->id));
         if ($password == AuthComponent::password($this->data['User']['password_old'])) {
-            return TRUE;
+            return true;
         } else {
-            return FALSE;
+            return false;
         }
     }
 

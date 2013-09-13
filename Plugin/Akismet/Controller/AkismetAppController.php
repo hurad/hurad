@@ -7,8 +7,7 @@ App::uses('AppController', 'Controller');
  *
  * @author mohammad
  */
-class AkismetAppController extends AppController {
+class AkismetAppController extends AppController
+{
     //put your code here
 }
-
-?>

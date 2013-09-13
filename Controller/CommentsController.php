@@ -7,8 +7,10 @@ App::uses('CakeEmail', 'Network/Email');
  * Comments Controller
  *
  * @property Comment $Comment
+ * @property HuradComponent $Hurad
  */
-class CommentsController extends AppController {
+class CommentsController extends AppController
+{
 
     public $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
     public $components = array('RequestHandler');
@@ -22,18 +24,10 @@ class CommentsController extends AppController {
         )
     );
 
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'reply');
-    }
-
-    public function isAuthorized($user) {
-        $action = Router::getParam('action');
-        switch ($user['role']) {
-            case 'admin':
-                return TRUE;
-                break;
-        }
+        $this->Auth->allow('index', 'add', 'reply');
     }
 
     /**
@@ -41,23 +35,10 @@ class CommentsController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $this->Comment->recursive = 0;
         $this->set('comments', $this->paginate());
-    }
-
-    /**
-     * view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null) {
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        $this->set('comment', $this->Comment->read(null, $id));
     }
 
     /**
@@ -65,7 +46,8 @@ class CommentsController extends AppController {
      *
      * @return void
      */
-    public function add() {
+    public function add()
+    {
         if ($this->request->is('post')) {
             $this->Comment->create();
             $this->request->data['Comment']['author_ip'] = CakeRequest::clientIp();
@@ -73,80 +55,35 @@ class CommentsController extends AppController {
             $this->request->data['Comment']['approved'] = 0;
 
             $format = new Formatting();
-            $this->request->data['Comment']['author_url'] = $format->esc_url($this->request->data['Comment']['author_url']);
+            $this->request->data['Comment']['author_url'] = $format->esc_url(
+                $this->request->data['Comment']['author_url']
+            );
             if ($this->Comment->save($this->request->data)) {
                 $this->redirect($this->referer());
-//                $email = new CakeEmail('gmail');
-//                $email->emailFormat('html');
-//                $email->template('add_comment');
-//                $email->from(array('info@hurad.org' => 'Hurad'));
-//                $email->to($this->request->data['Comment']['author_email']);
-//                $email->subject('Comment Submit');
-//                $email->send('Your comment submit in blog waiting to approve by admin.');
-//                $this->Session->setFlash(__('The comment has been saved'));
-//                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
-            }
-        }
-    }
-
-    /**
-     * edit method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function edit($id = null) {
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The comment has been saved'));
+                $this->Hurad->sendEmail(
+                    $this->request->data['Comment']['author_email'],
+                    __d('hurad', 'Comment Submit'),
+                    'add_comment',
+                    __d('hurad', 'Your comment submit in blog waiting to approve by admin.')
+                );
+                $this->Session->setFlash(__d('hurad', 'The comment has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
+                $this->Session->setFlash(__d('hurad', 'The comment could not be saved. Please, try again.'));
             }
-        } else {
-            $this->request->data = $this->Comment->read(null, $id);
         }
-        $parentComments = $this->Comment->ParentComment->find('list');
-        $posts = $this->Comment->Post->find('list');
-        $users = $this->Comment->User->find('list');
-        $this->set(compact('parentComments', 'posts', 'users'));
-    }
-
-    /**
-     * delete method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function delete($id = null) {
-        if (!$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        if ($this->Comment->delete()) {
-            $this->Session->setFlash(__('Comment deleted'));
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('Comment was not deleted'));
-        $this->redirect(array('action' => 'index'));
     }
 
     /**
      * admin_index method
      *
+     * @param null $action
+     *
      * @return void
      */
-    public function admin_index($action = null) {
-        $this->set('title_for_layout', __('Comments'));
+    public function admin_index($action = null)
+    {
+        $this->set('title_for_layout', __d('hurad', 'Comments'));
         $this->Comment->recursive = 0;
 
         if (isset($this->request->params['named']['q'])) {
@@ -162,35 +99,35 @@ class CommentsController extends AppController {
 
         switch ($action) {
             case 'moderated':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __d('hurad', 'Moderated comments'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 0,
                 );
                 break;
 
             case 'approved':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __d('hurad', 'Approved comments'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 1,
                 );
                 break;
 
             case 'spam':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __d('hurad', 'Spams'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 'spam',
                 );
                 break;
 
             case 'trash':
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __d('hurad', 'Trashes'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => 'trash',
                 );
                 break;
 
             default:
-                $this->set('title_for_layout', __('Comments'));
+                $this->set('title_for_layout', __d('hurad', 'Comments'));
                 $this->paginate['conditions'] = array(
                     'Comment.approved' => array(0, 1),
                 );
@@ -208,57 +145,24 @@ class CommentsController extends AppController {
     }
 
     /**
-     * admin_view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function admin_view($id = null) {
-        $this->Comment->id = $id;
-        if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
-        }
-        $this->set('comment', $this->Comment->read(null, $id));
-    }
-
-    /**
-     * admin_add method
-     *
-     * @return void
-     */
-    public function admin_add() {
-        if ($this->request->is('post')) {
-            $this->Comment->create();
-            if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The comment has been saved'));
-                $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
-            }
-        }
-        $parentComments = $this->Comment->ParentComment->find('list');
-        $posts = $this->Comment->Post->find('list');
-        $users = $this->Comment->User->find('list');
-        $this->set(compact('parentComments', 'posts', 'users'));
-    }
-
-    /**
      * admin_edit method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_edit($id = null) {
+    public function admin_edit($id = null)
+    {
         $this->Comment->id = $id;
         if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
+            throw new NotFoundException(__d('hurad', 'Invalid comment'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The comment has been saved'));
+                $this->Session->setFlash(__d('hurad', 'The comment has been saved'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
+                $this->Session->setFlash(__d('hurad', 'The comment could not be saved. Please, try again.'));
             }
         } else {
             $this->request->data = $this->Comment->read(null, $id);
@@ -272,41 +176,44 @@ class CommentsController extends AppController {
      * admin_delete method
      *
      * @param string $id
+     *
      * @return void
      */
-    public function admin_delete($id = null) {
+    public function admin_delete($id = null)
+    {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
         $this->Comment->id = $id;
         if (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
+            throw new NotFoundException(__d('hurad', 'Invalid comment'));
         }
         if ($this->Comment->delete()) {
-            $this->Session->setFlash(__('Comment deleted'));
+            $this->Session->setFlash(__d('hurad', 'Comment was deleted'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__('Comment was not deleted'));
+        $this->Session->setFlash(__d('hurad', 'Comment was not deleted'));
         $this->redirect(array('action' => 'index'));
     }
 
     /**
      * reply method
-     * 
+     *
      * @param string $post_id
      * @param string $comment_id
      *
      * @return void
      */
-    public function reply($post_id = NULL, $comment_id = NULL) {
+    public function reply($post_id = null, $comment_id = null)
+    {
         if ($this->request->is('post')) {
             $this->Comment->create();
 
             if (is_null($post_id) && !is_int($post_id)) {
-                $this->Session->setFlash(__('The post is not valid'));
+                $this->Session->setFlash(__d('hurad', 'The post is invalid.'));
                 $this->redirect($this->referer());
             } elseif (is_null($comment_id) && !is_int($comment_id)) {
-                $this->Session->setFlash(__('The comment is not valid'));
+                $this->Session->setFlash(__d('hurad', 'The comment is invalid.'));
                 $this->redirect($this->referer());
             } else {
                 $this->request->data['Comment']['parent_id'] = $comment_id;
@@ -314,10 +221,10 @@ class CommentsController extends AppController {
             }
 
             if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__('The reply comment has been saved'));
+                $this->Session->setFlash(__d('hurad', 'The reply of comment has been saved.'));
                 $this->redirect(array('controller' => 'posts', 'action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The comment could not be saved. Please, try again.'));
+                $this->Session->setFlash(__d('hurad', 'The comment could not be saved. Please, try again.'));
                 $this->redirect(array('controller' => 'posts', 'action' => 'index'));
             }
         }
@@ -325,41 +232,42 @@ class CommentsController extends AppController {
         $this->set(compact('urls'));
     }
 
-    public function admin_action($action = null, $id = null) {
-        $this->autoRender = FALSE;
+    public function admin_action($action = null, $id = null)
+    {
+        $this->autoRender = false;
         $this->Comment->id = $id;
         if (is_null($action)) {
-            return FALSE;
+            return false;
         } elseif (!$this->Comment->exists()) {
-            throw new NotFoundException(__('Invalid comment'));
+            throw new NotFoundException(__d('hurad', 'Invalid comment'));
         }
         switch ($action) {
             case 'approved':
                 $data = array('id' => $id, 'approved' => '1');
-                $msg = __('Comment approved.');
-                $err = __('Comment not approved please try again.');
+                $msg = __d('hurad', 'Comments are approved.');
+                $err = __d('hurad', 'Comments are not approved, please try again.');
                 break;
             case 'disapproved':
                 $data = array('id' => $id, 'approved' => '0');
-                $msg = __('Comment unapproved.');
-                $err = __('Comment not disapproved please try again.');
+                $msg = __d('hurad', 'Comment are unapproved.');
+                $err = __d('hurad', 'Comment are not unapproved, please try again.');
                 break;
             case 'spam':
                 $data = array('id' => $id, 'approved' => 'spam');
-                $msg = __('Comment spam.');
-                $err = __('Comment not spam please try again.');
+                $msg = __d('hurad', 'Comment marked as spam.');
+                $err = __d('hurad', 'Comment didn\'t mark as spam, please try again.');
                 break;
             case 'trash':
                 $data = array('id' => $id, 'approved' => 'trash');
-                $msg = __('Comment move to trash.');
-                $err = __('Comment not move to trash please try again.');
+                $msg = __d('hurad', 'Comment moved to trash.');
+                $err = __d('hurad', 'Comment didn\'t move to trash, please try again.');
                 break;
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'error');
+                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
                 break;
         }
 
-        if ($this->RequestHandler->isAjax()) {
+        if ($this->request->is('ajax')) {
             $this->Comment->save($data);
         } else {
             if ($this->Comment->save($data)) {
@@ -372,7 +280,8 @@ class CommentsController extends AppController {
         }
     }
 
-    public function admin_process() {
+    public function admin_process()
+    {
         $this->autoRender = false;
         $action = $this->request->data['Comment']['action'];
         $ids = array();
@@ -383,40 +292,40 @@ class CommentsController extends AppController {
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__('No items selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No item selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__('No action selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_error');
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'approve':
                 if ($this->Comment->updateAll(array('Comment.approved' => '1'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments approved'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Comments are approved'), 'flash_notice');
                 }
                 break;
 
             case 'disapprove':
                 if ($this->Comment->updateAll(array('Comment.approved' => '0'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments unapproved'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Comments are unapproved'), 'flash_notice');
                 }
                 break;
 
             case 'spam':
                 if ($this->Comment->updateAll(array('Comment.approved' => '"spam"'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments marked as spam.'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Comments marked as spam.'), 'flash_notice');
                 }
                 break;
 
             case 'trash':
                 if ($this->Comment->updateAll(array('Comment.approved' => '"trash"'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__('Comments move to trash.'), 'flash_notice');
+                    $this->Session->setFlash(__d('hurad', 'Comments moved to trash.'), 'flash_notice');
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__('An error occurred.'), 'flash_error');
+                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_error');
                 break;
         }
         $this->redirect(array('action' => 'index'));

@@ -5,13 +5,16 @@
  *
  * @author mohammad
  */
-class AkismetBehavior extends ModelBehavior {
+class AkismetBehavior extends ModelBehavior
+{
 
-    public function setup(\Model $model, $config = array()) {
+    public function setup(\Model $model, $config = array())
+    {
         parent::setup($model, $config);
     }
 
-    public function beforeSave(\Model $model) {
+    public function beforeSave(\Model $model)
+    {
         parent::beforeSave($model);
         $request = new CakeRequest();
         $data = array(

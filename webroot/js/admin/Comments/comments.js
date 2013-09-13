@@ -12,7 +12,7 @@ var Comments = {};
  *
  * @return void
  */
-Comments.documentReady = function() {
+Comments.documentReady = function () {
     Comments.search();
 }
 
@@ -21,18 +21,18 @@ Comments.documentReady = function() {
  *
  * @return void
  */
-Comments.search = function() {
+Comments.search = function () {
 
-    $('#AdminSearchForm').submit(function() {
-        var q='';
-		
+    $('#AdminSearchForm').submit(function () {
+        var q = '';
+
         //query string
-        if($('#CommentQ').val() != '') {
-            q=$('#CommentQ').val();
+        if ($('#CommentQ').val() != '') {
+            q = $('#CommentQ').val();
         }
         var loadUrl = Hurad.basePath + 'admin/comments/index';
         if (q != '') {
-            loadUrl +='/q:'+q;          
+            loadUrl += '/q:' + q;
         }
 
         window.location = loadUrl;
@@ -41,13 +41,12 @@ Comments.search = function() {
 }
 
 
-
 /**
  * document ready
  *
  * @return void
  */
-$(document).ready(function() {
+$(document).ready(function () {
     if (Hurad.params.controller == 'comments') {
         Comments.documentReady();
     }
