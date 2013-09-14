@@ -137,7 +137,7 @@ class CategoriesController extends AppController
                 $this->Session->setFlash(
                     __d('hurad', 'The category could not be saved. Please, try again.'),
                     'flash_message',
-                    array('class' => 'error')
+                    array('class' => 'danger')
                 );
             }
         } else {
@@ -165,7 +165,11 @@ class CategoriesController extends AppController
         if (!$this->Category->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid category'));
         } elseif ($id == '1') {
-            $this->Session->setFlash(__d('hurad', 'You could not delete Uncategorized category.'), 'flash_message');
+            $this->Session->setFlash(
+                __d('hurad', 'You could not delete Uncategorized category.'),
+                'flash_message',
+                array('class' => 'warning')
+            );
             $this->redirect(array('action' => 'index'));
         }
 
@@ -180,7 +184,7 @@ class CategoriesController extends AppController
             $this->Session->setFlash(
                 __d('hurad', 'Category was not deleted'),
                 'flash_message',
-                array('class' => 'error')
+                array('class' => 'danger')
             );
             $this->redirect(array('action' => 'index'));
         }
@@ -206,10 +210,10 @@ class CategoriesController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No item selected.'), 'flash_message');
+            $this->Session->setFlash(__d('hurad', 'No item selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         }
 
@@ -229,7 +233,7 @@ class CategoriesController extends AppController
                 $this->Session->setFlash(
                     __d('hurad', 'An error occurred.'),
                     'flash_message',
-                    array('class' => 'error')
+                    array('class' => 'danger')
                 );
                 break;
         }

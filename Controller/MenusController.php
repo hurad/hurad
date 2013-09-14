@@ -54,10 +54,18 @@ class MenusController extends AppController
             $this->request->data['Menu']['type'] = 'nav_menu';
             $this->Menu->create();
             if ($this->Menu->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The menu has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The menu has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The menu could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The menu could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
     }
@@ -78,10 +86,18 @@ class MenusController extends AppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Menu->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The menu has been saved'), 'notice');
+                $this->Session->setFlash(
+                    __d('hurad', 'The menu has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The menu could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The menu could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         } else {
             $this->request->data = $this->Menu->read(null, $id);
@@ -106,10 +122,10 @@ class MenusController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid menu'));
         }
         if ($this->Menu->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Menu deleted'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'Menu deleted'), 'flash_message', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'Menu was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'Menu was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
 

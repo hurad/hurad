@@ -115,10 +115,18 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $this->User->create();
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The user has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The user has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The user could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The user could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
     }
@@ -140,7 +148,11 @@ class UsersController extends AppController
         }
 
         if ($this->Auth->user('role') != 'admin' && $this->Auth->user('id') != $id) {
-            $this->Session->setFlash(__d('hurad', 'You do not have permission to access this section.'), 'error');
+            $this->Session->setFlash(
+                __d('hurad', 'You do not have permission to access this section.'),
+                'flash_message',
+                array('class' => 'danger')
+            );
             $this->redirect('/admin');
         }
 
@@ -156,11 +168,19 @@ class UsersController extends AppController
             }
 
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The user has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The user has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect($this->referer());
             } else {
                 $this->set('errors', $this->User->validationErrors);
-                $this->Session->setFlash(__d('hurad', 'The user could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The user could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         } else {
             $this->request->data = $this->User->read(null, $id);
@@ -194,10 +214,10 @@ class UsersController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid user'));
         }
         if ($this->User->delete()) {
-            $this->Session->setFlash(__d('hurad', 'User deleted'), 'success');
+            $this->Session->setFlash(__d('hurad', 'User deleted'), 'flash_message', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'User was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'User was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
 
@@ -209,7 +229,7 @@ class UsersController extends AppController
         $this->layout = "admin_login";
         $this->set('title_for_layout', __d('hurad', 'Login to admin section'));
         if ($this->Auth->loggedIn()) {
-            $this->Session->setFlash(__d('hurad', 'You already login.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'You already login.'), 'flash_message', array('class' => 'warning'));
             $this->redirect($this->Auth->redirectUrl('/admin'));
         } else {
             if ($this->request->is('post')) {
@@ -219,11 +239,16 @@ class UsersController extends AppController
                         $this->__setCookie();
                         $this->Session->setFlash(
                             __d('hurad', '%s you have successfully logged in', $this->Auth->user('username')),
-                            'success'
+                            'flash_message',
+                            array('class' => 'success')
                         );
                         $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
                     } else {
-                        $this->Session->setFlash(__d('hurad', 'Your username or password was incorrect.'), 'error');
+                        $this->Session->setFlash(
+                            __d('hurad', 'Your username or password was incorrect.'),
+                            'flash_message',
+                            array('class' => 'danger')
+                        );
                     }
                 }
             }
@@ -256,10 +281,14 @@ class UsersController extends AppController
         if ($this->Auth->loggedIn()) {
             $this->Session->destroy();
             $this->Cookie->destroy();
-            $this->Session->setFlash(__d('hurad', 'You are successfully logout'), 'success');
+            $this->Session->setFlash(
+                __d('hurad', 'You are successfully logout'),
+                'flash_message',
+                array('class' => 'success')
+            );
             $this->redirect($this->Auth->logout());
         } else {
-            $this->Session->setFlash(__d('hurad', 'You already logout.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'You already logout.'), 'flash_message', array('class' => 'warning'));
             $this->redirect('/');
         }
     }
@@ -284,12 +313,17 @@ class UsersController extends AppController
                         'username' => $user['User']['username']
                     )
                 );
-                $this->Session->setFlash(__d('hurad', 'Your password has been updated'), 'flash_notice');
+                $this->Session->setFlash(
+                    __d('hurad', 'Your password has been updated'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('admin' => true, 'action' => 'index'));
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'Could not be changed password. Please, try again.'),
-                    'flash_notice'
+                    'flash_message',
+                    array('class' => 'danger')
                 );
             }
         }
@@ -322,15 +356,15 @@ class UsersController extends AppController
                 );
                 $this->Session->setFlash(
                     __d('hurad', 'Congratulations, You are Successfully register'),
-                    'default',
+                    'flash_message',
                     array('class' => 'success')
                 );
                 $this->redirect(array('action' => 'login'));
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'The user could not be saved. Please, try again.'),
-                    'default',
-                    array('class' => 'error')
+                    'flash_message',
+                    array('class' => 'danger')
                 );
             }
         }
@@ -377,17 +411,26 @@ class UsersController extends AppController
                         'verify',
                         __d('hurad', 'Thank you confirm your account')
                     );
-                    $this->Session->setFlash(__d('hurad', 'User confirm.'));
+                    $this->Session->setFlash(
+                        __d('hurad', 'User confirm.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                     $this->redirect(array('action' => 'index'));
                 } else {
                     $this->Session->setFlash(
                         __d('hurad', 'Could not be confirm your email. Please, try again.'),
-                        'success'
+                        'flash_message',
+                        array('class' => 'danger')
                     );
                     $this->redirect(array('action' => 'index'));
                 }
             } else {
-                $this->Session->setFlash(__d('hurad', 'Your activation key not valid.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'Your activation key not valid.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 $this->redirect(array('action' => 'index'));
             }
         }
@@ -423,7 +466,8 @@ class UsersController extends AppController
 
             $this->Session->setFlash(
                 __d('hurad', 'An email has been sent with instructions for resetting your password.'),
-                'success'
+                'flash_message',
+                array('class' => 'success')
             );
             $this->redirect(array('action' => 'login'));
         }
@@ -439,7 +483,7 @@ class UsersController extends AppController
         $this->set('title_for_layout', __d('hurad', 'Reset Password'));
 
         if ($key == null) {
-            $this->Session->setFlash(__d('hurad', 'An error occurred.'));
+            $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_message', array('class' => 'danger'));
             $this->redirect(array('action' => 'login'));
         }
 
@@ -452,7 +496,7 @@ class UsersController extends AppController
             )
         );
         if (!isset($user['User']['id'])) {
-            $this->Session->setFlash(__d('hurad', 'An error occurred.'));
+            $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_message', array('class' => 'danger'));
             $this->redirect(array('action' => 'login'));
         }
 
@@ -460,10 +504,18 @@ class UsersController extends AppController
             $this->User->id = $user['User']['id'];
             $user['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
             if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'Your password has been reset successfully.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'Your password has been reset successfully.'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'An error occurred. Please try again.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred. Please try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
 
@@ -500,22 +552,30 @@ class UsersController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->User->deleteAll(array('User.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__d('hurad', 'Users deleted.'), 'notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Users deleted.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 break;
         }
         $this->redirect(array('action' => 'index'));

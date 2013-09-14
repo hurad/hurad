@@ -89,10 +89,18 @@ class CommentsController extends AppController
                     'add_comment',
                     __d('hurad', 'Your comment submit in blog waiting to approve by admin.')
                 );
-                $this->Session->setFlash(__d('hurad', 'The comment has been saved'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The comment has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The comment could not be saved. Please, try again.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The comment could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
     }
@@ -205,10 +213,18 @@ class CommentsController extends AppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The comment has been saved'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The comment has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The comment could not be saved. Please, try again.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The comment could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         } else {
             $this->request->data = $this->Comment->read(null, $id);
@@ -236,10 +252,10 @@ class CommentsController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid comment'));
         }
         if ($this->Comment->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Comment was deleted'));
+            $this->Session->setFlash(__d('hurad', 'Comment was deleted'), 'flash_message', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'Comment was not deleted'));
+        $this->Session->setFlash(__d('hurad', 'Comment was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
 
@@ -255,10 +271,18 @@ class CommentsController extends AppController
             $this->Comment->create();
 
             if (is_null($post_id) && !is_int($post_id)) {
-                $this->Session->setFlash(__d('hurad', 'The post is invalid.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The post is invalid.'),
+                    'flash_message',
+                    array('class' => 'warning')
+                );
                 $this->redirect($this->referer());
             } elseif (is_null($comment_id) && !is_int($comment_id)) {
-                $this->Session->setFlash(__d('hurad', 'The comment is invalid.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The comment is invalid.'),
+                    'flash_message',
+                    array('class' => 'warning')
+                );
                 $this->redirect($this->referer());
             } else {
                 $this->request->data['Comment']['parent_id'] = $comment_id;
@@ -266,10 +290,18 @@ class CommentsController extends AppController
             }
 
             if ($this->Comment->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The reply of comment has been saved.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The reply of comment has been saved.'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('controller' => 'posts', 'action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The comment could not be saved. Please, try again.'));
+                $this->Session->setFlash(
+                    __d('hurad', 'The comment could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 $this->redirect(array('controller' => 'posts', 'action' => 'index'));
             }
         }
@@ -325,10 +357,10 @@ class CommentsController extends AppController
             $this->Comment->save($data);
         } else {
             if ($this->Comment->save($data)) {
-                $this->Session->setFlash($msg, 'notice');
+                $this->Session->setFlash($msg, 'flash_message', array('class' => 'success'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash($err, 'error');
+                $this->Session->setFlash($err, 'flash_message', array('class' => 'danger'));
                 $this->redirect(array('action' => 'index'));
             }
         }
@@ -349,40 +381,60 @@ class CommentsController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No item selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No item selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'approve':
                 if ($this->Comment->updateAll(array('Comment.approved' => '1'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Comments are approved'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Comments are approved'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'disapprove':
                 if ($this->Comment->updateAll(array('Comment.approved' => '0'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Comments are unapproved'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Comments are unapproved'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'spam':
                 if ($this->Comment->updateAll(array('Comment.approved' => '"spam"'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Comments marked as spam.'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Comments marked as spam.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'trash':
                 if ($this->Comment->updateAll(array('Comment.approved' => '"trash"'), array('Comment.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Comments moved to trash.'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Comments moved to trash.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 break;
         }
         $this->redirect(array('action' => 'index'));

@@ -50,7 +50,7 @@ class OptionsController extends AppController
         );
 
         if (count($options) == 0) {
-            $this->Session->setFlash(__d('hurad', 'Invalid Option name'), 'error');
+            $this->Session->setFlash(__d('hurad', 'Invalid Option name'), 'flash_message', array('class' => 'danger'));
             /* @todo Set admin prefix config */
             $this->redirect('/admin');
         }
@@ -69,7 +69,11 @@ class OptionsController extends AppController
             $optionData['Option'] = $opt;
 
             if ($this->Option->update($optionData)) {
-                $this->Session->setFlash(__d('hurad', 'Options have been updated!'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'Options have been updated!'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'Unable to update ' . $prefix . ' options.'),

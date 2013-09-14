@@ -133,10 +133,18 @@ class LinksController extends AppController
             if ($this->request->is('post')) {
                 $this->Link->create();
                 if ($this->Link->save($this->request->data)) {
-                    $this->Session->setFlash(__d('hurad', 'The link has been saved'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'The link has been saved'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                     $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__d('hurad', 'The link could not be saved. Please, try again.'), 'error');
+                    $this->Session->setFlash(
+                        __d('hurad', 'The link could not be saved. Please, try again.'),
+                        'flash_message',
+                        array('class' => 'danger')
+                    );
                 }
             }
             $linkCats = $this->Link->Linkcat->find(
@@ -158,10 +166,18 @@ class LinksController extends AppController
             if ($this->request->is('post')) {
                 $this->Link->create();
                 if ($this->Link->save($this->request->data)) {
-                    $this->Session->setFlash(__d('hurad', 'The link has been saved', 'success'));
+                    $this->Session->setFlash(
+                        __d('hurad', 'The link has been saved'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                     $this->redirect(array('action' => 'indexByMenu', $menuId));
                 } else {
-                    $this->Session->setFlash(__d('hurad', 'The link could not be saved. Please, try again.'), 'error');
+                    $this->Session->setFlash(
+                        __d('hurad', 'The link could not be saved. Please, try again.'),
+                        'flash_message',
+                        array('class' => 'danger')
+                    );
                 }
             }
             $linkCats = $this->Link->Menu->find(
@@ -192,10 +208,18 @@ class LinksController extends AppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Link->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The link has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The link has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The link could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The link could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         } else {
             $this->request->data = $this->Link->read(null, $id);
@@ -228,10 +252,10 @@ class LinksController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid link'));
         }
         if ($this->Link->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Link deleted'), 'success');
+            $this->Session->setFlash(__d('hurad', 'Link deleted'), 'flash_message', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'Link was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'Link was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
 
@@ -255,34 +279,50 @@ class LinksController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect($this->referer());
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Link->deleteAll(array('Link.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__d('hurad', 'Links deleted.'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Links deleted.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'visible':
                 if ($this->Link->updateAll(array('Link.visible' => "'Y'"), array('Link.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Links visible'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Links visible'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'invisible':
                 if ($this->Link->updateAll(array('Link.visible' => "'N'"), array('Link.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Links invisible'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Links invisible'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 break;
         }
         $this->redirect($this->referer());

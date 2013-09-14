@@ -66,12 +66,17 @@ class LinkcatsController extends AppController
             $this->Linkcat->create();
             $this->request->data['Linkcat']['type'] = 'link_category';
             if ($this->Linkcat->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The link category has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The link category has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'The link category could not be saved. Please, try again.'),
-                    'error'
+                    'flash_message',
+                    array('class' => 'danger')
                 );
             }
         }
@@ -93,12 +98,17 @@ class LinkcatsController extends AppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Linkcat->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The link category has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The link category has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'The link category could not be saved. Please, try again.'),
-                    'error'
+                    'flash_message',
+                    array('class' => 'danger')
                 );
             }
         } else {
@@ -124,10 +134,18 @@ class LinkcatsController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid link category'));
         }
         if ($this->Linkcat->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Link category deleted'), 'success');
+            $this->Session->setFlash(
+                __d('hurad', 'Link category deleted'),
+                'flash_message',
+                array('class' => 'success')
+            );
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'Link category was not deleted'), 'error');
+        $this->Session->setFlash(
+            __d('hurad', 'Link category was not deleted'),
+            'flash_message',
+            array('class' => 'danger')
+        );
         $this->redirect(array('action' => 'index'));
     }
 
@@ -146,22 +164,30 @@ class LinkcatsController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Linkcat->deleteAll(array('Linkcat.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__d('hurad', 'Link categories deleted.'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Link categories deleted.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 break;
         }
         $this->redirect(array('action' => 'index'));

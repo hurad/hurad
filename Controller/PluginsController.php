@@ -45,21 +45,30 @@ class PluginsController extends AppController
         $this->autoRender = false;
         if (HuradPlugin::isActive($alias)) {
             if (HuradPlugin::deactivate($alias)) {
-                $this->Session->setFlash(__d('hurad', 'Plugin deactivate'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'Plugin deactivate'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'The plugin could not be deactivate. Please, try again.'),
-                    'error'
+                    'flash_message',
+                    array('class' => 'danger')
                 );
                 $this->redirect(array('action' => 'index'));
             }
         } else {
             if (HuradPlugin::activate($alias)) {
-                $this->Session->setFlash(__d('hurad', 'Plugin activate'), 'success');
+                $this->Session->setFlash(__d('hurad', 'Plugin activate'), 'flash_message', array('class' => 'success'));
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The plugin could not be activate. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The plugin could not be activate. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 $this->redirect(array('action' => 'index'));
             }
         }

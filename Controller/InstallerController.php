@@ -105,7 +105,11 @@ class DATABASE_CONFIG {
 EOF;
                             $file->write($databaseConfig);
                         }
-                        $this->Session->setFlash(__d('hurad', 'Database successfuly installed'), 'success');
+                        $this->Session->setFlash(
+                            __d('hurad', 'Database successfuly installed'),
+                            'flash_message',
+                            array('class' => 'success')
+                        );
                         $this->redirect(array('action' => 'finalize'));
                     }
                 }
@@ -150,11 +154,19 @@ EOF;
 
             if ($db->connected) {
                 if ($this->__executeSQL("hurad_defaults.sql", $db, $search)) {
-                    $this->Session->setFlash(__d('hurad', 'Hurad successfully installed.'), 'success');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Hurad successfully installed.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                     $this->redirect(array('action' => 'welcome'));
                 }
             } else {
-                $this->Session->setFlash(__d('hurad', 'Not connected to database.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'Not connected to database.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
     }
@@ -204,7 +216,11 @@ EOF;
 
             return true;
         } else {
-            $this->Session->setFlash(__d('hurad', 'File "Config/Schema/%s" not exists.', $fileName), 'error');
+            $this->Session->setFlash(
+                __d('hurad', 'File "Config/Schema/%s" not exists.', $fileName),
+                'flash_message',
+                array('class' => 'danger')
+            );
             return false;
         }
     }

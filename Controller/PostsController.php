@@ -287,10 +287,18 @@ class PostsController extends AppController
 
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The post has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The post has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The post could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The post could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
         $categories = $this->Post->Category->generateTreeList(null, null, null, '_');
@@ -345,10 +353,18 @@ class PostsController extends AppController
             // save the data
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The Post has been saved.'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The Post has been saved.'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The Post could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The Post could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
         if (empty($this->request->data)) {
@@ -381,10 +397,10 @@ class PostsController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid post'));
         }
         if ($this->Post->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Post deleted'), 'flash_notice');
+            $this->Session->setFlash(__d('hurad', 'Post deleted'), 'flash_message', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'Post was not deleted'), 'flash_error');
+        $this->Session->setFlash(__d('hurad', 'Post was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
 
@@ -405,7 +421,11 @@ class PostsController extends AppController
                     $tag = $this->Post->Tag->save(array('name' => $tagName, 'slug' => $tagSlug));
                     $tag['Tag']['id'] = $this->Post->Tag->id;
                     if (!$tag) {
-                        $this->Session->setFlash(__(sprintf('The Tag %s could not be saved.', $_tag)), 'flash_error');
+                        $this->Session->setFlash(
+                            __(sprintf('The Tag %s could not be saved.', $_tag)),
+                            'flash_message',
+                            array('class' => 'danger')
+                        );
                     }
                 }
                 if ($tag) {
@@ -509,40 +529,60 @@ class PostsController extends AppController
         }
 
         if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_error');
+            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
             $this->redirect(array('action' => 'index'));
         }
 
         switch ($action) {
             case 'delete':
                 if ($this->Post->deleteAll(array('Post.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__d('hurad', 'Posts deleted.'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Posts deleted.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'publish':
                 if ($this->Post->updateAll(array('Post.status' => "'publish'"), array('Post.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Posts published'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Posts published'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'draft':
                 if ($this->Post->updateAll(array('Post.status' => "'draft'"), array('Post.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Posts drafted'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Posts drafted'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             case 'trash':
                 if ($this->Post->updateAll(array('Post.status' => "'trash'"), array('Post.id' => $ids))) {
-                    $this->Session->setFlash(__d('hurad', 'Posts move to trash'), 'flash_notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Posts move to trash'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'flash_error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 break;
         }
         $this->redirect(array('action' => 'index'));

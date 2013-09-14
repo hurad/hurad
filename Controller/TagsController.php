@@ -94,10 +94,18 @@ class TagsController extends AppController
             }
             $this->Tag->create();
             if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The tag has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The tag has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The tag could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The tag could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         }
     }
@@ -118,10 +126,18 @@ class TagsController extends AppController
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Tag->save($this->request->data)) {
-                $this->Session->setFlash(__d('hurad', 'The tag has been saved'), 'success');
+                $this->Session->setFlash(
+                    __d('hurad', 'The tag has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__d('hurad', 'The tag could not be saved. Please, try again.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'The tag could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
             }
         } else {
             $this->request->data = $this->Tag->read(null, $id);
@@ -148,10 +164,10 @@ class TagsController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
         if ($this->Tag->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Tag deleted'), 'notice');
+            $this->Session->setFlash(__d('hurad', 'Tag deleted'), 'flash_message', array('class' => 'success'));
             $this->redirect(array('action' => 'index'));
         }
-        $this->Session->setFlash(__d('hurad', 'Tag was not deleted'), 'error');
+        $this->Session->setFlash(__d('hurad', 'Tag was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
 
@@ -172,12 +188,20 @@ class TagsController extends AppController
         switch ($action) {
             case 'delete':
                 if ($this->Tag->deleteAll(array('Tag.id' => $ids), true, true)) {
-                    $this->Session->setFlash(__d('hurad', 'Tags deleted.'), 'notice');
+                    $this->Session->setFlash(
+                        __d('hurad', 'Tags deleted.'),
+                        'flash_message',
+                        array('class' => 'success')
+                    );
                 }
                 break;
 
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
+                $this->Session->setFlash(
+                    __d('hurad', 'An error occurred.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
                 break;
         }
 
