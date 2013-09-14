@@ -1,29 +1,56 @@
 <?php
-
+/**
+ * Comment Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
 
 /**
- * Comments Controller
+ * Class CommentsController
  *
  * @property Comment $Comment
- * @property HuradComponent $Hurad
  */
 class CommentsController extends AppController
 {
 
-    public $helpers = array('AdminLayout', 'Gravatar', 'Js' => array('Jquery'));
-    public $components = array('RequestHandler');
+    /**
+     * An array containing the names of helpers this controller uses.
+     *
+     * @var array
+     */
+    public $helpers = array('AdminLayout', 'Gravatar');
+    /**
+     * Other components utilized by CommentsController
+     *
+     * @var array
+     */
+    public $components = array('RequestHandler', 'Paginator');
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
         'conditions' => array(
             'Comment.approved' => array(0, 1),
         ),
-        'limit' => 15,
+        'limit' => 25,
         'order' => array(
             'Comment.created' => 'desc'
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -31,31 +58,27 @@ class CommentsController extends AppController
     }
 
     /**
-     * index method
-     *
-     * @return void
+     * List of comments
      */
     public function index()
     {
         $this->Comment->recursive = 0;
-        $this->set('comments', $this->paginate());
+        $this->set('comments', $this->Paginator->paginate('Comment'));
     }
 
     /**
-     * add method
-     *
-     * @return void
+     * Add comment
      */
     public function add()
     {
         if ($this->request->is('post')) {
             $this->Comment->create();
-            $this->request->data['Comment']['author_ip'] = CakeRequest::clientIp();
+            $request = new CakeRequest();
+            $this->request->data['Comment']['author_ip'] = $request->clientIp();
             $this->request->data['Comment']['agent'] = env('HTTP_USER_AGENT');
             $this->request->data['Comment']['approved'] = 0;
 
-            $format = new Formatting();
-            $this->request->data['Comment']['author_url'] = $format->esc_url(
+            $this->request->data['Comment']['author_url'] = Formatting::esc_url(
                 $this->request->data['Comment']['author_url']
             );
             if ($this->Comment->save($this->request->data)) {
@@ -75,11 +98,9 @@ class CommentsController extends AppController
     }
 
     /**
-     * admin_index method
+     * List of comments
      *
-     * @param null $action
-     *
-     * @return void
+     * @param null|string $action
      */
     public function admin_index($action = null)
     {
@@ -89,47 +110,72 @@ class CommentsController extends AppController
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
-            $this->paginate['Comment']['limit'] = 25;
-            $this->paginate['Comment']['order'] = array('Comment.created' => 'desc');
-            $this->paginate['Comment']['conditions'] = array(
-                'Comment.approved' => array(0, 1),
-                'Comment.content LIKE' => '%' . $q . '%',
+            $this->Paginator->settings = array_merge(
+                $this->paginate,
+                array(
+                    'Comment' => array(
+                        'conditions' => array(
+                            'Comment.content LIKE' => '%' . $q . '%',
+                        )
+                    )
+                )
             );
         }
 
         switch ($action) {
             case 'moderated':
                 $this->set('title_for_layout', __d('hurad', 'Moderated comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 0,
+                $this->Paginator->settings = array_merge(
+                    $this->paginate,
+                    array(
+                        'Comment' => array(
+                            'conditions' => array(
+                                'Comment.approved' => 0,
+                            )
+                        )
+                    )
                 );
                 break;
 
             case 'approved':
                 $this->set('title_for_layout', __d('hurad', 'Approved comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 1,
+                $this->Paginator->settings = array_merge(
+                    $this->paginate,
+                    array(
+                        'Comment' => array(
+                            'conditions' => array(
+                                'Comment.approved' => 1,
+                            )
+                        )
+                    )
                 );
                 break;
 
             case 'spam':
                 $this->set('title_for_layout', __d('hurad', 'Spams'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 'spam',
+                $this->Paginator->settings = array_merge(
+                    $this->paginate,
+                    array(
+                        'Comment' => array(
+                            'conditions' => array(
+                                'Comment.approved' => 'spam',
+                            )
+                        )
+                    )
                 );
                 break;
 
             case 'trash':
                 $this->set('title_for_layout', __d('hurad', 'Trashes'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => 'trash',
-                );
-                break;
-
-            default:
-                $this->set('title_for_layout', __d('hurad', 'Comments'));
-                $this->paginate['conditions'] = array(
-                    'Comment.approved' => array(0, 1),
+                $this->Paginator->settings = array_merge(
+                    $this->paginate,
+                    array(
+                        'Comment' => array(
+                            'conditions' => array(
+                                'Comment.approved' => 'trash',
+                            )
+                        )
+                    )
                 );
                 break;
         }
@@ -141,15 +187,15 @@ class CommentsController extends AppController
         $countComments['trash'] = $this->Comment->countComments('trash');
 
         $this->set('countComments', $countComments);
-        $this->set('comments', $this->paginate());
+        $this->set('comments', $this->Paginator->paginate('Comment'));
     }
 
     /**
-     * admin_edit method
+     * Edit comment
      *
-     * @param string $id
+     * @param null|int $id
      *
-     * @return void
+     * @throws NotFoundException
      */
     public function admin_edit($id = null)
     {
@@ -173,11 +219,12 @@ class CommentsController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete comment
      *
-     * @param string $id
+     * @param null|int $id
      *
-     * @return void
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function admin_delete($id = null)
     {
@@ -197,12 +244,10 @@ class CommentsController extends AppController
     }
 
     /**
-     * reply method
+     * Reply comment
      *
-     * @param string $post_id
-     * @param string $comment_id
-     *
-     * @return void
+     * @param null $post_id
+     * @param null $comment_id
      */
     public function reply($post_id = null, $comment_id = null)
     {
@@ -232,6 +277,15 @@ class CommentsController extends AppController
         $this->set(compact('urls'));
     }
 
+    /**
+     * Comment actions
+     *
+     * @param null $action
+     * @param null $id
+     *
+     * @throws NotFoundException
+     * @return bool
+     */
     public function admin_action($action = null, $id = null)
     {
         $this->autoRender = false;
@@ -280,6 +334,9 @@ class CommentsController extends AppController
         }
     }
 
+    /**
+     * Comment processes
+     */
     public function admin_process()
     {
         $this->autoRender = false;

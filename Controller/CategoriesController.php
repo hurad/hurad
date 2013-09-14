@@ -3,8 +3,6 @@
 /**
  * Category Controller
  *
- * This file is category controller file.
- *
  * PHP 5
  *
  * @link http://hurad.org Hurad Project
@@ -16,21 +14,27 @@
 App::uses('AppController', 'Controller');
 
 /**
- * CategoriesController is used for managing Hurad categories.
+ * Class CategoriesController
  *
- * @package app.Controller
  * @property Category $Category
  */
 class CategoriesController extends AppController
 {
-
+    public $components = array('Paginator');
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
-        'limit' => 5,
-        'order' => array(
-            'Category.name' => 'desc'
+        'Category' => array(
+            'limit' => 25
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -39,9 +43,9 @@ class CategoriesController extends AppController
     }
 
     /**
-     * index method
+     * List of categories
      *
-     * @return void
+     * @return array
      */
     public function index()
     {
@@ -55,39 +59,38 @@ class CategoriesController extends AppController
                 )
             );
             return $cats;
-        } else {
-            $this->Category->recursive = 0;
-            $this->set('categories', $this->paginate());
         }
+
+        $this->Category->recursive = 0;
+        $this->set('categories', $this->Paginator->paginate('Category'));
     }
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * List of categories
      */
     public function admin_index()
     {
         $this->set('title_for_layout', __d('hurad', 'Categories'));
-        $this->paginate = array(
-            'order' => array('Category.lft' => 'ASC'),
-            'limit' => 20,
-            'contain' => false
+        $this->Paginator->settings = Hash::merge(
+            $this->paginate,
+            array(
+                'Category' => array(
+                    'order' => array('Category.lft' => 'ASC'),
+                    'contain' => false
+                )
+            )
         );
-        $this->set('categories', $this->paginate());
+        $this->set('categories', $this->Paginator->paginate('Category'));
     }
 
     /**
-     * admin_add method
-     *
-     * @return void
+     * Add category
      */
     public function admin_add()
     {
         $this->set('title_for_layout', __d('hurad', 'Add New Category'));
         if ($this->request->is('post')) {
             $this->Category->create();
-            //$this->request->data['Category']['parent_id'] = $this->ModelName->getInsertID();
             if ($this->Category->save($this->request->data)) {
                 $this->Session->setFlash(
                     __d('hurad', 'The category has been saved'),
@@ -109,12 +112,11 @@ class CategoriesController extends AppController
     }
 
     /**
-     * admin_edit method
+     * Edit category
      *
-     * @param string $id
+     * @param null|int $id
      *
      * @throws NotFoundException
-     * @return void
      */
     public function admin_edit($id = null)
     {
@@ -147,13 +149,12 @@ class CategoriesController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete category
      *
-     * @param string $id
+     * @param null|int $id
      *
      * @throws NotFoundException
      * @throws MethodNotAllowedException
-     * @return void
      */
     public function admin_delete($id = null)
     {
@@ -186,7 +187,7 @@ class CategoriesController extends AppController
     }
 
     /**
-     * admin_process method
+     * Category processes
      */
     public function admin_process()
     {
@@ -217,13 +218,11 @@ class CategoriesController extends AppController
                 foreach ($ids as $value) {
                     $this->Category->removeFromTree($value);
                 }
-                // if ($this->Category->deleteAll(array('Category.id' => $ids), true, true)) {
                 $this->Session->setFlash(
                     __d('hurad', 'Categories was deleted.'),
                     'flash_message',
                     array('class' => 'success')
                 );
-                //}
                 break;
 
             default:

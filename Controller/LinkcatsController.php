@@ -1,26 +1,41 @@
 <?php
-
+/**
+ * Linkcats Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Menus Controller
+ * Class LinkcatsController
  *
- * @property Menu $Menu
+ * @property Linkcat $Linkcat
  */
 class LinkcatsController extends AppController
 {
-
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
-        'limit' => 25,
-        'order' => array(
-            'Linkcat.created' => 'desc'
+        'Linkcat' => array(
+            'order' => array(
+                'Linkcat.created' => 'desc'
+            ),
+            'conditions' => array('Linkcat.type' => 'link_category'),
+            'limit' => 25
         )
     );
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * List of link categories
      */
     public function admin_index()
     {
@@ -29,19 +44,20 @@ class LinkcatsController extends AppController
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
-            $this->paginate['Linkcat']['limit'] = 25;
-            $this->paginate['Linkcat']['conditions'] = array(
-                'Linkcat.type' => 'link_category',
-                'Linkcat.name LIKE' => '%' . $q . '%',
+            $this->Paginator->settings = Hash::merge(
+                $this->paginate,
+                array(
+                    'Linkcat' => array(
+                        'conditions' => array('Linkcat.name LIKE' => '%' . $q . '%'),
+                    )
+                )
             );
         }
-        $this->set('linkcats', $this->paginate('Linkcat', array('Linkcat.type' => 'link_category')));
+        $this->set('linkcats', $this->Paginator->paginate('Linkcat'));
     }
 
     /**
-     * admin_add method
-     *
-     * @return void
+     * Add link categories
      */
     public function admin_add()
     {
@@ -62,11 +78,11 @@ class LinkcatsController extends AppController
     }
 
     /**
-     * admin_edit method
+     * Edit link category
      *
-     * @param string $id
+     * @param null|int $id
      *
-     * @return void
+     * @throws NotFoundException
      */
     public function admin_edit($id = null)
     {
@@ -91,11 +107,12 @@ class LinkcatsController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete link category
      *
-     * @param string $id
+     * @param null|int $id
      *
-     * @return void
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function admin_delete($id = null)
     {
@@ -114,6 +131,9 @@ class LinkcatsController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    /**
+     * Link categories processes
+     */
     public function admin_process()
     {
         $this->autoRender = false;

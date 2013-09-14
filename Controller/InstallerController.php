@@ -1,15 +1,35 @@
 <?php
-
+/**
+ * Installer Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 App::uses('ConnectionManager', 'Model');
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 
+/**
+ * Class InstallerController
+ */
 class InstallerController extends AppController
 {
-
+    /**
+     * An array containing the class names of models this controller uses.
+     *
+     * @var array
+     */
     public $uses = array();
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -21,11 +41,17 @@ class InstallerController extends AppController
         $this->layout = 'install';
     }
 
+    /**
+     * Index installer
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('hurad', 'Welcome to Hurad installer'));
     }
 
+    /**
+     * Database configuration step
+     */
     public function database()
     {
         $this->set('title_for_layout', __d('hurad', 'Database Configuration'));
@@ -89,6 +115,9 @@ EOF;
         }
     }
 
+    /**
+     * Hurad configuration step
+     */
     public function finalize()
     {
         $this->set('title_for_layout', __d('hurad', 'Hurad Configuration'));
@@ -130,14 +159,29 @@ EOF;
         }
     }
 
+    /**
+     * Final step
+     *
+     * @throws NotFoundException
+     */
     public function welcome()
     {
         $this->set('title_for_layout', __d('hurad', 'Welcome to Hurad'));
 
         $file = new File(TMP . 'installed', true, 0644);
+        if (!$file->exists()) {
+            throw new NotFoundException(__d('hurad', '/tmp directory not writable.'));
+        }
     }
 
-    private function __executeSQL($fileName, $object, $search = null)
+    /**
+     * @param $fileName
+     * @param $object
+     * @param null $search
+     *
+     * @return bool
+     */
+    private function __executeSQL($fileName, DboSource $object, $search = null)
     {
         if (file_exists(SCHEMA . $fileName)) {
             $sql = file_get_contents(SCHEMA . $fileName);
@@ -151,6 +195,7 @@ EOF;
                 $statements = $contents;
             }
 
+            /** @var $statements[] */
             foreach ($statements as $statement) {
                 if (trim($statement) != '') {
                     $object->query($statement);

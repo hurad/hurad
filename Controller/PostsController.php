@@ -1,9 +1,19 @@
 <?php
-
+/**
+ * Posts Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Posts Controller
+ * Class PostsController
  *
  * @property Post $Post
  * @property Category $Category
@@ -12,9 +22,23 @@ App::uses('AppController', 'Controller');
  */
 class PostsController extends AppController
 {
-
+    /**
+     * An array containing the names of helpers this controller uses.
+     *
+     * @var array
+     */
     public $helpers = array('Post', 'Comment', 'Text', 'Editor');
+    /**
+     * Other components utilized by CommentsController
+     *
+     * @var array
+     */
     public $components = array('RequestHandler', 'Role', 'Hurad', 'Paginator');
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
         'conditions' => array(
             'Post.status' => array('publish', 'draft'),
@@ -26,6 +50,9 @@ class PostsController extends AppController
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -34,9 +61,7 @@ class PostsController extends AppController
     }
 
     /**
-     * index method
-     *
-     * @return void
+     * List of posts
      */
     public function index()
     {
@@ -54,29 +79,27 @@ class PostsController extends AppController
             );
             $this->set(compact('posts'));
         } else {
-            $this->paginate = array(
-                'conditions' => array(
-                    'Post.status' => array('publish'),
-                    'Post.type' => 'post'
-                ),
-                'contain' => array('Category', 'User', 'Tag', 'Comment'),
-                'order' => array(
-                    'Post.created' => 'desc'
+            $this->Paginator->settings = Hash::merge(
+                $this->paginate,
+                array(
+                    'Post' => array(
+                        'conditions' => array(
+                            'Post.status' => array('publish'),
+                        ),
+                        'contain' => array('Category', 'User', 'Tag', 'Comment'),
+                    )
                 )
             );
-            $this->set('posts', $this->paginate('Post'));
+            $this->set('posts', $this->Paginator->paginate('Post'));
         }
     }
 
     /**
-     * view method
+     * View post
      *
-     * @param null $slug
+     * @param null|string $slug
      *
      * @throws NotFoundException
-     * @internal param string $id
-     *
-     * @return void
      */
     public function view($slug = null)
     {
@@ -90,6 +113,13 @@ class PostsController extends AppController
         }
     }
 
+    /**
+     * View post filtered by post id
+     *
+     * @param null|int $id
+     *
+     * @throws NotFoundException
+     */
     public function viewById($id = null)
     {
         $this->Post->id = $id;
@@ -104,6 +134,13 @@ class PostsController extends AppController
         }
     }
 
+    /**
+     * List of posts filtered by user id
+     *
+     * @param null|int $userId
+     *
+     * @throws NotFoundException
+     */
     public function admin_listByAuthor($userId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
@@ -112,7 +149,7 @@ class PostsController extends AppController
             throw new NotFoundException(__d('hurad', 'Invalid author'));
         }
         $this->Post->recursive = 1;
-        $this->Paginator->settings = array_merge(
+        $this->Paginator->settings = Hash::merge(
             $this->paginate,
             array(
                 'Post' => array(
@@ -126,6 +163,13 @@ class PostsController extends AppController
         $this->render('admin_index');
     }
 
+    /**
+     * List of posts filtered by category id
+     *
+     * @param null|int $categoryId
+     *
+     * @throws NotFoundException
+     */
     public function admin_listByCategory($categoryId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
@@ -133,7 +177,7 @@ class PostsController extends AppController
         if (is_null($categoryId) || !$this->Post->Category->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid category'));
         }
-        $this->Paginator->settings = array_merge(
+        $this->Paginator->settings = Hash::merge(
             $this->paginate,
             array(
                 'Post' => array(
@@ -148,6 +192,13 @@ class PostsController extends AppController
         $this->render('admin_index');
     }
 
+    /**
+     * List of posts filtered by tag id
+     *
+     * @param null|int $tagId
+     *
+     * @throws NotFoundException
+     */
     public function admin_listByTag($tagId = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
@@ -155,7 +206,7 @@ class PostsController extends AppController
         if (is_null($tagId) || !$this->Post->Tag->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid tag'));
         }
-        $this->Paginator->settings = array_merge(
+        $this->Paginator->settings = Hash::merge(
             $this->paginate,
             array(
                 'Post' => array(
@@ -171,9 +222,7 @@ class PostsController extends AppController
     }
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * List of posts
      */
     public function admin_index()
     {
@@ -182,7 +231,7 @@ class PostsController extends AppController
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
-            $this->Paginator->settings = array_merge(
+            $this->Paginator->settings = Hash::merge(
                 $this->paginate,
                 array(
                     'Post' => array(
@@ -195,9 +244,7 @@ class PostsController extends AppController
     }
 
     /**
-     * admin_add method
-     *
-     * @return void
+     * Add post
      */
     public function admin_add()
     {
@@ -251,11 +298,9 @@ class PostsController extends AppController
     }
 
     /**
-     * admin_edit method
+     * Edit post
      *
-     * @param string $id
-     *
-     * @return void
+     * @param null|int $id
      */
     public function admin_edit($id = null)
     {
@@ -319,13 +364,12 @@ class PostsController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete post
      *
-     * @param string $id
+     * @param null|int $id
      *
      * @throws NotFoundException
      * @throws MethodNotAllowedException
-     * @return void
      */
     public function admin_delete($id = null)
     {
@@ -399,11 +443,9 @@ class PostsController extends AppController
     }
 
     /**
-     * admin_filter method
+     * Filter posts
      *
-     * @param string $action
-     *
-     * @return void
+     * @param null|string $action
      */
     public function admin_filter($action = null)
     {
@@ -449,6 +491,9 @@ class PostsController extends AppController
         $this->render('admin_index');
     }
 
+    /**
+     * Post processes
+     */
     public function admin_process()
     {
         $this->autoRender = false;
