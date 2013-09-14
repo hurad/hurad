@@ -1,26 +1,60 @@
 <?php
-
+/**
+ * Users Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
 
 /**
- * Users Controller
+ * Class UsersController
  *
  * @property User $User
  */
 class UsersController extends AppController
 {
-
+    /**
+     * Other components utilized by CommentsController
+     *
+     * @var array
+     */
     public $components = array('Cookie', 'Session', 'Hurad', 'RequestHandler', 'Paginator');
-    public $helpers = array('Gravatar', 'Dashboard', 'Js');
+    /**
+     * An array containing the names of helpers this controller uses.
+     *
+     * @var array
+     */
+    public $helpers = array('Gravatar', 'Dashboard');
+    /**
+     * An array containing the class names of models this controller uses.
+     *
+     * @var array
+     */
     public $uses = array('User', 'UserMeta');
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
-        'limit' => 10,
-        'order' => array(
-            'User.username' => 'desc'
+        'User' => array(
+            'limit' => 25,
+            'order' => array(
+                'User.username' => 'desc'
+            )
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -28,6 +62,9 @@ class UsersController extends AppController
         $this->Auth->allow(array('register', 'login', 'logout', 'forgot'));
     }
 
+    /**
+     * Admin dashboard
+     */
     public function admin_dashboard()
     {
         $this->set('title_for_layout', __d('hurad', 'Dashboard'));
@@ -44,9 +81,7 @@ class UsersController extends AppController
     }
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * List of users
      */
     public function admin_index()
     {
@@ -72,9 +107,7 @@ class UsersController extends AppController
     }
 
     /**
-     * admin_add method
-     *
-     * @return void
+     * Add user
      */
     public function admin_add()
     {
@@ -91,12 +124,11 @@ class UsersController extends AppController
     }
 
     /**
-     * admin_edit method
+     * User profile
      *
-     * @param string $id
+     * @param null|int $id User ID
      *
      * @throws NotFoundException
-     * @return void
      */
     public function admin_profile($id = null)
     {
@@ -145,13 +177,12 @@ class UsersController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete user
      *
-     * @param string $id
+     * @param null|int $id User ID
      *
      * @throws NotFoundException
      * @throws MethodNotAllowedException
-     * @return void
      */
     public function admin_delete($id = null)
     {
@@ -171,9 +202,7 @@ class UsersController extends AppController
     }
 
     /**
-     * login method
-     *
-     * @return void
+     * User login
      */
     public function login()
     {
@@ -204,10 +233,7 @@ class UsersController extends AppController
     /**
      * Sets the cookie to remember the user
      *
-     * @param string $cookieKey Cookie data keyname for the userdata, its default is "User". This is set to User and NOT using the model alias to make sure it works with different apps with different user models accross different (sub)domains.
-     *
-     * @internal param \Cookie $array component properties as array, like array('domain' => 'yourdomain.com')
-     * @return void
+     * @param string $cookieKey
      */
     private function __setCookie($cookieKey = 'Auth.User')
     {
@@ -223,9 +249,7 @@ class UsersController extends AppController
     }
 
     /**
-     * logout method
-     *
-     * @return void
+     * User logout
      */
     public function logout()
     {
@@ -241,9 +265,7 @@ class UsersController extends AppController
     }
 
     /**
-     * change_password method
-     *
-     * @return void
+     * Change password
      */
     public function change_password()
     {
@@ -274,9 +296,7 @@ class UsersController extends AppController
     }
 
     /**
-     * register method
-     *
-     * @return void
+     * User register
      */
     public function register()
     {
@@ -317,11 +337,9 @@ class UsersController extends AppController
     }
 
     /**
-     * _getActivationKey method
+     * Generate activation key
      *
-     * @param void
-     *
-     * @return string activation key
+     * @return string Generated activation hash
      */
     private function _getActivationKey()
     {
@@ -329,12 +347,12 @@ class UsersController extends AppController
     }
 
     /**
-     * verify method
+     * Verify user
      *
-     * @param void
+     * @param null|string $key Activation hash
      *
+     * @return bool
      * @throws NotFoundException
-     * @return string activation key
      */
     public function verify($key = null)
     {
@@ -375,6 +393,9 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * Forgot password
+     */
     public function forgot()
     {
         $this->layout = "admin_login";
@@ -408,6 +429,11 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * Reset password
+     *
+     * @param null|string $key
+     */
     public function reset($key = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Reset Password'));
@@ -433,7 +459,6 @@ class UsersController extends AppController
         if (!empty($this->request->data) && isset($this->request->data['User']['password'])) {
             $this->User->id = $user['User']['id'];
             $user['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
-//$user['User']['activation_key'] = md5(uniqid());
             if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__d('hurad', 'Your password has been reset successfully.'));
                 $this->redirect(array('action' => 'login'));
@@ -445,7 +470,7 @@ class UsersController extends AppController
         $this->set(compact('user', 'username', 'key'));
     }
 
-    function check()
+    public function check()
     {
         $cookie = $this->Cookie->read($this->cookieName);
 
@@ -460,6 +485,9 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * User processes
+     */
     public function admin_process()
     {
         $this->autoRender = false;

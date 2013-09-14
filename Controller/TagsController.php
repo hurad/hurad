@@ -1,23 +1,47 @@
 <?php
-
+/**
+ * Tags Controller
+ *
+ * PHP 5
+ *
+ * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
+ * @package app.Controller
+ * @since Version 0.1.0
+ * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ */
 App::uses('AppController', 'Controller');
 
 /**
- * Tags Controller
+ * Class TagsController
  *
  * @property Tag $Tag
  */
 class TagsController extends AppController
 {
-
-    public $components = array('RequestHandler');
+    /**
+     * Other components utilized by CommentsController
+     *
+     * @var array
+     */
+    public $components = array('Paginator');
+    /**
+     * Paginate settings
+     *
+     * @var array
+     */
     public $paginate = array(
-        'limit' => 10,
-        'order' => array(
-            'Tag.created' => 'desc'
+        'Tag' => array(
+            'limit' => 25,
+            'order' => array(
+                'Tag.created' => 'desc'
+            )
         )
     );
 
+    /**
+     * Called before the controller action.
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();
@@ -25,13 +49,11 @@ class TagsController extends AppController
     }
 
     /**
-     * index method
-     *
-     * @return void
+     * List of tags
      */
     public function index()
     {
-        if ($this->RequestHandler->isAjax()) {
+        if ($this->request->is('ajax')) {
             Configure::write('debug', 0);
             $this->autoRender = false;
             $tags = $this->Tag->find('all', array('conditions' => array('Tag.name LIKE' => '%' . $_GET['term'] . '%')));
@@ -44,42 +66,22 @@ class TagsController extends AppController
             echo json_encode($response);
         } else {
             $this->Tag->recursive = 0;
-            $this->set('tags', $this->paginate());
+            $this->set('tags', $this->Paginator->paginate('Tag'));
         }
     }
 
     /**
-     * admin_index method
-     *
-     * @return void
+     * List of tags
      */
     public function admin_index()
     {
         $this->set('title_for_layout', __d('hurad', 'Tags'));
         $this->Tag->recursive = 0;
-        $this->set('tags', $this->paginate());
+        $this->set('tags', $this->Paginator->paginate('Tag'));
     }
 
     /**
-     * admin_view method
-     *
-     * @param string $id
-     *
-     * @return void
-     */
-    public function admin_view($id = null)
-    {
-        $this->Tag->id = $id;
-        if (!$this->Tag->exists()) {
-            throw new NotFoundException(__d('hurad', 'Invalid tag'));
-        }
-        $this->set('tag', $this->Tag->read(null, $id));
-    }
-
-    /**
-     * admin_add method
-     *
-     * @return void
+     * Add tag
      */
     public function admin_add()
     {
@@ -101,11 +103,11 @@ class TagsController extends AppController
     }
 
     /**
-     * admin_edit method
+     * Edit tag
      *
-     * @param string $id
+     * @param null|int $id
      *
-     * @return void
+     * @throws NotFoundException
      */
     public function admin_edit($id = null)
     {
@@ -129,11 +131,12 @@ class TagsController extends AppController
     }
 
     /**
-     * admin_delete method
+     * Delete tag
      *
-     * @param string $id
+     * @param null|int $id
      *
-     * @return void
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
     public function admin_delete($id = null)
     {
@@ -152,6 +155,9 @@ class TagsController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    /**
+     * Tag processes
+     */
     public function admin_process()
     {
         $this->autoRender = false;
@@ -179,4 +185,3 @@ class TagsController extends AppController
     }
 
 }
-

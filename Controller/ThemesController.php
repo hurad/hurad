@@ -1,9 +1,6 @@
 <?php
-
 /**
- * Theme Controller
- *
- * This file is theme controller file.
+ * Themes Controller
  *
  * PHP 5
  *
@@ -17,29 +14,20 @@ App::uses('AppController', 'Controller');
 App::uses('HuradTheme', 'Lib');
 
 /**
- * ThemesController is used for managing Hurad themes.
- *
- * @package app.Controller
+ * Class ThemesController
  */
 class ThemesController extends AppController
 {
 
     /**
-     * uses property
+     * An array containing the class names of models this controller uses.
      *
      * @var array
-     * @access public
      */
     public $uses = array();
 
     /**
-     * For the list of available themes.
-     * admin_index action (admin/theme/index)
-     *
-     * @since 0.1.0
-     * @access public
-     *
-     * @return void
+     * List of themes
      */
     public function admin_index()
     {
@@ -57,15 +45,9 @@ class ThemesController extends AppController
     }
 
     /**
-     * To uninstall a theme.
-     * admin_delete action (admin/theme/delete)
+     * Delete theme
      *
-     * @since 0.1.0
-     * @access public
-     *
-     * @param string $alias Theme folder
-     *
-     * @return void
+     * @param null|string $alias Theme directory name
      */
     public function admin_delete($alias = null)
     {
@@ -75,26 +57,20 @@ class ThemesController extends AppController
         }
         if (HuradTheme::delete($alias)) {
             $this->Session->setFlash(
-                __d('hurad', '%s Theme successfuly deleted.', Configure::read('template')),
+                __d('hurad', '%s Theme successfully deleted.', Configure::read('template')),
                 'success'
             );
             $this->redirect(array('action' => 'index'));
         } else {
-            $this->Session->setFlash(__d('hurad', 'Occured error.'), 'error');
+            $this->Session->setFlash(__d('hurad', 'Occurred error.'), 'error');
             $this->redirect(array('action' => 'index'));
         }
     }
 
     /**
-     * To activate a theme.
-     * admin_activate action (admin/theme/activate)
+     * Activate theme
      *
-     * @since 0.1.0
-     * @access public
-     *
-     * @param string $alias Theme folder
-     *
-     * @return void
+     * @param null|string $alias Theme directory name
      */
     public function admin_activate($alias = null)
     {
