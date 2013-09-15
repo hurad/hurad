@@ -126,7 +126,7 @@ class Post extends AppModel
     public function afterDelete()
     {
         parent::afterDelete();
-        $this->UserMeta->deleteAll(array('PostMeta.post_id' => $this->id), false);
+        $this->PostMeta->deleteAll(array('PostMeta.post_id' => $this->id), false);
     }
 
     /**
