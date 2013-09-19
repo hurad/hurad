@@ -22,3 +22,11 @@ Thumbs.db
 
 # Config file
 /Config/database.php
+
+# Composer files
+composer.phar
+composer.lock
+Vendor/autoload.php
+Vendor/bin/
+Vendor/composer/
+Vendor/pear-pear.cakephp.org/
