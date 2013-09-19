@@ -1,8 +1,12 @@
-<h2><?php echo $title_for_layout; ?></h2>
+<div class="page-header">
+    <h2><?php echo $title_for_layout; ?></h2>
+</div>
+
 <?php
 echo $this->Form->create(
     'Menu',
     array(
+        'class' => 'form-horizontal',
         'inputDefaults' => array(
             'label' => false,
             'div' => false
@@ -10,30 +14,30 @@ echo $this->Form->create(
     )
 );
 ?>
-<?php echo $this->Form->input('id'); ?>
-<div id="wrap-body">
-    <div id="wrap-body-content">
-        <table class="form-table">
-            <tbody>
-            <tr class="form-field form-required">
-                <th scope="row"><?php echo $this->Form->label('name', 'Name'); ?> <span
-                        class="description"><?php echo __("(Required)"); ?></span></th>
-                <td><?php echo $this->Form->input('name', array('type' => 'text')); ?></td>
-            </tr>
-            <tr class="form-field form-required">
-                <th scope="row"><?php echo $this->Form->label('alias', 'Alias'); ?> <span
-                        class="description"><?php echo __("(Required)"); ?></span></th>
-                <td><?php echo $this->Form->input('alias', array('type' => 'text')); ?></td>
-            </tr>
-            <tr class="form-field form-required">
-                <th scope="row"><?php echo $this->Form->label('description', 'Description'); ?> <span
-                        class="description"><?php echo __("(Required)"); ?></span></th>
-                <td><?php echo $this->Form->input('description', array('type' => 'text')); ?></td>
-            </tr>
-            </tbody>
-        </table>
-        <?php echo $this->Form->end(__d('hurad', 'Submit')); ?>
+
+<div class="form-group">
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->input('name', array('class' => 'form-control')); ?>
+    </div>
+</div>
+<div class="form-group">
+    <?php echo $this->Form->label('alias', __d('hurad', 'Alias'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->input('slug', array('class' => 'form-control')); ?>
+    </div>
+</div>
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'description',
+        __d('hurad', 'Description'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->input('description', array('class' => 'form-control')); ?>
     </div>
 </div>
 
+<?php echo $this->Form->submit(__d('hurad', 'Add menu'), array('class' => 'btn btn-primary')); ?>
 
+<?php echo $this->Form->end(); ?>

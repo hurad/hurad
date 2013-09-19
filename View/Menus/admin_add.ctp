@@ -15,27 +15,29 @@ echo $this->Form->create(
 );
 ?>
 
-<div class="control-group">
-    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label')); ?>
-    <div class="controls">
-        <?php echo $this->Form->input('name', array('type' => 'text')); ?>
+<div class="form-group">
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->input('name', array('class' => 'form-control')); ?>
     </div>
 </div>
-<div class="control-group">
-    <?php echo $this->Form->label('alias', __d('hurad', 'Alias'), array('class' => 'control-label')); ?>
-    <div class="controls">
-        <?php echo $this->Form->input('slug', array('type' => 'text')); ?>
+<div class="form-group">
+    <?php echo $this->Form->label('alias', __d('hurad', 'Alias'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->input('slug', array('class' => 'form-control')); ?>
     </div>
 </div>
-<div class="control-group">
-    <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label')); ?>
-    <div class="controls">
-        <?php echo $this->Form->input('description', array('class' => 'col-md-5')); ?>
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'description',
+        __d('hurad', 'Description'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->input('description', array('class' => 'form-control')); ?>
     </div>
 </div>
 
-<div class="form-actions">
-    <?php echo $this->Form->submit(__d('hurad', 'Add menu'), array('class' => 'btn btn-primary')); ?>
-</div>
+<?php echo $this->Form->submit(__d('hurad', 'Add menu'), array('class' => 'btn btn-primary')); ?>
 
-<?php echo $this->Form->end(null); ?>
+<?php echo $this->Form->end(); ?>

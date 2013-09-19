@@ -21,9 +21,9 @@ echo $this->Form->create(
 );
 ?>
 
-<div class="control-group <?php echo $this->Form->isFieldError('username') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('username', __d('hurad', 'Username'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('username') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('username', __d('hurad', 'Username'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'username',
@@ -34,141 +34,117 @@ echo $this->Form->create(
                     'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
                     'attributes' => array(
                         'wrap' => 'span',
-                        'class' => 'help-inline'
+                        'class' => 'help-block'
                     )
                 ),
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
-                'disabled' => true
+                'disabled' => true,
+                'class' => 'form-control'
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group <?php echo $this->Form->isFieldError('UserMeta.firstname') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('UserMeta.firstname', __d('hurad', 'First Name'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.firstname') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label(
+        'UserMeta.firstname',
+        __d('hurad', 'First Name'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'UserMeta.firstname',
             array(
-//            'error' => array(
-//                'usernameRule-1' => __d('hurad', 'Minimum length of 5 characters.'), //minLength rule message
-//                'usernameRule-2' => __d('hurad', 'This username has already been taken.'), //isUnique rule message
-//                'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
-//                'attributes' => array(
-//                    'wrap' => 'span',
-//                    'class' => 'help-inline'
-//                )
-//            ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control',
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group <?php echo $this->Form->isFieldError('UserMeta.lastname') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('UserMeta.lastname', __d('hurad', 'Last Name'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.lastname') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label(
+        'UserMeta.lastname',
+        __d('hurad', 'Last Name'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'UserMeta.lastname',
             array(
-//            'error' => array(
-//                'usernameRule-1' => __d('hurad', 'Minimum length of 5 characters.'), //minLength rule message
-//                'usernameRule-2' => __d('hurad', 'This username has already been taken.'), //isUnique rule message
-//                'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
-//                'attributes' => array(
-//                    'wrap' => 'span',
-//                    'class' => 'help-inline'
-//                )
-//            ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group <?php echo $this->Form->isFieldError('UserMeta.nickname') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('UserMeta.nickname', __d('hurad', 'Nickname'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.nickname') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label(
+        'UserMeta.nickname',
+        __d('hurad', 'Nickname'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'UserMeta.nickname',
             array(
-//            'error' => array(
-//                'usernameRule-1' => __d('hurad', 'Minimum length of 5 characters.'), //minLength rule message
-//                'usernameRule-2' => __d('hurad', 'This username has already been taken.'), //isUnique rule message
-//                'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
-//                'attributes' => array(
-//                    'wrap' => 'span',
-//                    'class' => 'help-inline'
-//                )
-//            ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group <?php echo $this->Form->isFieldError('UserMeta.display_name') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('UserMeta.display_name', __d('hurad', 'Display Name'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.display_name') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label(
+        'UserMeta.display_name',
+        __d('hurad', 'Display Name'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'UserMeta.display_name',
             array(
                 'options' => $this->AdminLayout->displayNameOptions($current_user),
-//            'error' => array(
-//                'usernameRule-1' => __d('hurad', 'Minimum length of 5 characters.'), //minLength rule message
-//                'usernameRule-2' => __d('hurad', 'This username has already been taken.'), //isUnique rule message
-//                'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
-//                'attributes' => array(
-//                    'wrap' => 'span',
-//                    'class' => 'help-inline'
-//                )
-//            ),
-                //'required' => FALSE, //For disable HTML5 validation
+                'class' => 'form-control'
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group <?php echo $this->Form->isFieldError('email') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('email', __d('hurad', 'Email'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('email') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('email', __d('hurad', 'Email'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'email',
             array(
-//            'error' => array(
-//                'usernameRule-1' => __d('hurad', 'Minimum length of 5 characters.'), //minLength rule message
-//                'usernameRule-2' => __d('hurad', 'This username has already been taken.'), //isUnique rule message
-//                'usernameRule-3' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
-//                'attributes' => array(
-//                    'wrap' => 'span',
-//                    'class' => 'help-inline'
-//                )
-//            ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control'
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group <?php echo $this->Form->isFieldError('url') ? 'error' : ''; ?>">
-    <?php echo $this->Form->label('url', __d('hurad', 'Website'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group<?php echo $this->Form->isFieldError('url') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('url', __d('hurad', 'Website'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'url',
@@ -177,20 +153,21 @@ echo $this->Form->create(
                     'urlRule-1' => __d('hurad', 'Enter valid url.'), //url rule message
                     'attributes' => array(
                         'wrap' => 'span',
-                        'class' => 'help-inline'
+                        'class' => 'help-block'
                     )
                 ),
                 'required' => false, //For disable HTML5 validation
-                'type' => 'text'
+                'type' => 'text',
+                'class' => 'form-control',
             )
         );
         ?>
     </div>
 </div>
 
-<div class="control-group">
-    <?php echo $this->Form->label('password', __d('hurad', 'Password'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group">
+    <?php echo $this->Form->label('password', __d('hurad', 'Password'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'password',
@@ -200,18 +177,25 @@ echo $this->Form->create(
                 'value' => '',
                 'type' => 'password',
                 'autocomplete' => 'off',
+                'class' => 'form-control'
             )
         );
         ?>
-        <span class="help-inline"><?php echo __(
-                'If you would like to change the password type a new one. Otherwise leave this blank.'
-            ) ?></span>
     </div>
+    <span class="help-block">
+        <?php echo __(
+            'If you would like to change the password type a new one. Otherwise leave this blank.'
+        ) ?>
+    </span>
 </div>
 
-<div class="control-group">
-    <?php echo $this->Form->label('confirm_password', __d('hurad', 'Confirm Password'), array('class' => 'control-label')); ?>
-    <div class="controls">
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'confirm_password',
+        __d('hurad', 'Confirm Password'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'confirm_password',
@@ -220,35 +204,42 @@ echo $this->Form->create(
                 'required' => false, //For disable HTML5 validation
                 'type' => 'password',
                 'autocomplete' => 'off',
+                'class' => 'form-control'
             )
         );
         ?>
-        <span class="help-inline"><?php echo __d('hurad', 'Type your new password again.') ?></span>
-        <span class="help-block">
-            <div id="pass-strength-result"><?php echo __d('hurad', 'Strength indicator'); ?></div>
-            <p class="description indicator-hint"><?php echo __(
-                    'Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ & ).'
-                ); ?></p>
-        </span>
     </div>
+    <span class="help-block"><?php echo __d('hurad', 'Type your new password again.') ?></span>
 </div>
 
-<div class="form-actions">
-    <?php echo $this->Form->button(__d('hurad', 'Update Profile'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+<div class="form-group">
+    <span class="help-block">
+            <div id="pass-strength-result"><?php echo __d('hurad', 'Strength indicator'); ?></div>
+            <p class="description indicator-hint">
+                <?php echo __d(
+                    'hurad',
+                    'Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ & ).'
+                ); ?>
+            </p>
+        </span>
 </div>
+
+<?php echo $this->Form->button(
+    __d('hurad', 'Update Profile'),
+    array('type' => 'submit', 'class' => 'btn btn-primary')
+); ?>
 
 <?php echo $this->Form->end(); ?>
 
 <script type='text/javascript'>
     /* <![CDATA[ */
     var commonL10n = {
-        warnDelete: "You are about to permanently delete the selected items.\n  \'Cancel\' to stop, \'OK\' to delete."
+        warnDelete: "<?php echo __d('hurad', 'You are about to permanently delete the selected items.\n  \'Cancel\' to stop, \'OK\' to delete.') ?>"
     };
     try {
         convertEntities(commonL10n);
     } catch (e) {
     }
-    ;
     var pwsL10n = {
         empty: "<?php echo __d('hurad', 'Strength indicator') ?>",
         shortly: "<?php echo __d('hurad', 'Very weak') ?>",
@@ -261,6 +252,5 @@ echo $this->Form->create(
         convertEntities(pwsL10n);
     } catch (e) {
     }
-    ;
     /* ]]> */
 </script>
