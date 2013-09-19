@@ -29,7 +29,7 @@ class PostsController extends AppController
      */
     public $helpers = array('Post', 'Comment', 'Text', 'Editor');
     /**
-     * Other components utilized by CommentsController
+     * Other components utilized by PostsController
      *
      * @var array
      */
@@ -523,7 +523,7 @@ class PostsController extends AppController
         }
         $ids = array();
         foreach ($this->request->data['Post'] AS $id => $value) {
-            if ($id != 'action' && $value['id'] == 1) {
+            if ($id != 'action' && $id != 'tcheckbox' && $id != 'bcheckbox' && $value['id'] == 1) {
                 $ids[] = $id;
             }
         }

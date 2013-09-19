@@ -20,6 +20,12 @@ App::uses('AppController', 'Controller');
 class MenusController extends AppController
 {
     /**
+     * Other components utilized by MenusController
+     *
+     * @var array
+     */
+    public $components = array('Paginator');
+    /**
      * Paginate settings
      *
      * @var array

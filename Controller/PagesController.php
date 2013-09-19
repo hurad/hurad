@@ -26,11 +26,11 @@ class PagesController extends AppController
      */
     public $helpers = array('Page', 'Comment', 'Text', 'Editor');
     /**
-     * Other components utilized by CommentsController
+     * Other components utilized by PagesController
      *
      * @var array
      */
-    public $components = array('RequestHandler', 'Hurad');
+    public $components = array('RequestHandler', 'Hurad', 'Paginator');
     /**
      * Paginate settings
      *

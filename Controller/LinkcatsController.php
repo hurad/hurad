@@ -20,6 +20,12 @@ App::uses('AppController', 'Controller');
 class LinkcatsController extends AppController
 {
     /**
+     * Other components utilized by LinkcatsController
+     *
+     * @var array
+     */
+    public $components = array('Paginator');
+    /**
      * Paginate settings
      *
      * @var array
