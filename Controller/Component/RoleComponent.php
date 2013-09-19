@@ -22,8 +22,6 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
-                break;
             case "editor":
                 return $this->allowAuth();
                 break;
