@@ -166,4 +166,4 @@ HuradNavigation::addSubMenu(
     'manage_options'
 );
 
-echo $this->AdminLayout->adminMenus(Configure::read('Hurad.menus'));
+echo $this->AdminLayout->adminMenus(HuradNavigation::getMenus());

@@ -11,8 +11,11 @@ class HuradNavigation
     public static function addMenu($slug, $title, $url, $capability, $icon = array())
     {
         if (!self::menuExists($slug)) {
-            self::$menus[$slug] = array('title' => $title, 'url' => $url, 'icon' => $icon, 'capability' => $capability);
-            Configure::write('Hurad.menus', self::$menus);
+            self::$menus = Hash::insert(
+                self::$menus,
+                $slug,
+                array('title' => $title, 'url' => $url, 'icon' => $icon, 'capability' => $capability)
+            );
         }
     }
 
@@ -25,22 +28,32 @@ class HuradNavigation
     {
         if (self::menuExists($parentSlug)) {
             if (!self::subMenuExists($parentSlug, $slug)) {
-                self::$menus[$parentSlug]['sub_menus'][$slug] = array(
-                    'title' => $title,
-                    'url' => $url,
-                    'capability' => $capability
+                self::$menus = Hash::insert(
+                    self::$menus,
+                    $parentSlug . '.sub_menus.' . $slug,
+                    array(
+                        'title' => $title,
+                        'url' => $url,
+                        'capability' => $capability
+                    )
                 );
             }
         }
     }
 
+    /**
+     * Get all menus
+     *
+     * @return array
+     */
+    public static function getMenus()
+    {
+        return self::$menus;
+    }
+
     private static function subMenuExists($menuSlug, $subMenuSlug)
     {
-        if (count(self::$menus) > 0 && isset(self::$menus[$menuSlug]['sub_menus'])) {
-            return array_key_exists($subMenuSlug, self::$menus[$menuSlug]['sub_menus']);
-        } else {
-            return false;
-        }
+        return Hash::check(self::$menus, $menuSlug . '.sub_menus.' . $subMenuSlug);
     }
 
     public static function addDashboardMenu($slug, $title, $url, $capability)
