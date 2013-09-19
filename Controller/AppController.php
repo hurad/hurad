@@ -36,10 +36,10 @@ class AppController extends Controller
 {
 
     public $components = array(
+        'Security' => array('csrfUseOnce' => false),
         'Role',
         'Cookie',
         'Session',
-        'Security' => array('csrfUseOnce' => false, 'csrfExpires' => '+1 hour'),
         'Auth' => array(
             //'fields' => array('username' => 'username', 'password' => 'password'),
             'loginAction' => array(
