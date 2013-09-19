@@ -89,8 +89,8 @@ class CommentHelper extends AppHelper
         $this->post = $this->Link->post = $this->_View->getVar('post');
         $this->page = $this->_View->getVar('page');
         $this->current_user = $this->_View->getVar('current_user');
-        $this->MUser = & ClassRegistry::getObject('User');
-        $this->MPost = & ClassRegistry::getObject('Post');
+        $this->MUser = ClassRegistry::getObject('User');
+        $this->MPost = ClassRegistry::getObject('Post');
     }
 
     public function setComment($comment)

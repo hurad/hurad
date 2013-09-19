@@ -127,7 +127,7 @@ class User extends AppModel
         }
     }
 
-    public function afterSave($created)
+    public function afterSave($created, $options = array())
     {
         parent::afterSave($created);
 

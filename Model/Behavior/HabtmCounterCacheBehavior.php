@@ -209,7 +209,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
      * @param AppModel $model
      * @return boolean Always true
      */
-    public function beforeSave(\Model $model) {
+    public function beforeSave(\Model $model, $options = array()) {
         parent::beforeSave($model);
 
         // If no model->id, inserting, so return
@@ -252,7 +252,7 @@ class HabtmCounterCacheBehavior extends ModelBehavior {
      * @param boolean $created
      * @return boolean Always true
      */
-    public function afterSave(\Model $model, $created) {
+    public function afterSave(\Model $model, $created, $options = array()) {
         parent::afterSave($model, $created);
 
         $this->_setNewHabtmIds($model);

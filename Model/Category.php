@@ -140,7 +140,7 @@ class Category extends AppModel
         }
     }
 
-    public function afterSave($created)
+    public function afterSave($created, $options = array())
     {
         parent::afterSave($created);
         $action = $this->request->params['action'];
