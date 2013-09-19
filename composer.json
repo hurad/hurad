@@ -27,6 +27,9 @@
         "php": ">=5.2.0",
         "pear-cakephp/cakephp": ">=2.4.0"
     },
+    "require-dev": {
+        "cakephp/debug_kit": "2.2.*"
+    },
     "config": {
         "vendor-dir": "Vendor/"
     }
