@@ -1,0 +1,28 @@
+{
+    "name": "hurad/hurad",
+    "description": "Hurad is web software you can use to create a beautiful blog.",
+    "keywords": ["blog", "cakephp"],
+    "version": "0.1.0-alpha.1",
+    "homepage": "http://hurad.org",
+    "license": "GPL v2",
+    "authors": [
+        {
+            "name": "Mohammad Abdoli Rad",
+            "email": "m.abdolirad@gmail.com",
+            "homepage": "http://magzilla.org"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.cakephp.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0",
+        "pear-cakephp/cakephp": ">=2.4.0"
+    },
+    "config": {
+        "vendor-dir": "Vendor/"
+    }
+}
