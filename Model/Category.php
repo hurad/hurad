@@ -145,7 +145,7 @@ class Category extends AppModel
         parent::afterSave($created);
         $action = $this->request->params['action'];
         if ($action == 'admin_add' || $action == 'admin_edit') {
-            $path = $this->getPath($this->data['Category']['id']);
+            $path = $this->getPath($this->id);
             $path_num = count($path) - 1;
 
             if ($path_num > 0) {
@@ -159,13 +159,13 @@ class Category extends AppModel
             }
             $this->updateAll(
                 array('Category.path' => "'$path_field'"),
-                array('Category.id' => $this->data['Category']['id'])
+                array('Category.id' => $this->id)
             );
         }
         if ($action == 'admin_process') {
-            $path = $this->getPath($this->data['Category']['id']);
+            $path = $this->getPath($this->id);
             $path_num = count($path) - 1;
-            $category = $this->findById($this->data['Category']['id']);
+            $category = $this->findById($this->id);
             if ($path_num > 0) {
                 $under = "";
                 for ($i = 0; $i < $path_num; $i++) {
@@ -177,7 +177,7 @@ class Category extends AppModel
             }
             $this->updateAll(
                 array('Category.path' => "'$path_field'"),
-                array('Category.id' => $this->data['Category']['id'])
+                array('Category.id' => $this->id)
             );
         }
     }
