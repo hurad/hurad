@@ -152,7 +152,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'Mystery Man');
                     ?>
@@ -172,7 +172,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?d=blank&f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'Blank');
                     ?>
@@ -192,7 +192,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'Gravatar Logo');
                     ?>
@@ -212,7 +212,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?d=identicon&f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'Identicon (Generated)');
                     ?>
@@ -232,7 +232,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?d=wavatar&f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'Wavatar (Generated)');
                     ?>
@@ -252,7 +252,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?d=monsterid&f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'MonsterID (Generated)');
                     ?>
@@ -272,7 +272,7 @@ echo $this->Form->create(
                     );
                     echo $this->Html->image(
                         'http://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y&s=32',
-                        array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
+                        array('class' => 'avatar avatar-32 photo')
                     );
                     echo '&nbsp;' . __d('hurad', 'Retro (Generated)');
                     ?>
