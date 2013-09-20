@@ -5,7 +5,7 @@
         //Show widget inside(div.widget-inside)
         $(document).on("click", "span.widget-inside-click", function (event) {
             var item_id = $(this).parent().parent().attr("id");
-            $("#" + item_id).children(".panel-body").slideToggle("slow");
+            $("#" + item_id).children(".widget-inside").slideToggle("slow");
             return false;
         });
         //Edit widget data
@@ -39,48 +39,50 @@
 </script>
 <div class="row">
 <div class="col-md-8">
-    <div class="draggable-header">
-        <h5><?php echo __d('hurad', 'Available Widgets'); ?></h5>
-    </div>
-    <div id="draggable">
-        <?php
-        foreach (Configure::read('widgets') as $widget_id => $widget) {
-            echo $this->Html->div('widget-item', null, array('value' => $widget['id'], 'id' => $widget['id']));
-            echo $this->Html->div('widget-title', null);
-            echo $widget['title'];
-            echo '<span class="in-widget-title"></span>';
-            if ($this->Widget->formExist($widget['element'])) {
-                echo '<span class="widget-inside-click" style="display: none;"><i class="glyphicon glyphicon-chevron-down"></i></span>';
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5><?php echo __d('hurad', 'Available Widgets'); ?></h5>
+        </div>
+        <div id="draggable" class="panel-body">
+            <?php
+            foreach (Configure::read('widgets') as $widget_id => $widget) {
+                echo $this->Html->div('panel panel-default widget-item', null, array('value' => $widget['id'], 'id' => $widget['id']));
+                echo $this->Html->div('panel-heading widget-title', null);
+                echo $widget['title'];
+                echo '<span class="in-widget-title"></span>';
+                if ($this->Widget->formExist($widget['element'])) {
+                    echo '<span class="widget-inside-click" style="display: none;"><i class="glyphicon glyphicon-chevron-down"></i></span>';
+                }
+                echo '</div>'; //Close div.widget-title
+                echo $this->Html->div('widget-inside', null, array('style' => 'display: none;'));
+                echo '<form id="form-' . $widget['id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
+                if (isset($widget['element']) && $this->Widget->formExist($widget['element'])) {
+                    echo $this->Html->div('widget-content', null);
+                    echo $this->element('Widgets/' . $widget['element'] . '-form', array('data' => array()));
+                    echo "</div>"; //Close div.widget-content
+                }
+                echo '<input id="number" type="hidden" value="' . HuradWidget::maxNumber(
+                        $widget['id']
+                    ) . '" name="number">';
+                echo '<input id="widget-id" type="hidden" value="' . $widget['id'] . '" name="widget-id">';
+                echo '<input id="unique-id" type="hidden" value="" name="unique-id">';
+                echo $this->Html->div('widget-control-actions', null);
+                echo $this->Html->div('pull-right', null);
+                echo $this->Html->image(
+                    'ajax-fb.gif',
+                    array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;')
+                );
+                echo '<input id="submit-' . $widget['id'] . '" type="submit" class="btn btn-default widget-submit" value="Save">';
+                echo '</div>'; //Close div.pull-right
+                echo '<div class="clear"></div>';
+                echo '</div>'; //Close div.widget-control-actions
+                echo "</form>"; //Close form.widget-form
+                echo "</div>"; //Close div.widget-inside
+                echo "</div>"; //Close div.widget-item
             }
-            echo '</div>'; //Close div.widget-title
-            echo $this->Html->div('widget-inside', null, array('style' => 'display: none;'));
-            echo '<form id="form-' . $widget['id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
-            if (isset($widget['element']) && $this->Widget->formExist($widget['element'])) {
-                echo $this->Html->div('widget-content', null);
-                echo $this->element('Widgets/' . $widget['element'] . '-form', array('data' => array()));
-                echo "</div>"; //Close div.widget-content
-            }
-            echo '<input id="number" type="hidden" value="' . HuradWidget::maxNumber(
-                    $widget['id']
-                ) . '" name="number">';
-            echo '<input id="widget-id" type="hidden" value="' . $widget['id'] . '" name="widget-id">';
-            echo '<input id="unique-id" type="hidden" value="" name="unique-id">';
-            echo $this->Html->div('widget-control-actions', null);
-            echo $this->Html->div('pull-right', null);
-            echo $this->Html->image(
-                'ajax-fb.gif',
-                array('class' => 'ajax-feedback', 'style' => 'visibility: hidden;')
-            );
-            echo '<input id="submit-' . $widget['id'] . '" type="submit" class="btn btn-default widget-submit" value="Save">';
-            echo '</div>'; //Close div.pull-right
-            echo '<div class="clear"></div>';
-            echo '</div>'; //Close div.widget-control-actions
-            echo "</form>"; //Close form.widget-form
-            echo "</div>"; //Close div.widget-inside
-            echo "</div>"; //Close div.widget-item
-        }
-        ?>
-        <span class="clearfix"></span>
+            ?>
+            <span class="clearfix"></span>
+        </div>
     </div>
     <?php
     if (Configure::check('sidebars') && !is_null(Configure::read('sidebars'))) {
@@ -106,7 +108,7 @@
     if (Configure::check('sidebars') && !is_null(Configure::read('sidebars'))) {
     foreach (Configure::read('sidebars') as $sidebarID => $sidebar):
     ?>
-    <div class="panel panel-default">
+    <div class="panel panel-default sortable">
         <div class="panel-heading <?php echo "sortable-header-" . $sidebar['id']; ?>">
             <div class="pull-left">
                 <h5><?php echo $sidebar['name']; ?></h5>
@@ -129,15 +131,15 @@
 
             if (isset($sidebars_widgets[$sidebarID])) {
                 foreach ($sidebars_widgets[$sidebarID] as $wgdb) {
-                    echo '<div class="panel panel-default" value="' . $wgdb['widget-id'] . '" id="' . $wgdb['unique-id'] . '">';
-                    echo '<div class="panel-heading">';
+                    echo '<div class="panel panel-default widget-item" value="' . $wgdb['widget-id'] . '" id="' . $wgdb['unique-id'] . '">';
+                    echo '<div class="panel-heading widget-title">';
                     echo $widget[$wgdb['widget-id']]['title'];
                     echo isset($wgdb['title']) && !empty($wgdb['title']) ? '<span class="in-widget-title">: ' . $wgdb['title'] . '</span>' : '<span class="in-widget-title"></span>';
                     if ($this->Widget->formExist($widget[$wgdb['widget-id']]['element'])) {
                         echo '<span class="widget-inside-click"><i class="glyphicon glyphicon-chevron-down"></i></span>';
                     }
                     echo "</div>"; //Close div.widget-title
-                    echo $this->Html->div('panel-body', null, array('style' => 'display: none;'));
+                    echo $this->Html->div('panel-body widget-inside', null, array('style' => 'display: none;'));
                     echo '<form id="form-' . $wgdb['unique-id'] . '" class="widget-form" accept-charset="utf-8" method="post" action="">';
                     if (isset($widget[$wgdb['widget-id']]['element']) && $this->Widget->formExist(
                             $widget[$wgdb['widget-id']]['element']

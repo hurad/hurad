@@ -1,25 +1,3 @@
-#draggable, .sortable {
-    background-color: #F5F5F5;
-    border-color: #E3E3E3;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
-    border-radius: 0 0 4px 4px;
-    margin-bottom: 20px;
-    padding: 15px 15px 10px 15px;
-    min-height: 80px;
-}
-
-#draggable div.widget-title {
-    padding: 0 0 0 10px;
-    line-height: 30px;
-    background-color: #FAFAFA;
-    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
-    background-repeat: repeat-x;
-    border: 1px solid #D4D4D4;
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-}
-
 #draggable div.widget-item {
     width: 250px;
     margin: 0 20px 10px 0;
@@ -27,33 +5,19 @@
     cursor: move;
 }
 
-.panel-body div.widget-item {
+.sortable div.widget-item {
     width: 100%;
     float: left;
     margin-bottom: 10px;
     cursor: move;
-
-}
-
-.panel-body div.widget-title {
-    line-height: 30px;
-    background-color: #FAFAFA;
-    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
-    background-repeat: repeat-x;
-    border: 1px solid #D4D4D4;
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-    padding: 0 0 0 10px;
-    cursor: move;
 }
 
 .panel-heading img {
-    padding: 8px 10px 4px 0px;
-
+    padding: 8px 10px 4px 0;
 }
 
 .panel-heading h5, .panel-heading h5 {
-    font-size: 12px;
+    font-weight: bold;
     line-height: 10px;
     text-decoration: none;
     text-shadow: 1px 1px #EEEEEE;
@@ -80,9 +44,8 @@
 
 .widget-inside {
     background-color: #FFFFFF;
-    border-width: 0 1px 1px 1px;
-    border-color: #D4D4D4;
-    border-style: solid;
+    border: 1px solid #D4D4D4;
+    border-top-width: 0;
     border-radius: 0 0 4px 4px;
     padding: 8px;
 }
@@ -105,7 +68,7 @@ div.clear {
     float: left;
     border: 1px dashed #a2a2a2;
     border-radius: 4px 4px 4px 4px;
-    height: 30px;
+    height: 43px;
     width: 100%;
     margin-bottom: 10px;
 }
