@@ -155,3 +155,5 @@ echo $this->Form->create(
         <div class="col-md-8"><!-- --></div>
     </div>
 </section>
+
+<?php echo $this->Form->end(); ?>
