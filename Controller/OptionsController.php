@@ -57,7 +57,11 @@ class OptionsController extends AppController
 
         if ($this->request->is('post') || $this->request->is('put')) {
 
-            $this->request->data['Option']['site_url'] = rtrim($this->request->data['Option']['site_url'], "/");
+            switch ($this->request->param('pass')[0]) {
+                case'general':
+                    $this->request->data['Option']['site_url'] = rtrim($this->request->data['Option']['site_url'], "/");
+                    break;
+            }
 
             $opt = array();
 
