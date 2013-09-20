@@ -144,7 +144,7 @@ echo $this->Form->create(
                     echo $this->Form->radio(
                         'avatar_default',
                         array(
-                            'mystery' => ''
+                            'mm' => ''
                         ),
                         array(
                             'label' => false,
