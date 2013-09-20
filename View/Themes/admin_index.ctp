@@ -1,16 +1,24 @@
 <?php $this->Html->script(array('holder'), array('block' => 'scriptHeader')); ?>
-<h3><?php echo __d('hurad', 'Current Theme'); ?></h3>
+<div class="page-header">
+    <h2>
+        <?php echo __d('hurad', 'Current Theme'); ?>
+    </h2>
+</div>
 <style>
     ul.thumbnails li.col-md-4:nth-child(3n + 4) {
-        margin-left: 0px;
+        margin-left: 0;
     }
 
-    ul.thumbnails li.col-md-3:nth-child(4n + 5) {
-        margin-left: 0px;
+    ul.thumbnails li.col-md-4:nth-child(4n + 5) {
+        margin-left: 0;
     }
 
     ul.thumbnails li.col-md-12 + li {
-        margin-left: 0px;
+        margin-left: 0;
+    }
+
+    .available-theme li {
+        margin-bottom: 30px;
     }
 
     .description {
@@ -18,7 +26,7 @@
     }
 </style>
 <div class="current-theme">
-    <ul class="thumbnails">
+    <ul class="thumbnails list-unstyled">
         <li class="col-md-4">
             <div class="thumbnail">
                 <?php
@@ -74,9 +82,14 @@
         </li>
     </ul>
 </div>
-<h3><?php echo __d('hurad', 'Available Themes') ?></h3>
+<div class="clearfix"></div>
+<div class="page-header">
+    <h2>
+        <?php echo __d('hurad', 'Available Themes') ?>
+    </h2>
+</div>
 <div class="available-theme">
-    <ul class="thumbnails">
+    <ul class="thumbnails list-unstyled">
         <?php foreach ($themes as $alias => $theme) { ?>
             <?php
             if ($alias == Configure::read('template')) {
@@ -137,13 +150,27 @@
                         <p>
                             <?php echo $this->Form->postLink(
                                 __d('hurad', 'Activate'),
-                                array('admin' => true, 'action' => 'activate', $alias),
-                                array('title' => __d('hurad', 'Activate "%s"', $theme['name']), 'class' => 'btn btn-success')
+                                array(
+                                    'admin' => true,
+                                    'action' => 'activate',
+                                    $alias
+                                ),
+                                array(
+                                    'title' => __d('hurad', 'Activate "%s"', $theme['name']),
+                                    'class' => 'btn btn-success'
+                                )
                             ); ?>
                             <?php echo $this->Form->postLink(
                                 __d('hurad', 'Delete'),
-                                array('admin' => true, 'action' => 'delete', $alias),
-                                array('title' => __d('hurad', 'Delete "%s"', $theme['name']), 'class' => 'btn btn-danger'),
+                                array(
+                                    'admin' => true,
+                                    'action' => 'delete',
+                                    $alias
+                                ),
+                                array(
+                                    'title' => __d('hurad', 'Delete "%s"', $theme['name']),
+                                    'class' => 'btn btn-danger'
+                                ),
                                 __d('hurad', 'Are you sure delete "%s"', $theme['name'])
                             ); ?>
                         </p>
