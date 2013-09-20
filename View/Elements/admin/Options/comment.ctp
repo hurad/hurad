@@ -21,267 +21,267 @@ echo $this->Form->create(
 ?>
 
 <fieldset>
-    <legend><?php echo __d('hurad', 'Avatar Display'); ?></legend>
-    <div class="control-group">
-        <div class="controls">
-            <label class="radio">
-                <?php
-                echo $this->Form->radio(
-                    'show_avatars',
-                    array(
-                        '0' => __d('hurad', 'Don’t show Avatars'),
-                        '1' => __d('hurad', 'Show Avatars')
-                    ),
-                    array(
-                        'legend' => false,
-                        //'label' => FALSE
-                    )
-                );
-                ?>
-            </label>
-        </div>
-    </div>
-</fieldset>
-<fieldset>
-    <legend><?php echo __d('hurad', 'Maximum Rating'); ?></legend>
-    <div class="control-group">
-        <div class="controls">
-            <label class="radio" for="OptionAvatarRatingG">
-                <?php
-                echo $this->Form->input(
-                    'avatar_rating',
-                    array(
-                        'options' => array(
-                            'G' => ''
-                        ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo __d('hurad', 'G &mdash; Suitable for all audiences');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarRatingPG">
-                <?php
-                echo $this->Form->input(
-                    'avatar_rating',
-                    array(
-                        'options' => array(
-                            'PG' => ''
-                        ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo __d('hurad', 'PG &mdash; Possibly offensive, usually for audiences 13 and above');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarRatingR">
-                <?php
-                echo $this->Form->input(
-                    'avatar_rating',
-                    array(
-                        'options' => array(
-                            'R' => ''
-                        ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo __d('hurad', 'R &mdash; Intended for adult audiences above 17');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarRatingX">
-                <?php
-                echo $this->Form->input(
-                    'avatar_rating',
-                    array(
-                        'options' => array(
-                            'X' => ''
-                        ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo __d('hurad', 'X &mdash; Even more mature than above');
-                ?>
-            </label>
-        </div>
-    </div>
-</fieldset>
+    <div class="form-group">
+        <label class="control-label col-lg-2">
+            <?php echo __d('hurad', 'Avatar Display'); ?>
+        </label>
 
+        <div class="col-lg-4">
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'show_avatars',
+                        array(
+                            '0' => __d('hurad', 'Don’t show Avatars'),
+                        ),
+                        array(
+                            'label' => false
+                        )
+                    );
+                    ?>
+                </label>
+
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'show_avatars',
+                        array(
+                            '1' => __d('hurad', 'Show Avatars')
+                        ),
+                        array(
+                            'label' => false
+                        )
+                    );
+                    ?>
+                </label>
+            </div>
+        </div>
+    </div>
+</fieldset>
 <fieldset>
-    <legend><?php echo __d('hurad', 'Default Avatar'); ?></legend>
-    <div class="control-group">
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultMystery">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+    <div class="form-group">
+        <label class="control-label col-lg-2">
+            <?php echo __d('hurad', 'Maximum Rating'); ?>
+        </label>
+
+        <div class="col-lg-6">
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_rating',
+                        array(
+                            'G' => __d('hurad', 'G &mdash; Suitable for all audiences')
+                        ),
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_rating',
+                        array(
+                            'PG' => __d('hurad', 'PG &mdash; Possibly offensive, usually for audiences 13 and above')
+                        ),
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_rating',
+                        array(
+                            'R' => __d('hurad', 'R &mdash; Intended for adult audiences above 17')
+                        ),
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_rating',
+                        array(
+                            'X' => __d('hurad', 'X &mdash; Even more mature than above')
+                        ),
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    ?>
+                </label>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group">
+        <label class="control-label col-lg-2">
+            <?php echo __d('hurad', 'Default Avatar'); ?>
+        </label>
+
+        <div class="col-lg-4">
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'mystery' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'Mystery Man');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultBlank">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+                    echo '&nbsp;' . __d('hurad', 'Mystery Man');
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'blank' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=http%3A%2F%2Fdemo.opensourcecms.com%2Fwordpress%2Fwp-includes%2Fimages%2Fblank.gif&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'Blank');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultGravatarDefault">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+                    echo '&nbsp;' . __d('hurad', 'Blank');
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'gravatar_default' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'Gravatar Logo');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultIdenticon">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+                    echo '&nbsp;' . __d('hurad', 'Gravatar Logo');
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'identicon' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=identicon&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'Identicon (Generated)');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultWavatar">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+                    echo '&nbsp;' . __d('hurad', 'Identicon (Generated)');
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'wavatar' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=wavatar&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'Wavatar (Generated)');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultMonsterid">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+                    echo '&nbsp;' . __d('hurad', 'Wavatar (Generated)');
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'monsterid' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=monsterid&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'MonsterID (Generated)');
-                ?>
-            </label>
-        </div>
-        <div class="controls">
-            <label class="radio" for="OptionAvatarDefaultRetro">
-                <?php
-                echo $this->Form->input(
-                    'avatar_default',
-                    array(
-                        'options' => array(
+                    echo '&nbsp;' . __d('hurad', 'MonsterID (Generated)');
+                    ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <?php
+                    echo $this->Form->radio(
+                        'avatar_default',
+                        array(
                             'retro' => ''
                         ),
-                        'type' => 'radio',
-                        'label' => false,
-                        'hiddenField' => false
-                    )
-                );
-                echo '&nbsp;' . $this->Html->image(
+                        array(
+                            'label' => false,
+                        )
+                    );
+                    echo $this->Html->image(
                         'http://0.gravatar.com/avatar/8237ab7e8f668d10f29da4210e1c6b2f?s=32&amp;d=retro&amp;r=G&amp;forcedefault=1',
                         array('width' => '32', 'height' => '32', 'class' => 'avatar avatar-32 photo')
                     );
-                echo '&nbsp;' . __d('hurad', 'Retro (Generated)');
-                ?>
-            </label>
+                    echo '&nbsp;' . __d('hurad', 'Retro (Generated)');
+                    ?>
+                </label>
+            </div>
         </div>
     </div>
 </fieldset>
 
-<div class="form-actions">
-    <?php echo $this->Form->button(__d('hurad', 'Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
-</div>
+<?php echo $this->Form->button(__d('hurad', 'Update'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
 
 <?php echo $this->Form->end(); ?>
