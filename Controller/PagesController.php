@@ -37,13 +37,15 @@ class PagesController extends AppController
      * @var array
      */
     public $paginate = array(
-        'conditions' => array(
-            'Page.status' => array('publish', 'draft'),
-            'Page.type' => 'page'
-        ),
-        'limit' => 25,
-        'order' => array(
-            'Page.created' => 'desc'
+        'Page' => array(
+            'conditions' => array(
+                'Page.status' => array('publish', 'draft'),
+                'Page.type' => 'page'
+            ),
+            'limit' => 25,
+            'order' => array(
+                'Page.created' => 'desc'
+            )
         )
     );
 
@@ -82,11 +84,11 @@ class PagesController extends AppController
 
     public function pageIndex()
     {
-        $pages = $this->Post->find(
+        $pages = $this->Page->find(
             'threaded',
             array(
-                'conditions' => array('Post.type' => 'page'),
-                'order' => array('Post.' . $this->request->named['sort'] => $this->request->named['direction']),
+                'conditions' => array('Page.type' => 'page'),
+                'order' => array('Page.' . $this->request->named['sort'] => $this->request->named['direction']),
             )
         );
 
@@ -136,6 +138,7 @@ class PagesController extends AppController
                 )
             );
         }
+        $this->Paginator->settings = $this->paginate;
         $this->set('pages', $this->Paginator->paginate('Page'));
     }
 
