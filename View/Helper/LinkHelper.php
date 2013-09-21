@@ -27,13 +27,31 @@ class LinkHelper extends AppHelper
      * @access public
      */
     public $content = array();
+    /**
+     * Model of content
+     *
+     * @var null|string
+     */
     private static $model = null;
 
-    public function __construct(\View $View, $settings = array())
+    /**
+     * Set model
+     *
+     * @return null|string
+     */
+    public static function getModel()
     {
-        parent::__construct($View, $settings);
+        return self::$model;
+    }
 
-        self::$model = Inflector::singularize($View->viewPath);
+    /**
+     * Get model
+     *
+     * @param null|string $model
+     */
+    public static function setModel($model)
+    {
+        self::$model = Inflector::singularize($model);
     }
 
     /**
