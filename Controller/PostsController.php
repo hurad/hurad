@@ -40,13 +40,15 @@ class PostsController extends AppController
      * @var array
      */
     public $paginate = array(
-        'conditions' => array(
-            'Post.status' => array('publish', 'draft'),
-            'Post.type' => 'post'
-        ),
-        'limit' => 25,
-        'order' => array(
-            'Post.created' => 'desc'
+        'Post' => array(
+            'conditions' => array(
+                'Post.status' => array('publish', 'draft'),
+                'Post.type' => 'post'
+            ),
+            'limit' => 25,
+            'order' => array(
+                'Post.created' => 'desc'
+            )
         )
     );
 
@@ -240,6 +242,7 @@ class PostsController extends AppController
                 )
             );
         }
+        $this->Paginator->settings = $this->paginate;
         $this->set('posts', $this->Paginator->paginate('Post'));
     }
 
