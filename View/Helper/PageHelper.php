@@ -29,13 +29,14 @@ class PageHelper extends AppHelper
         $this->page = $page;
         $this->General->content = $page;
         $this->Link->content = $page;
+        $this->Link->setModel('Page');
     }
 
     protected function init_page()
     {
         if ($this->view_path == 'Pages') {
-            if ($this->view == 'view' || $this->view == 'viewByid') {
-                $this->page = $this->_View->getVar('page');
+            if ($this->view == 'view') {
+                $this->page = $this->_View->get('page');
             }
         } else {
             return false;
@@ -103,7 +104,7 @@ class PageHelper extends AppHelper
         $title = $this->getTheTitle();
 
         if (strlen($title) == 0) {
-            return;
+            return null;
         }
 
         $title = $before . $title . $after;
@@ -136,7 +137,7 @@ class PageHelper extends AppHelper
         $title = $this->getTheTitle();
 
         if (strlen($title) == 0) {
-            return;
+            return null;
         }
 
         $defaults = array('before' => '', 'after' => '', 'echo' => true);
@@ -243,7 +244,7 @@ class PageHelper extends AppHelper
         return $this->General->getTheDate($d);
     }
 
-    public function list_pages($args = '')
+    public function listPages($args = '')
     {
         $defaults = array(
             'direction' => 'asc',
@@ -252,10 +253,17 @@ class PageHelper extends AppHelper
             'link_before' => '',
             'link_after' => '',
         );
+
         //$narr = merge $args with $defaults
         $narr = $this->parse_args($args, $defaults);
-        $pages = $this->requestAction('/posts/pageIndex/sort:' . $narr['sort'] . '/direction:' . $narr['direction']);
-        $output = $this->page_tree_render($pages, $narr);
+        $pages = $this->requestAction('/pages/pageIndex/sort:' . $narr['sort'] . '/direction:' . $narr['direction']);
+
+        if (count($pages) > 0) {
+            $output = $this->page_tree_render($pages, $narr);
+        } else {
+            $output = __d('hurad', 'No pages were found');
+        }
+
         if ($narr['echo']) {
             echo $output;
         } else {
@@ -274,8 +282,9 @@ class PageHelper extends AppHelper
     {
         $out = null;
         foreach ($pages as $page) {
-            $out .= '<li class="page_item page-item-' . $page['Post']['id'] . '">';
-            $out .= $this->Html->link($page['Post']['title'], '/pages/' . $page['Post']['slug']);
+            $this->setPage($page);
+            $out .= '<li class="page_item page-item-' . $page['Page']['id'] . '">';
+            $out .= $this->Html->link($page['Page']['title'], $this->getPermalink());
             if (isset($page['children']) && !empty($page['children'])) {
                 $out .= '<ul class="children">';
                 $out .= $this->page_tree_render($page['children']);
@@ -320,6 +329,7 @@ class PageHelper extends AppHelper
             $strArr = $this->stringToArray($args);
             return array_merge($defaults, $strArr);
         }
+        return null;
     }
 
 }

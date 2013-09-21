@@ -2,6 +2,13 @@
 
 App::uses('AppHelper', 'View/Helper');
 
+/**
+ * @property GeneralHelper $General
+ * @property LinkHelper $Link
+ * @property HtmlHelper $Html
+ * @property HookHelper $Hook
+ * @property AuthorHelper $Author
+ */
 class PostHelper extends AppHelper
 {
 
@@ -50,7 +57,7 @@ class PostHelper extends AppHelper
 
         if ($this->view_path == 'Posts') {
             if ($this->view == 'view' || $this->view == 'viewByid') {
-                $this->Link->content = $this->General->content = $this->post = $this->_View->getVar('post');
+                $this->Link->content = $this->General->content = $this->post = $this->_View->get('post');
             }
         } else {
             return false;
@@ -62,6 +69,7 @@ class PostHelper extends AppHelper
         $this->post = $post;
         $this->General->content = $post;
         $this->Link->content = $post;
+        $this->Link->setModel('Post');
         $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
     }
 
@@ -104,7 +112,7 @@ class PostHelper extends AppHelper
         $title = $this->getTheTitle();
 
         if (strlen($title) == 0) {
-            return;
+            return null;
         }
 
         $title = $before . $title . $after;
@@ -137,7 +145,7 @@ class PostHelper extends AppHelper
         $title = $this->getTheTitle();
 
         if (strlen($title) == 0) {
-            return;
+            return null;
         }
 
         $defaults = array('before' => '', 'after' => '', 'echo' => true);
@@ -438,26 +446,6 @@ class PostHelper extends AppHelper
     public function getTheDate($d = '')
     {
         return $this->General->getTheDate($d);
-    }
-
-    public function list_pages($args = '')
-    {
-        $defaults = array(
-            'direction' => 'asc',
-            'sort' => 'title',
-            'echo' => 1,
-            'link_before' => '',
-            'link_after' => '',
-        );
-        //$narr = merge $args with $defaults
-        $narr = Functions::hr_parse_args($args, $defaults);
-        $pages = $this->requestAction('/posts/pageIndex/sort:' . $narr['sort'] . '/direction:' . $narr['direction']);
-        $output = $this->page_tree_render($pages, $narr);
-        if ($narr['echo']) {
-            echo $output;
-        } else {
-            return $output;
-        }
     }
 
     /**
