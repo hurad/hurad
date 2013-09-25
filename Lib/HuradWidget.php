@@ -5,12 +5,14 @@
  *
  * @author mohammad
  */
-class HuradWidget {
+class HuradWidget
+{
 
     public static $sidebars = array();
     public static $widgets = array();
 
-    public static function registerSidebar($args = array()) {
+    public static function registerSidebar($args = array())
+    {
         $i = count(self::$sidebars) + 1;
 
         $defaults = array(
@@ -26,7 +28,8 @@ class HuradWidget {
         Configure::write('sidebars', self::$sidebars);
     }
 
-    public static function registerWidget($args = array()) {
+    public static function registerWidget($args = array())
+    {
         $i = count(self::$widgets) + 1;
 
         if (!isset($args['id'])) {
@@ -41,13 +44,14 @@ class HuradWidget {
         );
 
         $widget = Functions::hr_parse_args($args, $defaults);
-        
+
         self::$widgets[$widget['id']] = $widget;
 
         Configure::write('widgets', self::$widgets);
     }
 
-    public static function maxNumber($widgetID = null) {
+    public static function maxNumber($widgetID = null)
+    {
         $optionName = Configure::read('template') . '.widgets';
         $sidebarsWidgets = unserialize(Configure::read($optionName));
 
@@ -69,7 +73,8 @@ class HuradWidget {
         }
     }
 
-    public static function getWidgetData($uniqueId) {
+    public static function getWidgetData($uniqueId)
+    {
         $optionName = Configure::read('template') . '.widgets';
         $sidebarsWidgets = unserialize(Configure::read($optionName));
 
