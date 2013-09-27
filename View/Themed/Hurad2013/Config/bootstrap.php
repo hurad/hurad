@@ -3,6 +3,7 @@
 HuradWidget::registerSidebar(
     array(
         'name' => __('Right Sidebar'),
-        'id' => 'right-sidebar'
+        'id' => 'right-sidebar',
+        'class' => 'well'
     )
 );
