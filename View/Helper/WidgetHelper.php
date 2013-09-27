@@ -5,6 +5,7 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Description of WidgetHelper
  *
+ * @property FormHelper $Form
  * @author mohammad
  */
 class WidgetHelper extends AppHelper
@@ -18,9 +19,9 @@ class WidgetHelper extends AppHelper
      */
     public $helpers = array('Form');
 
-    public function sidebar($sidebar_id = null)
+    public function sidebar($sidebarId = null)
     {
-        if (is_null($sidebar_id) && !in_array($sidebar_id, Configure::read('sidebars'))) {
+        if (is_null($sidebarId) && !in_array($sidebarId, Configure::read('sidebars'))) {
             return false;
         }
 
@@ -30,91 +31,83 @@ class WidgetHelper extends AppHelper
                 Configure::read(Configure::read('template') . '.widgets')
             )
         ) {
-            $this->_View->start($sidebar_id);
+            $this->_View->start($sidebarId);
 
-            foreach ($sidebar_widgets[$sidebar_id] as $widget) {
+            foreach ($sidebar_widgets[$sidebarId] as $widget) {
+                $sidebar = Configure::read('sidebars')[$sidebarId];
+                echo sprintf($sidebar['before_widget'], $widget['unique-id'], $sidebar['class']);
+                echo $sidebar['before_title'];
+                echo isset($widget['title']) && !empty($widget['title']) ? $widget['title'] : $widgets[$widget['widget-id']]['title'];
+                echo $sidebar['after_title'];
                 echo $this->_View->element(
                     'Widgets/' . $widgets[$widget['widget-id']]['element'],
                     array('data' => HuradWidget::getWidgetData($widget['unique-id']))
                 );
+                echo $sidebar['after_widget'];
             }
 
             $this->_View->end();
         }
 
-        echo $this->_View->fetch($sidebar_id);
+        echo $this->_View->fetch($sidebarId);
     }
 
     public function label($for, $text)
     {
-        echo $this->Form->label('Widget' . ucfirst($for), $text);
+        $options = array(
+            'class' => 'control-label'
+        );
+        echo $this->Form->label('Widget' . ucfirst($for) . '-id', $text, $options);
     }
 
-    public function input($inputName, $data)
+    public function input($inputName, $data, $options = array())
     {
+        $defaultOptions = array(
+            'id' => 'Widget' . ucfirst($inputName) . '-id',
+            'class' => 'form-control',
+            'name' => $inputName,
+            'type' => 'text',
+            'label' => false,
+            'div' => false
+        );
+
+        $defaultOptions = Hash::merge($defaultOptions, $options);
+
         if (count($data) > 0) {
-            echo $this->Form->input(
-                $inputName,
-                array(
-                    'id' => $inputName,
-                    'class' => 'input-block-level',
-                    'name' => $inputName,
-                    'type' => 'text',
-                    'value' => $data[$inputName],
-                    'label' => false,
-                    'div' => false
-                )
-            );
-        } elseif (isset($inputName)) {
-            echo $this->Form->input(
-                $inputName,
-                array(
-                    'id' => $inputName,
-                    'class' => 'input-block-level',
-                    'name' => $inputName,
-                    'type' => 'text',
-                    'value' => '',
-                    'label' => false,
-                    'div' => false
-                )
+            $options = array(
+                'value' => $data[$inputName],
             );
         } else {
-            return false;
+            $options = array(
+                'value' => '',
+            );
         }
+
+        $options = Hash::merge($defaultOptions, $options);
+
+        echo $this->Form->input($inputName, $options);
     }
 
-    public function select($inputName, $data, $options)
+    public function select($inputName, $data, $options, $attributes = array())
     {
+        $defaultAttributes = array(
+            'id' => 'Widget' . ucfirst($inputName) . '-id',
+            'class' => 'form-control',
+            'name' => $inputName,
+            'label' => false,
+            'div' => false,
+            'empty' => false
+        );
+
         if (count($data) > 0) {
-            echo $this->Form->select(
-                $inputName,
-                $options,
-                array(
-                    'id' => $inputName,
-                    'class' => 'input-block-level',
-                    'name' => $inputName,
-                    'value' => $data[$inputName],
-                    'label' => false,
-                    'div' => false,
-                    'empty' => false
-                )
+            $attributes = array(
+                'value' => $data[$inputName]
             );
-        } elseif (isset($inputName)) {
-            echo $this->Form->select(
-                $inputName,
-                $options,
-                array(
-                    'id' => $inputName,
-                    'class' => 'input-block-level',
-                    'name' => $inputName,
-                    'label' => false,
-                    'div' => false,
-                    'empty' => false
-                )
-            );
-        } else {
-            return false;
         }
+
+        $attributes = Hash::merge($defaultAttributes, $attributes);
+
+        echo $this->Form->select($inputName, $options, $attributes);
     }
 
     public function formExist($element)
