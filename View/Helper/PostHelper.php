@@ -18,7 +18,7 @@ class PostHelper extends AppHelper
      * @var array
      * @access public
      */
-    public $helpers = array('Html', 'Time', 'General', 'Link', 'Hook', 'Author');
+    public $helpers = array('Html', 'Time', 'General', 'Link', 'Hook', 'Author', 'Comment');
 
     /**
      * Current post array.
@@ -57,7 +57,12 @@ class PostHelper extends AppHelper
 
         if ($this->view_path == 'Posts') {
             if ($this->view == 'view' || $this->view == 'viewByid') {
-                $this->Link->content = $this->General->content = $this->post = $this->_View->get('post');
+                $this->setPost($this->_View->get('post'));
+                $this->Link->setModel('Post');
+                $this->Comment->setModel('Post');
+                $this->Link->content = $this->General->content = $this->Comment->content = $this->post = $this->_View->get(
+                    'post'
+                );
             }
         } else {
             return false;
@@ -68,8 +73,9 @@ class PostHelper extends AppHelper
     {
         $this->post = $post;
         $this->General->content = $post;
-        $this->Link->content = $post;
+        $this->Link->content = $this->Comment->content = $post;
         $this->Link->setModel('Post');
+        $this->Comment->setModel('Post');
         $this->Author->setAuthor($post['Post']['user_id'], $post['Post']['id']);
     }
 
@@ -149,11 +155,11 @@ class PostHelper extends AppHelper
         }
 
         $defaults = array('before' => '', 'after' => '', 'echo' => true);
-        $r = Functions::hr_parse_args($args, $defaults);
+        $r = Hash::merge($defaults, $args);
         extract($r, EXTR_SKIP);
 
         $title = $before . $title . $after;
-        $title = Formatting::esc_attr(strip_tags($title));
+        $title = HuradSanitize::htmlAttribute(strip_tags($title));
 
         if ($echo) {
             echo $title;
@@ -235,7 +241,6 @@ class PostHelper extends AppHelper
                         $more_link_text
                     );
                 }
-                $output = Formatting::force_balance_tags($output);
             }
         }
         return $output;
@@ -309,7 +314,7 @@ class PostHelper extends AppHelper
         $classes = array();
 
         $classes[] = 'post-' . $this->post['Post']['id'];
-        if (!Functions::is_admin()) {
+        if (!HuradFunctions::isAdmin()) {
             $classes[] = $this->post['Post']['type'];
         }
         $classes[] = 'type-' . $this->post['Post']['type'];
@@ -325,7 +330,7 @@ class PostHelper extends AppHelper
             $classes = array_merge($classes, $class);
         }
 
-        $classes = array_map('Formatting::esc_attr', $classes);
+        $classes = array_map('HuradSanitize::htmlClass', $classes);
 
         return $this->Hook->applyFilters('post_class', $classes, $class);
     }
@@ -479,7 +484,7 @@ class PostHelper extends AppHelper
             'echo' => 1,
         );
         //$narr = merge $args with $defaults
-        $narr = Functions::hr_parse_args($args, $defaults);
+        $narr = Hash::merge($defaults, $args);
         $cats = $this->requestAction('/categories/index/sort:' . $narr['sort'] . '/direction:' . $narr['direction']);
         $output = $this->category_tree_render($cats);
         if ($narr['echo']) {
