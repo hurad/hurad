@@ -2,7 +2,13 @@
 Plugin/DebugKit/
 
 # tmp directory
-/tmp/
+tmp/*
+!tmp/cache/models/empty
+!tmp/cache/persistent/empty
+!tmp/cache/views/empty
+!tmp/logs/empty
+!tmp/sessions/empty
+!tmp/tests/empty
 
 # IDE config files
 /nbproject/
@@ -19,7 +25,6 @@ Plugin/DebugKit/
 ._*
 .Spotlight-V100
 .Trashes
-Icon?
 ehthumbs.db
 Thumbs.db
 
@@ -31,7 +36,4 @@ composer.phar
 composer.lock
 
 # Vendor files
-Vendor/autoload.php
-Vendor/bin/
-Vendor/composer/
-Vendor/pear-pear.cakephp.org/
+/Vendor
