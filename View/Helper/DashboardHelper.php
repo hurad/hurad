@@ -41,7 +41,7 @@ class DashboardHelper extends AppHelper
                     <cite class="comment-author">
                         <?php echo $this->Html->link(
                             $this->Comment->getCommentAuthor(),
-                            Formatting::esc_url($this->Comment->getCommentAuthorUrl()),
+                            HuradSanitize::url($this->Comment->getCommentAuthorUrl()),
                             array('class' => 'url', 'rel' => 'external nofollow')
                         ); ?>
                     </cite>
