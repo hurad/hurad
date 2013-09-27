@@ -17,7 +17,7 @@ class GravatarHelper extends AppHelper
             'class' => 'avatar',
             'echo' => true
         );
-        $options = Functions::hr_parse_args($options, $defaults);
+        $options = Hash::merge($defaults, $options);
 
         $optionsQuery = http_build_query($options);
         $gravatarUrl = "http://www.gravatar.com/avatar/";
