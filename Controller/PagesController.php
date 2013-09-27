@@ -154,17 +154,15 @@ class PagesController extends AppController
             $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
             if (empty($this->request->data['Page']['slug'])) {
-                if (!in_array($this->request->data['Page']['status'], array('draft'))) {
-                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(
-                        $this->request->data['Page']['title']
-                    );
-                } else {
-                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(
-                        __("Draft-") . $this->request->data['Page']['title']
-                    );
-                }
+                $this->request->data['Page']['slug'] = HuradSanitize::title(
+                    $this->request->data['Page']['title'],
+                    'dash'
+                );
             } else {
-                $this->request->data['Page']['slug'] = Formatting::sanitize_title($this->request->data['Page']['slug']);
+                $this->request->data['Page']['slug'] = HuradSanitize::title(
+                    $this->request->data['Page']['slug'],
+                    'dash'
+                );
             }
 
             $this->Page->create();
@@ -201,18 +199,14 @@ class PagesController extends AppController
                 $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
                 if (empty($this->request->data['Page']['slug'])) {
-                    if (!in_array($this->request->data['Page']['status'], array('draft'))) {
-                        $this->request->data['Page']['slug'] = Formatting::sanitize_title(
-                            $this->request->data['Page']['title']
-                        );
-                    } else {
-                        $this->request->data['Page']['slug'] = Formatting::sanitize_title(
-                            __("Draft-") . $this->request->data['Page']['title']
-                        );
-                    }
+                    $this->request->data['Page']['slug'] = HuradSanitize::title(
+                        $this->request->data['Page']['title'],
+                        'dash'
+                    );
                 } else {
-                    $this->request->data['Page']['slug'] = Formatting::sanitize_title(
-                        $this->request->data['Page']['slug']
+                    $this->request->data['Page']['slug'] = HuradSanitize::title(
+                        $this->request->data['Page']['slug'],
+                        'dash'
                     );
                 }
 

@@ -105,7 +105,7 @@ class PostsController extends AppController
      */
     public function view($slug = null)
     {
-        $slug = Formatting::sanitize_title($slug);
+        $slug = HuradSanitize::title($slug);
         $this->Post->slug = $slug;
         if (is_null($slug) && !$this->Post->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid post'));
@@ -268,7 +268,7 @@ class PostsController extends AppController
 
         if ($this->request->is('post')) {
             $this->request->data['Post']['created'] = $this->Hurad->dateParse($this->request->data['Post']['created']);
-            $this->request->data['Post'] = Functions::hr_parse_args($this->request->data['Post'], $defaults);
+            $this->request->data['Post'] = Hash::merge($defaults, $this->request->data['Post']);
             // get the tags from the text data
             if ($this->request->data['Post']['tags']) {
                 $this->_saveTags();
@@ -277,15 +277,15 @@ class PostsController extends AppController
             $this->Post->hasAndBelongsToMany['Tag']['unique'] = false;
 
             if (empty($this->request->data['Post']['slug'])) {
-                if (!in_array($this->request->data['Post']['status'], array('draft'))) {
-                    $this->request->data['Post']['slug'] = Formatting::sanitize_title(
-                        $this->request->data['Post']['title']
-                    );
-                } else {
-                    $this->request->data['Post']['slug'] = '';
-                }
+                $this->request->data['Post']['slug'] = HuradSanitize::title(
+                    $this->request->data['Post']['title'],
+                    'dash'
+                );
             } else {
-                $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['slug']);
+                $this->request->data['Post']['slug'] = HuradSanitize::title(
+                    $this->request->data['Post']['slug'],
+                    'dash'
+                );
             }
 
             $this->Post->create();
@@ -332,7 +332,7 @@ class PostsController extends AppController
 
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
-                $this->request->data['Post'] = Functions::hr_parse_args($this->request->data['Post'], $defaults);
+                $this->request->data['Post'] = Hash::merge($defaults, $this->request->data['Post']);
                 if (empty($this->request->data['Post']['tags'])) {
                     $this->loadModel('PostsTag');
                     $this->PostsTag->deleteAll(array('post_id' => $id), false);
@@ -342,15 +342,15 @@ class PostsController extends AppController
             $this->_saveTags();
 
             if (empty($this->request->data['Post']['slug'])) {
-                if (!in_array($this->request->data['Post']['status'], array('draft'))) {
-                    $this->request->data['Post']['slug'] = Formatting::sanitize_title(
-                        $this->request->data['Post']['title']
-                    );
-                } else {
-                    $this->request->data['Post']['slug'] = '';
-                }
+                $this->request->data['Post']['slug'] = HuradSanitize::title(
+                    $this->request->data['Post']['title'],
+                    'dash'
+                );
             } else {
-                $this->request->data['Post']['slug'] = Formatting::sanitize_title($this->request->data['Post']['slug']);
+                $this->request->data['Post']['slug'] = HuradSanitize::title(
+                    $this->request->data['Post']['slug'],
+                    'dash'
+                );
             }
 
             // save the data
