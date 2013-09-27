@@ -19,9 +19,14 @@ class HuradWidget
             'id' => "sidebar-$i",
             'name' => __d('hurad', 'Sidebar %d', $i),
             'description' => __d('hurad', 'Default description for this sidebar'),
+            'class' => '',
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+            'after_widget' => '</div>',
+            'before_title' => '<h4 class="widgettitle">',
+            'after_title' => '</h4>'
         );
 
-        $sidebar = Functions::hr_parse_args($args, $defaults);
+        $sidebar = Hash::merge($defaults, $args);
 
         self::$sidebars[$sidebar['id']] = $sidebar;
 
@@ -43,7 +48,7 @@ class HuradWidget
             'element' => '',
         );
 
-        $widget = Functions::hr_parse_args($args, $defaults);
+        $widget = Hash::merge($defaults, $args);
 
         self::$widgets[$widget['id']] = $widget;
 
