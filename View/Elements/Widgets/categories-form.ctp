@@ -1,11 +1,22 @@
-<p>
-    <!--    <label for="title"><?php //echo __d('hurad', 'Title:'); ?></label>-->
+<div class="form-group">
     <?php $this->Widget->label('title', __d('hurad', 'Title:')); ?>
     <?php $this->Widget->input('title', $data); ?>
+</div>
 
-    <label for="direction"><?php echo __d('hurad', 'Direction:'); ?></label>
-    <?php $this->Widget->select('direction', $data, array('asc' => __d('hurad', 'Ascending'), 'desc' => __d('hurad', 'Descending'))); ?>
+<div class="form-group">
+    <?php $this->Widget->label('direction', __d('hurad', 'Direction:')); ?>
+    <?php $this->Widget->select(
+        'direction',
+        $data,
+        array('asc' => __d('hurad', 'Ascending'), 'desc' => __d('hurad', 'Descending'))
+    ); ?>
+</div>
 
-    <label for="sort"><?php echo __d('hurad', 'Sort By:'); ?></label>
-    <?php $this->Widget->select('sort', $data, array('id' => __d('hurad', 'ID'), 'name' => __d('hurad', 'Name'), 'slug' => __d('hurad', 'Slug'))); ?>
-</p>
+<div class="form-group">
+    <?php $this->Widget->label('sort', __d('hurad', 'Sort By:')); ?>
+    <?php $this->Widget->select(
+        'sort',
+        $data,
+        array('id' => __d('hurad', 'ID'), 'name' => __d('hurad', 'Name'), 'slug' => __d('hurad', 'Slug'))
+    ); ?>
+</div>
