@@ -78,7 +78,7 @@ class CommentsController extends AppController
             $this->request->data['Comment']['agent'] = env('HTTP_USER_AGENT');
             $this->request->data['Comment']['approved'] = 0;
 
-            $this->request->data['Comment']['author_url'] = Formatting::esc_url(
+            $this->request->data['Comment']['author_url'] = HuradSanitize::url(
                 $this->request->data['Comment']['author_url']
             );
             if ($this->Comment->save($this->request->data)) {
