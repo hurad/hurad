@@ -79,7 +79,7 @@ class LinkHelper extends AppHelper
     {
         switch (strtolower($mode)) {
             case 'title':
-                $title = Formatting::sanitize_title(
+                $title = HuradSanitize::title(
                         $this->content[self::$model]['title']
                     ) . '-' . $this->content[self::$model]['id'];
                 echo $this->Html->link(null, null, array('id' => $title));
@@ -244,19 +244,9 @@ class LinkHelper extends AppHelper
      */
     public function setUrlScheme($url, $scheme = null)
     {
-        $orig_scheme = $scheme;
-        if (!in_array($scheme, array('http', 'https', 'relative'))) {
-            if (('login_post' == $scheme || 'rpc' == $scheme) && (Functions::force_ssl_login(
-                    ) || Functions::force_ssl_admin())
-            ) {
-                $scheme = 'https';
-            } elseif (('login' == $scheme) && Functions::force_ssl_admin()) {
-                $scheme = 'https';
-            } elseif (('admin' == $scheme) && Functions::force_ssl_admin()) {
-                $scheme = 'https';
-            } else {
-                $scheme = (Functions::is_ssl() ? 'https' : 'http');
-            }
+        $originalScheme = $scheme;
+        if (is_null($scheme)) {
+            $scheme = 'http';
         }
 
         if ('relative' == $scheme) {
@@ -265,7 +255,7 @@ class LinkHelper extends AppHelper
             $url = preg_replace('#^.+://#', $scheme . '://', $url);
         }
 
-        return $this->Hook->applyFilters('set_url_scheme', $url, $scheme, $orig_scheme);
+        return $this->Hook->applyFilters('set_url_scheme', $url, $scheme, $originalScheme);
     }
 
 }
