@@ -144,7 +144,7 @@ echo $this->Form->create(
                         </script>
                     </div>
                     <?php echo $this->Form->button(
-                        __d('hurad', 'Publish'),
+                        __d('hurad', 'Update'),
                         array('type' => 'submit', 'class' => 'btn btn-primary')
                     ) ?>
                 </div>
