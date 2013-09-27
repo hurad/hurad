@@ -15,12 +15,18 @@ HuradWidget::registerWidget(
 HuradWidget::registerWidget(
     array(
         'title' => __d('hurad', 'Recent Posts'),
-        'element' => 'recent_posts',
+        'element' => 'recent-posts',
     )
 );
 HuradWidget::registerWidget(
     array(
         'title' => __d('hurad', 'Pages'),
         'element' => 'pages',
+    )
+);
+HuradWidget::registerWidget(
+    array(
+        'title' => __d('hurad', 'Text'),
+        'element' => 'text',
     )
 );
