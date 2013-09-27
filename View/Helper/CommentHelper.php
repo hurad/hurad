@@ -82,13 +82,47 @@ class CommentHelper extends AppHelper
      */
     public $helpers = array('Hook', 'Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page', 'Link');
 
+    /**
+     * Current post array
+     *
+     * @var array
+     * @access public
+     */
+    public $content = array();
+    /**
+     * Model of content
+     *
+     * @var null|string
+     */
+    private static $model = null;
+
+    /**
+     * Set model
+     *
+     * @return null|string
+     */
+    public static function getModel()
+    {
+        return self::$model;
+    }
+
+    /**
+     * Get model
+     *
+     * @param null|string $model
+     */
+    public static function setModel($model)
+    {
+        self::$model = Inflector::singularize($model);
+    }
+
     public function __construct(View $View, $settings = array())
     {
         parent::__construct($View, $settings);
         $this->view_path = $this->_View->viewPath;
-        $this->post = $this->Link->post = $this->_View->getVar('post');
-        $this->page = $this->_View->getVar('page');
-        $this->current_user = $this->_View->getVar('current_user');
+        $this->post = $this->Link->post = $this->_View->get('post');
+        $this->page = $this->_View->get('page');
+        $this->current_user = $this->_View->get('current_user');
         $this->MUser = ClassRegistry::getObject('User');
         $this->MPost = ClassRegistry::getObject('Post');
     }
@@ -289,7 +323,7 @@ class CommentHelper extends AppHelper
     public function getCommentAuthorUrl()
     {
         $url = ('http://' == $this->comment['author_url']) ? '' : $this->comment['author_url'];
-        $url = Formatting::esc_url($url, array('http', 'https'));
+        $url = HuradSanitize::url($url);
         return $this->Hook->applyFilters('getCommentAuthorUrl', $url);
     }
 
@@ -391,9 +425,8 @@ class CommentHelper extends AppHelper
         if ($this->comment['user_id'] > 0 && $user = $this->MUser->getUserData($this->comment['user_id'])) {
             // For all registered users, 'byuser'
             $classes[] = 'byuser';
-            $classes[] = 'comment-author-' . Formatting::sanitize_html_class(
-                    $user['nickname'],
-                    $this->comment['user_id']
+            $classes[] = 'comment-author-' . HuradSanitize::htmlClass(
+                    array('comment-author-' . $user['nickname'], 'comment-author-' . $this->comment['user_id'])
                 );
             // For comment authors who are the author of the post
             if ($post = $this->MPost->getPost($this->comment['post_id'])) {
@@ -442,7 +475,7 @@ class CommentHelper extends AppHelper
             $classes = array_merge($classes, $class);
         }
 
-        $classes = array_map('Formatting::esc_attr', $classes);
+        $classes = array_map('HuradSanitize::htmlClass', $classes);
 
         return $this->Hook->applyFilters('getCommentClass', $classes, $class);
     }
@@ -618,7 +651,7 @@ class CommentHelper extends AppHelper
         if ($number > 1) {
             $output = str_replace(
                 '%',
-                Functions::number_format_i18n($number),
+                HuradFunctions::numberFormatI18n($number),
                 (false === $more) ? __d('hurad', '% Comments') : $more
             );
         } elseif ($number == 0) {
@@ -727,12 +760,7 @@ class CommentHelper extends AppHelper
      */
     public function commentsOpen()
     {
-        if ($this->view_path == 'Posts') {
-            $comment_status = ('open' == $this->post['Post']['comment_status']);
-        } elseif ($this->view_path == 'Pages') {
-            $comment_status = ('open' == $this->page['Page']['comment_status']);
-        }
-
+        $comment_status = ('open' == $this->content[self::$model]['comment_status']);
         $open = ('open' == $comment_status);
         return $this->Hook->applyFilters('commentsOpen', $open);
     }
@@ -771,7 +799,7 @@ class CommentHelper extends AppHelper
         $number = $this->getCommentsNumber();
 
         if (0 == $number && !$this->commentsOpen()) {
-            echo '<span' . ((!empty($css_class)) ? ' class="' . Formatting::esc_attr(
+            echo '<span' . ((!empty($css_class)) ? ' class="' . HuradSanitize::htmlClass(
                         $css_class
                     ) . '"' : '') . '>' . $none . '</span>';
             return;
@@ -798,7 +826,7 @@ class CommentHelper extends AppHelper
 
         echo $this->Hook->applyFilters('comments_popup_link_attributes', '');
 
-        echo ' title="' . Formatting::esc_attr(sprintf(__d('hurad', 'Comment on %s'), $title)) . '">';
+        echo ' title="' . HuradSanitize::htmlAttribute(sprintf(__d('hurad', 'Comment on %s'), $title)) . '">';
         $this->commentsNumber($zero, $one, $more);
         echo '</a>';
     }
@@ -842,7 +870,11 @@ class CommentHelper extends AppHelper
                 array('admin' => true, 'controller' => 'users', 'action' => 'profile', $this->current_user['id'])
             )
         );
-        echo $this->Html->link(__d('hurad', 'Log out?'), '/logout', array('title' => __d('hurad', 'Log out of this account')));
+        echo $this->Html->link(
+            __d('hurad', 'Log out?'),
+            '/logout',
+            array('title' => __d('hurad', 'Log out of this account'))
+        );
         echo '</p>';
 
         echo '<p>';
