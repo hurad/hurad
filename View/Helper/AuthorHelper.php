@@ -164,7 +164,7 @@ class AuthorHelper extends AppHelper
         if ($this->getTheAuthorMeta('url')) {
             return $this->Html->link(
                 $this->getTheAuthor(),
-                Formatting::esc_url($this->getTheAuthorMeta('url')),
+                HuradSanitize::url($this->getTheAuthorMeta('url')),
                 array('title' => __("Visit %s&#8217;s website", $this->getTheAuthor()), 'rel' => 'author external')
             );
         } else {
@@ -290,12 +290,12 @@ class AuthorHelper extends AppHelper
             'html' => true
         );
 
-        $args = Functions::hr_parse_args($args, $defaults);
+        $args = Hash::merge($defaults, $args);
         extract($args, EXTR_SKIP);
 
         $return = '';
 
-        $query_args = Functions::hr_array_slice_assoc($args, array('orderby', 'order', 'number'));
+        $query_args = HuradFunctions::arraySliceAssoc($args, array('orderby', 'order', 'number'));
         //$query_args['fields'] = 'ids';
         $authors = ClassRegistry::init('User')->getUsers($query_args);
 
