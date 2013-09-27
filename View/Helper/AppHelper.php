@@ -29,6 +29,21 @@ App::uses('Helper', 'View');
  * will inherit them.
  *
  * @package       app.View.Helper
+ *
+ * @property AdminLayoutHelper $AdminLayout
+ * @property AuthorHelper $Author
+ * @property CommentHelper $Comment
+ * @property DashboardHelper $Dashboard
+ * @property EditorHelper $Editor
+ * @property GeneralHelper $General
+ * @property GravatarHelper $Gravatar
+ * @property HookHelper $Hook
+ * @property LinkHelper $Link
+ * @property PageHelper $Page
+ * @property PostHelper $Post
+ * @property RoleHelper $Role
+ * @property WidgetHelper $Widget
+ *
  */
 class AppHelper extends Helper
 {
