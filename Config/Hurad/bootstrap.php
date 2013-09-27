@@ -32,8 +32,9 @@ config('Hurad/default_filters');
 /**
  * Load Hurad Lib
  */
-App::uses('Functions', 'Lib');
-App::uses('Formatting', 'Lib');
+App::uses('HuradFunctions', 'Lib');
+App::uses('HuradFormatting', 'Lib');
+App::uses('HuradSanitize', 'Lib');
 App::uses('HuradPlugin', 'Lib');
 App::uses('Hurad', 'Lib');
 App::uses('HuradWidget', 'Lib');
