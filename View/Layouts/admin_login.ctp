@@ -12,20 +12,13 @@
 <div id="content">
     <div class="container">
         <div class="row">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <?php echo $this->Session->flash('flash'); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4 well">
-                    <div class="login-logo">
-                        <?php echo $this->Html->image('hurad.png', array('width' => '80px')); ?>
-                        <h1>Hurad
-                            <small>(alpha)</small>
-                        </h1>
-                    </div>
-                    <?php echo $this->Session->flash('flash'); ?>
+            <div class="col-md-4 col-md-offset-4">
+                <?php echo $this->Session->flash('flash'); ?>
+                <div class="login-logo well">
+                    <?php echo $this->Html->image('hurad.png', array('width' => '80px')); ?>
+                    <h1 class="text-muted">Hurad
+                        <small>(alpha)</small>
+                    </h1>
                     <?php echo $this->fetch('content'); ?>
                 </div>
             </div>

@@ -18,18 +18,20 @@
                 <p></p>
 
                 <p>
-                    <i class="glyphicon glyphicon-user"></i> <?php echo __('by'); ?> <?php echo $this->Html->link(
+                    <?php echo __d('hurad', 'Posted by'); ?> <?php echo $this->Html->link(
                         $this->Author->getTheAuthor(),
                         $this->Author->getAuthorPostsUrl()
                     ); ?>
-                    | <i class="glyphicon glyphicon-calendar"></i> <?php $this->Post->theDate(); ?>
-                    | <i class="glyphicon glyphicon-comment"></i> <?php $this->Comment->commentsPopupLink(
+                    | <?php $this->Post->theDate(); ?>
+                    | <?php $this->Comment->commentsPopupLink(
                         __('Leave a comment'),
                         __('1 Comment'),
                         __('% Comments')
                     ); ?>
-                    | <i class="glyphicon glyphicon-share"></i> <?php $this->Post->the_category(); ?>
-                    | <i class="glyphicon glyphicon-tags"></i> Tags : <?php $this->Post->tag(); ?>
+                    <?php $cat = $this->Post->the_category(', ', false) ?>
+                    <?php echo isset($cat) ? '| ' . $cat : '' ?>
+                    <?php $tag = $this->Post->tag(', ', false) ?>
+                    <?php echo isset($tag) ? '| ' . __d('hurad', 'Tags: ') . $tag : '' ?>
                 </p>
             </div>
         </div>

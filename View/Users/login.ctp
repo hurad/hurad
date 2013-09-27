@@ -10,7 +10,7 @@ echo $this->Form->create(
 );
 ?>
 
-    <div class="control-group <?php echo $this->Form->isFieldError('username') ? 'error' : ''; ?>">
+    <div class="form-group <?php echo $this->Form->isFieldError('username') ? 'error' : ''; ?>">
         <?php
         echo $this->Form->input(
             'username',
@@ -26,14 +26,14 @@ echo $this->Form->create(
                 ),
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
-                'class' => 'input-block-level',
+                'class' => 'form-control',
                 'placeholder' => __d('hurad', 'Username')
             )
         );
         ?>
     </div>
 
-    <div class="control-group <?php echo $this->Form->isFieldError('password') ? 'error' : ''; ?>">
+    <div class="form-group <?php echo $this->Form->isFieldError('password') ? 'error' : ''; ?>">
         <?php
         echo $this->Form->input(
             'password',
@@ -48,24 +48,28 @@ echo $this->Form->create(
                 ),
                 'required' => false, //For disable HTML5 validation
                 'type' => 'password',
-                'class' => 'input-block-level',
+                'class' => 'form-control',
                 'placeholder' => __d('hurad', 'Password')
             )
         );
         ?>
     </div>
-
-    <label class="checkbox">
-        <?php echo $this->Form->input('remember_me', array('label' => __d('hurad', 'Remember Me'), 'type' => 'checkbox')); ?>
+<div class="checkbox">
+    <label>
+        <?php echo $this->Form->input(
+            'remember_me',
+            array('label' => __d('hurad', 'Remember Me'), 'type' => 'checkbox')
+        ); ?>
     </label>
+</div>
 
 <?php if (Configure::check('General.users_can_register') && Configure::read('General.users_can_register') == 1) : ?>
-    <div class="control-group">
+    <div class="form-group">
         <?php echo $this->Html->link(__d('hurad', 'Not registered?'), array('controller' => 'users', 'action' => 'register')); ?>
     </div>
 <?php endif; ?>
 
-    <div class="control-group">
+    <div class="form-group">
         <?php echo $this->Html->link(__d('hurad', 'Forgot password?'), array('controller' => 'users', 'action' => 'forgot')); ?>
     </div>
 
