@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Description of UserFixture
- *
- * @author mohammad
+ * Class UserFixture
  */
 class UserFixture extends CakeTestFixture
 {
@@ -53,8 +51,8 @@ class UserFixture extends CakeTestFixture
             'activation_key' => '',
             'reset_key' => '',
             'status' => 0,
-            'created' => '2007-03-17 01:16:23',
-            'modified' => '2007-03-17 01:18:31'
+            'created' => '2013-03-17 01:16:23',
+            'modified' => '2013-03-17 01:16:23'
         ),
         array(
             'id' => 2,
@@ -66,8 +64,8 @@ class UserFixture extends CakeTestFixture
             'activation_key' => '',
             'reset_key' => '',
             'status' => 0,
-            'created' => '2007-03-17 01:18:23',
-            'modified' => '2007-03-17 01:20:31'
+            'created' => '2013-03-18 01:18:23',
+            'modified' => '2013-03-18 01:18:23'
         ),
         array(
             'id' => 3,
@@ -79,8 +77,8 @@ class UserFixture extends CakeTestFixture
             'activation_key' => '',
             'reset_key' => '',
             'status' => 0,
-            'created' => '2007-03-17 01:20:23',
-            'modified' => '2007-03-17 01:22:31'
+            'created' => '2013-03-19 01:20:23',
+            'modified' => '2013-03-19 01:20:23'
         ),
         array(
             'id' => 4,
@@ -92,8 +90,8 @@ class UserFixture extends CakeTestFixture
             'activation_key' => '',
             'reset_key' => '',
             'status' => 0,
-            'created' => '2007-03-17 01:22:23',
-            'modified' => '2007-03-17 01:24:31'
+            'created' => '2013-03-20 01:22:23',
+            'modified' => '2013-03-20 01:22:23'
         ),
     );
 
