@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Description of UserFixture
- *
- * @author mohammad
+ * Class UserMetaFixture
  */
 class UserMetaFixture extends CakeTestFixture
 {
