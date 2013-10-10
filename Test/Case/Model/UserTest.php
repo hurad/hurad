@@ -3,9 +3,7 @@
 App::uses('User', 'Model');
 
 /**
- * Description of UserTest
- *
- * @author mohammad
+ * Class UserTest
  */
 class UserTest extends CakeTestCase
 {
@@ -23,7 +21,7 @@ class UserTest extends CakeTestCase
     {
         $created = $this->User->field('created', array('User.username' => 'admin'));
 
-        $this->assertEquals($created, '2007-03-17 01:16:23', 'Created Date');
+        $this->assertEquals($created, '2013-03-17 01:16:23', 'Created Date');
     }
 
     public function testGetUsers()
@@ -48,8 +46,8 @@ class UserTest extends CakeTestCase
                     'activation_key' => '',
                     'reset_key' => '',
                     'status' => '0',
-                    'created' => '2007-03-17 01:16:23',
-                    'modified' => '2007-03-17 01:18:31',
+                    'created' => '2013-03-17 01:16:23',
+                    'modified' => '2013-03-17 01:16:23',
                 )
             ),
             1 => array(
@@ -63,8 +61,8 @@ class UserTest extends CakeTestCase
                     'activation_key' => '',
                     'reset_key' => '',
                     'status' => '0',
-                    'created' => '2007-03-17 01:18:23',
-                    'modified' => '2007-03-17 01:20:31',
+                    'created' => '2013-03-18 01:18:23',
+                    'modified' => '2013-03-18 01:18:23',
                 )
             )
         );
@@ -86,8 +84,8 @@ class UserTest extends CakeTestCase
             'activation_key' => '',
             'reset_key' => '',
             'status' => '0',
-            'created' => '2007-03-17 01:16:23',
-            'modified' => '2007-03-17 01:18:31',
+            'created' => '2013-03-17 01:16:23',
+            'modified' => '2013-03-17 01:16:23',
             'firstname' => 'Mohammad',
             'lastname' => 'Abdoli Rad',
             'nickname' => 'atkrad',
