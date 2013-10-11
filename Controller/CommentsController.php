@@ -207,6 +207,7 @@ class CommentsController extends AppController
      */
     public function admin_edit($id = null)
     {
+        $this->set('title_for_layout', __d('hurad', 'Edit Comment'));
         $this->Comment->id = $id;
         if (!$this->Comment->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid comment'));
@@ -227,11 +228,10 @@ class CommentsController extends AppController
                 );
             }
         } else {
-            $this->request->data = $this->Comment->read(null, $id);
+            $this->request->data = $comment = $this->Comment->read(null, $id);
         }
-        $posts = $this->Comment->Post->find('list');
-        $users = $this->Comment->User->find('list');
-        $this->set(compact('parentComments', 'posts', 'users'));
+        $user = $this->Comment->User->find('first');
+        $this->set(compact('comment', 'user'));
     }
 
     /**
