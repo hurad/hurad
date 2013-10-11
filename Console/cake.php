@@ -18,8 +18,16 @@
  * @since         CakePHP(tm) v 2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+if (!defined('CAKE_CORE_INCLUDE_PATH')) {
+    define('DS', DIRECTORY_SEPARATOR);
+    define('CAKE_CORE_INCLUDE_PATH', __DIR__ . '/../Vendor/pear-pear.cakephp.org/CakePHP');
+    define('CAKEPHP_SHELL', true);
+    if (!defined('CORE_PATH')) {
+        define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
+    }
+}
 $ds = DIRECTORY_SEPARATOR;
-$dispatcher = 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
+$dispatcher = CAKE_CORE_INCLUDE_PATH . $ds . 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
 
 if (function_exists('ini_set')) {
     $root = dirname(dirname(dirname(__FILE__)));
