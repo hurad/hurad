@@ -1,53 +1,114 @@
-<div class="comments form">
-    <?php echo $this->Form->create('Comment'); ?>
-    <fieldset>
-        <legend><?php echo __d('hurad', 'Admin Edit Comment'); ?></legend>
-        <?php
-        echo $this->Form->input('id');
-        echo $this->Form->input('parent_id');
-        echo $this->Form->input('post_id');
-        echo $this->Form->input('user_id');
-        echo $this->Form->input('author');
-        echo $this->Form->input('author_email');
-        echo $this->Form->input('author_url');
-        echo $this->Form->input('author_ip');
-        echo $this->Form->input('content');
-        echo $this->Form->input('approved');
-        echo $this->Form->input('agent');
-        echo $this->Form->input('lft');
-        echo $this->Form->input('rght');
-        ?>
-    </fieldset>
-    <?php echo $this->Form->end(__d('hurad', 'Submit')); ?>
+<div class="page-header">
+    <h2><?php echo $title_for_layout; ?></h2>
 </div>
-<div class="actions">
-    <h3><?php echo __d('hurad', 'Actions'); ?></h3>
-    <ul>
 
-        <li><?php echo $this->Form->postLink(
-                __d('hurad', 'Delete'),
-                array('action' => 'delete', $this->Form->value('Comment.id')),
-                null,
-                __d('hurad', 'Are you sure you want to delete # %s?', $this->Form->value('Comment.id'))
-            ); ?></li>
-        <li><?php echo $this->Html->link(__d('hurad', 'List Comments'), array('action' => 'index')); ?></li>
-        <li><?php echo $this->Html->link(
-                __d('hurad', 'List Comments'),
-                array('controller' => 'comments', 'action' => 'index')
-            ); ?> </li>
-        <li><?php echo $this->Html->link(
-                __d('hurad', 'New Parent Comment'),
-                array('controller' => 'comments', 'action' => 'add')
-            ); ?> </li>
-        <li><?php echo $this->Html->link(
-                __d('hurad', 'List Posts'),
-                array('controller' => 'posts', 'action' => 'index')
-            ); ?> </li>
-        <li><?php echo $this->Html->link(__d('hurad', 'New Post'), array('controller' => 'posts', 'action' => 'add')); ?> </li>
-        <li><?php echo $this->Html->link(
-                __d('hurad', 'List Users'),
-                array('controller' => 'users', 'action' => 'index')
-            ); ?> </li>
-        <li><?php echo $this->Html->link(__d('hurad', 'New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-    </ul>
+<?php
+echo $this->Form->create(
+    'Comment',
+    array(
+        'class' => 'form-horizontal',
+        'inputDefaults' => array(
+            'label' => false,
+            'div' => false
+        )
+    )
+);
+?>
+
+<div class="form-group">
+    <?php echo $this->Form->label('post_id', __d('hurad', 'Post Title'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-6">
+        <p class="form-control-static"><?= $comment['Post']['title']; ?></p>
+    </div>
 </div>
+
+<?php if ($comment['Comment']['user_id']) { ?>
+    <div class="form-group">
+        <?php echo $this->Form->label(
+            'user_id',
+            __d('hurad', 'Author Username'),
+            array('class' => 'control-label col-lg-2')
+        ); ?>
+        <div class="col-lg-6">
+            <p class="form-control-static"><?=
+                $this->Html->Link(
+                    $user['User']['username'],
+                    array('controller' => 'users', 'action' => 'profile', $comment['Comment']['user_id'])
+                ); ?></p>
+        </div>
+    </div>
+<?php } else { ?>
+    <div class="form-group">
+        <?php echo $this->Form->label(
+            'author',
+            __d('hurad', 'Author name'),
+            array('class' => 'control-label col-lg-2')
+        ); ?>
+        <div class="col-lg-6">
+            <p class="form-control-static"><?= $comment['Comment']['author']; ?></p>
+        </div>
+    </div>
+<?php } ?>
+
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'author_email',
+        __d('hurad', 'Author Email'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-6">
+        <p class="form-control-static"><?= $comment['Comment']['author_email']; ?></p>
+    </div>
+</div>
+
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'author_url',
+        __d('hurad', 'Author Url'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-6">
+        <p class="form-control-static"><?= $comment['Comment']['author_url']; ?></p>
+    </div>
+</div>
+
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'content',
+        __d('hurad', 'Content'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-6">
+        <?php echo $this->Form->textarea(
+            'content',
+            array('rows' => '15', 'cols' => '20', 'class' => 'form-control')
+        ); ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <?php echo $this->Form->label(
+        'approved',
+        __d('hurad', 'Status'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
+        <?php echo $this->Form->select(
+            'approved',
+            array(
+                '0' => __d('hurad', 'Disapprove'),
+                '1' => __d('hurad', 'Approve'),
+                'spam' => __d('hurad', 'Spam'),
+                'trash' => __d('hurad', 'Trash')
+            ),
+            array('class' => 'form-control', 'empty' => false)
+        ); ?>
+    </div>
+</div>
+
+<?php echo $this->Form->button(
+    __d('hurad', 'Update Comment'),
+    array('type' => 'submit', 'class' => 'btn btn-primary')
+); ?>
+
+<?php echo $this->Form->end(); ?>
