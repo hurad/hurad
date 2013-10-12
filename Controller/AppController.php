@@ -90,8 +90,8 @@ class AppController extends Controller
             $this->layout = 'admin';
         }
 
-        //Set logged_in var in all view
-        $this->set('logged_in', $this->Auth->loggedIn());
+        //Set $loggedIn var in all view
+        $this->set('loggedIn', $this->Auth->loggedIn());
 
         if ($this->Auth->loggedIn() && Configure::read('Installed')) {
             //Set current_user var in all view
