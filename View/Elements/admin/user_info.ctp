@@ -1,4 +1,4 @@
-<?php if ($logged_in): ?>
+<?php if ($loggedIn): ?>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
