@@ -1,6 +1,6 @@
 <!-- app/View/Elements/comment_form.ctp -->
 
-<?php if ($logged_in) { ?>
+<?php if ($loggedIn) { ?>
     <?php //echo $this->Form->create('Comment', array('action' => 'add')); ?>
     <fieldset>
         <legend><?php echo __d('hurad', 'Add Comment'); ?></legend>
