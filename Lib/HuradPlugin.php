@@ -4,13 +4,13 @@ App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 
 /**
- * Description of HuradPlugin
- *
- * @author mohammad
+ * Class HuradPlugin
  */
-class HuradPlugin {
+class HuradPlugin
+{
 
-    public static function getPluginData() {
+    public static function getPluginData()
+    {
         $dir = new Folder(APP . DS . 'Plugin');
         $files = $dir->read(true, array('empty'));
         foreach ($files[0] as $i => $folder) {
@@ -25,18 +25,20 @@ class HuradPlugin {
         return $plugins;
     }
 
-    public static function isActive($alias = NULL) {
+    public static function isActive($alias = null)
+    {
         if (Configure::check('Plugins')) {
             $aliases = Configure::read('Plugins');
             $aliases = explode(',', $aliases);
 
             return in_array($alias, $aliases);
         } else {
-            return FALSE;
+            return false;
         }
     }
 
-    public static function activate($alias) {
+    public static function activate($alias)
+    {
         $aliases = Configure::read('Plugins');
         if (Configure::check('Plugins') && !empty($aliases)) {
             $aliases = explode(',', $aliases);
@@ -51,10 +53,11 @@ class HuradPlugin {
             $plugins = $alias;
         }
         ClassRegistry::init('Option')->write('Plugins', $plugins);
-        return TRUE;
+        return true;
     }
 
-    public static function deactivate($alias) {
+    public static function deactivate($alias)
+    {
         if (Configure::check('Plugins')) {
             $aliases = Configure::read('Plugins');
             $aliases = explode(',', $aliases);
@@ -66,23 +69,25 @@ class HuradPlugin {
                 }
                 $plugins = implode(',', $result);
                 ClassRegistry::init('Option')->write('Plugins', $plugins);
-                return TRUE;
+                return true;
             }
         } else {
-            return FALSE;
+            return false;
         }
     }
 
-    public static function delete($alias) {
+    public static function delete($alias)
+    {
         $folder = new Folder(APP . 'Plugin' . DS . $alias);
         if ($folder->delete()) {
-            return TRUE;
+            return true;
         } else {
             return $folder->errors();
         }
     }
 
-    public static function loadAll() {
+    public static function loadAll()
+    {
         $plugins = Configure::read('Plugins');
 
         if (Configure::check('Plugins') && !empty($plugins)) {
@@ -97,7 +102,7 @@ class HuradPlugin {
                 if ($rt->exists()) {
                     $config[$pluginFolder]['routes'] = true;
                 }
-                if ($bs->exists() == FALSE && $rt->exists() == FALSE) {
+                if ($bs->exists() == false && $rt->exists() == false) {
                     $config[$pluginFolder] = array();
                 }
             }
