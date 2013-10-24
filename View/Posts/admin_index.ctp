@@ -142,7 +142,7 @@ if (count($posts) > 0) {
                         )
                     ),
                     array(
-                        $this->Post->tag('', false),
+                        $this->Post->getTags(),
                         array(
                             'class' => 'column-tags'
                         )
