@@ -1,4 +1,5 @@
 <?php $this->Html->css(array('admin/Widgets/widgets'), null, array('inline' => false)); ?>
+<?php $this->Html->script(array('admin/Widgets/widget'), array('block' => 'scriptHeader')); ?>
 
 <script>
     jQuery(document).ready(function () {
@@ -172,7 +173,6 @@
             }
             ?>
 
-            <span class="clearfix"></span>
         </div>
     </div>
 </div>
@@ -183,30 +183,7 @@
             revert: true,
             placeholder: "placeholder",
             beforeStop: function (event, ui) {
-                var widget = {};
-                //Get input number
-                widget.number = ui.item.children().children().children('#number').val();
-                //Get div.widget-item value attribute
-                widget.darg_value = ui.item.attr('value');
-                //Change div.widget-item id attribute
-                widget.id = ui.item.attr("id", widget.darg_value + "-" + widget.number);
-
-                //Update input#number value attribute
-                $("#draggable #" + widget.darg_value).children().children().children("#number").attr("value", parseInt(widget.number) + 1);
-                //Set form id
-                ui.item.children().children("form").attr("id", "form-" + widget.darg_value + "-" + widget.number);
-                //Set submit id
-                ui.item.children().children().children("input[type='submit']").attr("id", "submit-" + widget.darg_value + "-" + widget.number);
-                //Set input#unique-id value
-                ui.item.children().children().children("#unique-id").attr("value", widget.darg_value + "-" + widget.number);
-
-                ui.item.children(".widget-title").children("span").removeAttr("style");
-
-                if (ui.item.hasClass("ui-draggable")) {
-                    ui.item.removeClass("ui-draggable");
-                }
-                $("#<?php echo $sidebarID; ?> .clearfix").remove();
-                $("#<?php echo $sidebarID; ?>").append('<span class="clearfix"></span>');
+                new CloneWidget(ui.item);
             },
             update: function (event, ui) {
                 //Create order array
