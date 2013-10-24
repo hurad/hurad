@@ -27,7 +27,7 @@ class PostsController extends AppController
      *
      * @var array
      */
-    public $helpers = array('Post', 'Comment', 'Text', 'Editor');
+    public $helpers = array('Post', 'Comment', 'Text', 'Editor', 'Utils.Tree');
     /**
      * Other components utilized by PostsController
      *
@@ -59,7 +59,6 @@ class PostsController extends AppController
     {
         parent::beforeFilter();
         $this->Auth->allow('index', 'view', 'viewById');
-        $this->Security->unlockedFields = array('Post.tcheckbox', 'Post.bcheckbox');
     }
 
     /**
