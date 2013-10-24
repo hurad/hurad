@@ -89,8 +89,6 @@ class CommentsController extends AppController
                 $this->request->data['Comment']['author_url'] = $this->Comment->User->getUserData(
                     $this->Auth->user('id')
                 )['url'];
-            } else {
-                $this->request->data['Comment']['user_id'] = 0;
             }
 
             $request = new CakeRequest();
@@ -315,8 +313,6 @@ class CommentsController extends AppController
                 $this->request->data['Comment']['author_url'] = $this->Comment->User->getUserData(
                     $this->Auth->user('id')
                 )['url'];
-            } else {
-                $this->request->data['Comment']['user_id'] = 0;
             }
 
             $this->Comment->create();
