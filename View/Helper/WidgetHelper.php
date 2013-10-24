@@ -3,10 +3,7 @@
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Description of WidgetHelper
- *
- * @property FormHelper $Form
- * @author mohammad
+ * Class WidgetHelper
  */
 class WidgetHelper extends AppHelper
 {
