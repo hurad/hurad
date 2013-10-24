@@ -4,36 +4,44 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4><strong><a href="<?php $this->Post->thePermalink(); ?>" title="<?php printf(
-                                __('Permalink to %s'),
+                    <h4><strong><a href="<?= $this->Post->getPermalink(); ?>" title="<?php printf(
+                                __d('hurad', 'Permalink to %s'),
                                 $this->Post->theTitleAttribute('echo=0')
                             ); ?>"><?php $this->Post->theTitle(); ?></a></strong></h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <?php $this->Post->theContent('Read More ...'); ?>
+                    <?php $this->Post->theContent(__d('hurad', 'Read More ...')); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <p></p>
-
                     <p>
-                        <?php echo __d('hurad', 'Posted by'); ?> <?php echo $this->Html->link(
+                        <span class="glyphicon glyphicon-pencil"></span> <?php echo $this->Html->link(
                             $this->Author->getTheAuthor(),
                             $this->Author->getAuthorPostsUrl()
                         ); ?>
-                        | <?php $this->Post->theDate(); ?>
-                        | <?php $this->Comment->commentsPopupLink(
+                        &nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-time"></span> <?= $this->Post->getDate(); ?>
+                        &nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-comment"></span>
+                        <?php $this->Comment->commentsPopupLink(
                             __('Leave a comment'),
                             __('1 Comment'),
                             __('% Comments')
                         ); ?>
-                        <?php $cat = $this->Post->the_category(', ', false) ?>
-                        <?php echo isset($cat) ? '| ' . $cat : '' ?>
-                        <?php $tag = $this->Post->tag(', ', false) ?>
-                        <?php echo isset($tag) ? '| ' . __d('hurad', 'Tags: ') . $tag : '' ?>
+                        &nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+                        <?= $this->Post->the_category(', ', false) ?>
+                        &nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-tags"></span>&nbsp;
+                        <?=
+                        $this->Post->getTags(
+                            '</span><span class="label label-info">',
+                            '<span class="label label-default">',
+                            '</span>'
+                        ); ?>
                     </p>
                 </div>
             </div>
