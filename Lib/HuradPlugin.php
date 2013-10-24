@@ -8,12 +8,18 @@ App::uses('File', 'Utility');
  */
 class HuradPlugin
 {
-
+    /**
+     * Get plugin information
+     *
+     * @return array
+     */
     public static function getPluginData()
     {
         $dir = new Folder(APP . DS . 'Plugin');
         $files = $dir->read(true, array('empty'));
-        foreach ($files[0] as $i => $folder) {
+        $plugins = [];
+
+        foreach ($files[0] as $folder) {
             $file = new File(APP . 'Plugin' . DS . $folder . DS . 'Config' . DS . 'info.xml');
             if ($file->exists()) {
                 $fileContent = $file->read();
@@ -25,7 +31,14 @@ class HuradPlugin
         return $plugins;
     }
 
-    public static function isActive($alias = null)
+    /**
+     * Check activate plugin
+     *
+     * @param $alias
+     *
+     * @return bool
+     */
+    public static function isActive($alias)
     {
         if (Configure::check('Plugins')) {
             $aliases = Configure::read('Plugins');
@@ -37,6 +50,13 @@ class HuradPlugin
         }
     }
 
+    /**
+     * Activate plugin
+     *
+     * @param $alias
+     *
+     * @return bool
+     */
     public static function activate($alias)
     {
         $aliases = Configure::read('Plugins');
@@ -56,6 +76,13 @@ class HuradPlugin
         return true;
     }
 
+    /**
+     * Deactivate plugin
+     *
+     * @param $alias
+     *
+     * @return bool
+     */
     public static function deactivate($alias)
     {
         if (Configure::check('Plugins')) {
@@ -76,6 +103,13 @@ class HuradPlugin
         }
     }
 
+    /**
+     * Delete plugin
+     *
+     * @param $alias
+     *
+     * @return array|bool
+     */
     public static function delete($alias)
     {
         $folder = new Folder(APP . 'Plugin' . DS . $alias);
@@ -86,14 +120,19 @@ class HuradPlugin
         }
     }
 
-    public static function loadAll()
+    /**
+     * Load all activate plugin
+     *
+     * @param array $corePlugins
+     */
+    public static function loadAll($corePlugins = [])
     {
         $plugins = Configure::read('Plugins');
+        $config = [];
 
         if (Configure::check('Plugins') && !empty($plugins)) {
             $plugins = explode(',', $plugins);
-            $config = array();
-            foreach ($plugins as $i => $pluginFolder) {
+            foreach ($plugins as $pluginFolder) {
                 $bs = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'bootstrap.php');
                 $rt = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'routes.php');
                 if ($bs->exists()) {
@@ -106,8 +145,10 @@ class HuradPlugin
                     $config[$pluginFolder] = array();
                 }
             }
-            CakePlugin::load($config);
         }
+
+        $config = Hash::merge($corePlugins, $config);
+        CakePlugin::load($config);
     }
 
 }
