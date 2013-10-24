@@ -1,5 +1,6 @@
 # Plugin
 Plugin/DebugKit/
+Plugin/Utils/
 
 # tmp directory
 tmp/*
