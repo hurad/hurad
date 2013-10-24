@@ -66,18 +66,11 @@ class InstallerController extends AppController
         );
 
         if (!empty($this->request->data)) {
-            $config = array_merge($defaults, $this->request->data['Installer']);
+            $config = Hash::merge($defaults, $this->request->data['Installer']);
 
-            try {
-                ConnectionManager::create('install', $config);
-                $db = ConnectionManager::getDataSource('install');
+            $file = new File(CONFIG . 'database.php', true, 0644);
 
-                if ($db->connected) {
-                    if ($this->__executeSQL('hurad.sql', $db, array('$[prefix]' => $config['prefix']))) {
-                        $file = new File(CONFIG . 'database.php', true, 0644);
-
-                        if ($file->exists() && $file->writable()) {
-                            $databaseConfig = <<<EOF
+            $databaseConfig = <<<CONFIG
 <?php
 
 class DATABASE_CONFIG {
@@ -91,30 +84,44 @@ class DATABASE_CONFIG {
         'database' => '{$config['database']}',
         'prefix' => '{$config['prefix']}',
     );
-    
+
     public \$test = array(
         'datasource' => 'Database/Mysql',
         'persistent' => false,
-        'host' => 'localhost',
-        'login' => 'root',
-        'password' => '',
-        'database' => 'hurad_test',
+        'host' => '{$config['host']}',
+        'login' => '{$config['login']}',
+        'password' => '{$config['password']}',
+        'database' => '{$config['database']}_test',
     );
 
 }
-EOF;
-                            $file->write($databaseConfig);
+CONFIG;
+
+            if ($file->write($databaseConfig)) {
+                try {
+                    $dataSource = ConnectionManager::create('default', $config);
+
+                    if ($dataSource->connected) {
+                        if ($this->__executeSQL('hurad.sql', $dataSource, array('$[prefix]' => $config['prefix']))) {
+
+                            $this->Session->setFlash(
+                                __d('hurad', 'Database successfuly installed'),
+                                'flash_message',
+                                array('class' => 'success')
+                            );
+                            $this->redirect(array('action' => 'finalize'));
                         }
-                        $this->Session->setFlash(
-                            __d('hurad', 'Database successfuly installed'),
-                            'flash_message',
-                            array('class' => 'success')
-                        );
-                        $this->redirect(array('action' => 'finalize'));
                     }
+                } catch (MissingConnectionException $exc) {
+                    $this->Session->setFlash($exc->getMessage(), 'flash_message', array('class' => 'danger'));
                 }
-            } catch (MissingConnectionException $exc) {
-                $this->Session->setFlash($exc->getMessage(), 'flash_message', array('class' => 'danger'));
+            } else {
+                $this->Session->setFlash(
+                    __d('hurad', 'Hurad not write Config/database.php'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
+                $this->redirect(array('action' => 'database'));
             }
         }
     }
@@ -142,7 +149,7 @@ EOF;
 
             $search['$[username]'] = $this->request->data['Installer']['username'];
             $search['$[email]'] = $this->request->data['Installer']['email'];
-            $search['$[password]'] = AuthComponent::password($this->request->data['Installer']['password']);
+            $search['$[password]'] = Security::hash($this->request->data['Installer']['password']);
             $search['$[title]'] = $this->request->data['Installer']['title'];
 
             $serverName = env("SERVER_NAME");
@@ -204,7 +211,7 @@ EOF;
                 $statements = $contents;
             }
 
-            /** @var $statements[] */
+            /** @var $statements [] */
             foreach ($statements as $statement) {
                 if (trim($statement) != '') {
                     $object->query($statement);
