@@ -17,6 +17,8 @@ App::uses('CakeEmail', 'Network/Email');
  * Class CommentsController
  *
  * @property Comment $Comment
+ * @property Post $Post
+ * @property User $User
  */
 class CommentsController extends AppController
 {
@@ -73,10 +75,27 @@ class CommentsController extends AppController
     {
         if ($this->request->is('post')) {
             $this->Comment->create();
+
+            if ($this->Auth->loggedIn()) {
+                $this->request->data['Comment']['user_id'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['id'];
+                $this->request->data['Comment']['author'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['display_name'];
+                $this->request->data['Comment']['author_email'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['email'];
+                $this->request->data['Comment']['author_url'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['url'];
+            } else {
+                $this->request->data['Comment']['user_id'] = 0;
+            }
+
             $request = new CakeRequest();
             $this->request->data['Comment']['author_ip'] = $request->clientIp();
             $this->request->data['Comment']['agent'] = env('HTTP_USER_AGENT');
-            $this->request->data['Comment']['approved'] = 0;
 
             $this->request->data['Comment']['author_url'] = HuradSanitize::url(
                 $this->request->data['Comment']['author_url']
@@ -262,33 +281,45 @@ class CommentsController extends AppController
     /**
      * Reply comment
      *
-     * @param null $post_id
-     * @param null $comment_id
+     * @param int $postID
+     * @param int $parentID
+     *
+     * @throws NotFoundException
      */
-    public function reply($post_id = null, $comment_id = null)
+    public function reply($postID, $parentID)
     {
         if ($this->request->is('post')) {
-            $this->Comment->create();
-
-            if (is_null($post_id) && !is_int($post_id)) {
-                $this->Session->setFlash(
-                    __d('hurad', 'The post is invalid.'),
-                    'flash_message',
-                    array('class' => 'warning')
-                );
-                $this->redirect($this->referer());
-            } elseif (is_null($comment_id) && !is_int($comment_id)) {
-                $this->Session->setFlash(
-                    __d('hurad', 'The comment is invalid.'),
-                    'flash_message',
-                    array('class' => 'warning')
-                );
-                $this->redirect($this->referer());
-            } else {
-                $this->request->data['Comment']['parent_id'] = $comment_id;
-                $this->request->data['Comment']['post_id'] = $post_id;
+            $this->Comment->id = $parentID;
+            if (!$this->Comment->exists()) {
+                throw new NotFoundException(__d('hurad', 'Invalid comment'));
             }
 
+            $this->Comment->Post->id = $postID;
+            if (!$this->Comment->Post->exists()) {
+                throw new NotFoundException(__d('hurad', 'Invalid post'));
+            }
+
+            $this->request->data['Comment']['parent_id'] = $parentID;
+            $this->request->data['Comment']['post_id'] = $postID;
+
+            if ($this->Auth->loggedIn()) {
+                $this->request->data['Comment']['user_id'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['id'];
+                $this->request->data['Comment']['author'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['display_name'];
+                $this->request->data['Comment']['author_email'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['email'];
+                $this->request->data['Comment']['author_url'] = $this->Comment->User->getUserData(
+                    $this->Auth->user('id')
+                )['url'];
+            } else {
+                $this->request->data['Comment']['user_id'] = 0;
+            }
+
+            $this->Comment->create();
             if ($this->Comment->save($this->request->data)) {
                 $this->Session->setFlash(
                     __d('hurad', 'The reply of comment has been saved.'),
@@ -305,8 +336,6 @@ class CommentsController extends AppController
                 $this->redirect(array('controller' => 'posts', 'action' => 'index'));
             }
         }
-        $urls = $this->request['pass'];
-        $this->set(compact('urls'));
     }
 
     /**
