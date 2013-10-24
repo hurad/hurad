@@ -50,7 +50,7 @@ config('Hurad/default_capabilities');
 /**
  * Load all active plugins
  */
-HuradPlugin::loadAll();
+HuradPlugin::loadAll(array('Utils'));
 
 /**
  * Include default widgets
