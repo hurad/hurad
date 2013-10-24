@@ -114,7 +114,7 @@ EOF;
                     }
                 }
             } catch (MissingConnectionException $exc) {
-                $this->Session->setFlash($exc->getMessage(), 'error');
+                $this->Session->setFlash($exc->getMessage(), 'flash_message', array('class' => 'danger'));
             }
         }
     }
@@ -125,15 +125,12 @@ EOF;
     public function finalize()
     {
         $this->set('title_for_layout', __d('hurad', 'Hurad Configuration'));
-        $config = get_class_vars('DATABASE_CONFIG');
+        $dataSource = ConnectionManager::getDataSource('default');
 
         if ($this->request->is('post')) {
-            ConnectionManager::create('install', $config['default']);
-            $db = ConnectionManager::getDataSource('install');
-
             $search = array();
 
-            $search['$[prefix]'] = $config['default']['prefix'];
+            $search['$[prefix]'] = $dataSource->config['prefix'];
 
             App::uses('CakeTime', 'Utility');
             $search['$[created]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
@@ -152,8 +149,8 @@ EOF;
             $url = Router::url('/');
             $search['$[site_url]'] = rtrim("http://" . $serverName . $url, '/');
 
-            if ($db->connected) {
-                if ($this->__executeSQL("hurad_defaults.sql", $db, $search)) {
+            if ($dataSource->connected) {
+                if ($this->__executeSQL("hurad_defaults.sql", $dataSource, $search)) {
                     $this->Session->setFlash(
                         __d('hurad', 'Hurad successfully installed.'),
                         'flash_message',
