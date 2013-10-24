@@ -53,6 +53,19 @@ class Comment extends AppModel
         )
     );
 
+    public function getComments($postID, $type = 'all')
+    {
+        $comments = $this->find(
+            $type,
+            array(
+                'conditions' => array('post_id' => $postID),
+                'recursive' => -1,
+                'order' => 'lft ASC'
+            )
+        );
+        return $comments;
+    }
+
     public function countComments($type = 'all')
     {
         if ($type == null) {
