@@ -77,7 +77,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                    array('Comment.approved' => 1)
+                        array('Comment.approved' => 1)
                 )
             );
         } elseif ($type == 'moderated') {
@@ -85,7 +85,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                    array('Comment.approved' => 0)
+                        array('Comment.approved' => 0)
                 )
             );
         } elseif ($type == 'spam') {
@@ -93,7 +93,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                    array('Comment.approved' => 'spam')
+                        array('Comment.approved' => 'spam')
                 )
             );
         } elseif ($type == 'trash') {
@@ -101,7 +101,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                    array('Comment.approved' => 'trash')
+                        array('Comment.approved' => 'trash')
                 )
             );
         } else {
