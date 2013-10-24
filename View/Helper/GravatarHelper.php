@@ -1,11 +1,14 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
-
+/**
+ * Class GravatarHelper
+ */
 class GravatarHelper extends AppHelper
 {
 
     public $helpers = array('Html');
+    const GRAVATAR_URL = 'http://www.gravatar.com/avatar/';
 
     public function image($email, $options)
     {
@@ -20,9 +23,8 @@ class GravatarHelper extends AppHelper
         $options = Hash::merge($defaults, $options);
 
         $optionsQuery = http_build_query($options);
-        $gravatarUrl = "http://www.gravatar.com/avatar/";
         $email = md5(strtolower(trim($email)));
-        $imageSrc = $gravatarUrl . $email . '?' . $optionsQuery;
+        $imageSrc = self::GRAVATAR_URL . $email . '?' . $optionsQuery;
 
         if (Configure::read('Comment-avatar_default') == 'gravatar_default') {
             $opt = array(
@@ -30,7 +32,7 @@ class GravatarHelper extends AppHelper
             );
             $email = '00000000000000000000000000000000';
             $optionsQuery = http_build_query($opt);
-            $imageSrc = $gravatarUrl . $email . '?' . $optionsQuery;
+            $imageSrc = self::GRAVATAR_URL . $email . '?' . $optionsQuery;
         }
 
         if ($options['echo']) {
