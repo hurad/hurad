@@ -1,27 +1,33 @@
 body {
-    padding-bottom: 60px;
-    padding-top: 80px;
+    padding: 80px 0 60px;
 }
-.installer{
+
+.installer {
     margin: 0 auto;
-    max-width: 1000px;
+    max-width: 768px;
 }
-.installer img{
+
+.installer img {
     padding-right: 15px;
 }
-.header{
+
+.header {
     margin-bottom: 30px;
 }
-.content-heading h2{
-    padding: 17px 0 0 0;
+
+.content-heading h2 {
+    padding: 17px 0 0;
 }
+
 .checking span.label {
-    font-size: large;
+    font-size: 16px;
     line-height: 22px;
 }
-.check-item{
-    margin-bottom:  15px;
+
+.check-item {
+    margin-bottom: 15px;
 }
-.info{
-    margin-top: 30px;
+
+.info ul {
+    margin: 30px 0 25px;
 }
