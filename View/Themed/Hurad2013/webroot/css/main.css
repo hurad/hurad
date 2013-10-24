@@ -1,0 +1,25 @@
+body {
+    padding: 20px 0 70px 0;
+}
+
+/* Start Comment */
+ul.comment-list, ul.children {
+    list-style: none;
+}
+
+.comment-author-name, .comment-meta-data {
+    padding: 0 0 0 80px;
+}
+
+.comment-body {
+    padding: 10px 0 0 0;
+}
+
+.comment-author-avatar img {
+    padding: 4px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* End Comment */
