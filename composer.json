@@ -26,7 +26,7 @@
     "require": {
         "php": ">=5.2.0",
         "pear-cakephp/cakephp": ">=2.4.0",
-        "ezyang/htmlpurifier": "=4.5.0"
+        "cakedc/utils": ">=1.3"
     },
     "require-dev": {
         "cakephp/debug_kit": "2.2.*"
