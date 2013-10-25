@@ -33,6 +33,8 @@ INSERT INTO `$[prefix]options` (`id`, `name`, `value`) VALUES
     (10, 'Comment.show_avatars', '1'),
     (11, 'Comment.avatar_rating', 'G'),
     (12, 'Comment.avatar_default', 'mystery'),
-    (13, 'template', 'Hurad2013'),
-    (14, 'site_charset', 'UTF-8'),
-    (15, 'Permalink.common', 'default');
+    (13, 'decimal_point', '.'),
+    (14, 'thousands_sep', ','),
+    (15, 'template', 'Hurad2013'),
+    (16, 'site_charset', 'UTF-8'),
+    (17, 'Permalink.common', 'default');
