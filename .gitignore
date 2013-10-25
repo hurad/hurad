@@ -37,4 +37,5 @@ composer.phar
 composer.lock
 
 # Vendor files
-/Vendor
+/Vendor/*
+!/Vendor/empty
