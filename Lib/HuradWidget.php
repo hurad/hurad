@@ -85,11 +85,7 @@ class HuradWidget
 
         $getAllData = Hash::extract($sidebarsWidgets, '{s}.' . $uniqueId);
 
-        $removeNumber = Hash::remove($getAllData, '{n}.number');
-        $removeWidgetId = Hash::remove($removeNumber, '{n}.widget-id');
-        $getUserData = Hash::remove($removeWidgetId, '{n}.unique-id');
-
-        return $getUserData[0];
+        return array_slice($getAllData[0], 0, (count($getAllData[0]) - 3));
     }
 
 }
