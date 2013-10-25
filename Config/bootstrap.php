@@ -205,7 +205,7 @@ define('SCHEMA', APP . 'Config' . DS . 'Schema' . DS);
  */
 define('HURAD_CONFIG', CONFIG . 'Hurad' . DS);
 
-Configure::write('Installed', file_exists(TMP . 'installed'));
+Configure::write('Installed', isInstalled());
 
 if (file_exists(APP . '/Vendor/autoload.php')) {
     // Load composer autoload.
@@ -219,4 +219,41 @@ if (file_exists(APP . '/Vendor/autoload.php')) {
 
 if (Configure::read('Installed')) {
     config('Hurad/bootstrap');
+}
+
+function isInstalled()
+{
+    if (file_exists(CONFIG . 'database.php')) {
+        App::uses('ConnectionManager', 'Model');
+        $dataSource = ConnectionManager::getDataSource('default');
+
+        $baseTables = [
+            'categories' => $dataSource->config['prefix'] . 'categories',
+            'categories_posts' => $dataSource->config['prefix'] . 'categories_posts',
+            'comments' => $dataSource->config['prefix'] . 'comments',
+            'links' => $dataSource->config['prefix'] . 'links',
+            'menus' => $dataSource->config['prefix'] . 'menus',
+            'options' => $dataSource->config['prefix'] . 'options',
+            'post_metas' => $dataSource->config['prefix'] . 'post_metas',
+            'posts' => $dataSource->config['prefix'] . 'posts',
+            'posts_tags' => $dataSource->config['prefix'] . 'posts_tags',
+            'tags' => $dataSource->config['prefix'] . 'tags',
+            'user_metas' => $dataSource->config['prefix'] . 'user_metas',
+            'users' => $dataSource->config['prefix'] . 'users',
+        ];
+
+        $installed = [];
+
+        foreach ($baseTables as $table => $tablePrefix) {
+            if (in_array($tablePrefix, $dataSource->listSources()) && count($dataSource->describe($table)) > 0) {
+                $installed[$table] = true;
+            } else {
+                $installed[$table] = false;
+            }
+        }
+    } else {
+        $installed['database.php'] = false;
+    }
+
+    return !in_array(false, $installed);
 }
