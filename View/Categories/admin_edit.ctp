@@ -69,25 +69,27 @@ echo $this->Form->create(
         ); ?>
     </span>
 </div>
-<div class="form-group">
-    <?php echo $this->Form->label(
-        'parent_id',
-        __d('hurad', 'Parent Category'),
-        array('class' => 'control-label col-lg-2')
-    ); ?>
-    <div class="col-lg-4">
-        <?php echo $this->Form->select(
+<?php if (Router::getParams()['pass'][0] != "1") { ?>
+    <div class="form-group">
+        <?php echo $this->Form->label(
             'parent_id',
-            $parentCategories,
-            array('empty' => __d('hurad', 'None'), 'class' => 'form-control')
+            __d('hurad', 'Parent Category'),
+            array('class' => 'control-label col-lg-2')
         ); ?>
-    </div>
+        <div class="col-lg-4">
+            <?php echo $this->Form->select(
+                'parent_id',
+                $parentCategories,
+                array('empty' => __d('hurad', 'None'), 'class' => 'form-control')
+            ); ?>
+        </div>
     <span class="help-block">
             <?php echo __(
                 'Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.'
             ); ?>
     </span>
-</div>
+    </div>
+<?php } ?>
 <div class="form-group">
     <?php echo $this->Form->label(
         'description',

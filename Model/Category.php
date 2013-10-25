@@ -182,6 +182,15 @@ class Category extends AppModel
         }
     }
 
+    public function beforeSave($options = array())
+    {
+        parent::beforeSave($options);
+
+        if ($this->id == '1' && isset($this->data['Category']['parent_id'])) {
+            return false;
+        }
+    }
+
     public function count_cats()
     {
 
