@@ -40,10 +40,10 @@ echo $this->Form->create(
         array(
             array(
                 $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
-                array(
-                    'class' => 'column-cb check-column column-manage',
-                    'scope' => 'col'
-                )
+                    array(
+                        'class' => 'column-cb check-column column-manage',
+                        'scope' => 'col'
+                    )
             ),
             array(
                 $this->Paginator->sort('author', __d('hurad', 'Author')) => array(
@@ -68,59 +68,71 @@ echo $this->Form->create(
     ?>
     </thead>
     <tbody>
-    <?php foreach ($comments as $comment): ?>
-        <?php $this->Comment->setComment($comment['Comment']) ?>
-        <?php
-        echo $this->Html->tableCells(
-            array(
+    <?php
+    if (count($comments) > 0) {
+        foreach ($comments as $comment) {
+            $this->Comment->setComment($comment['Comment']);
+            echo $this->Html->tableCells(
                 array(
                     array(
-                        $this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id'),
                         array(
-                            'class' => 'check-column',
-                            'scope' => 'row'
-                        )
-                    ),
-                    array(
-                        $this->Gravatar->image(
-                            $this->Comment->getAuthorEmail(),
-                            array('size' => '32', 'default' => 'mm', 'echo' => false)
-                        ) . $this->Comment->getAuthor() . $this->element(
-                            'admin/Comments/row_actions',
-                            array('comment' => $comment)
+                            $this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id'),
+                            array(
+                                'class' => 'check-column',
+                                'scope' => 'row'
+                            )
                         ),
                         array(
-                            'class' => 'column-author'
-                        )
-                    ),
-                    array(
-                        $this->Comment->getExcerpt(),
-                        array(
-                            'class' => 'column-content'
-                        )
-                    ),
-                    array(
-                        $this->Html->link(
-                            $comment['Post']['title'],
-                            array('controller' => 'posts', 'action' => 'edit', $comment['Post']['id'])
+                            $this->Gravatar->image(
+                                $this->Comment->getAuthorEmail(),
+                                array('size' => '32', 'default' => 'mm', 'echo' => false)
+                            ) . $this->Comment->getAuthor() . $this->element(
+                                'admin/Comments/row_actions',
+                                array('comment' => $comment)
+                            ),
+                            array(
+                                'class' => 'column-author'
+                            )
                         ),
                         array(
-                            'class' => 'column-replyto'
+                            $this->Comment->getExcerpt(),
+                            array(
+                                'class' => 'column-content'
+                            )
+                        ),
+                        array(
+                            $this->Html->link(
+                                $comment['Post']['title'],
+                                array('controller' => 'posts', 'action' => 'edit', $comment['Post']['id'])
+                            ),
+                            array(
+                                'class' => 'column-replyto'
+                            )
                         )
-                    )
+                    ),
                 ),
+                array(
+                    'id' => 'comment-' . $comment['Comment']['id'],
+                    'class' => $this->AdminLayout->commentClass($comment['Comment']['approved'])
+                ),
+                array(
+                    'id' => 'comment-' . $comment['Comment']['id'],
+                    'class' => $this->AdminLayout->commentClass($comment['Comment']['approved'])
+                )
+            );
+        }
+    } else {
+        echo $this->Html->tag(
+            'tr',
+            $this->Html->tag(
+                'td',
+                __d('hurad', 'No comments were found'),
+                array('colspan' => '4', 'style' => 'text-align:center;')
             ),
-            array(
-                'id' => 'comment-' . $comment['Comment']['id'],
-                'class' => $this->AdminLayout->commentClass($comment['Comment']['approved'])
-            ),
-            array(
-                'id' => 'comment-' . $comment['Comment']['id'],
-                'class' => $this->AdminLayout->commentClass($comment['Comment']['approved'])
-            )
+            array('id' => 'comment-0')
         );
-        ?>
-    <?php endforeach; ?>
+    }
+    ?>
     </tbody>
     <tfoot>
     <?php
@@ -128,10 +140,10 @@ echo $this->Form->create(
         array(
             array(
                 $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
-                array(
-                    'class' => 'column-cb check-column column-manage',
-                    'scope' => 'col'
-                )
+                    array(
+                        'class' => 'column-cb check-column column-manage',
+                        'scope' => 'col'
+                    )
             ),
             array(
                 $this->Paginator->sort('author', __d('hurad', 'Author')) => array(
