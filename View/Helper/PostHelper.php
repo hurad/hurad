@@ -218,7 +218,7 @@ class PostHelper extends AppHelper
             $more = true;
             $content = explode($matches[0], $content, 2);
             if (!empty($matches[1]) && !empty($more_link_text)) {
-                $more_link_text = strip_tags(kses_no_null(trim($matches[1])));
+                $more_link_text = strip_tags(trim($matches[1]));
             }
             $hasTeaser = true;
         } else {
