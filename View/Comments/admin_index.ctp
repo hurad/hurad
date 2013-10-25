@@ -83,9 +83,9 @@ echo $this->Form->create(
                     ),
                     array(
                         $this->Gravatar->image(
-                            $this->Comment->getCommentAuthorEmail(),
+                            $this->Comment->getAuthorEmail(),
                             array('size' => '32', 'default' => 'mm', 'echo' => false)
-                        ) . $this->Comment->getCommentAuthor() . $this->element(
+                        ) . $this->Comment->getAuthor() . $this->element(
                             'admin/Comments/row_actions',
                             array('comment' => $comment)
                         ),
@@ -94,7 +94,7 @@ echo $this->Form->create(
                         )
                     ),
                     array(
-                        $this->Comment->getCommentExcerpt(),
+                        $this->Comment->getExcerpt(),
                         array(
                             'class' => 'column-content'
                         )
