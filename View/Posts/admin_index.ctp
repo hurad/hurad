@@ -156,7 +156,7 @@ if (count($posts) > 0) {
                     array(
                         $this->Html->tag(
                             'abbr',
-                            $this->Post->getTheDate(),
+                            $this->Post->getDate(),
                             array('title' => $post['Post']['created'])
                         ) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
                         array(
