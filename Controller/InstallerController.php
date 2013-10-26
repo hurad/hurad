@@ -99,7 +99,7 @@ CONFIG;
 
             if ($file->write($databaseConfig)) {
                 try {
-                    $dataSource = ConnectionManager::create('default', $config);
+                    $dataSource = ConnectionManager::getDataSource('default');
 
                     if ($dataSource->connected) {
                         if ($this->__executeSQL('hurad.sql', $dataSource, array('$[prefix]' => $config['prefix']))) {
@@ -149,7 +149,7 @@ CONFIG;
 
             $search['$[username]'] = $this->request->data['Installer']['username'];
             $search['$[email]'] = $this->request->data['Installer']['email'];
-            $search['$[password]'] = Security::hash($this->request->data['Installer']['password']);
+            $search['$[password]'] = Security::hash($this->request->data['Installer']['password'], null, true);
             $search['$[title]'] = $this->request->data['Installer']['title'];
 
             $serverName = env("SERVER_NAME");
