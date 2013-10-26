@@ -243,9 +243,9 @@ function isInstalled()
         ];
 
         $installed = [];
-
+        App::uses('ClassRegistry', 'Utility');
         foreach ($baseTables as $table => $tablePrefix) {
-            if (in_array($tablePrefix, $dataSource->listSources()) && count($dataSource->describe($table)) > 0) {
+            if (in_array($tablePrefix, $dataSource->listSources()) && count($dataSource->describe($table)) > 0 && count(ClassRegistry::init('Option')->getOptions()) > 0) {
                 $installed[$table] = true;
             } else {
                 $installed[$table] = false;
