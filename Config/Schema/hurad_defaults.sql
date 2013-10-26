@@ -11,7 +11,7 @@ INSERT INTO `$[prefix]comments`(`id`, `parent_id`, `post_id`, `user_id`, `author
      (1, NULL, 1, 1, '$[username]', '$[email]', '', '$[client_ip]', 'This comment has been sent for testing, you can delete it', 1, '$[user_agent]', 1, 2, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]users`(`id`, `username`, `password`, `email`, `url`, `role`, `status`, `created`, `modified`) VALUES
-     (1, '$[username]', '$[password]', '', '$[email]', '', 'admin', 0, '$[created]', '$[modified]');
+     (1, '$[username]', '$[password]', '', '$[email]', '', 'administrator', 0, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]user_metas` (`id`, `user_id`, `meta_key`, `meta_value`) VALUES
     (1, 1, 'firstname', ''),
