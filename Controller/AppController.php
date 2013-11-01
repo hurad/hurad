@@ -158,7 +158,7 @@ class AppController extends Controller
                 'fields' => array('User.username', 'User.password', 'User.role', 'User.email', 'User.url'),
                 'conditions' => array(
                     'User.username' => $cookie['User']['username'],
-                    'User.password' => Security::hash($cookie['User']['password'])
+                    'User.password' => Security::hash($cookie['User']['password'], null, true)
                 ),
                 'recursive' => 0
             )
