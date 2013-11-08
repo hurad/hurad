@@ -39,3 +39,5 @@ composer.lock
 # Vendor files
 /Vendor/*
 !/Vendor/empty
+
+/webroot/files
