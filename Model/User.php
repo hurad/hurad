@@ -66,7 +66,20 @@ class User extends AppModel
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
-        )
+        ),
+        'Media' => array(
+            'className' => 'Media',
+            'foreignKey' => 'user_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
     );
     public $validate = array(
         'username' => array(
@@ -222,15 +235,4 @@ class User extends AppModel
             return false;
         }
     }
-
-    function password_old()
-    {
-        $password = $this->field('password', array('id' => $this->id));
-        if ($password == AuthComponent::password($this->data['User']['password_old'])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
