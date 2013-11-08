@@ -160,6 +160,20 @@ class RoleComponent extends Component
         }
     }
 
+    private function checkMediaAuthorization($user)
+    {
+        switch ($user['role']) {
+            case "administrator":
+                return $this->allowAuth();
+                break;
+            case "editor":
+            case "author":
+            case "user":
+                return $this->denyAuth();
+                break;
+        }
+    }
+
     private function checkPluginsAuthorization($user)
     {
         switch ($user['role']) {
