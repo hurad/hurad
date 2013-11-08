@@ -23,6 +23,11 @@ HuradRole::addCap('administrator', 'delete_published_posts');
 HuradRole::addCap('administrator', 'delete_others_posts');
 
 /*
+ * Administrator Media Capability
+ */
+HuradRole::addCap('administrator', 'manage_media');
+
+/*
  * Administrator Categories Capability
  */
 HuradRole::addCap('administrator', 'manage_categories');
