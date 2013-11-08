@@ -153,7 +153,7 @@ echo $this->Form->create(
                     <div class="checkbox">
                         <?php echo $this->Form->input(
                             'Category',
-                            array('multiple' => 'checkbox')
+                            ['multiple' => 'checkbox', 'selected' => 1]
                         ); ?>
                     </div>
                 </div>
