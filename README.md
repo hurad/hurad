@@ -4,9 +4,9 @@ the [GPL2 License](https://github.com/hurad/hurad/blob/master/LICENSE.txt). Some
 
 ## Requirements ##
 
-* Apache with mod_rewrite
-* PHP 5.3 +
-* MySQL 4.1 +
+* Apache with mod_rewrite is preferred, but by no means required.
+* PHP 5.4 or greater.
+* MySQL 4 or greater.
 
 ## Installation ##
 
