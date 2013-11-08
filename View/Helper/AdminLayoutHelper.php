@@ -329,7 +329,8 @@ class AdminLayoutHelper extends AppHelper
                 );
             }
         }
-        echo implode(" | ", $links);
+
+        return implode(" | ", $links);
     }
 
 }
