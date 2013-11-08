@@ -15,6 +15,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'manage_menus');
 
     $actions = HuradHook::apply_filters('menu_row_actions', HuradRowActions::getActions(), $menu);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

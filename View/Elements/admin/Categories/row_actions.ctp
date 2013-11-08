@@ -15,6 +15,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'manage_categories');
 
     $actions = HuradHook::apply_filters('category_row_actions', HuradRowActions::getActions(), $category);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

@@ -15,6 +15,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'manage_tags');
 
     $actions = HuradHook::apply_filters('tag_row_actions', HuradRowActions::getActions(), $tag);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

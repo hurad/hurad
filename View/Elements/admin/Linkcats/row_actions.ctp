@@ -15,6 +15,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'manage_links');
 
     $actions = HuradHook::apply_filters('linkcat_row_actions', HuradRowActions::getActions(), $linkcat);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

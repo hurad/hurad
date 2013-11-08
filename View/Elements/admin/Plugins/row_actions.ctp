@@ -21,6 +21,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'delete_plugins');
 
     $actions = HuradHook::apply_filters('plugin_row_actions', HuradRowActions::getActions(), $alias);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

@@ -23,6 +23,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'delete_pages');
 
     $actions = HuradHook::apply_filters('page_row_actions', HuradRowActions::getActions(), $page);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

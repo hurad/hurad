@@ -33,6 +33,6 @@
     );
 
     $actions = HuradHook::apply_filters('post_row_actions', HuradRowActions::getActions(), $post);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

@@ -15,6 +15,6 @@
     HuradRowActions::addAction('delete', $deleteLink, 'edit_users');
 
     $actions = HuradHook::apply_filters('user_row_actions', HuradRowActions::getActions(), $user);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>

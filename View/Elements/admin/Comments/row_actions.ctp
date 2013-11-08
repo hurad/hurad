@@ -34,6 +34,6 @@
     HuradRowActions::addAction('trash', $trashLink, 'manage_comments');
 
     $actions = HuradHook::apply_filters('comment_row_actions', HuradRowActions::getActions(), $comment);
-    $this->AdminLayout->rowActions($actions);
+    echo $this->AdminLayout->rowActions($actions);
     ?>
 </div>
