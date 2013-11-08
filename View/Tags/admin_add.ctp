@@ -10,7 +10,8 @@ echo $this->Form->create(
         'inputDefaults' => array(
             'label' => false,
             'div' => false
-        )
+        ),
+        'enctype'=>'multipart/form-data'
     )
 );
 ?>
@@ -31,6 +32,24 @@ echo $this->Form->create(
                 ),
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
+                'class' => 'form-control'
+            )
+        );
+        ?>
+    </div>
+    <span class="help-block">
+            <?php echo __d('hurad', 'The name is how it appears on your site.'); ?>
+    </span>
+</div>
+<div class="form-group">
+    <?php echo $this->Form->label('file', __d('hurad', 'Upload'), array('class' => 'control-label col-lg-2')); ?>
+    <div class="col-lg-4">
+        <?php
+        echo $this->Form->input(
+            'file',
+            array(
+                'required' => false, //For disable HTML5 validation
+                'type' => 'file',
                 'class' => 'form-control'
             )
         );

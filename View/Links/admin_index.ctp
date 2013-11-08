@@ -1,5 +1,5 @@
 <?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => false)); ?>
-<?php $this->Html->script(array('admin/Links/links', 'admin/checkbox'), array('block' => 'scriptHeader')); ?>
+<?php $this->Html->script(array('admin/Links/links'), array('block' => 'scriptHeader')); ?>
 
 <div class="page-header">
     <h2><?php echo $title_for_layout; ?></h2>
@@ -12,37 +12,11 @@
     </div>
 </section>
 
-<?php
-echo $this->Form->create(
-    'Link',
-    array(
-        'url' => array(
-            'admin' => true,
-            'controller' => 'links',
-            'action' => 'process'
-        ),
-        'class' => 'form-inline',
-        'inputDefaults' => array(
-            'label' => false,
-            'div' => false
-        )
-    )
-);
-?>
-
 <table class="table table-striped">
     <thead>
     <?php
     echo $this->Html->tableHeaders(
         array(
-            array(
-                $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
-                array(
-                    'id' => 'cb',
-                    'class' => 'column-cb check-column column-manage',
-                    'scope' => 'col'
-                )
-            ),
             array(
                 $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
                     'id' => 'title',
@@ -89,13 +63,6 @@ echo $this->Form->create(
         echo $this->Html->tableCells(
             array(
                 array(
-                    array(
-                        $this->Form->checkbox('Link.' . $link['Link']['id'] . '.id'),
-                        array(
-                            'class' => 'check-column',
-                            'scope' => 'row'
-                        )
-                    ),
                     array(
                         $this->Html->link(
                             '<strong>' . h($link['Link']['name']) . '</strong>',
@@ -159,44 +126,31 @@ echo $this->Form->create(
     echo $this->Html->tableHeaders(
         array(
             array(
-                $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
-                array(
-                    'id' => 'cb',
-                    'class' => 'column-cb check-column column-manage',
-                    'scope' => 'col'
-                )
-            ),
-            array(
                 $this->Paginator->sort('name', __d('hurad', 'Name')) => array(
-                    'id' => 'title',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
                 $this->Paginator->sort('url', __d('hurad', 'URL')) => array(
-                    'id' => 'author',
                     'class' => 'column-url column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
                 $this->Paginator->sort('Menu.name', __d('hurad', 'Category')) => array(
-                    'id' => 'menu',
                     'class' => 'column-menu column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
                 $this->Paginator->sort('visible', __d('hurad', 'Visible')) => array(
-                    'id' => 'visible',
                     'class' => 'column-visible column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
                 $this->Paginator->sort('rating', __d('hurad', 'Rating')) => array(
-                    'id' => 'rating',
                     'class' => 'column-rating column-manage',
                     'scope' => 'col'
                 )
@@ -210,29 +164,7 @@ echo $this->Form->create(
 <section class="bottom-table">
     <div class="row">
         <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input(
-                    'Link.action.bot',
-                    array(
-                        'label' => false,
-                        'options' => array(
-                            'visible' => __d('hurad', 'Visible'),
-                            'invisible' => __d('hurad', 'Invisible'),
-                            'delete' => __d('hurad', 'Delete'),
-                        ),
-                        'empty' => __d('hurad', 'Bulk Actions'),
-                        'class' => 'form-control'
-                    )
-                );
-                ?>
-            </div>
-            <?php
-            echo $this->Form->submit(
-                __d('hurad', 'Apply'),
-                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
-            );
-            ?>
+            <!-- Bulk Actions -->
         </div>
         <div class="col-md-8"><?php echo $this->element('admin/paginator'); ?></div>
     </div>

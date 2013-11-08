@@ -1,29 +1,8 @@
-<?php $this->Html->css(array('list-table', 'paging'), null, array('inline' => false)); ?>
-<?php $this->Html->script(array('pages', 'admin/checkbox'), array('block' => 'headerScript')); ?>
-
 <div class="page-header">
     <h2>
         <?php echo $title_for_layout; ?>
     </h2>
 </div>
-
-<?php
-echo $this->Form->create(
-    'Plugin',
-    array(
-        'url' => array(
-            'admin' => true,
-            'controller' => 'plugins',
-            'action' => 'process'
-        ),
-        'class' => 'form-inline',
-        'inputDefaults' => array(
-            'label' => false,
-            'div' => false
-        )
-    )
-);
-?>
 
 <table class="table table-striped">
     <thead>
@@ -31,22 +10,14 @@ echo $this->Form->create(
     echo $this->Html->tableHeaders(
         array(
             array(
-                $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
-                array(
-                    'id' => 'cb',
-                    'class' => 'column-cb check-column column-manage',
-                    'scope' => 'col'
-                )
-            ),
-            array(
-                __d('hurad', 'Name') => array(
+                $this->Html->Link(__d('hurad', 'Name'), '#') => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                __d('hurad', 'Description') => array(
+                $this->Html->Link(__d('hurad', 'Description'), '#') => array(
                     'id' => 'description',
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
@@ -62,13 +33,6 @@ echo $this->Form->create(
         echo $this->Html->tableCells(
             array(
                 array(
-                    array(
-                        $this->Form->checkbox('Plugin.' . $alias . '.alias'),
-                        array(
-                            'class' => 'check-column',
-                            'scope' => 'row'
-                        )
-                    ),
                     array(
                         $plugin['name'] . $this->element('admin/Plugins/row_actions', array('alias' => $alias)),
                         array(
@@ -98,23 +62,13 @@ echo $this->Form->create(
     echo $this->Html->tableHeaders(
         array(
             array(
-                $this->Form->checkbox('', array('class' => 'check-all', 'name' => false, 'hiddenField' => false)) =>
-                array(
-                    'id' => 'cb',
-                    'class' => 'column-cb check-column column-manage',
-                    'scope' => 'col'
-                )
-            ),
-            array(
-                __d('hurad', 'Name') => array(
-                    'id' => 'name',
+                $this->Html->Link(__d('hurad', 'Name'), '#') => array(
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )
             ),
             array(
-                __d('hurad', 'Description') => array(
-                    'id' => 'description',
+                $this->Html->Link(__d('hurad', 'Description'), '#') => array(
                     'class' => 'column-description column-manage',
                     'scope' => 'col'
                 )
@@ -128,32 +82,8 @@ echo $this->Form->create(
 <section class="bottom-table">
     <div class="row">
         <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input(
-                    'Plugin.action',
-                    array(
-                        'label' => false,
-                        'options' => array(
-                            'activate' => __d('hurad', 'Activate'),
-                            'deactivate' => __d('hurad', 'Deactivate'),
-                            'delete' => __d('hurad', 'Delete'),
-                        ),
-                        'empty' => __d('hurad', 'Bulk Actions'),
-                        'class' => 'form-control'
-                    )
-                );
-                ?>
-            </div>
-            <?php
-            echo $this->Form->submit(
-                __d('hurad', 'Apply'),
-                array('type' => 'submit', 'class' => 'btn btn-info', 'div' => false)
-            );
-            ?>
+            <!-- Bulk Actions -->
         </div>
         <div class="col-md-8"><!-- --></div>
     </div>
 </section>
-
-<?php echo $this->Form->end(); ?>
