@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS `$[prefix]categories`;
 DROP TABLE IF EXISTS `$[prefix]categories_posts`;
 DROP TABLE IF EXISTS `$[prefix]comments`;
 DROP TABLE IF EXISTS `$[prefix]links`;
+DROP TABLE IF EXISTS `$[prefix]media`;
 DROP TABLE IF EXISTS `$[prefix]menus`;
 DROP TABLE IF EXISTS `$[prefix]options`;
 DROP TABLE IF EXISTS `$[prefix]post_metas`;
@@ -72,6 +73,23 @@ CREATE TABLE `$[prefix]links` (
 	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
 	COLLATE=utf8_general_ci,
 	ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `name` varchar(255) NOT NULL COMMENT 'Generated name with extension',
+  `original_name` varchar(255) NOT NULL COMMENT 'Original name with extension',
+  `mime_type` varchar(255) NOT NULL,
+  `size` bigint(20) NOT NULL,
+  `extension` varchar(5) NOT NULL,
+  `path` varchar(12) NOT NULL,
+  `web_path` text NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE `$[prefix]menus` (
 	`id` int(10) NOT NULL AUTO_INCREMENT,
