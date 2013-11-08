@@ -33,7 +33,23 @@ HuradNavigation::addSubMenu(
     'manage_tags'
 );
 
-HuradNavigation::addMenu('links', __d('hurad', 'Links'), '#', 'manage_links', array('class' => 'glyphicon glyphicon-globe'));
+HuradNavigation::addMenu('media', __d('hurad', 'Media'), '#', 'manage_media', array('class' => 'glyphicon glyphicon-cloud'));
+HuradNavigation::addSubMenu(
+    'media',
+    'all_media',
+    __d('hurad', 'Media Library'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'media', 'action' => 'index'),
+    'manage_links'
+);
+HuradNavigation::addSubMenu(
+    'media',
+    'add_new_media',
+    __d('hurad', 'Add New'),
+    array('plugin' => null, 'admin' => true, 'controller' => 'media', 'action' => 'add'),
+    'manage_links'
+);
+
+HuradNavigation::addMenu('links', __d('hurad', 'Links'), '#', 'manage_links', array('class' => 'glyphicon glyphicon-link'));
 HuradNavigation::addSubMenu(
     'links',
     'all_links',
