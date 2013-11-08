@@ -120,7 +120,8 @@ th a.desc:after {
     border: 1px #B3B3B3 dashed;
     visibility: visible !important;
     background-color: #f4f4f4;
-    margin: 0 0 1em 0;
+    margin: 0 0 20px 0;
+    border-radius: 3px;
 }
 
 .ui-sortable-placeholder * {
@@ -166,10 +167,11 @@ th a.desc:after {
     display: inline;
 }
 
-.bottom-table .paginate-counter{
+.bottom-table .paginate-counter {
     padding-top: 8px;
     font-size: 11px;
 }
+
 /*jQuery AutoComplete style*/
 .ui-autocomplete {
     position: absolute;
