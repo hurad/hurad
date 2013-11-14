@@ -24,7 +24,7 @@ class PagesController extends AppController
      *
      * @var array
      */
-    public $helpers = array('Page', 'Comment', 'Text', 'Editor');
+    public $helpers = ['Page', 'Comment', 'Text', 'Editor' => ['name' => 'data[Page][content]']];
     /**
      * Other components utilized by PagesController
      *
