@@ -4,9 +4,7 @@ App::uses('Component', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
 
 /**
- * Description of Hurad
- *
- * @author mohammad
+ * Class HuradComponent
  */
 class HuradComponent extends Component
 {
@@ -16,13 +14,13 @@ class HuradComponent extends Component
         $subject,
         $template = 'default',
         $content = null,
-        $viewVars = array(),
-        $options = array()
+        $viewVars = [],
+        $options = []
     ) {
-        $defaults = array(
+        $defaults = [
             'config' => 'smtp',
             'emailFormat' => 'html'
-        );
+        ];
 
         $options = array_merge($defaults, $options);
 
@@ -30,7 +28,7 @@ class HuradComponent extends Component
         $email->config($options['config']);
         $email->from('info@hurad.org', Configure::read('General.site_name'));
         $email->to($to);
-        $email->setHeaders(array('X-Mailer' => "Hurad Mail"));
+        $email->setHeaders(['X-Mailer' => "Hurad Mail"]);
         $email->emailFormat($options['emailFormat']);
         $email->template($template);
         $email->viewVars($viewVars);
@@ -40,16 +38,15 @@ class HuradComponent extends Component
 
     public function dateParse($date)
     {
-        $output = array();
         $dateArr = date_parse($date);
-        $output = array(
+        $output = [
             'year' => $dateArr['year'],
             'month' => $dateArr['month'],
             'day' => $dateArr['day'],
             'hour' => $dateArr['hour'],
             'min' => $dateArr['minute'],
             'sec' => $dateArr['second']
-        );
+        ];
 
         return $output;
     }
