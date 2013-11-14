@@ -27,7 +27,7 @@ class PostsController extends AppController
      *
      * @var array
      */
-    public $helpers = array('Post', 'Comment', 'Text', 'Editor', 'Utils.Tree');
+    public $helpers = ['Post', 'Comment', 'Text', 'Editor' => ['name' => 'data[Post][content]'], 'Utils.Tree'];
     /**
      * Other components utilized by PostsController
      *
