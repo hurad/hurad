@@ -43,21 +43,6 @@ class Category extends AppModel
     public $actsAs = array('Tree', 'Containable');
 
     /**
-     * belongsTo associations
-     *
-     * @var array
-     */
-//    public $belongsTo = array(
-//        'ParentCategory' => array(
-//            'className' => 'Category',
-//            'foreignKey' => 'parent_id',
-//            'conditions' => '',
-//            'fields' => '',
-//            'order' => ''
-//        )
-//    );
-
-    /**
      * hasMany associations
      *
      * @var array
@@ -116,7 +101,7 @@ class Category extends AppModel
                 foreach ($cat['Post'] as $key => $value) {
                     $this->query("DELETE FROM `categories_posts` WHERE `categories_posts`.`post_id` = " . $value['id']);
                     $this->query(
-                        "INSERT INTO `categories_posts` (`category_id`, `post_id`) VALUES ('37', '" . $value['id'] . "');"
+                        "INSERT INTO `categories_posts` (`category_id`, `post_id`) VALUES ('1', '" . $value['id'] . "');"
                     );
                 }
             }
@@ -129,14 +114,14 @@ class Category extends AppModel
                             'alias' => 'CategoriesPost',
                             'type' => 'INNER',
                             'conditions' => array(
-                                'CategoriesPost.category_id' => 37,
+                                'CategoriesPost.category_id' => 1,
                             )
                         )
                     ),
                     'group' => 'post_id'
                 )
             );
-            $this->query("UPDATE `categories` SET `post_count` = '" . $post_count . "' WHERE `categories`.`id` =37;");
+            $this->query("UPDATE `categories` SET `post_count` = '" . $post_count . "' WHERE `categories`.`id` = 1;");
         }
     }
 
