@@ -141,13 +141,18 @@ class UsersController extends AppController
     public function admin_profile($id = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Profile'));
+
+        if (is_null($id)) {
+            $id = $this->Auth->user('id');
+        }
+
         $this->User->id = $id;
 
         if (!$this->User->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid user'));
         }
 
-        if ($this->Auth->user('role') != 'admin' && $this->Auth->user('id') != $id) {
+        if ($this->Auth->user('role') != 'administrator' && $this->Auth->user('id') != $id) {
             $this->Session->setFlash(
                 __d('hurad', 'You do not have permission to access this section.'),
                 'flash_message',
