@@ -332,6 +332,7 @@ class PostsController extends AppController
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
                 $this->request->data['Post'] = Hash::merge($defaults, $this->request->data['Post']);
+                $this->request->data['Post']['created'] = $this->Hurad->dateParse($this->request->data['Post']['created']);
                 if (empty($this->request->data['Post']['tags'])) {
                     $this->loadModel('PostsTag');
                     $this->PostsTag->deleteAll(array('post_id' => $id), false);
