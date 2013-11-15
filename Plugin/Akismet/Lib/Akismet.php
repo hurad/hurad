@@ -3,70 +3,73 @@
 App::uses('HttpSocket', 'Network/Http');
 
 /**
- * Description of Akismet
- *
- * @author mohammad
+ * Class Akismet
  */
 class Akismet
 {
 
-    public static $protocol = 'http://';
-    public static $host = 'rest.akismet.com';
-    public static $apiVersion = '1.1';
+    const SCHEMA = 'http://';
+    const HOST = 'rest.akismet.com';
+    const API_VERSION = '1.1';
 
-    public function isVerifyAPIKey($data)
+    public static function isVerifyAPIKey($data)
     {
-        $result = self::_postRequest($data, null, 'verify-key');
+        $result = self::postRequest($data, null, 'verify-key');
         if ($result['body'] == 'valid') {
             return true;
         }
+
         return false;
     }
 
-    public function isSpam($data, $key)
+    public static function isSpam($data, $key)
     {
-        $result = self::_postRequest($data, $key, 'comment-check');
+        $result = self::postRequest($data, $key, 'comment-check');
         if ($result['body'] == 'true') {
             return true;
         }
+
         return false;
     }
 
-    public function submitSpam($data, $key)
+    public static function submitSpam($data, $key)
     {
-        $result = self::_postRequest($data, $key, 'submit-spam');
+        $result = self::postRequest($data, $key, 'submit-spam');
         if (strlen($result['body']) == 41) {
             return true;
         }
+
         return false;
     }
 
-    public function submitHam($data, $key)
+    public static function submitHam($data, $key)
     {
-        $result = self::_postRequest($data, $key, 'submit-ham');
+        $result = self::postRequest($data, $key, 'submit-ham');
         if (strlen($result['body']) == 41) {
             return true;
         }
+
         return false;
     }
 
-    private function _postRequest($data, $key = null, $type = null)
+    protected static function postRequest($data, $key = null, $type = null)
     {
         $HttpSocket = new HttpSocket();
 
-        if ($type == 'verify-key') {
-            $requestURI = self::$protocol . self::$host . '/' . self::$apiVersion . '/verify-key';
-        } elseif ($type == 'comment-check') {
-            $requestURI = self::$protocol . $key . '.' . self::$host . '/' . self::$apiVersion . '/comment-check';
-        } elseif ($type == 'submit-spam') {
-            $requestURI = self::$protocol . $key . '.' . self::$host . '/' . self::$apiVersion . '/submit-spam';
-        } elseif ($type == 'submit-ham') {
-            $requestURI = self::$protocol . $key . '.' . self::$host . '/' . self::$apiVersion . '/submit-ham';
-        } else {
-            return false;
+        switch ($type) {
+            case 'verify-key':
+                $requestURI = self::SCHEMA . self::HOST . '/' . self::API_VERSION . "/$type";
+                break;
+            case 'comment-check':
+            case 'submit-spam':
+            case 'submit-ham':
+                $requestURI = self::SCHEMA . $key . '.' . self::HOST . '/' . self::API_VERSION . "/$type";
+                break;
+            default:
+                $requestURI = '';
+                break;
         }
 
         return $HttpSocket->post($requestURI, $data);
     }
-
 }

@@ -3,9 +3,7 @@
 App::uses('AppController', 'Controller');
 
 /**
- * Description of AkismetAppController
- *
- * @author mohammad
+ * Class AkismetAppController
  */
 class AkismetAppController extends AppController
 {

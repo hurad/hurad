@@ -2,17 +2,12 @@
 
 App::uses('Akismet', 'Akismet.Lib');
 
-HrNav::add(
+HuradNavigation::addSubMenu(
     'options',
-    array(
-        'child' => array(
-            'akismet' => array(
-                'title' => __('Akismet Configuration'),
-                'url' => array('admin' => true, 'plugin' => 'akismet', 'controller' => 'akismet'),
-                'weight' => 5,
-            ),
-        ),
-    )
+    'akismet',
+    __d('hurad', 'Akismet Configuration'),
+    ['admin' => true, 'plugin' => 'akismet', 'controller' => 'akismet'],
+    'manage_options'
 );
 
 Hurad::applyBehavior('Comment', 'Akismet.Akismet');

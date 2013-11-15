@@ -4,8 +4,8 @@
     <name>Akismet</name>
     <plugin_uri>hurad.org</plugin_uri>
     <description>Akismet plugin</description>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <author>Mohammad Abdoli Rad</author>
     <author_uri>http://magzilla.org</author_uri>
-    <license>GPL3</license>
+    <license>GPL2</license>
 </plugin>
