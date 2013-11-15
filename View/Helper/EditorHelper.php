@@ -2,6 +2,9 @@
 
 App::uses('AppHelper', 'View/Helper');
 
+/**
+ * Class EditorHelper
+ */
 class EditorHelper extends AppHelper
 {
 
@@ -11,80 +14,77 @@ class EditorHelper extends AppHelper
      * @var array
      * @access public
      */
-    public $helpers = array('Html', 'Js', 'Hook');
-    public $defaults = array(
-        // General options
-        'mode' => '',
-        'selector' => 'textarea.editor',
-        'elements' => '',
-        'theme' => 'advanced',
-        'relative_urls' => false,
-        'plugins' => 'safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,spellchecker,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template',
-        'width' => '100%',
-        'height' => '250px',
-        'theme_advanced_toolbar_location' => 'top',
-        'theme_advanced_toolbar_align' => 'left',
-        'theme_advanced_statusbar_location' => 'bottom',
-        'theme_advanced_resizing' => true,
-        // Skin options
-        'skin' => 'o2k7',
-        'skin_variant' => 'silver',
-    );
+    public $helpers = ['Html', 'Js', 'Hook'];
+    /**
+     * Textarea name
+     *
+     * @var string
+     */
+    protected $name;
 
+    /**
+     * Default Constructor
+     *
+     * @param View $view The View this helper is being attached to.
+     * @param array $settings Configuration settings for the helper.
+     */
+    public function __construct(View $view, $settings = array())
+    {
+        parent::__construct($view, $settings);
+        $this->setName($settings['name']);
+    }
+
+    /**
+     * Before render callback. beforeRender is called before the view file is rendered.
+     *
+     * @param string $viewFile The view file that is going to be rendered
+     *
+     * @return void
+     */
     public function beforeRender($viewFile)
     {
         parent::beforeRender($viewFile);
-        $this->Html->script('admin/tiny_mce/tiny_mce.js', array('block' => 'scriptHeader'));
+        $this->Html->script('admin/ckeditor/ckeditor.js', ['block' => 'scriptHeader']);
         $this->Html->scriptBlock(
-            'tinyMCE.init(' . $this->Js->object($this->editorSettings()) . ');',
-            array('block' => 'scriptHeader')
+            "window.onload = function() {CKEDITOR.replace('{$this->getName()}'," . $this->Js->object(
+                $this->editorConfig()
+            ) . ');};',
+            ['block' => 'scriptHeader']
         );
     }
 
-    public function editorSettings()
+    /**
+     * Set textarea name
+     *
+     * @param string $name Textarea name
+     */
+    public function setName($name)
     {
-        $theme_buttons1 = $this->Hook->applyFilters(
-            'tiny_theme_buttons1',
-            array(
-                array('bold', 'italic', 'underline'),
-                array('strikethrough', 'removeformat'),
-                array('bullist', 'numlist'),
-                array('outdent', 'indent', 'blockquote'),
-                array('justifyleft', 'justifycenter', 'justifyright', 'justifyfull'),
-                array('ltr', 'rtl'),
-                array('formatselect'),
-            )
-        );
-
-        foreach ($theme_buttons1 as $key => $value) {
-            $buttons1[] = implode(',', $value);
-        }
-
-        $theme_buttons2 = $this->Hook->applyFilters(
-            'tiny_theme_buttons2',
-            array(
-                array('forecolor', 'backcolor'),
-                array('pastetext', 'pasteword'),
-                array('charmap', 'media'),
-                array('undo', 'redo'),
-                array('link', 'unlink', 'image', 'cleanup'),
-                array('backcolor'),
-                array('sub', 'sup'),
-                array('spellchecker', 'code'),
-                array('fullscreen', 'help'),
-            )
-        );
-
-        foreach ($theme_buttons2 as $key => $value) {
-            $buttons2[] = implode(',', $value);
-        }
-
-        $tinyMceInit = array(
-            'theme_advanced_buttons1' => implode(',|,', $buttons1),
-            'theme_advanced_buttons2' => implode(',|,', $buttons2),
-        );
-
-        return $this->Hook->applyFilters('tiny_mce_init', Set::merge($tinyMceInit, $this->defaults));
+        $this->name = $name;
     }
 
+    /**
+     * Get textarea name
+     *
+     * @return string Textarea name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Default config
+     *
+     * @return mixed
+     */
+    protected function editorConfig()
+    {
+        $defaultConfigs = [
+            'filebrowserBrowseUrl' => '/admin/media/browse',
+            'filebrowserImageBrowseUrl' => '/admin/media/browse/images',
+        ];
+
+        return $this->Hook->applyFilters('editor_config', $defaultConfigs, $this->getName());
+    }
 }
