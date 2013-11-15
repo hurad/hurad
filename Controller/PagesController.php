@@ -195,6 +195,7 @@ class PagesController extends AppController
         $this->set('title_for_layout', __d('hurad', 'Edit Page'));
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
+                $this->request->data['Page']['created'] = $this->Hurad->dateParse($this->request->data['Page']['created']);
                 $this->request->data['Page']['type'] = 'page';
                 $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
