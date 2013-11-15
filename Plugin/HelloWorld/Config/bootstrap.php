@@ -1,29 +1,9 @@
 <?php
 
-//$HuradHook = Configure::read('HuradHook.obj');
-HrNav::add(
+HuradNavigation::addSubMenu(
     'dashboard',
-    array(
-        'child' => array(
-            'test' => array(
-                'title' => __('Hello World'),
-                'url' => array('admin' => true, 'plugin' => 'hello_world', 'controller' => 'hello'),
-                'weight' => 1,
-            ),
-        ),
-    )
+    'hello_world',
+    __d('hurad', 'Hello World'),
+    ['admin' => true, 'plugin' => 'hello_world', 'controller' => 'hello'],
+    'manage_options'
 );
-//$title .= 'Mohammad ';
-//HuradHook::add_filter('the_title', function($title) {
-//            return 'Mohammad ' . $title;
-//        });
-
-//function test() {
-//
-//    echo 'Salam';
-//}
-
-//$HuradHook->add_filter('the_date', 'test');
-//debug($HuradHook);
-//HuradHook::add_action('test', 'test');
-//debug($HuradHook);
