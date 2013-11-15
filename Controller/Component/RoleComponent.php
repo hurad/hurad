@@ -221,7 +221,7 @@ class RoleComponent extends Component
      *
      * @return bool
      */
-    private function denyAuth($methods = null)
+    public function denyAuth($methods = null)
     {
         if (is_null($methods)) {
             return false;
@@ -245,7 +245,7 @@ class RoleComponent extends Component
      *
      * @return bool
      */
-    private function allowAuth($methods = null)
+    public function allowAuth($methods = null)
     {
         if (is_null($methods)) {
             return true;
@@ -263,5 +263,4 @@ class RoleComponent extends Component
             return false;
         }
     }
-
 }
