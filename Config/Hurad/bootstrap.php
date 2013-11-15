@@ -21,7 +21,7 @@ foreach ($options AS $option) {
     Configure::write($option['Option']['name'], $option['Option']['value']);
 }
 //Write all options in "Options" key
-Configure::write('Options', $_options);
+Configure::write('Hurad.Options', $_options);
 
 /**
  * Load HuradHook Lib and include default filters
@@ -46,6 +46,11 @@ App::uses('HuradRowActions', 'Lib');
  * Include default capabilities
  */
 config('Hurad/default_capabilities');
+
+/**
+ * Include default navigation
+ */
+config('Hurad/default_navigation');
 
 /**
  * Load all active plugins
