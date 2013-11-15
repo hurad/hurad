@@ -68,16 +68,6 @@ class UsersController extends AppController
     public function admin_dashboard()
     {
         $this->set('title_for_layout', __d('hurad', 'Dashboard'));
-        $comments = ClassRegistry::init('Comment')->find(
-            'all',
-            array(
-                "fields" => "Comment.id, Comment.user_id, Comment.post_id, Comment.author, Comment.author_url, Comment.author_email, Comment.content, Comment.approved, Post.title",
-                "conditions" => array('Comment.approved' => array(0, 1)),
-                "order" => "Comment.created DESC",
-                "limit" => 5
-            )
-        );
-        $this->set(compact('comments'));
     }
 
     /**
@@ -585,5 +575,4 @@ class UsersController extends AppController
         }
         $this->redirect(array('action' => 'index'));
     }
-
 }
