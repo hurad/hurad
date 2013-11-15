@@ -5,35 +5,34 @@
 <?php
 echo $this->Form->create(
     'Tag',
-    array(
+    [
         'class' => 'form-horizontal',
-        'inputDefaults' => array(
+        'inputDefaults' => [
             'label' => false,
             'div' => false
-        ),
-        'enctype'=>'multipart/form-data'
-    )
+        ]
+    ]
 );
 ?>
 
 <div class="form-group<?php echo $this->Form->isFieldError('name') ? ' has-error' : ''; ?>">
-    <?php echo $this->Form->label('name', __d('hurad', 'Name'), array('class' => 'control-label col-lg-2')); ?>
+    <?php echo $this->Form->label('name', __d('hurad', 'Name'), ['class' => 'control-label col-lg-2']); ?>
     <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'name',
-            array(
-                'error' => array(
+            [
+                'error' => [
                     'nameRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
-                    'attributes' => array(
+                    'attributes' => [
                         'wrap' => 'span',
                         'class' => 'help-block'
-                    )
-                ),
+                    ]
+                ],
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
                 'class' => 'form-control'
-            )
+            ]
         );
         ?>
     </div>
@@ -41,43 +40,26 @@ echo $this->Form->create(
             <?php echo __d('hurad', 'The name is how it appears on your site.'); ?>
     </span>
 </div>
-<div class="form-group">
-    <?php echo $this->Form->label('file', __d('hurad', 'Upload'), array('class' => 'control-label col-lg-2')); ?>
-    <div class="col-lg-4">
-        <?php
-        echo $this->Form->input(
-            'file',
-            array(
-                'required' => false, //For disable HTML5 validation
-                'type' => 'file',
-                'class' => 'form-control'
-            )
-        );
-        ?>
-    </div>
-    <span class="help-block">
-            <?php echo __d('hurad', 'The name is how it appears on your site.'); ?>
-    </span>
-</div>
+
 <div class="form-group<?php echo $this->Form->isFieldError('slug') ? ' has-error' : ''; ?>">
-    <?php echo $this->Form->label('slug', __d('hurad', 'Slug'), array('class' => 'control-label col-lg-2')); ?>
+    <?php echo $this->Form->label('slug', __d('hurad', 'Slug'), ['class' => 'control-label col-lg-2']); ?>
     <div class="col-lg-4">
         <?php
         echo $this->Form->input(
             'slug',
-            array(
-                'error' => array(
+            [
+                'error' => [
                     'slugRule-1' => __d('hurad', 'This field cannot be left blank.'), //notEmpty rule message
                     'slugRule-2' => __d('hurad', 'This slug has already exist.'), //isUnique rule message
-                    'attributes' => array(
+                    'attributes' => [
                         'wrap' => 'span',
                         'class' => 'help-block'
-                    )
-                ),
+                    ]
+                ],
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
                 'class' => 'form-control'
-            )
+            ]
         );
         ?>
     </div>
@@ -87,10 +69,15 @@ echo $this->Form->create(
         ); ?>
     </span>
 </div>
+
 <div class="form-group">
-    <?php echo $this->Form->label('description', __d('hurad', 'Description'), array('class' => 'control-label col-lg-2')); ?>
+    <?php echo $this->Form->label(
+        'description',
+        __d('hurad', 'Description'),
+        ['class' => 'control-label col-lg-2']
+    ); ?>
     <div class="col-lg-4">
-        <?php echo $this->Form->input('description', array('class' => 'form-control')); ?>
+        <?php echo $this->Form->input('description', ['class' => 'form-control']); ?>
     </div>
     <span class="help-block">
         <?php echo __d(
@@ -100,6 +87,6 @@ echo $this->Form->create(
     </span>
 </div>
 
-<?php echo $this->Form->button(__d('hurad', 'Add Tag'), array('type' => 'submit', 'class' => 'btn btn-primary')); ?>
+<?php echo $this->Form->button(__d('hurad', 'Add Tag'), ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
 
 <?php echo $this->Form->end(); ?>
