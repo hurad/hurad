@@ -1,6 +1,6 @@
 <?php
 
-Configure::write('Hurad.version', "0.1.0-alpha.4");
+Configure::write('Hurad.version', "0.1.0-alpha.5");
 
 /**
  * Load Options

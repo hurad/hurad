@@ -2,7 +2,7 @@
     "name": "hurad/hurad",
     "description": "Hurad is web software you can use to create a beautiful blog.",
     "keywords": ["cakephp", "blog"],
-    "version": "0.1.0-alpha.4",
+    "version": "0.1.0-alpha.5",
     "homepage": "http://hurad.org",
     "license": "GPL-2.0",
     "authors": [
