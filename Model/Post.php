@@ -232,4 +232,19 @@ class Post extends AppModel
         return $num;
     }
 
+    public function getLatestPosts($limit = 5)
+    {
+        $latestPosts = $this->find(
+            'all',
+            [
+                'conditions' => ['Post.status' => 'publish', 'Post.type' => 'post'],
+                'limit' => $limit,
+                'order' => [
+                    'Post.created' => 'desc'
+                ]
+            ]
+        );
+
+        return $latestPosts;
+    }
 }

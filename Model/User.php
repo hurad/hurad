@@ -189,16 +189,25 @@ class User extends AppModel
 
     public function getUsers($args)
     {
+        $defaults = [
+            'order_by' => 'username',
+            'order' => 'ASC',
+            'limit' => 5
+        ];
+
+        $args = Hash::merge($defaults, $args);
+
         $users = $this->find(
             'all',
             array(
                 'order' => array(
-                    'User.' . $args['orderby'] => $args['order']
+                    'User.' . $args['order_by'] => $args['order']
                 ),
-                'limit' => $args['number'],
+                'limit' => $args['limit'],
                 'recursive' => 0
             )
         );
+
         return $users;
     }
 

@@ -1,6 +1,9 @@
-<section class="widget">
-    <h4 class="widgettitle"><?php echo $data['title']; ?></h4>
-    <ul>
-        <?php $this->Author->hrListAuthors(array('show_fullname' => TRUE)); ?>
-    </ul>
-</section>
+<ul class="list-unstyled">
+    <?php echo $this->Author->getListAuthors(
+        [
+            'show_fullname' => $data['full_name'],
+            'hide_empty' => $data['hide_empty'],
+            'exclude_admin' => $data['exclude_admin']
+        ]
+    ); ?>
+</ul>

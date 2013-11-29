@@ -126,13 +126,14 @@ class PageHelper extends AppHelper
      * is passed to the user or displayed. The default
      * as with {@link the_title()}, is to display the title.
      *
-     * @since 1.0
+     * @since 0.1.0
      *
-     * @param string|array $args Optional. Override the defaults.
+     * @param $before
+     * @param $after
      *
      * @return string|null Null on failure or display. String when echo is false.
      */
-    function theTitleAttribute($args = '')
+    function theTitleAttribute($before = null, $after = null)
     {
         $title = $this->getTheTitle();
 
@@ -140,17 +141,10 @@ class PageHelper extends AppHelper
             return null;
         }
 
-        $defaults = array('before' => '', 'after' => '', 'echo' => true);
-        $r = $this->parse_args($args, $defaults);
-
-        $title = $r['before'] . $title . $r['after'];
+        $title = $before . $title . $after;
         $title = strip_tags($title);
 
-        if ($r['echo']) {
-            echo $title;
-        } else {
-            return $title;
-        }
+        return $title;
     }
 
     /**

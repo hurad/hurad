@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <h4><strong><a href="<?php $this->Post->getPermalink(); ?>" title="<?php printf(
                             __('Permalink to %s'),
-                            $this->Post->theTitleAttribute('echo=0')
+                            $this->Post->theTitleAttribute()
                         ); ?>"><?php $this->Post->theTitle(); ?></a></strong></h4>
             </div>
         </div>

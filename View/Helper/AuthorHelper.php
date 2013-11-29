@@ -244,25 +244,6 @@ class AuthorHelper extends AppHelper
 
     /**
      * List all the authors of the blog, with several options available.
-     * <code>
-     * <ul>
-     * <li>optioncount (boolean) (false): Show the count in parenthesis next to the
-     * author's name.</li>
-     * <li>exclude_admin (boolean) (true): Exclude the 'admin' user that is
-     * installed by default.</li>
-     * <li>show_fullname (boolean) (false): Show their full names.</li>
-     * <li>hide_empty (boolean) (true): Don't show authors without any posts.</li>
-     * <li>feed (string) (''): If isn't empty, show links to author's feeds.</li>
-     * <li>feed_image (string) (''): If isn't empty, use this image to link to
-     * feeds.</li>
-     * <li>echo (boolean) (true): Set to false to return the output, instead of
-     * echoing.</li>
-     * <li>style (string) ('list'): Whether to display list of authors in list form
-     * or as a string.</li>
-     * <li>html (bool) (true): Whether to list the items in html form or plaintext.
-     * </li>
-     * </ul>
-     * </code>
      *
      * @since 0.1.0
      *
@@ -270,123 +251,71 @@ class AuthorHelper extends AppHelper
      *
      * @return null|string The output, if echo is set to false.
      */
-    public function hrListAuthors($args = '')
+    public function getListAuthors($args = array())
     {
-        //global $wpdb;
-
-        $defaults = array(
-            'orderby' => 'username',
+        $defaults = [
+            'order_by' => 'username',
             'order' => 'ASC',
-            'number' => '',
-            'optioncount' => false,
+            'limit' => '',
+            'count' => false,
             'exclude_admin' => true,
             'show_fullname' => false,
-            'hide_empty' => true,
-            'feed' => '',
-            'feed_image' => '',
-            'feed_type' => '',
-            'echo' => true,
+            'hide_empty' => false,
             'style' => 'list',
             'html' => true
-        );
+        ];
 
         $args = Hash::merge($defaults, $args);
-        extract($args, EXTR_SKIP);
-
         $return = '';
 
-        $query_args = HuradFunctions::arraySliceAssoc($args, array('orderby', 'order', 'number'));
-        //$query_args['fields'] = 'ids';
-        $authors = ClassRegistry::init('User')->getUsers($query_args);
+        $queryArgs = HuradFunctions::arraySliceAssoc($args, ['order_by', 'order', 'limit']);
+        $authors = ClassRegistry::init('User')->getUsers($queryArgs);
 
-//        $author_count = array();
-//        foreach ((array) $wpdb->get_results("SELECT DISTINCT post_author, COUNT(ID) AS count FROM $wpdb->posts WHERE post_type = 'post' AND " . get_private_posts_cap_sql('post') . " GROUP BY post_author") as $row)
-//            $author_count[$row->post_author] = $row->count;
-
-        foreach ($authors as $key => $author) {
+        foreach ($authors as $author) {
             $author = ClassRegistry::init('User')->getUserData($author['User']['id']);
 
-            if ($exclude_admin && 'admin' == $author['display_name']) {
+            if ($args['exclude_admin'] && 'administrator' == $author['role']) {
                 continue;
             }
 
-            //$posts = isset($author_count[$author->ID]) ? $author_count[$author->ID] : 0;
             $posts = ClassRegistry::init('Post')->countUserPosts($author['id']);
 
-
-            if (!$posts && $hide_empty) {
+            if (!$posts && $args['hide_empty']) {
                 continue;
             }
 
-            $link = '';
-
-            if ($show_fullname && $author['firstname'] && $author['lastname']) {
+            if ($args['show_fullname'] && $author['firstname'] && $author['lastname']) {
                 $name = "{$author['firstname']} {$author['lastname']}";
             } else {
                 $name = $author['display_name'];
             }
 
-            if (!$html) {
+            if (!$args['html']) {
                 $return .= $name . ', ';
-
-                continue; // No need to go further to process HTML.
+                continue;
             }
 
-            if ('list' == $style) {
+            if ('list' == $args['style']) {
                 $return .= '<li>';
             }
 
-            //$link = '<a href="' . get_author_posts_url($author->ID, $author->user_nicename) . '" title="' . esc_attr(sprintf(__("Posts by %s"), $author->display_name)) . '">' . $name . '</a>';
             $link = $this->Html->link(
                 $name,
                 $this->getAuthorPostsUrl($author['id'], $author['nicename']),
-                array('title' => __("Posts by %s", $author['display_name']))
+                ['title' => __("Posts by %s", $author['display_name'])]
             );
 
-//            if (!empty($feed_image) || !empty($feed)) {
-//                $link .= ' ';
-//                if (empty($feed_image)) {
-//                    $link .= '(';
-//                }
-//
-//                $link .= '<a href="' . get_author_feed_link($author->ID) . '"';
-//
-//                $alt = $title = '';
-//                if (!empty($feed)) {
-//                    $title = ' title="' . esc_attr($feed) . '"';
-//                    $alt = ' alt="' . esc_attr($feed) . '"';
-//                    $name = $feed;
-//                    $link .= $title;
-//                }
-//
-//                $link .= '>';
-//
-//                if (!empty($feed_image))
-//                    $link .= '<img src="' . esc_url($feed_image) . '" style="border: none;"' . $alt . $title . ' />';
-//                else
-//                    $link .= $name;
-//
-//                $link .= '</a>';
-//
-//                if (empty($feed_image))
-//                    $link .= ')';
-//            }
 
-            if ($optioncount) {
+            if ($args['count']) {
                 $link .= ' (' . $posts . ')';
             }
 
             $return .= $link;
-            $return .= ('list' == $style) ? '</li>' : ', ';
+            $return .= ('list' == $args['style']) ? '</li>' : ', ';
         }
 
         $return = rtrim($return, ', ');
 
-        if (!$echo) {
-            return $return;
-        }
-
-        echo $return;
+        return $return;
     }
-
 }

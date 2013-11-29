@@ -700,9 +700,9 @@ class CommentHelper extends AppHelper
         }
 
         if ($this->view_path == 'Posts') {
-            $title = $this->Post->theTitleAttribute(array('echo' => 0));
+            $title = $this->Post->theTitleAttribute();
         } elseif ($this->view_path == 'Pages') {
-            $title = $this->Page->theTitleAttribute(array('echo' => 0));
+            $title = $this->Page->theTitleAttribute();
         }
 
         echo $this->Hook->applyFilters('comments_popup_link_attributes', '');

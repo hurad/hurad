@@ -107,6 +107,54 @@ class WidgetHelper extends AppHelper
         echo $this->Form->select($inputName, $options, $attributes);
     }
 
+    public function radio($fieldName, array $data, array $options, array $attributes = [])
+    {
+        $defaultAttributes = [
+            'id' => 'Widget' . ucfirst($fieldName) . '-id',
+            'name' => $fieldName,
+            'label' => false
+        ];
+
+
+        if (count($data) > 0) {
+            $attributes['value'] = $data[$fieldName];
+        }
+
+        $attr = HuradFunctions::arraySliceAssoc($attributes, ['show-type', 'btn-class']);
+        unset($attributes['show-type']);
+        unset($attributes['btn-class']);
+        $attributes = Hash::merge($defaultAttributes, $attributes);
+
+        if ($attr['show-type'] == 'btn-group') {
+            if (!isset($attr['btn-class'])) {
+                $attr['btn-class'] = 'btn-default';
+            }
+            $opt[] = '<div class="btn-group" data-toggle="buttons">';
+            foreach ($options as $value => $label) {
+                if (isset($attributes['value']) && $value == $attributes['value']) {
+                    $active = ' active';
+                } else {
+                    $active = '';
+                }
+
+                $opt[] = '<label class="btn ' . $attr['btn-class'] . $active . '">';
+                $opt[] = $this->Form->radio($fieldName, [$value => $label], $attributes);
+                $opt[] = '</label>';
+            }
+            $opt[] = '</div>';
+        } else {
+            foreach ($options as $value => $label) {
+                $opt[] = '<div class="radio">';
+                $opt[] = '<label>';
+                $opt[] = $this->Form->radio($fieldName, [$value => $label], $attributes);
+                $opt[] = '</label>';
+                $opt[] = '</div>';
+            }
+        }
+
+        return implode('', $opt);
+    }
+
     public function formExist($element)
     {
         return $this->_View->elementExists('Widgets/' . $element . '-form');

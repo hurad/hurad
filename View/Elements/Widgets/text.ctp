@@ -1,1 +1,2 @@
-<?php echo $data['text']; ?>
+<?php
+echo $data['text'];
