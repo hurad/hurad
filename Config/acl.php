@@ -2,21 +2,20 @@
 /**
  * This is the PHP base ACL configuration file.
  *
- * Use it to configure access control of your Cake application.
- *
- * PHP 5
+ * Use it to configure access control of your CakePHP application.
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       app.Config
  * @since         CakePHP(tm) v 2.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 /**
@@ -74,16 +73,16 @@
  *
  *    $config['rules'] = array(
  *       'allow' => array(
- *       	'*' => 'Role/admin',
- *       	'controllers/users/(dashboard|profile)' => 'Role/default',
- *       	'controllers/invoices/*' => 'Role/accountant',
- *       	'controllers/articles/*' => 'Role/editor',
- *       	'controllers/users/*'  => 'Role/manager',
- *       	'controllers/invoices/delete'  => 'Role/manager',
+ *               '*' => 'Role/admin',
+ *               'controllers/users/(dashboard|profile)' => 'Role/default',
+ *               'controllers/invoices/*' => 'Role/accountant',
+ *               'controllers/articles/*' => 'Role/editor',
+ *               'controllers/users/*'  => 'Role/manager',
+ *               'controllers/invoices/delete'  => 'Role/manager',
  *       ),
  *       'deny' => array(
- *       	'controllers/invoices/delete' => 'Role/accountant, User/jeff',
- *       	'controllers/articles/(delete|publish)' => 'Role/editor',
+ *               'controllers/invoices/delete' => 'Role/accountant, User/jeff',
+ *               'controllers/articles/(delete|publish)' => 'Role/editor',
  *       ),
  *    );
  *
@@ -104,8 +103,8 @@
  * to the roles you defined in the roles configuration.
  */
 $config['map'] = array(
-	'User' => 'User/username',
-	'Role' => 'User/group_id',
+    'User' => 'User/username',
+    'Role' => 'User/group_id',
 );
 
 /**
@@ -113,22 +112,22 @@ $config['map'] = array(
  * the roles defined in your role configuration.
  */
 $config['alias'] = array(
-	'Role/4' => 'Role/editor',
+    'Role/4' => 'Role/editor',
 );
 
 /**
  * role configuration
  */
 $config['roles'] = array(
-	'Role/admin' => null,
+    'Role/admin' => null,
 );
 
 /**
  * rule configuration
  */
 $config['rules'] = array(
-	'allow' => array(
-		'*' => 'Role/admin',
-	),
-	'deny' => array(),
+    'allow' => array(
+        '*' => 'Role/admin',
+    ),
+    'deny' => array(),
 );
