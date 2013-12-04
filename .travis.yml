@@ -9,10 +9,9 @@ env:
   - DB=pgsql
 
 before_script:
-  - sh -c "curl -sS https://getcomposer.org/installer | php"
-  - sh -c "php composer.phar install"
+  - sh -c "composer install"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE hurad_test;'; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA hurad_test;' -U postgres -d hurad_test; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE hurad_test;' -U postgres; fi"
   - set +H
   - echo "<?php
     class DATABASE_CONFIG {
