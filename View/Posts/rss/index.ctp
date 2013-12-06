@@ -3,23 +3,30 @@
 App::uses('Sanitize', 'Utility');
 
 Configure::write('debug', 0);
-$homeUrl = $this->Html->url('/', true);
+
 $this->set(
-    'channel',
-    array(
+    'documentData',
+    [
+        'xmlns:dc' => 'http://purl.org/dc/elements/1.1/'
+    ]
+);
+
+$this->set(
+    'channelData',
+    [
         'title' => __d('hurad', 'My Recent Posts'),
-        'link' => $homeUrl,
-        'description' => 'Hurad CMS',
+        'link' => Configure::read('General.site_url'),
+        'description' => (!Configure::read('General.site_description') ? ' ' : ''),
         'language' => 'en-us',
-        'copyright' => ((date('Y') > 2012) ? '2012-' . date('Y') : '2012') . 'Hurad CMS',
-        'atom:link' => array(
-            'attrib' => array(
-                'href' => 'http://localhost/hurad/posts/index.rss',
+        'copyright' => date('Y') . ' ' . Configure::read('General.site_name'),
+        'atom:link' => [
+            'attrib' => [
+                'href' => Configure::read('General.site_url') . '/feed.rss',
                 'rel' => 'self',
                 'type' => 'application/rss+xml'
-            )
-        )
-    )
+            ]
+        ]
+    ]
 );
 
 foreach ($posts as $post) {
@@ -31,18 +38,25 @@ foreach ($posts as $post) {
     $bodyText = preg_replace('=\(.*?\)=is', '', $post['Post']['content']);
     $bodyText = $this->Text->stripLinks($bodyText);
     $bodyText = Sanitize::stripAll($bodyText);
-    $bodyText = $this->Text->truncate($bodyText, 120, '...', true, true);
+    $bodyText = $this->Text->truncate(
+        $bodyText,
+        400,
+        [
+            'ending' => '...',
+            'exact' => true,
+            'html' => true,
+        ]
+    );
 
     echo $this->Rss->item(
-        array(),
-        array(
+        [],
+        [
             'title' => $post['Post']['title'],
-            'link' => $this->Post->get_permalink(),
-            'guid' => array('url' => $this->Post->get_permalink(), 'isPermaLink' => 'true'),
+            'link' => $this->Post->getPermalink(),
+            'guid' => ['url' => $this->Post->getPermalink(), 'isPermaLink' => 'true'],
             'description' => $bodyText,
-            'dc:author' => $post['User']['username'],
+            'author' => $post['User']['email'] . ' (' . $post['User']['username'] . ')',
             'pubDate' => $this->Time->toRSS($post['Post']['created'])
-        )
+        ]
     );
 }
-?>

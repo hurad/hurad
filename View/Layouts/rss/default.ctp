@@ -1,16 +1,15 @@
 <?php
-if (!isset($channel)) {
-    $channel = array();
-}
-if (!isset($channel['title'])) {
-    $channel['title'] = $title_for_layout;
+if (!isset($documentData)) {
+    $documentData = [];
 }
 
-echo $this->Rss->document(
-    $this->Rss->channel(
-        array(),
-        $channel,
-        $content_for_layout
-    )
-);
-?>
+if (!isset($channelData)) {
+    $channelData = [];
+}
+
+if (!isset($channelData['title'])) {
+    $channelData['title'] = $title_for_layout;
+}
+
+$channel = $this->Rss->channel([], $channelData, $content_for_layout);
+echo $this->Rss->document($documentData, $channel);
