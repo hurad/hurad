@@ -12,6 +12,7 @@ before_script:
   - sh -c "composer install"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE hurad_test;'; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE hurad_test;' -U postgres; fi"
+  - sh -c "if [ ! -f = 'Config/database.php' ]; then cp Config/database.php.default Config/database.php; fi"
   - set +H
   - echo "<?php
     class DATABASE_CONFIG {
