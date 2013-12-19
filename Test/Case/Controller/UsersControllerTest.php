@@ -8,7 +8,7 @@ App::uses('UsersController', 'Controller');
 class UsersControllerTest extends ControllerTestCase
 {
 
-    public $fixtures = array('app.user', 'app.userMeta', 'app.comment', 'app.category', 'app.tag', 'app.post');
+    public $fixtures = ['app.user', 'app.userMeta', 'app.comment', 'app.category', 'app.tag', 'app.post', 'app.media'];
     public $User;
 
     public function testAdminIndex()

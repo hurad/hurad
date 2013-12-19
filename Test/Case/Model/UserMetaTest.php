@@ -27,14 +27,4 @@ class UserMetaTest extends CakeTestCase
         );
         $this->assertEquals($firstName, 'Mohammad', 'First name');
     }
-
-    public function testAddMeta()
-    {
-        $result = $this->UserMeta->addMeta('firstname', 'Mahdi', 3);
-        $this->assertTrue($result);
-
-        $result = $this->UserMeta->addMeta('firstname', 'Mahdi', 3);
-        $this->assertFalse($result);
-    }
-
 }

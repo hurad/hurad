@@ -27,9 +27,9 @@ class UserTest extends CakeTestCase
     public function testGetUsers()
     {
         $args = array(
-            'orderby' => 'created',
+            'order_by' => 'created',
             'order' => 'asc',
-            'number' => 2
+            'limit' => 2
         );
 
         $result = $this->User->getUsers($args);
