@@ -152,17 +152,8 @@ class UsersController extends AppController
         }
 
         if ($this->request->is('post') || $this->request->is('put')) {
-            if (isset($this->request->data['UserMeta'])) {
-                foreach ($this->request->data['UserMeta'] as $meta_key => $meta_value) {
-                    //Update user_metas table.
-                    $this->UserMeta->updateAll(
-                        array('UserMeta.meta_value' => "'$meta_value'"),
-                        array('UserMeta.user_id' => $id, 'UserMeta.meta_key' => $meta_key)
-                    );
-                }
-            }
-
-            if ($this->User->save($this->request->data)) {
+            $this->UserMeta->user_id = $id;
+            if ($this->User->save($this->request->data) && $this->User->UserMeta->saveData($this->request->data)) {
                 $this->Session->setFlash(
                     __d('hurad', 'The user has been saved'),
                     'flash_message',
@@ -180,14 +171,9 @@ class UsersController extends AppController
         } else {
             $this->request->data = $this->User->read(null, $id);
 
-            //Retraive user_metas table.
-            $this->request->data['UserMeta'] = $this->UserMeta->find(
-                'list',
-                array(
-                    'conditions' => array('UserMeta.user_id' => $id),
-                    'fields' => array('UserMeta.meta_key', 'UserMeta.meta_value'),
-                )
-            );
+            //Retrieve UserMeta.
+            $this->UserMeta->user_id = $id;
+            $this->request->data['UserMeta'] = $this->UserMeta->getData();
         }
     }
 

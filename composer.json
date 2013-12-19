@@ -33,5 +33,10 @@
     },
     "config": {
         "vendor-dir": "Vendor/"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod -R 777 tmp/"
+        ]
     }
 }

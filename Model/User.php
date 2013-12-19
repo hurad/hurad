@@ -145,16 +145,13 @@ class User extends AppModel
         parent::afterSave($created);
 
         if ($created) {
-            $userMetaData = array(
-                'firstname' => '',
-                'lastname' => '',
+            $userMetaData['UserMeta'] = [
                 'nickname' => $this->data['User']['username'],
-                'bio' => '',
                 'display_name' => $this->data['User']['username']
-            );
-            foreach ($userMetaData as $meta_key => $meta_value) {
-                $this->UserMeta->addMeta($meta_key, $meta_value, $this->id);
-            }
+            ];
+
+            $this->UserMeta->user_id = $this->id;
+            $this->UserMeta->saveData($userMetaData);
         }
     }
 
