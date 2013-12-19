@@ -73,13 +73,10 @@ class KeyValueStorageBehavior extends ModelBehavior
                 ]
             );
 
-            $index = 0;
-
             $arrObj = new ArrayObject($data[$model->alias]);
             $iterator = $arrObj->getIterator();
 
             while ($iterator->valid()) {
-                $index++;
                 $insert = $dataTemplate;
 
                 $insert[$model->alias][$this->settings[$model->alias]['key']] = $iterator->key();
