@@ -17,14 +17,10 @@ Router::connect('/admin', ['controller' => 'users', 'action' => 'dashboard', 'ad
  * Posts
  */
 Router::connect('/', ['controller' => 'posts', 'action' => 'index', 'admin' => false]);
-Router::connect(
-    '/feed',
-    [
-        'controller' => 'posts',
-        'action' => 'index',
-        'url' => ['ext' => 'rss']
-    ]
-);
+Router::connect('/feed', ['controller' => 'posts', 'action' => 'index', 'url' => ['ext' => 'rss']]);
+Router::connect('/category/*', ['controller' => 'posts', 'action' => 'indexByTaxonomy', 'admin' => false, 'category']);
+Router::connect('/tag/*', ['controller' => 'posts', 'action' => 'indexByTaxonomy', 'admin' => false, 'tag']);
+Router::connect('/author/*', ['controller' => 'posts', 'action' => 'indexByTaxonomy', 'admin' => false, 'author']);
 
 /**
  * Posts permalink

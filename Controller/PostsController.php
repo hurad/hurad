@@ -58,7 +58,7 @@ class PostsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'view', 'viewById');
+        $this->Auth->allow('index', 'view', 'viewById', 'indexByTaxonomy');
     }
 
     /**
@@ -93,6 +93,76 @@ class PostsController extends AppController
             );
             $this->set('posts', $this->Paginator->paginate('Post'));
         }
+    }
+
+    public function indexByTaxonomy($type, $slug = null)
+    {
+        switch ($type) {
+            case 'category':
+                if ($this->Post->Category->getBySlug($slug)) {
+                    $id = $this->Post->Category->getBySlug($slug)['Category']['id'];
+                } else {
+                    throw new NotFoundException();
+                }
+
+                $conditions = [];
+                $joins = [
+                    array(
+                        'type' => 'inner',
+                        'table' => 'categories_posts',
+                        'alias' => 'CategoriesPost',
+                        'conditions' => array(
+                            'CategoriesPost.post_id = Post.id',
+                            'CategoriesPost.category_id' => $id
+                        )
+                    )
+                ];
+                break;
+
+            case 'tag':
+                if ($this->Post->Tag->getBySlug($slug)) {
+                    $id = $this->Post->Tag->getBySlug($slug)['Tag']['id'];
+                } else {
+                    throw new NotFoundException();
+                }
+
+                $conditions = [];
+                $joins = [
+                    array(
+                        'type' => 'inner',
+                        'table' => 'posts_tags',
+                        'alias' => 'PostsTag',
+                        'conditions' => array(
+                            'PostsTag.post_id = Post.id',
+                            'PostsTag.tag_id' => $id
+                        )
+                    )
+                ];
+                break;
+
+            case 'author':
+                $conditions = ['Post.status' => ['publish'], ['User.username' => $slug]];
+                $joins = [];
+                break;
+
+            default:
+                throw new NotFoundException();
+                break;
+        }
+
+        $this->Paginator->settings = Hash::merge(
+            $this->paginate,
+            array(
+                'Post' => array(
+                    'conditions' => $conditions,
+                    'joins' => $joins,
+                    'contain' => array('Category', 'User', 'Tag', 'Comment'),
+                )
+            )
+        );
+
+        $this->set('posts', $this->Paginator->paginate('Post'));
+        $this->render('index');
     }
 
     /**
@@ -332,7 +402,9 @@ class PostsController extends AppController
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
                 $this->request->data['Post'] = Hash::merge($defaults, $this->request->data['Post']);
-                $this->request->data['Post']['created'] = $this->Hurad->dateParse($this->request->data['Post']['created']);
+                $this->request->data['Post']['created'] = $this->Hurad->dateParse(
+                    $this->request->data['Post']['created']
+                );
                 if (empty($this->request->data['Post']['tags'])) {
                     $this->loadModel('PostsTag');
                     $this->PostsTag->deleteAll(array('post_id' => $id), false);
@@ -451,7 +523,7 @@ class PostsController extends AppController
         }
     }
 
-    private function _fallbackView($viewName)
+    protected function _fallbackView($viewName)
     {
         if (file_exists(
             APP . 'View' . DS . 'Themed' . DS . Configure::read(

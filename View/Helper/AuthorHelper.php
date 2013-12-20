@@ -217,11 +217,10 @@ class AuthorHelper extends AppHelper
      * @since 0.1.0
      *
      * @param intiger $author_id
-     * @param string $author_nickname Description
      *
      * @return string The URL to the author's page.
      */
-    public function getAuthorPostsUrl($author_id = null, $author_nickname = '')
+    public function getAuthorPostsUrl($author_id = null)
     {
         if (is_null($author_id)) {
             $author_id = (int)$this->user_id;
@@ -229,17 +228,12 @@ class AuthorHelper extends AppHelper
             $this->authorData = ClassRegistry::init('User')->getUserData($author_id);
         }
 
-        if ('' == $author_nickname) {
-            if (!empty($this->authorData['nickname'])) {
-                $author_nickname = $this->authorData['nickname'];
-            }
-        }
-        $file = $this->Link->siteUrl('/');
-        $link = $file . 'author/' . $author_nickname;
+        $author_username = $this->authorData['username'];
 
-        $link = $this->Hook->applyFilters('author_link', $link, $author_id, $author_nickname);
+        $siteUrl = $this->Link->siteUrl('/');
+        $link = $siteUrl . 'author/' . $author_username;
 
-        return $link;
+        return $this->Hook->applyFilters('author_link', $link, $author_id, $author_username);
     }
 
     /**
@@ -284,7 +278,7 @@ class AuthorHelper extends AppHelper
                 continue;
             }
 
-            if ($args['show_fullname'] && $author['firstname'] && $author['lastname']) {
+            if ($args['show_fullname'] && isset($author['firstname']) && isset($author['lastname'])) {
                 $name = "{$author['firstname']} {$author['lastname']}";
             } else {
                 $name = $author['display_name'];

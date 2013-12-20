@@ -7,7 +7,8 @@ App::uses('AppModel', 'Model');
  *
  * @property Post $Post
  */
-class Tag extends AppModel {
+class Tag extends AppModel
+{
 
     /**
      * Display field
@@ -57,11 +58,18 @@ class Tag extends AppModel {
         )
     );
 
-    public function count_tags() {
+    public function count_tags()
+    {
 
         $tags = $this->find('count');
 
         return $tags;
     }
 
+    public function getBySlug($slug)
+    {
+        $tag = $this->find('first', ['conditions' => ['Tag.slug' => $slug]]);
+
+        return $tag;
+    }
 }

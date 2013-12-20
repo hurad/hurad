@@ -1,0 +1,2364 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2013-12-20 12:02+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Config/Hurad/default_capabilities.php:5
+#: View/Helper/AdminLayoutHelper.php:136
+#: View/Users/admin_add.ctp:168
+msgid "Administrator"
+msgstr ""
+
+#: Config/Hurad/default_capabilities.php:6
+#: View/Elements/admin/Options/general.ctp:95
+#: View/Helper/AdminLayoutHelper.php:139
+#: View/Users/admin_add.ctp:167
+msgid "Editor"
+msgstr ""
+
+#: Config/Hurad/default_capabilities.php:7
+#: View/Comments/admin_index.ctp:23;109
+#: View/Elements/admin/Options/general.ctp:94
+#: View/Helper/AdminLayoutHelper.php:142
+#: View/Pages/admin_index.ctp:35;142
+#: View/Posts/admin_index.ctp:35;168
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:35
+#: View/Users/admin_add.ctp:166
+msgid "Author"
+msgstr ""
+
+#: Config/Hurad/default_capabilities.php:8
+#: View/Elements/admin/Options/general.ctp:93
+#: View/Helper/AdminLayoutHelper.php:145
+#: View/Media/admin_browse.ctp:29;115
+#: View/Media/admin_index.ctp:32;118
+#: View/Users/admin_add.ctp:165
+msgid "User"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:4
+#: Controller/UsersController.php:70
+#: View/Users/admin_dashboard.ctp:5
+msgid "Dashboard"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:9
+msgid "Home"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:13;21
+#: Controller/PostsController.php:217;246;275;300;568;576
+#: View/Categories/admin_index.ctp:41;134
+#: View/Posts/index.ctp:2
+#: View/Tags/admin_index.ctp:41;124
+msgid "Posts"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:28;64;86;115;203
+#: View/Categories/admin_index.ctp:7
+#: View/Linkcats/admin_index.ctp:7
+#: View/Media/admin_index.ctp:5
+#: View/Pages/admin_index.ctp:8
+#: View/Posts/admin_index.ctp:8
+#: View/Tags/admin_index.ctp:7
+msgid "Add New"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:35
+#: Config/Hurad/default_widgets.php:11
+#: Controller/CategoriesController.php:73
+#: View/Posts/admin_add.ctp:151
+#: View/Posts/admin_edit.ctp:153
+#: View/Posts/admin_index.ctp:42;174
+msgid "Categories"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:42
+msgid "Post Tags"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:49
+msgid "Media"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:57
+#: Controller/MediaController.php:48;141
+msgid "Media Library"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:71;79
+#: Controller/LinksController.php:70
+#: View/Linkcats/admin_index.ctp:48;131
+#: View/Links/index.ctp:2
+msgid "Links"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:93
+#: Controller/LinkcatsController.php:48
+msgid "Link Categories"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:100
+#: Config/Hurad/default_widgets.php:23
+#: Controller/PagesController.php:125;278;305;339
+msgid "Pages"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:108
+msgid "All Pages"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:122
+#: Controller/CommentsController.php:132
+#: View/Helper/DashboardHelper.php:236
+#: View/Pages/admin_index.ctp:42;148
+#: View/Posts/admin_index.ctp:56;186
+msgid "Comments"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:130
+msgid "All Comments"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:137
+msgid "Appearance"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:145
+#: Controller/ThemesController.php:34
+msgid "Themes"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:152
+msgid "Widgets"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:159
+msgid "All Menus"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:166
+#: Controller/MenusController.php:58
+msgid "Add Menu"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:173;181
+#: Controller/PluginsController.php:32
+msgid "Plugins"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:188
+#: Controller/UsersController.php:78
+msgid "Users"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:196
+msgid "All Users"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:210
+msgid "Edit Profile"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:217
+msgid "Options"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:225
+#: Controller/OptionsController.php:37
+msgid "General"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:232
+#: Controller/OptionsController.php:38
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:23;68
+msgid "Comment"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:239
+msgid "Permalinks"
+msgstr ""
+
+#: Config/Hurad/default_widgets.php:5
+msgid "Authors"
+msgstr ""
+
+#: Config/Hurad/default_widgets.php:17
+msgid "Recent Posts"
+msgstr ""
+
+#: Config/Hurad/default_widgets.php:29
+msgid "Text"
+msgstr ""
+
+#: Controller/CategoriesController.php:91
+#: View/Posts/admin_add.ctp:163
+msgid "Add New Category"
+msgstr ""
+
+#: Controller/CategoriesController.php:96;131
+msgid "The category has been saved"
+msgstr ""
+
+#: Controller/CategoriesController.php:103;138
+msgid "The category could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/CategoriesController.php:123
+msgid "Edit Category"
+msgstr ""
+
+#: Controller/CategoriesController.php:126;166
+#: Controller/PostsController.php:249
+msgid "Invalid category"
+msgstr ""
+
+#: Controller/CategoriesController.php:169
+msgid "You could not delete Uncategorized category."
+msgstr ""
+
+#: Controller/CategoriesController.php:178
+msgid "Category was deleted"
+msgstr ""
+
+#: Controller/CategoriesController.php:185
+msgid "Category was not deleted"
+msgstr ""
+
+#: Controller/CategoriesController.php:213
+#: Controller/CommentsController.php:409
+msgid "No item selected."
+msgstr ""
+
+#: Controller/CategoriesController.php:216
+#: Controller/CommentsController.php:412
+#: Controller/LinkcatsController.php:176
+#: Controller/LinksController.php:285
+#: Controller/PagesController.php:380
+#: Controller/PostsController.php:610
+#: Controller/UsersController.php:539
+msgid "No action selected."
+msgstr ""
+
+#: Controller/CategoriesController.php:226
+msgid "Categories was deleted."
+msgstr ""
+
+#: Controller/CategoriesController.php:234
+#: Controller/CommentsController.php:377;459
+#: Controller/LinkcatsController.php:193
+#: Controller/LinksController.php:322
+#: Controller/PagesController.php:427
+#: Controller/PostsController.php:657
+#: Controller/TagsController.php:201
+#: Controller/UsersController.php:467;480;556
+msgid "An error occurred."
+msgstr ""
+
+#: Controller/CommentsController.php:105
+msgid "Comment Submit"
+msgstr ""
+
+#: Controller/CommentsController.php:107
+msgid "Your comment submit in blog waiting to approve by admin."
+msgstr ""
+
+#: Controller/CommentsController.php:110;235
+msgid "The comment has been saved"
+msgstr ""
+
+#: Controller/CommentsController.php:117;242;328
+msgid "The comment could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/CommentsController.php:152
+msgid "Moderated comments"
+msgstr ""
+
+#: Controller/CommentsController.php:166
+msgid "Approved comments"
+msgstr ""
+
+#: Controller/CommentsController.php:180
+msgid "Spams"
+msgstr ""
+
+#: Controller/CommentsController.php:194
+msgid "Trashes"
+msgstr ""
+
+#: Controller/CommentsController.php:227
+msgid "Edit Comment"
+msgstr ""
+
+#: Controller/CommentsController.php:230;269;292;353
+msgid "Invalid comment"
+msgstr ""
+
+#: Controller/CommentsController.php:272
+msgid "Comment was deleted"
+msgstr ""
+
+#: Controller/CommentsController.php:275
+msgid "Comment was not deleted"
+msgstr ""
+
+#: Controller/CommentsController.php:297
+#: Controller/PostsController.php:180;198;472
+msgid "Invalid post"
+msgstr ""
+
+#: Controller/CommentsController.php:321
+msgid "The reply of comment has been saved."
+msgstr ""
+
+#: Controller/CommentsController.php:358
+msgid "Comments are approved."
+msgstr ""
+
+#: Controller/CommentsController.php:359
+msgid "Comments are not approved, please try again."
+msgstr ""
+
+#: Controller/CommentsController.php:363
+msgid "Comment are unapproved."
+msgstr ""
+
+#: Controller/CommentsController.php:364
+msgid "Comment are not unapproved, please try again."
+msgstr ""
+
+#: Controller/CommentsController.php:368
+msgid "Comment marked as spam."
+msgstr ""
+
+#: Controller/CommentsController.php:369
+msgid "Comment didn't mark as spam, please try again."
+msgstr ""
+
+#: Controller/CommentsController.php:373
+msgid "Comment moved to trash."
+msgstr ""
+
+#: Controller/CommentsController.php:374
+msgid "Comment didn't move to trash, please try again."
+msgstr ""
+
+#: Controller/CommentsController.php:420
+msgid "Comments are approved"
+msgstr ""
+
+#: Controller/CommentsController.php:430
+msgid "Comments are unapproved"
+msgstr ""
+
+#: Controller/CommentsController.php:440
+msgid "Comments marked as spam."
+msgstr ""
+
+#: Controller/CommentsController.php:450
+msgid "Comments moved to trash."
+msgstr ""
+
+#: Controller/InstallerController.php:49
+msgid "Welcome to Hurad installer"
+msgstr ""
+
+#: Controller/InstallerController.php:57
+msgid "Database Configuration"
+msgstr ""
+
+#: Controller/InstallerController.php:108
+msgid "Database successfuly installed"
+msgstr ""
+
+#: Controller/InstallerController.php:120
+msgid "Hurad not write Config/database.php"
+msgstr ""
+
+#: Controller/InstallerController.php:134
+msgid "Hurad Configuration"
+msgstr ""
+
+#: Controller/InstallerController.php:162
+msgid "Hurad successfully installed."
+msgstr ""
+
+#: Controller/InstallerController.php:170
+msgid "Not connected to database."
+msgstr ""
+
+#: Controller/InstallerController.php:185
+msgid "Welcome to Hurad"
+msgstr ""
+
+#: Controller/InstallerController.php:189
+msgid "/tmp directory not writable."
+msgstr ""
+
+#: Controller/InstallerController.php:224
+msgid "File \"Config/Schema/%s\" not exists."
+msgstr ""
+
+#: Controller/LinkcatsController.php:70
+#: View/Linkcats/admin_add.ctp:89
+msgid "Add New Link Category"
+msgstr ""
+
+#: Controller/LinkcatsController.php:76;108
+msgid "The link category has been saved"
+msgstr ""
+
+#: Controller/LinkcatsController.php:83;115
+msgid "The link category could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/LinkcatsController.php:100
+msgid "Edit Link Category"
+msgstr ""
+
+#: Controller/LinkcatsController.php:103;140
+msgid "Invalid link category"
+msgstr ""
+
+#: Controller/LinkcatsController.php:144
+msgid "Link category deleted"
+msgstr ""
+
+#: Controller/LinkcatsController.php:151
+msgid "Link category was not deleted"
+msgstr ""
+
+#: Controller/LinkcatsController.php:173
+#: Controller/LinksController.php:282
+#: Controller/PagesController.php:377
+#: Controller/PostsController.php:607
+#: Controller/UsersController.php:536
+msgid "No items selected."
+msgstr ""
+
+#: Controller/LinkcatsController.php:184
+msgid "Link categories deleted."
+msgstr ""
+
+#: Controller/LinksController.php:100;160
+#: Controller/MenusController.php:91;128
+msgid "Invalid menu"
+msgstr ""
+
+#: Controller/LinksController.php:117
+msgid "Links: %s"
+msgstr ""
+
+#: Controller/LinksController.php:132
+msgid "Add New Link"
+msgstr ""
+
+#: Controller/LinksController.php:137;170;212
+msgid "The link has been saved"
+msgstr ""
+
+#: Controller/LinksController.php:144;177;219
+msgid "The link could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/LinksController.php:165
+msgid "Add New Link to: %s"
+msgstr ""
+
+#: Controller/LinksController.php:204
+msgid "Edit Link"
+msgstr ""
+
+#: Controller/LinksController.php:207;252
+msgid "Invalid link"
+msgstr ""
+
+#: Controller/LinksController.php:255
+msgid "Link deleted"
+msgstr ""
+
+#: Controller/LinksController.php:258
+msgid "Link was not deleted"
+msgstr ""
+
+#: Controller/LinksController.php:293
+msgid "Links deleted."
+msgstr ""
+
+#: Controller/LinksController.php:303
+msgid "Links visible"
+msgstr ""
+
+#: Controller/LinksController.php:313
+msgid "Links invisible"
+msgstr ""
+
+#: Controller/MediaController.php:59
+msgid "Add Media"
+msgstr ""
+
+#: Controller/MediaController.php:69
+msgid "File could not be uploaded. Please, try again."
+msgstr ""
+
+#: Controller/MediaController.php:116
+msgid "Media file deleted"
+msgstr ""
+
+#: Controller/MediaController.php:120
+msgid "Media file was not deleted"
+msgstr ""
+
+#: Controller/MenusController.php:48
+msgid "Menus"
+msgstr ""
+
+#: Controller/MenusController.php:64;96
+msgid "The menu has been saved"
+msgstr ""
+
+#: Controller/MenusController.php:71;103
+msgid "The menu could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/MenusController.php:88
+msgid "Edit Menu"
+msgstr ""
+
+#: Controller/MenusController.php:131
+msgid "Menu deleted"
+msgstr ""
+
+#: Controller/MenusController.php:134
+msgid "Menu was not deleted"
+msgstr ""
+
+#: Controller/OptionsController.php:39
+msgid "Permalink"
+msgstr ""
+
+#: Controller/OptionsController.php:41
+msgid "%s Option"
+msgstr ""
+
+#: Controller/OptionsController.php:53
+msgid "Invalid Option name"
+msgstr ""
+
+#: Controller/OptionsController.php:77
+msgid "Options have been updated!"
+msgstr ""
+
+#: Controller/OptionsController.php:83
+msgid "Unable to update "
+msgstr ""
+
+#: Controller/PagesController.php:113;259
+msgid "Invalid page"
+msgstr ""
+
+#: Controller/PagesController.php:150
+msgid "Add Page"
+msgstr ""
+
+#: Controller/PagesController.php:171
+msgid "The page has been saved"
+msgstr ""
+
+#: Controller/PagesController.php:178
+msgid "The page could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/PagesController.php:195
+msgid "Edit Page"
+msgstr ""
+
+#: Controller/PagesController.php:218
+msgid "The Page has been saved."
+msgstr ""
+
+#: Controller/PagesController.php:225
+msgid "The Page could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/PagesController.php:262
+msgid "Page deleted."
+msgstr ""
+
+#: Controller/PagesController.php:265
+msgid "Page was not deleted."
+msgstr ""
+
+#: Controller/PagesController.php:281
+#: Controller/PostsController.php:220
+msgid "Invalid author"
+msgstr ""
+
+#: Controller/PagesController.php:311
+msgid "Pages Published"
+msgstr ""
+
+#: Controller/PagesController.php:325
+msgid "Draft Pages"
+msgstr ""
+
+#: Controller/PagesController.php:388
+#: Controller/PostsController.php:618
+msgid "Posts deleted."
+msgstr ""
+
+#: Controller/PagesController.php:398
+msgid "Pages published"
+msgstr ""
+
+#: Controller/PagesController.php:408
+msgid "Pages drafted"
+msgstr ""
+
+#: Controller/PagesController.php:418
+msgid "Pages move to trash"
+msgstr ""
+
+#: Controller/PluginsController.php:49
+msgid "Plugin deactivate"
+msgstr ""
+
+#: Controller/PluginsController.php:56
+msgid "The plugin could not be deactivate. Please, try again."
+msgstr ""
+
+#: Controller/PluginsController.php:64
+msgid "Plugin activate"
+msgstr ""
+
+#: Controller/PluginsController.php:68
+msgid "The plugin could not be activate. Please, try again."
+msgstr ""
+
+#: Controller/PostsController.php:278
+#: Controller/TagsController.php:125;164
+msgid "Invalid tag"
+msgstr ""
+
+#: Controller/PostsController.php:323
+msgid "Add Post"
+msgstr ""
+
+#: Controller/PostsController.php:363
+msgid "The post has been saved"
+msgstr ""
+
+#: Controller/PostsController.php:370
+msgid "The post could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/PostsController.php:387
+msgid "Edit Post"
+msgstr ""
+
+#: Controller/PostsController.php:432
+msgid "The Post has been saved."
+msgstr ""
+
+#: Controller/PostsController.php:439
+msgid "The Post could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/PostsController.php:475
+msgid "Post deleted"
+msgstr ""
+
+#: Controller/PostsController.php:478
+msgid "Post was not deleted"
+msgstr ""
+
+#: Controller/PostsController.php:552
+msgid "Posts Published"
+msgstr ""
+
+#: Controller/PostsController.php:560
+msgid "Draft Posts"
+msgstr ""
+
+#: Controller/PostsController.php:628
+msgid "Posts published"
+msgstr ""
+
+#: Controller/PostsController.php:638
+msgid "Posts drafted"
+msgstr ""
+
+#: Controller/PostsController.php:648
+msgid "Posts move to trash"
+msgstr ""
+
+#: Controller/TagsController.php:78
+#: View/Helper/DashboardHelper.php:214
+#: View/Posts/admin_add.ctp:171
+#: View/Posts/admin_edit.ctp:164
+#: View/Posts/admin_index.ctp:49;180
+msgid "Tags"
+msgstr ""
+
+#: Controller/TagsController.php:88
+#: View/Tags/admin_add.ctp:90
+msgid "Add Tag"
+msgstr ""
+
+#: Controller/TagsController.php:98;130
+msgid "The tag has been saved"
+msgstr ""
+
+#: Controller/TagsController.php:105;137
+msgid "The tag could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/TagsController.php:122
+msgid "Edit Tag"
+msgstr ""
+
+#: Controller/TagsController.php:167
+msgid "Tag deleted"
+msgstr ""
+
+#: Controller/TagsController.php:170
+msgid "Tag was not deleted"
+msgstr ""
+
+#: Controller/TagsController.php:192
+msgid "Tags deleted."
+msgstr ""
+
+#: Controller/ThemesController.php:55
+msgid "Invalid Theme."
+msgstr ""
+
+#: Controller/ThemesController.php:60
+msgid "%s Theme successfully deleted."
+msgstr ""
+
+#: Controller/ThemesController.php:66
+msgid "Occurred error."
+msgstr ""
+
+#: Controller/ThemesController.php:79
+msgid "Theme activated."
+msgstr ""
+
+#: Controller/ThemesController.php:83
+msgid "Theme activation failed."
+msgstr ""
+
+#: Controller/UsersController.php:104
+msgid "Add new user"
+msgstr ""
+
+#: Controller/UsersController.php:109;158
+msgid "The user has been saved"
+msgstr ""
+
+#: Controller/UsersController.php:116;166;346
+msgid "The user could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/UsersController.php:133
+#: View/Elements/admin/user_info.ctp:10
+msgid "Profile"
+msgstr ""
+
+#: Controller/UsersController.php:142;195
+msgid "Invalid user"
+msgstr ""
+
+#: Controller/UsersController.php:147
+msgid "You do not have permission to access this section."
+msgstr ""
+
+#: Controller/UsersController.php:198
+msgid "User deleted"
+msgstr ""
+
+#: Controller/UsersController.php:201
+msgid "User was not deleted"
+msgstr ""
+
+#: Controller/UsersController.php:211
+msgid "Login to admin section"
+msgstr ""
+
+#: Controller/UsersController.php:213
+msgid "You already login."
+msgstr ""
+
+#: Controller/UsersController.php:222
+msgid "%s you have successfully logged in"
+msgstr ""
+
+#: Controller/UsersController.php:229
+msgid "Your username or password was incorrect."
+msgstr ""
+
+#: Controller/UsersController.php:266
+msgid "You are successfully logout"
+msgstr ""
+
+#: Controller/UsersController.php:272
+msgid "You already logout."
+msgstr ""
+
+#: Controller/UsersController.php:289
+msgid "Change Password"
+msgstr ""
+
+#: Controller/UsersController.php:291
+msgid "You are change password"
+msgstr ""
+
+#: Controller/UsersController.php:298
+msgid "Your password has been updated"
+msgstr ""
+
+#: Controller/UsersController.php:305
+msgid "Could not be changed password. Please, try again."
+msgstr ""
+
+#: Controller/UsersController.php:319
+#: View/Users/register.ctp:101
+msgid "Register"
+msgstr ""
+
+#: Controller/UsersController.php:327
+msgid "Register to %s"
+msgstr ""
+
+#: Controller/UsersController.php:339
+msgid "Congratulations, You are Successfully register"
+msgstr ""
+
+#: Controller/UsersController.php:382
+msgid "Invalid Key"
+msgstr ""
+
+#: Controller/UsersController.php:391
+msgid "Confirmed your account"
+msgstr ""
+
+#: Controller/UsersController.php:393
+msgid "Thank you confirm your account"
+msgstr ""
+
+#: Controller/UsersController.php:396
+msgid "User confirm."
+msgstr ""
+
+#: Controller/UsersController.php:403
+msgid "Could not be confirm your email. Please, try again."
+msgstr ""
+
+#: Controller/UsersController.php:411
+msgid "Your activation key not valid."
+msgstr ""
+
+#: Controller/UsersController.php:429
+msgid "Invalid username."
+msgstr ""
+
+#: Controller/UsersController.php:439;464
+msgid "Reset Password"
+msgstr ""
+
+#: Controller/UsersController.php:449
+msgid "An email has been sent with instructions for resetting your password."
+msgstr ""
+
+#: Controller/UsersController.php:489
+msgid "Your password has been reset successfully."
+msgstr ""
+
+#: Controller/UsersController.php:496
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: Controller/UsersController.php:547
+msgid "Users deleted."
+msgstr ""
+
+#: Lib/HuradWidget.php:20
+msgid "Sidebar %d"
+msgstr ""
+
+#: Lib/HuradWidget.php:21
+msgid "Default description for this sidebar"
+msgstr ""
+
+#: Lib/HuradWidget.php:46
+msgid "Widget %d"
+msgstr ""
+
+#: Lib/HuradWidget.php:47
+msgid "Default description for this widget"
+msgstr ""
+
+#: Model/Media.php:39
+msgid "Invalid file"
+msgstr ""
+
+#: Plugin/Akismet/Config/bootstrap.php:8
+msgid "Akismet Configuration"
+msgstr ""
+
+#: Plugin/HelloWorld/Config/bootstrap.php:6
+msgid "Hello World"
+msgstr ""
+
+#: View/Categories/admin_add.ctp:19
+#: View/Categories/admin_edit.ctp:19
+#: View/Categories/admin_index.ctp:20;116
+#: View/Elements/Widgets/categories-form.ctp:20
+#: View/Linkcats/admin_add.ctp:19
+#: View/Linkcats/admin_edit.ctp:20
+#: View/Linkcats/admin_index.ctp:27;113
+#: View/Links/admin_add.ctp:35
+#: View/Links/admin_edit.ctp:35
+#: View/Links/admin_index.ctp:21;129
+#: View/Media/admin_browse.ctp:15;103
+#: View/Media/admin_index.ctp:18;106
+#: View/Menus/admin_add.ctp:19
+#: View/Menus/admin_edit.ctp:19
+#: View/Menus/admin_index.ctp:18;112
+#: View/Plugins/admin_index.ctp:13;65
+#: View/Posts/view.ctp:46
+#: View/Tags/admin_add.ctp:19
+#: View/Tags/admin_edit.ctp:19
+#: View/Tags/admin_index.ctp:20;106
+#: View/Users/admin_index.ctp:18;119
+msgid "Name"
+msgstr ""
+
+#: View/Categories/admin_add.ctp:26;52
+#: View/Categories/admin_edit.ctp:26;52
+#: View/Linkcats/admin_add.ctp:26;51
+#: View/Linkcats/admin_edit.ctp:27;52
+#: View/Links/admin_add.ctp:42;82
+#: View/Links/admin_edit.ctp:42;82
+#: View/Tags/admin_add.ctp:26;52
+#: View/Tags/admin_edit.ctp:26;52
+#: View/Users/admin_add.ctp:28
+#: View/Users/admin_profile.ctp:34
+#: View/Users/login.ctp:21
+#: View/Users/register.ctp:21
+msgid "This field cannot be left blank."
+msgstr ""
+
+#: View/Categories/admin_add.ctp:41
+#: View/Categories/admin_edit.ctp:41
+#: View/Linkcats/admin_add.ctp:40
+#: View/Linkcats/admin_edit.ctp:41
+#: View/Tags/admin_add.ctp:40
+#: View/Tags/admin_edit.ctp:40
+msgid "The name is how it appears on your site."
+msgstr ""
+
+#: View/Categories/admin_add.ctp:45
+#: View/Categories/admin_edit.ctp:45
+#: View/Categories/admin_index.ctp:34;128
+#: View/Elements/Widgets/categories-form.ctp:20
+#: View/Linkcats/admin_add.ctp:44
+#: View/Linkcats/admin_edit.ctp:45
+#: View/Linkcats/admin_index.ctp:34;119
+#: View/Menus/admin_index.ctp:25;118
+#: View/Posts/view.ctp:47
+#: View/Tags/admin_add.ctp:45
+#: View/Tags/admin_edit.ctp:45
+#: View/Tags/admin_index.ctp:34;118
+msgid "Slug"
+msgstr ""
+
+#: View/Categories/admin_add.ctp:53
+#: View/Categories/admin_edit.ctp:53
+#: View/Linkcats/admin_add.ctp:52
+#: View/Linkcats/admin_edit.ctp:53
+#: View/Tags/admin_add.ctp:53
+#: View/Tags/admin_edit.ctp:53
+msgid "This slug has already exist."
+msgstr ""
+
+#: View/Categories/admin_add.ctp:75
+#: View/Categories/admin_edit.ctp:76
+msgid "Parent Category"
+msgstr ""
+
+#: View/Categories/admin_add.ctp:82
+#: View/Categories/admin_edit.ctp:83
+msgid "None"
+msgstr ""
+
+#: View/Categories/admin_add.ctp:94
+#: View/Categories/admin_edit.ctp:96
+#: View/Categories/admin_index.ctp:27;122
+#: View/Linkcats/admin_add.ctp:74
+#: View/Linkcats/admin_edit.ctp:76
+#: View/Linkcats/admin_index.ctp:41;125
+#: View/Links/admin_add.ctp:62
+#: View/Links/admin_edit.ctp:62
+#: View/Media/admin_browse.ctp:22;109
+#: View/Media/admin_index.ctp:25;112
+#: View/Menus/admin_add.ctp:33
+#: View/Menus/admin_edit.ctp:33
+#: View/Menus/admin_index.ctp:39;130
+#: View/Plugins/admin_index.ctp:20;71
+#: View/Tags/admin_add.ctp:76
+#: View/Tags/admin_edit.ctp:76
+#: View/Tags/admin_index.ctp:27;112
+msgid "Description"
+msgstr ""
+
+#: View/Categories/admin_add.ctp:101
+#: View/Categories/admin_edit.ctp:103
+#: View/Linkcats/admin_add.ctp:81
+#: View/Linkcats/admin_edit.ctp:83
+#: View/Links/admin_add.ctp:28
+#: View/Links/admin_edit.ctp:28
+#: View/Tags/admin_add.ctp:83
+#: View/Tags/admin_edit.ctp:83
+msgid "The description is not prominent by default; however, some themes may show it."
+msgstr ""
+
+#: View/Categories/admin_add.ctp:108
+msgid "Add Category"
+msgstr ""
+
+#: View/Categories/admin_edit.ctp:110
+msgid "Update Category"
+msgstr ""
+
+#: View/Categories/admin_index.ctp:65
+#: View/Links/admin_index.ctp:70
+#: View/Media/admin_browse.ctp:60
+#: View/Media/admin_index.ctp:63
+#: View/Menus/admin_index.ctp:60
+#: View/Pages/admin_index.ctp:75
+#: View/Posts/admin_index.ctp:89
+#: View/Tags/admin_index.ctp:61
+msgid "Edit “%s”"
+msgstr ""
+
+#: View/Categories/admin_index.ctp:156
+msgid "Note:"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:19
+msgid "Post Title"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:29
+msgid "Author Username"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:44
+msgid "Author name"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:56
+msgid "Author Email"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:67
+msgid "Author Url"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:78
+#: View/Comments/admin_index.ctp:29;115
+#: View/Helper/DashboardHelper.php:164
+msgid "Content"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:92
+msgid "Status"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:99
+#: View/Helper/AdminLayoutHelper.php:155
+msgid "Disapprove"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:100
+#: View/Helper/AdminLayoutHelper.php:161
+#: View/Helper/DashboardHelper.php:65
+msgid "Approve"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:101
+#: View/Elements/admin/Comments/row_actions.ctp:19
+#: View/Helper/CommentHelper.php:627
+#: View/Helper/DashboardHelper.php:116;289
+msgid "Spam"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:102
+#: View/Elements/admin/Comments/row_actions.ctp:25
+#: View/Helper/AdminLayoutHelper.php:43
+#: View/Helper/CommentHelper.php:630
+#: View/Helper/DashboardHelper.php:133
+msgid "Trash"
+msgstr ""
+
+#: View/Comments/admin_edit.ctp:110
+msgid "Update Comment"
+msgstr ""
+
+#: View/Comments/admin_index.ctp:35;121
+msgid "Reply to"
+msgstr ""
+
+#: View/Comments/admin_index.ctp:96
+msgid "No comments were found"
+msgstr ""
+
+#: View/Elements/auth.ctp:3
+msgid "Warning!"
+msgstr ""
+
+#: View/Elements/Comments/item.ctp:20
+#: View/Themed/Hurad2013/Elements/Comments/item.ctp:20
+msgid "Says:"
+msgstr ""
+
+#: View/Elements/Comments/item.ctp:26
+#: View/Themed/Hurad2013/Elements/Comments/item.ctp:24
+msgid " at "
+msgstr ""
+
+#: View/Elements/Comments/item.ctp:37
+#: View/Themed/Hurad2013/Elements/Comments/item.ctp:36
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:19
+msgid "Reply"
+msgstr ""
+
+#: View/Elements/Comments/logged-in-form.ctp:2
+#: View/Elements/Comments/logged-out-form.ctp:2
+#: View/Themed/Hurad2013/Elements/Comments/logged-in-form.ctp:2
+#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:2
+msgid "Leave a Reply"
+msgstr ""
+
+#: View/Elements/Comments/logged-in-form.ctp:27
+#: View/Themed/Hurad2013/Elements/Comments/logged-in-form.ctp:30
+msgid "Log out?"
+msgstr ""
+
+#: View/Elements/Comments/logged-in-form.ctp:29
+#: View/Themed/Hurad2013/Elements/Comments/logged-in-form.ctp:32
+msgid "Log out of this account"
+msgstr ""
+
+#: View/Elements/Comments/logged-in-form.ctp:46
+#: View/Elements/Comments/logged-out-form.ctp:47
+#: View/Themed/Hurad2013/Elements/Comments/logged-in-form.ctp:54
+msgid "Post Comment"
+msgstr ""
+
+#: View/Elements/Comments/logged-out-form.ctp:19
+#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:17
+msgid "Name (Required)"
+msgstr ""
+
+#: View/Elements/Comments/logged-out-form.ctp:26
+#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:26
+msgid "eMail (Required)"
+msgstr ""
+
+#: View/Elements/Comments/logged-out-form.ctp:33
+#: View/Links/admin_index.ctp:28;135
+#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:35
+msgid "URL"
+msgstr ""
+
+#: View/Elements/Comments/main.ctp:2
+msgid "%s Comment"
+msgstr ""
+
+#: View/Elements/Comments/main.ctp:10
+msgid "Comment Closed"
+msgstr ""
+
+#: View/Elements/Comments/reply-form.ctp:9;14;24
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:31
+msgid "Add Comment"
+msgstr ""
+
+#: View/Elements/Widgets/authors-form.ctp:2
+#: View/Elements/Widgets/categories-form.ctp:2
+#: View/Elements/Widgets/pages-form.ctp:2
+#: View/Elements/Widgets/recent-posts-form.ctp:2
+#: View/Elements/Widgets/text-form.ctp:2
+msgid "Title:"
+msgstr ""
+
+#: View/Elements/Widgets/authors-form.ctp:7
+msgid "Show full name:"
+msgstr ""
+
+#: View/Elements/Widgets/authors-form.ctp:11;21;31
+#: View/Helper/AdminLayoutHelper.php:55
+#: View/Links/admin_add.ctp:132
+#: View/Links/admin_edit.ctp:132
+msgid "No"
+msgstr ""
+
+#: View/Elements/Widgets/authors-form.ctp:11;21;31
+#: View/Helper/AdminLayoutHelper.php:53
+#: View/Links/admin_add.ctp:131
+#: View/Links/admin_edit.ctp:131
+msgid "Yes"
+msgstr ""
+
+#: View/Elements/Widgets/authors-form.ctp:17
+msgid "Hide empty:"
+msgstr ""
+
+#: View/Elements/Widgets/authors-form.ctp:27
+msgid "Exclude admin:"
+msgstr ""
+
+#: View/Elements/Widgets/categories-form.ctp:7
+msgid "Direction:"
+msgstr ""
+
+#: View/Elements/Widgets/categories-form.ctp:11
+msgid "Ascending"
+msgstr ""
+
+#: View/Elements/Widgets/categories-form.ctp:11
+msgid "Descending"
+msgstr ""
+
+#: View/Elements/Widgets/categories-form.ctp:16
+msgid "Sort By:"
+msgstr ""
+
+#: View/Elements/Widgets/categories-form.ctp:20
+msgid "ID"
+msgstr ""
+
+#: View/Elements/Widgets/recent-posts-form.ctp:7
+msgid "Number:"
+msgstr ""
+
+#: View/Elements/Widgets/recent-posts.ctp:12
+#: View/Themed/Hurad2013/Posts/index.ctp:8
+msgid "Permalink to %s"
+msgstr ""
+
+#: View/Elements/Widgets/recent-posts.ctp:18
+#: View/Posts/admin_index.ctp:149
+msgid "No posts were found"
+msgstr ""
+
+#: View/Elements/Widgets/text-form.ctp:7
+msgid "Text:"
+msgstr ""
+
+#: View/Elements/admin/footer.ctp:4
+msgid "Powered by %s <small>(%s)</small>"
+msgstr ""
+
+#: View/Elements/admin/footer.ctp:7
+#: View/Elements/admin/header.ctp:3
+#: View/Layouts/install.ctp:4
+msgid "Hurad"
+msgstr ""
+
+#: View/Elements/admin/pages_filter.ctp:13;19
+#: View/Elements/admin/Comments/filter.ctp:6;13
+#: View/Elements/admin/Pages/filter.ctp:13;20
+#: View/Elements/admin/Posts/filter.ctp:13;20
+msgid "All "
+msgstr ""
+
+#: View/Elements/admin/pages_filter.ctp:34;44
+#: View/Elements/admin/Pages/filter.ctp:34;41
+#: View/Elements/admin/Posts/filter.ctp:34;41
+msgid "Published "
+msgstr ""
+
+#: View/Elements/admin/pages_filter.ctp:66;72
+#: View/Elements/admin/Pages/filter.ctp:58;65
+#: View/Elements/admin/Posts/filter.ctp:58;65
+msgid "Draft "
+msgstr ""
+
+#: View/Elements/admin/pages_filter.ctp:90;96
+#: View/Elements/admin/Comments/filter.ctp:93;104
+#: View/Elements/admin/Pages/filter.ctp:83;90
+#: View/Elements/admin/Posts/filter.ctp:83;90
+msgid "Trash "
+msgstr ""
+
+#: View/Elements/admin/pages_search.ctp:19
+#: View/Elements/admin/Comments/search.ctp:28
+#: View/Elements/admin/Linkcats/search.ctp:28
+#: View/Elements/admin/Links/search.ctp:25
+#: View/Elements/admin/Pages/search.ctp:28
+#: View/Elements/admin/Posts/search.ctp:25
+#: View/Themed/Hurad2013/Layouts/default.ctp:27;29
+msgid "Search"
+msgstr ""
+
+#: View/Elements/admin/paginator.ctp:7
+msgid "Previous"
+msgstr ""
+
+#: View/Elements/admin/paginator.ctp:16
+msgid "Next"
+msgstr ""
+
+#: View/Elements/admin/paginator.ctp:30
+msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total"
+msgstr ""
+
+#: View/Elements/admin/user_info.ctp:25
+msgid "Logout"
+msgstr ""
+
+#: View/Elements/admin/Categories/row_actions.ctp:4
+#: View/Elements/admin/Comments/row_actions.ctp:13
+#: View/Elements/admin/Linkcats/row_actions.ctp:4
+#: View/Elements/admin/Links/row_actions.ctp:7
+#: View/Elements/admin/Media/row_actions.ctp:23
+#: View/Elements/admin/Menus/row_actions.ctp:4
+#: View/Elements/admin/Pages/row_actions.ctp:11
+#: View/Elements/admin/Posts/row_actions.ctp:11
+#: View/Elements/admin/Tags/row_actions.ctp:4
+#: View/Elements/admin/Users/row_actions.ctp:4
+#: View/Helper/DashboardHelper.php:102
+#: View/Links/index.ctp:46
+#: View/Posts/index.ctp:41
+#: View/Posts/view.ctp:67
+msgid "Edit"
+msgstr ""
+
+#: View/Elements/admin/Categories/row_actions.ctp:10
+#: View/Elements/admin/Linkcats/row_actions.ctp:10
+#: View/Elements/admin/Links/row_actions.ctp:13
+#: View/Elements/admin/Media/row_actions.ctp:13;38
+#: View/Elements/admin/Menus/row_actions.ctp:10
+#: View/Elements/admin/Pages/row_actions.ctp:18
+#: View/Elements/admin/Plugins/row_actions.ctp:16
+#: View/Elements/admin/Posts/row_actions.ctp:23
+#: View/Elements/admin/Tags/row_actions.ctp:10
+#: View/Elements/admin/Users/row_actions.ctp:10
+#: View/Links/index.ctp:48
+#: View/Posts/index.ctp:43
+#: View/Posts/view.ctp:71
+#: View/Themes/admin_index.ctp:164
+msgid "Delete"
+msgstr ""
+
+#: View/Elements/admin/Categories/row_actions.ctp:13
+#: View/Elements/admin/Linkcats/row_actions.ctp:13
+#: View/Elements/admin/Links/row_actions.ctp:16
+#: View/Elements/admin/Media/row_actions.ctp:16;41
+#: View/Elements/admin/Menus/row_actions.ctp:13
+#: View/Elements/admin/Posts/row_actions.ctp:26
+#: View/Elements/admin/Tags/row_actions.ctp:13
+#: View/Elements/admin/Users/row_actions.ctp:13
+msgid "Are you sure you want to delete “%s”?"
+msgstr ""
+
+#: View/Elements/admin/Comments/filter.ctp:23;34
+msgid "Pending "
+msgstr ""
+
+#: View/Elements/admin/Comments/filter.ctp:49;60
+msgid "Approved "
+msgstr ""
+
+#: View/Elements/admin/Comments/filter.ctp:75;82
+msgid "Spam "
+msgstr ""
+
+#: View/Elements/admin/Comments/row_actions.ctp:7
+#: View/Elements/admin/Pages/row_actions.ctp:4
+#: View/Elements/admin/Posts/row_actions.ctp:4
+#: View/Links/index.ctp:45
+#: View/Posts/index.ctp:40
+#: View/Posts/view.ctp:63
+msgid "View"
+msgstr ""
+
+#: View/Elements/admin/Linkcats/search.ctp:24
+msgid "Link category name"
+msgstr ""
+
+#: View/Elements/admin/Links/row_actions.ctp:3
+msgid "Visit Link"
+msgstr ""
+
+#: View/Elements/admin/Media/row_actions.ctp:6
+msgid "Use this media"
+msgstr ""
+
+#: View/Elements/admin/Media/row_actions.ctp:29
+msgid "Download"
+msgstr ""
+
+#: View/Elements/admin/Media/row_actions.ctp:34
+msgid "Direct link"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:26
+msgid "Avatar Display"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:36
+msgid "Don’t show Avatars"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:52
+msgid "Show Avatars"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:67
+msgid "Maximum Rating"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:77
+msgid "G &mdash; Suitable for all audiences"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:92
+msgid "PG &mdash; Possibly offensive, usually for audiences 13 and above"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:107
+msgid "R &mdash; Intended for adult audiences above 17"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:122
+msgid "X &mdash; Even more mature than above"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:137
+msgid "Default Avatar"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:157
+msgid "Mystery Man"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:177
+msgid "Blank"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:197
+msgid "Gravatar Logo"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:217
+msgid "Identicon (Generated)"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:237
+msgid "Wavatar (Generated)"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:257
+msgid "MonsterID (Generated)"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:277
+msgid "Retro (Generated)"
+msgstr ""
+
+#: View/Elements/admin/Options/comment.ctp:285
+#: View/Elements/admin/Options/general.ctp:157
+#: View/Elements/admin/Options/permalink.ctp:90
+#: View/Linkcats/admin_edit.ctp:90
+#: View/Links/admin_edit.ctp:157
+#: View/Pages/admin_edit.ctp:145
+#: View/Posts/admin_edit.ctp:147
+msgid "Update"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:26
+msgid "Site Name"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:34
+msgid "Site URL"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:42
+msgid "Site Description"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:47
+msgid "In a few words, explain what this site is about."
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:56
+msgid "Admin Email"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:70
+msgid "Membership"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:77
+msgid "Anyone can register"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:84
+msgid "Default Role"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:96
+msgid "Adminstrator"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:105
+msgid "Timezone"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:108
+msgid "Choose a city in the same timezone as you."
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:114
+msgid "Date Format"
+msgstr ""
+
+#: View/Elements/admin/Options/general.ctp:137
+msgid "Time Format"
+msgstr ""
+
+#: View/Elements/admin/Options/permalink.ctp:4
+msgid "This can improve the aesthetics, usability, and forward-compatibility of your links."
+msgstr ""
+
+#: View/Elements/admin/Options/permalink.ctp:30
+msgid "Common settings"
+msgstr ""
+
+#: View/Elements/admin/Options/permalink.ctp:40
+msgid "Default"
+msgstr ""
+
+#: View/Elements/admin/Options/permalink.ctp:47;64;84
+msgid "<code>"
+msgstr ""
+
+#: View/Elements/admin/Options/permalink.ctp:57
+msgid "Day and name"
+msgstr ""
+
+#: View/Elements/admin/Options/permalink.ctp:77
+msgid "Month and name"
+msgstr ""
+
+#: View/Elements/admin/Pages/row_actions.ctp:6
+#: View/Elements/admin/Posts/row_actions.ctp:6
+msgid "View “%s”"
+msgstr ""
+
+#: View/Elements/admin/Pages/row_actions.ctp:13
+#: View/Elements/admin/Posts/row_actions.ctp:13
+msgid "Edit this item"
+msgstr ""
+
+#: View/Elements/admin/Pages/row_actions.ctp:20
+#: View/Elements/admin/Posts/row_actions.ctp:25
+msgid "Delete this item"
+msgstr ""
+
+#: View/Elements/admin/Pages/row_actions.ctp:21
+#: View/Elements/admin/Plugins/row_actions.ctp:19
+msgid "Are you sure you want to delete \"%s\"?"
+msgstr ""
+
+#: View/Elements/admin/Plugins/row_actions.ctp:4
+msgid "Deactivate"
+msgstr ""
+
+#: View/Elements/admin/Plugins/row_actions.ctp:6
+#: View/Themes/admin_index.ctp:152
+msgid "Activate"
+msgstr ""
+
+#: View/Emails/html/forgot_password.ctp:1
+msgid "Hello %s"
+msgstr ""
+
+#: View/Emails/html/forgot_password.ctp:5
+msgid "Please visit this link to reset your password: %s"
+msgstr ""
+
+#: View/Emails/html/forgot_password.ctp:8
+msgid "If you did not request a password reset, then please ignore this email."
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:39
+#: View/Pages/admin_add.ctp:72;86;144
+#: View/Pages/admin_edit.ctp:73;87
+#: View/Posts/admin_add.ctp:73;87;145
+#: View/Posts/admin_edit.ctp:75;89
+msgid "Publish"
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:41
+#: View/Pages/admin_add.ctp:87
+#: View/Pages/admin_edit.ctp:88
+#: View/Posts/admin_add.ctp:88
+#: View/Posts/admin_edit.ctp:90
+msgid "Draft"
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:45;57
+#: View/Helper/CommentHelper.php:633
+msgid "Unknown"
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:81
+msgid "This key is valid."
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:85
+msgid "This key is not valid."
+msgstr ""
+
+#: View/Helper/CommentHelper.php:158
+msgid "Anonymous"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:552;674
+msgid "% Comments"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:555;668
+msgid "No Comments"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:558;671
+msgid "1 Comment"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:621
+#: View/Helper/DashboardHelper.php:253
+msgid "Approved"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:624
+msgid "Unapproved"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:677
+msgid "Comments Off"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:710
+msgid "Comment on %s"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:25
+msgid "No comments yet."
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:40
+msgid "From"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:48
+msgid "on"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:82
+msgid "Unapprove"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:176
+msgid "Post"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:190
+msgid "Page"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:204
+#: View/Links/admin_index.ctp:35;141
+msgid "Category"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:221
+msgid "Discussion"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:271
+msgid "Pending"
+msgstr ""
+
+#: View/Helper/GravatarHelper.php:19
+msgid "Avatar"
+msgstr ""
+
+#: View/Helper/PageHelper.php:258
+#: View/Pages/admin_index.ctp:123
+msgid "No pages were found"
+msgstr ""
+
+#: View/Helper/PostHelper.php:204
+msgid "(more...)"
+msgstr ""
+
+#: View/Helper/PostHelper.php:339;345;371;377
+msgid "View all posts in %s"
+msgstr ""
+
+#: View/Installer/database.ctp:19;25
+msgid "Database name"
+msgstr ""
+
+#: View/Installer/database.ctp:32;38
+msgid "Database username"
+msgstr ""
+
+#: View/Installer/database.ctp:45;51
+msgid "Database password"
+msgstr ""
+
+#: View/Installer/database.ctp:58;66
+msgid "Database host"
+msgstr ""
+
+#: View/Installer/database.ctp:77;85
+msgid "Tables prefix"
+msgstr ""
+
+#: View/Installer/database.ctp:94
+msgid "Install Database"
+msgstr ""
+
+#: View/Installer/finalize.ctp:15;19
+msgid "Weblog Title"
+msgstr ""
+
+#: View/Installer/finalize.ctp:26;32
+msgid "Admin Username"
+msgstr ""
+
+#: View/Installer/finalize.ctp:37;41
+#: View/Users/admin_add.ctp:108
+#: View/Users/admin_profile.ctp:169
+#: View/Users/login.ctp:52
+#: View/Users/register.ctp:51
+msgid "Password"
+msgstr ""
+
+#: View/Installer/finalize.ctp:48;54
+#: View/Users/admin_profile.ctp:195
+#: View/Users/register.ctp:72
+msgid "Confirm Password"
+msgstr ""
+
+#: View/Installer/finalize.ctp:59;63
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:46
+#: View/Users/admin_profile.ctp:130
+#: View/Users/register.ctp:94
+msgid "Email"
+msgstr ""
+
+#: View/Installer/finalize.ctp:70
+msgid "Finish :)"
+msgstr ""
+
+#: View/Installer/index.ctp:8
+msgid "Your version of PHP is 5.3.0 or higher."
+msgstr ""
+
+#: View/Installer/index.ctp:11
+msgid "Your version of PHP is too low. You need PHP 5.3.0 or higher to use Hurad."
+msgstr ""
+
+#: View/Installer/index.ctp:20
+msgid "Your tmp directory is writable."
+msgstr ""
+
+#: View/Installer/index.ctp:23
+msgid "Your tmp directory is NOT writable."
+msgstr ""
+
+#: View/Installer/index.ctp:39
+msgid "Your cache is NOT working. Please check the settings in APP/Config/core.php"
+msgstr ""
+
+#: View/Installer/index.ctp:95
+msgid "PCRE has not been compiled with Unicode support."
+msgstr ""
+
+#: View/Installer/index.ctp:110
+msgid "Official website"
+msgstr ""
+
+#: View/Installer/index.ctp:113
+msgid "Hurad Documentation"
+msgstr ""
+
+#: View/Installer/index.ctp:116
+msgid "Hurad API"
+msgstr ""
+
+#: View/Installer/index.ctp:119
+msgid "Hurad Source Code"
+msgstr ""
+
+#: View/Installer/index.ctp:122
+msgid "Hurad Issues"
+msgstr ""
+
+#: View/Installer/index.ctp:126
+msgid "If you are ready to install, then click here"
+msgstr ""
+
+#: View/Installer/welcome.ctp:5
+msgid "Enter to admin section"
+msgstr ""
+
+#: View/Installer/welcome.ctp:10
+msgid "View site"
+msgstr ""
+
+#: View/Layouts/admin.ctp:4
+#: View/Layouts/admin_login.ctp:4
+#: View/Layouts/browse.ctp:4
+msgid "Huard"
+msgstr ""
+
+#: View/Linkcats/admin_edit.ctp:67
+msgid "The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
+msgstr ""
+
+#: View/Links/admin_add.ctp:21
+#: View/Links/admin_edit.ctp:21
+msgid "Select Category"
+msgstr ""
+
+#: View/Links/admin_add.ctp:56
+#: View/Links/admin_edit.ctp:56
+msgid "Example: Nifty blogging software"
+msgstr ""
+
+#: View/Links/admin_add.ctp:75
+#: View/Links/admin_edit.ctp:75
+msgid "Web Address"
+msgstr ""
+
+#: View/Links/admin_add.ctp:83
+#: View/Links/admin_edit.ctp:83
+msgid "This URL not valid."
+msgstr ""
+
+#: View/Links/admin_add.ctp:103
+#: View/Links/admin_edit.ctp:103
+msgid "Target"
+msgstr ""
+
+#: View/Links/admin_add.ctp:110
+#: View/Links/admin_edit.ctp:110
+msgid "New window or tab. (_blank)"
+msgstr ""
+
+#: View/Links/admin_add.ctp:111
+#: View/Links/admin_edit.ctp:111
+msgid "Current window or tab, with no frames. (_top)"
+msgstr ""
+
+#: View/Links/admin_add.ctp:112
+#: View/Links/admin_edit.ctp:112
+msgid "Same window or tab. (_none)"
+msgstr ""
+
+#: View/Links/admin_add.ctp:120
+#: View/Links/admin_edit.ctp:120
+msgid "Choose the target frame for your link."
+msgstr ""
+
+#: View/Links/admin_add.ctp:124
+#: View/Links/admin_edit.ctp:124
+#: View/Links/admin_index.ctp:42;147
+msgid "Visible"
+msgstr ""
+
+#: View/Links/admin_add.ctp:141
+#: View/Links/admin_edit.ctp:141
+#: View/Links/admin_index.ctp:49;153
+msgid "Rating"
+msgstr ""
+
+#: View/Links/admin_add.ctp:148
+#: View/Links/admin_edit.ctp:148
+msgid "(Choose one)"
+msgstr ""
+
+#: View/Links/admin_add.ctp:157
+msgid "Add Link"
+msgstr ""
+
+#: View/Links/admin_index.ctp:80
+msgid "Visit %s"
+msgstr ""
+
+#: View/Links/index.ctp:17;77
+#: View/Posts/index.ctp:17;72
+#: View/Posts/view.ctp:50
+msgid "Actions"
+msgstr ""
+
+#: View/Links/index.ctp:51
+#: View/Posts/index.ctp:46
+#: View/Posts/view.ctp:74
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: View/Links/index.ctp:70
+#: View/Posts/index.ctp:65
+msgid "previous"
+msgstr ""
+
+#: View/Links/index.ctp:72
+#: View/Posts/index.ctp:67
+msgid "next"
+msgstr ""
+
+#: View/Links/index.ctp:79
+msgid "New Link"
+msgstr ""
+
+#: View/Links/index.ctp:81
+msgid "List Links"
+msgstr ""
+
+#: View/Links/index.ctp:85
+msgid "New Parent Link"
+msgstr ""
+
+#: View/Links/index.ctp:89
+msgid "List Menus"
+msgstr ""
+
+#: View/Links/index.ctp:92
+msgid "New Menu"
+msgstr ""
+
+#: View/Media/admin_add.ctp:20
+msgid "Choose File"
+msgstr ""
+
+#: View/Media/admin_add.ctp:35
+msgid "Upload"
+msgstr ""
+
+#: View/Media/admin_browse.ctp:36;121
+#: View/Media/admin_index.ctp:39;124
+#: View/Pages/admin_index.ctp:49;154
+#: View/Posts/admin_index.ctp:63;192
+msgid "Date"
+msgstr ""
+
+#: View/Menus/admin_add.ctp:25
+#: View/Menus/admin_edit.ctp:25
+msgid "Alias"
+msgstr ""
+
+#: View/Menus/admin_add.ctp:41
+#: View/Menus/admin_edit.ctp:41
+msgid "Add menu"
+msgstr ""
+
+#: View/Menus/admin_index.ctp:32;124
+msgid "Link Count"
+msgstr ""
+
+#: View/Menus/admin_index.ctp:99
+msgid "No menus were found"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:35
+#: View/Pages/admin_edit.ctp:36
+#: View/Posts/admin_add.ctp:35
+#: View/Posts/admin_edit.ctp:36
+msgid "Enter title here"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:45
+#: View/Pages/admin_edit.ctp:46
+#: View/Posts/admin_add.ctp:45
+#: View/Posts/admin_edit.ctp:47
+msgid "Enter slug here"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:57
+#: View/Pages/admin_edit.ctp:58
+#: View/Posts/admin_add.ctp:58
+#: View/Posts/admin_edit.ctp:60
+msgid "Excerpt"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:77
+#: View/Pages/admin_edit.ctp:78
+#: View/Posts/admin_add.ctp:78
+#: View/Posts/admin_edit.ctp:80
+msgid "Post Status:"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:96
+#: View/Pages/admin_edit.ctp:97
+#: View/Posts/admin_add.ctp:97
+#: View/Posts/admin_edit.ctp:99
+msgid "Comment Status:"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:105
+#: View/Pages/admin_edit.ctp:106
+#: View/Posts/admin_add.ctp:106
+#: View/Posts/admin_edit.ctp:108
+msgid "Open"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:106
+#: View/Pages/admin_edit.ctp:107
+#: View/Posts/admin_add.ctp:107
+#: View/Posts/admin_edit.ctp:109
+msgid "Close"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:107
+#: View/Pages/admin_edit.ctp:108
+#: View/Posts/admin_add.ctp:108
+#: View/Posts/admin_edit.ctp:110
+msgid "Disable"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:116
+#: View/Pages/admin_edit.ctp:117
+#: View/Posts/admin_add.ctp:117
+#: View/Posts/admin_edit.ctp:119
+msgid "Publish date:"
+msgstr ""
+
+#: View/Pages/admin_add.ctp:160
+#: View/Pages/admin_edit.ctp:161
+msgid "(No Parent)"
+msgstr ""
+
+#: View/Pages/admin_index.ctp:28;136
+#: View/Posts/admin_index.ctp:28;162
+msgid "Title"
+msgstr ""
+
+#: View/Posts/index.ctp:74
+msgid "New Post"
+msgstr ""
+
+#: View/Posts/index.ctp:76
+msgid "List Users"
+msgstr ""
+
+#: View/Posts/index.ctp:79
+msgid "New User"
+msgstr ""
+
+#: View/Posts/index.ctp:81
+msgid "List Comments"
+msgstr ""
+
+#: View/Posts/index.ctp:85
+msgid "New Comment"
+msgstr ""
+
+#: View/Posts/index.ctp:89
+msgid "List Categories"
+msgstr ""
+
+#: View/Posts/index.ctp:93
+msgid "New Category"
+msgstr ""
+
+#: View/Posts/index.ctp:96
+msgid "List Tags"
+msgstr ""
+
+#: View/Posts/index.ctp:97
+#: View/Posts/view.ctp:84
+msgid "New Tag"
+msgstr ""
+
+#: View/Posts/view.ctp:41
+msgid "Related Tags"
+msgstr ""
+
+#: View/Posts/view.ctp:45
+msgid "Id"
+msgstr ""
+
+#: View/Posts/view.ctp:48
+msgid "Created"
+msgstr ""
+
+#: View/Posts/view.ctp:49
+msgid "Modified"
+msgstr ""
+
+#: View/Posts/rss/index.ctp:17
+msgid "My Recent Posts"
+msgstr ""
+
+#: View/Tags/admin_edit.ctp:90
+msgid "Update Tag"
+msgstr ""
+
+#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:55
+msgid "Submit Comment"
+msgstr ""
+
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:57
+msgid "Url"
+msgstr ""
+
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:79
+msgid "Submit reply"
+msgstr ""
+
+#: View/Themed/Hurad2013/Layouts/default.ctp:44
+msgid "Powered by %s"
+msgstr ""
+
+#: View/Themed/Hurad2013/Layouts/default.ctp:51
+msgid "All rights reserved &copy; %s"
+msgstr ""
+
+#: View/Themed/Hurad2013/Posts/index.ctp:15
+msgid "Read More ..."
+msgstr ""
+
+#: View/Themes/admin_index.ctp:4
+msgid "Current Theme"
+msgstr ""
+
+#: View/Themes/admin_index.ctp:55;125
+msgid "Visit theme url"
+msgstr ""
+
+#: View/Themes/admin_index.ctp:65;135
+msgid "Visit author url"
+msgstr ""
+
+#: View/Themes/admin_index.ctp:70;140
+msgid "by"
+msgstr ""
+
+#: View/Themes/admin_index.ctp:78;148
+msgid "Tags: "
+msgstr ""
+
+#: View/Themes/admin_index.ctp:88
+msgid "Available Themes"
+msgstr ""
+
+#: View/Themes/admin_index.ctp:159
+msgid "Activate \"%s\""
+msgstr ""
+
+#: View/Themes/admin_index.ctp:171
+msgid "Delete \"%s\""
+msgstr ""
+
+#: View/Themes/admin_index.ctp:174
+msgid "Are you sure delete \"%s\""
+msgstr ""
+
+#: View/Users/admin_add.ctp:19
+#: View/Users/admin_index.ctp:11;113
+#: View/Users/admin_profile.ctp:25
+#: View/Users/forgot.ctp:22
+#: View/Users/login.ctp:30
+#: View/Users/register.ctp:30
+msgid "Username"
+msgstr ""
+
+#: View/Users/admin_add.ctp:26
+#: View/Users/admin_profile.ctp:32
+#: View/Users/login.ctp:19
+#: View/Users/register.ctp:19
+msgid "Minimum length of 5 characters."
+msgstr ""
+
+#: View/Users/admin_add.ctp:27
+#: View/Users/admin_profile.ctp:33
+#: View/Users/login.ctp:20
+#: View/Users/register.ctp:20
+msgid "This username has already been taken."
+msgstr ""
+
+#: View/Users/admin_add.ctp:43
+#: View/Users/admin_index.ctp:25;125
+msgid "e-Mail"
+msgstr ""
+
+#: View/Users/admin_add.ctp:50
+#: View/Users/register.ctp:84
+msgid "Please enter valid email."
+msgstr ""
+
+#: View/Users/admin_add.ctp:51
+#: View/Users/register.ctp:85
+msgid "This email has already exist."
+msgstr ""
+
+#: View/Users/admin_add.ctp:68
+#: View/Users/admin_profile.ctp:53
+msgid "First Name"
+msgstr ""
+
+#: View/Users/admin_add.ctp:78
+#: View/Users/admin_profile.ctp:73
+msgid "Last Name"
+msgstr ""
+
+#: View/Users/admin_add.ctp:86
+#: View/Users/admin_profile.ctp:146
+msgid "Website"
+msgstr ""
+
+#: View/Users/admin_add.ctp:93
+msgid "Please enter valid url."
+msgstr ""
+
+#: View/Users/admin_add.ctp:115
+#: View/Users/login.ctp:42
+#: View/Users/register.ctp:42
+msgid "Passwords must be between 5 and 32 characters long."
+msgstr ""
+
+#: View/Users/admin_add.ctp:133
+msgid "Retype Password"
+msgstr ""
+
+#: View/Users/admin_add.ctp:142
+#: View/Users/register.ctp:63
+msgid "Entered passwords do not match."
+msgstr ""
+
+#: View/Users/admin_add.ctp:158
+#: View/Users/admin_index.ctp:32;131
+msgid "Role"
+msgstr ""
+
+#: View/Users/admin_add.ctp:178
+msgid "Add New User"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:93
+msgid "Nickname"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:113
+msgid "Display Name"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:153
+msgid "Enter valid url."
+msgstr ""
+
+#: View/Users/admin_profile.ctp:212
+msgid "Type your new password again."
+msgstr ""
+
+#: View/Users/admin_profile.ctp:217;244
+msgid "Strength indicator"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:219
+msgid "Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! \" ? $ % ^ & )."
+msgstr ""
+
+#: View/Users/admin_profile.ctp:228
+msgid "Update Profile"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:237
+msgid "You are about to permanently delete the selected items.\\n  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+
+#: View/Users/admin_profile.ctp:245
+msgid "Very weak"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:246
+msgid "Weak"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:247
+msgid "Medium"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:248
+msgid "Strong"
+msgstr ""
+
+#: View/Users/admin_profile.ctp:249
+msgid "Mismatch"
+msgstr ""
+
+#: View/Users/forgot.ctp:29
+#: View/Users/reset.ctp:12
+msgid "Submit"
+msgstr ""
+
+#: View/Users/login.ctp:61
+msgid "Remember Me"
+msgstr ""
+
+#: View/Users/login.ctp:68
+msgid "Not registered?"
+msgstr ""
+
+#: View/Users/login.ctp:73
+msgid "Forgot password?"
+msgstr ""
+
+#: View/Users/login.ctp:77
+msgid "Login"
+msgstr ""
+
+#: View/Users/reset.ctp:7
+msgid "Add User"
+msgstr ""
+
+#: View/Users/reset.ctp:9
+msgid "New password"
+msgstr ""
+
+#: View/Widgets/admin_index.ctp:45
+msgid "Available Widgets"
+msgstr ""
+
+#: View/Widgets/admin_index.ctp:227
+msgid "Disable Sidebar"
+msgstr ""
+
+#: View/Widgets/admin_index.ctp:232
+msgid "In this theme not supported dynamic sidebar."
+msgstr ""
+

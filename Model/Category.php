@@ -184,4 +184,11 @@ class Category extends AppModel
         return $cats;
     }
 
+    public function getBySlug($slug)
+    {
+        $category = $this->find('first', ['conditions' => ['Category.slug' => $slug]]);
+
+        return $category;
+    }
+
 }

@@ -1,0 +1,44 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2013-12-20 12:02+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Plugin/Akismet/Controller/AkismetController.php:44
+msgid "Akismet config have been updated!"
+msgstr ""
+
+#: Plugin/Akismet/Controller/AkismetController.php:51
+msgid "Unable to update config."
+msgstr ""
+
+#: Plugin/Akismet/View/Akismet/admin_index.ctp:5
+msgid "Akismet Configuration"
+msgstr ""
+
+#: Plugin/Akismet/View/Akismet/admin_index.ctp:24
+msgid "Akismet API Key"
+msgstr ""
+
+#: Plugin/Akismet/View/Akismet/admin_index.ctp:35
+msgid "This key is valid."
+msgstr ""
+
+#: Plugin/Akismet/View/Akismet/admin_index.ctp:37
+msgid "This key is invalid."
+msgstr ""
+
+#: Plugin/Akismet/View/Akismet/admin_index.ctp:44
+msgid "Update"
+msgstr ""
+

@@ -339,9 +339,11 @@ class PostHelper extends AppHelper
                     array('title' => __d('hurad', 'View all posts in %s', $category['name']), 'rel' => 'category')
                 );
             } else {
-                $cat[] = '<a href="http://localhost/hurad/category/' . $category['slug'] . '" title="' . __(
-                        'View all posts in'
-                    ) . ' ' . $category['name'] . '" rel="category">' . $category['name'] . '</a>';
+                $cat[] = $this->Html->link(
+                    $category['name'],
+                    $this->Link->siteUrl('/') . 'category/' . $category['slug'],
+                    array('title' => __d('hurad', 'View all posts in %s', $category['name']), 'rel' => 'category')
+                );
             }
         }
         if ($separator == '') {
@@ -371,7 +373,7 @@ class PostHelper extends AppHelper
             } else {
                 $term[] = $this->Html->link(
                     $tag['name'],
-                    $this->getPermalink() . '/tag/' . $tag['slug'],
+                    $this->Link->siteUrl('/') . 'tag/' . $tag['slug'],
                     array('title' => __d('hurad', 'View all posts in %s', $tag['name']), 'rel' => 'tag')
                 );
             }
