@@ -4,10 +4,10 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4><strong><a href="<?= $this->Post->getPermalink(); ?>" title="<?php printf(
+                    <h3><strong><a href="<?= $this->Post->getPermalink(); ?>" title="<?php printf(
                                 __d('hurad', 'Permalink to %s'),
                                 $this->Post->theTitleAttribute()
-                            ); ?>"><?php $this->Post->theTitle(); ?></a></strong></h4>
+                            ); ?>"><?php $this->Post->theTitle(); ?></a></strong></h3>
                 </div>
             </div>
             <div class="row">
@@ -17,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>
+                    <p class="well well-sm">
                         <span class="glyphicon glyphicon-pencil"></span> <?php echo $this->Html->link(
                             $this->Author->getTheAuthor(),
                             $this->Author->getAuthorPostsUrl()
