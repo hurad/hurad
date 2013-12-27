@@ -89,8 +89,8 @@ class UserTest extends CakeTestCase
                 'modified' => '2013-03-17 01:16:23'
             ],
             'UserMeta' => [
-                'firstname' => 'Mohammad',
-                'lastname' => 'Abdoli Rad',
+                'first_name' => 'Mohammad',
+                'last_name' => 'Abdoli Rad',
                 'nickname' => 'atkrad',
                 'bio' => '',
                 'display_name' => 'Mohammad'

@@ -158,8 +158,8 @@ class AuthorHelper extends AppHelper
                 continue;
             }
 
-            if ($args['show_fullname'] && isset($author['UserMeta']['firstname']) && isset($author['UserMeta']['lastname'])) {
-                $name = "{$author['UserMeta']['firstname']} {$author['UserMeta']['lastname']}";
+            if ($args['show_fullname'] && isset($author['UserMeta']['first_name']) && isset($author['UserMeta']['last_name'])) {
+                $name = "{$author['UserMeta']['first_name']} {$author['UserMeta']['last_name']}";
             } else {
                 $name = $author['UserMeta']['display_name'];
             }

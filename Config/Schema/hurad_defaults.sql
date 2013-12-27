@@ -14,8 +14,8 @@ INSERT INTO `$[prefix]users`(`id`, `username`, `password`, `email`, `url`, `role
      (1, '$[username]', '$[password]', '$[email]', '', 'administrator', 0, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]user_metas` (`id`, `user_id`, `meta_key`, `meta_value`) VALUES
-    (1, 1, 'firstname', ''),
-    (2, 1, 'lastname', ''),
+    (1, 1, 'first_name', ''),
+    (2, 1, 'last_name', ''),
     (3, 1, 'nickname', '$[username]'),
     (4, 1, 'bio', ''),
     (5, 1, 'display_name', '$[username]');

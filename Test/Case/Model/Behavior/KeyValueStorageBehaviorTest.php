@@ -22,8 +22,8 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
     {
         $data = [
             'UserMeta' => [
-                'firstname' => 'Ali',
-                'lastname' => 'Rad',
+                'first_name' => 'Ali',
+                'last_name' => 'Rad',
                 'nickname' => 'hulk',
                 'display_name' => 'Dr Ali'
             ]
@@ -35,8 +35,8 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
 
         $dataTwo = [
             'UserMeta' => [
-                'firstname' => 'Hasan',
-                'lastname' => 'Rad',
+                'first_name' => 'Hasan',
+                'last_name' => 'Rad',
                 'nickname' => 'dr-hulk',
                 'display_name' => 'admin'
             ]
@@ -60,8 +60,8 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
 
         $expected = [
             'UserMeta' => [
-                'firstname' => 'Mohammad',
-                'lastname' => 'Abdoli Rad',
+                'first_name' => 'Mohammad',
+                'last_name' => 'Abdoli Rad',
                 'nickname' => 'atkrad',
                 'bio' => '',
                 'display_name' => 'Mohammad'

@@ -15,7 +15,7 @@
                 )
             ),
             array(
-                $this->Paginator->sort('firstname', __d('hurad', 'Name')) => array(
+                $this->Paginator->sort('first_name', __d('hurad', 'Name')) => array(
                     'id' => 'name',
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
@@ -116,7 +116,7 @@
                 )
             ),
             array(
-                $this->Paginator->sort('firstname', __d('hurad', 'Name')) => array(
+                $this->Paginator->sort('first_name', __d('hurad', 'Name')) => array(
                     'class' => 'column-name column-manage',
                     'scope' => 'col'
                 )

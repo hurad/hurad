@@ -278,19 +278,24 @@ class AdminLayoutHelper extends AppHelper
         $user = ClassRegistry::init('User')->getUser($userID);
         $options = array();
         $options[$user['User']['username']] = $user['User']['username'];
-        if (!empty($user['UserMeta']['firstname']) && !empty($user['UserMeta']['lastname'])) {
-            $options[$user['UserMeta']['firstname'] . ' ' . $user['UserMeta']['lastname']] = $user['UserMeta']['firstname'] . ' ' . $user['UserMeta']['lastname'];
-            $options[$user['UserMeta']['lastname'] . ' ' . $user['UserMeta']['firstname']] = $user['UserMeta']['lastname'] . ' ' . $user['UserMeta']['firstname'];
+
+        if (!empty($user['UserMeta']['first_name']) && !empty($user['UserMeta']['last_name'])) {
+            $options[$user['UserMeta']['first_name'] . ' ' . $user['UserMeta']['last_name']] = $user['UserMeta']['first_name'] . ' ' . $user['UserMeta']['last_name'];
+            $options[$user['UserMeta']['last_name'] . ' ' . $user['UserMeta']['first_name']] = $user['UserMeta']['last_name'] . ' ' . $user['UserMeta']['first_name'];
         }
-        if (!empty($user['UserMeta']['firstname']) && empty($user['UserMeta']['lastname'])) {
-            $options[$user['UserMeta']['firstname']] = $user['UserMeta']['firstname'];
+
+        if (!empty($user['UserMeta']['first_name']) && empty($user['UserMeta']['last_name'])) {
+            $options[$user['UserMeta']['first_name']] = $user['UserMeta']['first_name'];
         }
-        if (empty($user['UserMeta']['firstname']) && !empty($user['UserMeta']['lastname'])) {
-            $options[$user['UserMeta']['lastname']] = $user['UserMeta']['lastname'];
+
+        if (empty($user['UserMeta']['first_name']) && !empty($user['UserMeta']['last_name'])) {
+            $options[$user['UserMeta']['last_name']] = $user['UserMeta']['last_name'];
         }
+
         if (!empty($user['UserMeta']['nickname'])) {
             $options[$user['UserMeta']['nickname']] = $user['UserMeta']['nickname'];
         }
+
         return $options;
     }
 

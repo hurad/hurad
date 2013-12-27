@@ -23,7 +23,7 @@ class UserMetaTest extends CakeTestCase
     {
         $firstName = $this->UserMeta->field(
             'meta_value',
-            array('UserMeta.user_id' => 1, 'UserMeta.meta_key' => 'firstname')
+            array('UserMeta.user_id' => 1, 'UserMeta.meta_key' => 'first_name')
         );
         $this->assertEquals($firstName, 'Mohammad', 'First name');
     }

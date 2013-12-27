@@ -62,24 +62,24 @@ echo $this->Form->create(
         ?>
     </div>
 </div>
-<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.firstname') ? ' has-error' : ''; ?>">
+<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.first_name') ? ' has-error' : ''; ?>">
     <?php echo $this->Form->label(
-        'UserMeta.firstname',
+        'UserMeta.first_name',
         __d('hurad', 'First Name'),
         array('class' => 'control-label col-lg-2')
     ); ?>
     <div class="col-lg-4">
-        <?php echo $this->Form->input('UserMeta.firstname', array('class' => 'form-control')); ?>
+        <?php echo $this->Form->input('UserMeta.first_name', array('class' => 'form-control')); ?>
     </div>
 </div>
-<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.lastname') ? ' has-error' : ''; ?>">
+<div class="form-group<?php echo $this->Form->isFieldError('UserMeta.last_name') ? ' has-error' : ''; ?>">
     <?php echo $this->Form->label(
-        'UserMeta.lastname',
+        'UserMeta.last_name',
         __d('hurad', 'Last Name'),
         array('class' => 'control-label col-lg-2')
     ); ?>
     <div class="col-lg-4">
-        <?php echo $this->Form->input('UserMeta.lastname', array('class' => 'form-control')); ?>
+        <?php echo $this->Form->input('UserMeta.last_name', array('class' => 'form-control')); ?>
     </div>
 </div>
 <div class="form-group<?php echo $this->Form->isFieldError('url') ? ' has-error' : ''; ?>">
