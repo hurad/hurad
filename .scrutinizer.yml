@@ -3,6 +3,6 @@ filter:
 
 tools:
     php_code_coverage:
-      test_command: Console/cake test app AllTests --coverage-clover
+      test_command: Console/cake test app AllTests
     php_cpd: true
     php_pdepend: true
