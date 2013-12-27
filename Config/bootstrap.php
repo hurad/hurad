@@ -159,11 +159,11 @@ function isInstalled()
             'links' => $dataSource->config['prefix'] . 'links',
             'menus' => $dataSource->config['prefix'] . 'menus',
             'options' => $dataSource->config['prefix'] . 'options',
-            'post_metas' => $dataSource->config['prefix'] . 'post_metas',
+            'post_meta' => $dataSource->config['prefix'] . 'post_meta',
             'posts' => $dataSource->config['prefix'] . 'posts',
             'posts_tags' => $dataSource->config['prefix'] . 'posts_tags',
             'tags' => $dataSource->config['prefix'] . 'tags',
-            'user_metas' => $dataSource->config['prefix'] . 'user_metas',
+            'user_meta' => $dataSource->config['prefix'] . 'user_meta',
             'users' => $dataSource->config['prefix'] . 'users',
         ];
 

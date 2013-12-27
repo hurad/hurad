@@ -7,11 +7,11 @@ DROP TABLE IF EXISTS `$[prefix]links`;
 DROP TABLE IF EXISTS `$[prefix]media`;
 DROP TABLE IF EXISTS `$[prefix]menus`;
 DROP TABLE IF EXISTS `$[prefix]options`;
-DROP TABLE IF EXISTS `$[prefix]post_metas`;
+DROP TABLE IF EXISTS `$[prefix]post_meta`;
 DROP TABLE IF EXISTS `$[prefix]posts`;
 DROP TABLE IF EXISTS `$[prefix]posts_tags`;
 DROP TABLE IF EXISTS `$[prefix]tags`;
-DROP TABLE IF EXISTS `$[prefix]user_metas`;
+DROP TABLE IF EXISTS `$[prefix]user_meta`;
 DROP TABLE IF EXISTS `$[prefix]users`;
 
 
@@ -112,7 +112,7 @@ CREATE TABLE `$[prefix]options` (
 	COLLATE=utf8_general_ci,
 	ENGINE=InnoDB;
 
-CREATE TABLE `$[prefix]post_metas` (
+CREATE TABLE `$[prefix]post_meta` (
 	`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`post_id` bigint(20) DEFAULT 0 NOT NULL,
 	`meta_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `$[prefix]tags` (
 	COLLATE=utf8_general_ci,
 	ENGINE=InnoDB;
 
-CREATE TABLE `$[prefix]user_metas` (
+CREATE TABLE `$[prefix]user_meta` (
 	`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`user_id` bigint(20) DEFAULT 0 NOT NULL,
 	`meta_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

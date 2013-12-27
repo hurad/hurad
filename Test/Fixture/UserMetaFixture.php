@@ -13,7 +13,6 @@ class UserMetaFixture extends CakeTestFixture
      * @access public
      */
     public $name = 'UserMeta';
-    public $table = 'user_metas';
 
     /**
      * fields property

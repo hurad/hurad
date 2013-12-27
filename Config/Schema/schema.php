@@ -102,7 +102,7 @@ class AppSchema extends CakeSchema {
         ),
         'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
     );
-    public $post_metas = array(
+    public $post_meta = array(
         'id' => array('type' => 'biginteger', 'null' => false, 'default' => null, 'key' => 'primary'),
         'post_id' => array('type' => 'biginteger', 'null' => false, 'default' => '0'),
         'meta_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -155,7 +155,7 @@ class AppSchema extends CakeSchema {
         ),
         'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
     );
-    public $user_metas = array(
+    public $user_meta = array(
         'id' => array('type' => 'biginteger', 'null' => false, 'default' => null, 'key' => 'primary'),
         'user_id' => array('type' => 'biginteger', 'null' => false, 'default' => '0'),
         'meta_key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
