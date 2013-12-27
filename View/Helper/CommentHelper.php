@@ -9,30 +9,13 @@ App::uses('AppHelper', 'View/Helper');
  */
 class CommentHelper extends AppHelper
 {
-
-    /**
-     * Current Post
-     *
-     * @var array
-     * @access public
-     */
-    public $post = [];
-
-    /**
-     * Current Page
-     *
-     * @var array
-     * @access public
-     */
-    public $page = [];
-
     /**
      * Current Comment
      *
      * @var array
      * @access public
      */
-    public $comment = [];
+    protected $comment = [];
 
     /**
      * Current User Logged
@@ -40,31 +23,7 @@ class CommentHelper extends AppHelper
      * @var array
      * @access public
      */
-    public $current_user = [];
-
-    /**
-     * Current controller
-     *
-     * @var string
-     * @access public
-     */
-    public $view_path = null;
-
-    /**
-     * User model object
-     *
-     * @var object
-     * @access public
-     */
-    public $MUser = null;
-
-    /**
-     * Post model object
-     *
-     * @var object
-     * @access public
-     */
-    public $MPost = null;
+    public $currentUser = [];
 
     /**
      * Comment alt count
@@ -72,7 +31,7 @@ class CommentHelper extends AppHelper
      * @var object
      * @access public
      */
-    public $comment_alt = null;
+    public $commentAlt = null;
 
     /**
      * Other helpers used by this helper
@@ -80,7 +39,7 @@ class CommentHelper extends AppHelper
      * @var array
      * @access public
      */
-    public $helpers = ['Hook', 'Html', 'Form', 'Time', 'Text', 'Gravatar', 'Post', 'Page', 'Link', 'Utils.Tree'];
+    public $helpers = ['Hook', 'Html', 'Form', 'Time', 'Text', 'Gravatar', 'Content', 'Link', 'Utils.Tree'];
 
     /**
      * Current post array
@@ -89,143 +48,125 @@ class CommentHelper extends AppHelper
      * @access public
      */
     public $content = [];
-    /**
-     * Model of content
-     *
-     * @var null|string
-     */
-    private static $model = null;
 
     /**
-     * Set model
+     * Default Constructor
      *
-     * @return null|string
+     * @param View $View The View this helper is being attached to.
+     * @param array $settings Configuration settings for the helper.
      */
-    public static function getModel()
-    {
-        return self::$model;
-    }
-
-    /**
-     * Get model
-     *
-     * @param null|string $model
-     */
-    public static function setModel($model)
-    {
-        self::$model = Inflector::singularize($model);
-    }
-
     public function __construct(View $View, $settings = [])
     {
         parent::__construct($View, $settings);
-        $this->view_path = $this->_View->viewPath;
-        $this->post = $this->Link->post = $this->_View->get('post');
-        $this->page = $this->_View->get('page');
-        $this->current_user = $this->_View->get('current_user');
-        $this->MUser = ClassRegistry::getObject('User');
-        $this->MPost = ClassRegistry::getObject('Post');
+
+        if ($this->_View->viewPath == 'Posts') {
+            $this->content = $this->Link->post = $this->_View->get('post');
+            $this->contentModel = 'Post';
+            $this->contentType = 'post';
+        } elseif ($this->_View->viewPath == 'Pages') {
+            $this->content = $this->_View->get('page');
+            $this->contentModel = 'Page';
+            $this->contentType = 'page';
+        }
+
+        $this->currentUser = $this->_View->get('current_user');
     }
 
-    public function setComment($comment)
+    /**
+     * Set current comment
+     *
+     * @param array $comment Current comment
+     */
+    public function setComment(array $comment)
     {
         $this->comment = $comment;
     }
 
     /**
+     * Get comment
+     *
+     * @param array|string $comment Comment array or comment id
+     * @param array $query Find query
+     */
+    protected function getComment($comment, array $query = [])
+    {
+        if (is_array($comment) && array_key_exists('Comment', $comment)) {
+            $this->comment = $comment;
+        } elseif (!is_null($comment)) {
+            $comment = ClassRegistry::init('Comment')->getComment($comment, $query);
+            $this->comment = $comment;
+        }
+    }
+
+    /**
      * Retrieve the author of the current comment.
      *
-     * If the comment has an empty comment_author field, then 'Anonymous' person is
-     * assumed.
-     *
-     * @uses applyFilters() Calls 'get_comment_author' hook on the comment author
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The comment author
      */
     public function getAuthor($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        if (empty($this->comment['author'])) {
-            if (!empty($this->comment['user_id'])) {
-                $user = $this->MUser->getUserData($this->comment['user_id']);
-                $author = $user['username'];
+        if (empty($this->comment['Comment']['author'])) {
+            if (!empty($this->comment['Comment']['user_id'])) {
+                $user = ClassRegistry::init('User')->getUser($this->comment['Comment']['user_id']);
+                $author = $user['User']['username'];
             } else {
                 $author = __d('hurad', 'Anonymous');
             }
         } else {
-            $author = $this->comment['author'];
+            $author = $this->comment['Comment']['author'];
         }
-        return $this->Hook->applyFilters('get_comment_author', $author);
+
+        return $this->Hook->applyFilters('Helper.Comment.getAuthor', $author);
     }
 
     /**
      * Retrieve the email of the author of the current comment.
      *
-     * @uses applyFilters() Calls the 'get_comment_author_email' hook on the comment author email
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The current comment author's email
      */
     public function getAuthorEmail($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        return $this->Hook->applyFilters('get_comment_author_email', $this->comment['author_email']);
+        return $this->Hook->applyFilters('Helper.Comment.getAuthorEmail', $this->comment['Comment']['author_email']);
     }
 
     /**
      * Return the html email link to the author of the current comment.
      *
-     * Care should be taken to protect the email address and assure that email
-     * harvesters do not capture your commentors' email address. Most assume that
-     * their email address will not appear in raw form on the blog. Doing so will
-     * enable anyone, including those that people don't want to get the email
-     * address and use it for their own means good and bad.
-     *
-     * @uses applyFilters() Calls 'author_email' hook for the display of the comment author's email
-     *
      * @param string $linkText The text to display instead of the comment author's email address
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string
      */
     public function getAuthorEmailLink($linkText = '', $before = '', $after = '', $comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
-
-        $email = $this->Hook->applyFilters('author_email', $this->comment['author_email']);
+        $email = $this->getAuthorEmail($comment);
 
         if ((!empty($email)) && ($email != '@')) {
             $display = ($linkText != '') ? $linkText : $email;
             $return = $before;
             $return .= $this->Html->link($display, 'mailto:' . $email);
             $return .= $after;
-            return $return;
         } else {
-            return '';
+            $return = '';
         }
+
+        return $this->Hook->applyFilters('Helper.Comment.getAuthorEmailLink', $return, $email);
     }
 
     /**
      * Retrieve the html link to the url of the author of the current comment.
      *
-     * @uses getAuthorUrl() For retrieve the url of the author of the current comment.
-     * @uses getAuthor() For retrieve the author of the current comment.
-     * @uses applyFilters() Calls 'get_comment_author_link' hook on the complete link HTML or author
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string Comment Author name or HTML link for author's URL
      */
@@ -239,63 +180,48 @@ class CommentHelper extends AppHelper
         } else {
             $return = $this->Html->link('Enter', $url, ['class' => 'url', 'rel' => 'external nofollow']);
         }
-        return $this->Hook->applyFilters('get_comment_author_link', $return);
+
+        return $this->Hook->applyFilters('Helper.Comment.getAuthorLink', $return, $url, $author);
     }
 
     /**
      * Retrieve the IP address of the author of the current comment.
      *
-     * @uses applyFilters()
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The comment author's IP address.
      */
-    public function getAuthorIP($comment = null)
+    public function getAuthorIp($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        return $this->Hook->applyFilters('get_comment_author_ip', $this->comment['author_ip']);
+        return $this->Hook->applyFilters('Helper.Comment.getAuthorIp', $this->comment['Comment']['author_ip']);
     }
 
     /**
      * Retrieve the url of the author of the current comment.
      *
-     * @uses applyFilters() Calls 'get_comment_author_url' hook on the comment author's URL
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string
      */
     public function getAuthorUrl($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        $url = ('http://' == $this->comment['author_url']) ? '' : $this->comment['author_url'];
+        $url = ('http://' == $this->comment['Comment']['author_url']) ? '' : $this->comment['Comment']['author_url'];
         $url = HuradSanitize::url($url);
-        return $this->Hook->applyFilters('get_comment_author_url', $url);
+
+        return $this->Hook->applyFilters('Helper.Comment.getAuthorUrl', $url);
     }
 
     /**
      * Retrieves the HTML link of the url of the author of the current comment.
      *
-     * $linkText parameter is only used if the URL does not exist for the comment
-     * author. If the URL does exist then the URL will be used and the $linkText
-     * will be ignored.
-     *
-     * Encapsulate the HTML link between the $before and $after. So it will appear
-     * in the order of $before, link, and finally $after.
-     *
-     * @uses applyFilters() Calls the 'get_comment_author_url_link' on the complete HTML before returning.
-     *
      * @param string $linkText The text to display instead of the comment author's email address
      * @param string $before The text or HTML to display before the email link.
      * @param string $after The text or HTML to display after the email link.
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The HTML link between the $before and $after parameters
      */
@@ -305,161 +231,143 @@ class CommentHelper extends AppHelper
         $display = ($linkText != '') ? $linkText : $url;
         $display = str_replace('http://www.', '', $display);
         $display = str_replace('http://', '', $display);
+
         if ('/' == substr($display, -1)) {
             $display = substr($display, 0, -1);
         }
+
         $return = $before . $this->Html->link($display, $url, array('rel' => 'external')) . $after;
-        return $this->Hook->applyFilters('get_comment_author_url_link', $return);
-    }
 
-    /**
-     * Generates semantic classes for each comment element
-     *
-     * @param string|array $class One or more classes to add to the class list
-     * @param bool $echo
-     * @param null $comment
-     *
-     * @return string
-     */
-    public function commentClass($class = '', $echo = true, $comment = null)
-    {
-        $classes = join(' ', $this->getCommentClass($class, $comment));
-
-        if ($echo) {
-            echo $classes;
-        } else {
-            return $classes;
-        }
+        return $this->Hook->applyFilters('Helper.Comment.getAuthorUrlLink', $return, $url);
     }
 
     /**
      * Returns the classes for the comment div as an array
      *
      * @param string|array $class One or more classes to add to the class list
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return array Array of classes
      */
-    public function getCommentClass($class = '', $comment = null)
+    public function getClass($class = '', $comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
         $classes = [];
 
-        // Get the comment type (comment, trackback),
         $classes[] = 'comment';
 
         // If the comment author has an id (registered), then print the log in name
-        if ($this->comment['user_id'] > 0 && $user = $this->MUser->getUserData($this->comment['user_id'])) {
+        if ($this->comment['Comment']['user_id'] > 0 && $user = ClassRegistry::init('User')->getUser(
+                $this->comment['Comment']['user_id']
+            )
+        ) {
             // For all registered users, 'byuser'
             $classes[] = 'byuser';
             $classes[] = 'comment-author-' . HuradSanitize::htmlClass(
-                    array('comment-author-' . $user['nickname'], 'comment-author-' . $this->comment['user_id'])
+                    [
+                        'comment-author-' . $user['UserMeta']['nickname'],
+                        'comment-author-' . $this->comment['Comment']['user_id']
+                    ]
                 );
             // For comment authors who are the author of the post
-            if ($post = $this->MPost->getPost($this->comment['post_id'])) {
-                if ($this->comment['user_id'] === $post['Post']['user_id']) {
-                    $classes[] = 'bypostauthor';
+            if ($post = ClassRegistry::init('Post')->getPost($this->comment['Comment']['post_id'])) {
+                if ($this->comment['Comment']['user_id'] === $post['Post']['user_id']) {
+                    $classes[] = 'by-post-author';
                 }
             }
         }
 
-        if (empty($this->comment_alt)) {
-            $this->comment_alt = 0;
-        }
-        if (empty($comment_depth)) {
-            $comment_depth = 1;
-        }
-        if (empty($comment_thread_alt)) {
-            $comment_thread_alt = 0;
+        if (empty($this->commentAlt)) {
+            $this->commentAlt = 0;
         }
 
-        if ($this->comment_alt % 2) {
+        if (empty($commentDepth)) {
+            $commentDepth = 1;
+        }
+
+        if (empty($commentThreadAlt)) {
+            $commentThreadAlt = 0;
+        }
+
+        if ($this->commentAlt % 2) {
             $classes[] = 'odd';
             $classes[] = 'alt';
         } else {
             $classes[] = 'even';
         }
 
-        $this->comment_alt++;
+        $this->commentAlt++;
 
         // Alt for top-level comments
-        if (1 == $comment_depth) {
-            if ($comment_thread_alt % 2) {
+        if (1 == $commentDepth) {
+            if ($commentThreadAlt % 2) {
                 $classes[] = 'thread-odd';
                 $classes[] = 'thread-alt';
             } else {
                 $classes[] = 'thread-even';
             }
-            $comment_thread_alt++;
+            $commentThreadAlt++;
         }
 
-        $classes[] = "depth-$comment_depth";
+        $classes[] = "depth-$commentDepth";
 
         if (!empty($class)) {
             if (!is_array($class)) {
                 $class = preg_split('#\s+#', $class);
             }
-            $classes = array_merge($classes, $class);
+            $classes = Hash::merge($classes, $class);
         }
 
         $classes = array_map('HuradSanitize::htmlClass', $classes);
+        $classesStr = implode(' ', $classes);
 
-        return $this->Hook->applyFilters('getCommentClass', $classes, $class);
+        return $this->Hook->applyFilters('Helper.Comment.getClass', $classesStr, $classes, $class);
     }
 
     /**
      * Retrieve the comment date of the current comment.
      *
-     * @uses applyFilters() Calls 'get_comment_date' hook with the formatted date and the $d parameter respectively
-     * @uses $comment
-     *
-     * @param string $d The format of the date (defaults to user's config)
-     * @param null $comment
+     * @param string $format
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The comment's date
      */
-    public function getDate($d = '', $comment = null)
+    public function getDate($format = '', $comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        if ('' == $d) {
+        if ('' == $format) {
             $date = $this->Time->format(
                 Configure::read('General.date_format'),
-                $this->comment['created'],
+                $this->comment['Comment']['created'],
                 null,
                 Configure::read('General.timezone')
             );
         } else {
-            $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General-timezone'));
+            $date = $this->Time->format(
+                $format,
+                $this->comment['Comment']['created'],
+                null,
+                Configure::read('General-timezone')
+            );
         }
-        return $this->Hook->applyFilters('get_comment_date', $date, $d);
+
+        return $this->Hook->applyFilters('Helper.Comment.getDate', $date, $format);
     }
 
     /**
      * Retrieve the excerpt of the current comment.
      *
-     * Will cut each word and only output the first 20 words with '...' at the end.
-     * If the word count is less than 20, then no truncating is done and no '...'
-     * will appear.
-     *
-     * @uses applyFilters() Calls 'get_comment_excerpt' on truncated comment
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The maybe truncated comment with 20 words or less
      */
     public function getExcerpt($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        $commentText = strip_tags($this->comment['content']);
+        $commentText = strip_tags($this->comment['Comment']['content']);
         $blah = explode(' ', $commentText);
 
         if (count($blah) > 20) {
@@ -474,76 +382,86 @@ class CommentHelper extends AppHelper
         for ($i = 0; $i < $k; $i++) {
             $excerpt .= $blah[$i] . ' ';
         }
+
         $excerpt .= ($useDotDotDot) ? '...' : '';
-        return $this->Hook->applyFilters('get_comment_excerpt', $excerpt);
+
+        return $this->Hook->applyFilters('Helper.Comment.getExcerpt', $excerpt, $commentText);
     }
 
     /**
      * Retrieve the comment id of the current comment.
      *
-     * @uses applyFilters() Calls the 'get_comment_id' hook for the comment id
-     *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return int The comment ID
      */
     public function getId($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        return $this->Hook->applyFilters('get_comment_id', $this->comment['id']);
+        return $this->Hook->applyFilters('Helper.Comment.getId', $this->comment['Comment']['id']);
     }
 
     /**
      * Retrieves the link to the current post comments.
      *
+     * @param bool|string $zero Text for no comments
+     * @param bool|string $one Text for one comment
+     * @param bool|string $more Text for more than one comment
+     * @param int $contentId Post or Page id
+     *
      * @return string The link to the comments
      */
-    public function getCommentsLink()
+    public function getCommentsLink($zero = false, $one = false, $more = false, $contentId = null)
     {
-        $commentsLink = $this->Post->getPermalink() . '#comments';
-        return $this->Hook->applyFilters('get_comments_link', $commentsLink, $this->Post->getPermalink());
+        $commentsUrl = $this->Content->getPermalink($contentId) . '#comments';
+        $commentsLink = $this->Html->link($this->getCommentsNumber($zero, $one, $more, $contentId), $commentsUrl);
+
+        return $this->Hook->applyFilters(
+            'Helper.Comment.getCommentsLink',
+            $commentsLink,
+            $commentsUrl
+        );
     }
 
     /**
      * Retrieve the amount of comments a post has.
      *
-     * @uses applyFilters() Calls the 'getCommentsNumber' hook on the number of comments
+     * @param string $contentId Post id or Page id
      *
      * @return int The number of comments a post has
      */
-    public function getCommentsNumber()
+    public function getCommentCount($contentId = null)
     {
-        if ($this->view_path == 'Posts') {
-            $comment_count = $this->Post->post['Post']['comment_count'];
-            $post_id = $this->Post->post['Post']['id'];
-        } elseif ($this->view_path == 'Pages') {
-            $comment_count = $this->Page->page['Page']['comment_count'];
-            $post_id = $this->Page->page['Page']['id'];
-        }
-        if (!isset($comment_count)) {
+        $this->Content->getContentData($contentId);
+
+        $commentCount = $this->Content->content[$this->Content->contentModel]['comment_count'];
+        $contentId = $this->Content->content[$this->Content->contentModel]['id'];
+
+        if (!isset($commentCount)) {
             $count = 0;
         } else {
-            $count = $comment_count;
+            $count = $commentCount;
         }
 
-        return $this->Hook->applyFilters('getCommentsNumber', $count, $post_id);
+        return $this->Hook->applyFilters('Helper.Comment.getCommentCount', $count, $contentId);
     }
 
     /**
      * Display the language string for the number of comments the current post has.
      *
-     * @uses applyFilters() Calls the 'commentsNumber' hook on the output and number of comments respectively.
+     * @uses applyFilters() Calls the 'comments_number' hook on the output and number of comments respectively.
      *
      * @param bool|string $zero Text for no comments
      * @param bool|string $one Text for one comment
      * @param bool|string $more Text for more than one comment
+     * @param int $contentId Post or Page id
+     *
+     * @return mixed
      */
-    public function commentsNumber($zero = false, $one = false, $more = false)
+    public function getCommentsNumber($zero = false, $one = false, $more = false, $contentId = null)
     {
-        $number = $this->getCommentsNumber();
+        $number = $this->getCommentCount($contentId);
 
         if ($number > 1) {
             $output = str_replace(
@@ -553,70 +471,70 @@ class CommentHelper extends AppHelper
             );
         } elseif ($number == 0) {
             $output = (false === $zero) ? __d('hurad', 'No Comments') : $zero;
-        } else // must be one
-        {
+        } else {
             $output = (false === $one) ? __d('hurad', '1 Comment') : $one;
         }
 
-        echo $this->Hook->applyFilters('commentsNumber', $output, $number);
+        return $this->Hook->applyFilters('Helper.Comment.getCommentsNumber', $output, $number);
     }
 
     /**
      * Retrieve the text of the current comment.
      *
-     * @param null $comment
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The comment content
      */
     public function getText($comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        return $this->Hook->applyFilters('get_comment_text', $this->comment['content']);
+        return $this->Hook->applyFilters('Helper.Comment.getText', $this->comment['Comment']['content']);
     }
 
     /**
      * Retrieve the comment time of the current comment.
      *
-     * @uses applyFilter() Calls 'get_comment_time' hook with the formatted time, the $d parameter.
-     *
-     * @param string $d Optional. The format of the time (defaults to user's config)
-     * @param null $comment
+     * @param string $format Time format
+     * @param array|string $comment Comment array or comment id
      *
      * @return string The formatted time
      */
-    public function getTime($d = '', $comment = null)
+    public function getTime($format = '', $comment = null)
     {
-        if ($comment) {
-            $this->comment = $comment['Comment'];
-        }
+        $this->getComment($comment);
 
-        if ('' == $d) {
+        if ('' == $format) {
             $date = $this->Time->format(
                 Configure::read('General.time_format'),
-                $this->comment['created'],
+                $this->comment['Comment']['created'],
                 null,
                 Configure::read('General.timezone')
             );
         } else {
-            $date = $this->Time->format($d, $this->comment['created'], null, Configure::read('General.timezone'));
+            $date = $this->Time->format(
+                $format,
+                $this->comment['Comment']['created'],
+                null,
+                Configure::read('General.timezone')
+            );
         }
 
-        return $this->Hook->applyFilters('get_comment_time', $date, $d);
+        return $this->Hook->applyFilters('Helper.Comment.getTime', $date, $format);
     }
 
     /**
      * The status of a comment.
      *
-     * @param int $approved Comment Status
+     * @param array|string $comment Comment array or comment id
      *
      * @return string|bool Status might be 'trash', 'approved', 'unapproved', 'spam'. False on failure.
      */
-    function getCommentStatus($approved)
+    function getStatus($comment)
     {
-        switch ($approved) {
+        $this->getComment($comment);
+
+        switch ($this->comment['Comment']['approved']) {
             case'1';
                 $output = __d('hurad', 'Approved');
                 break;
@@ -633,138 +551,100 @@ class CommentHelper extends AppHelper
                 $output = __d('hurad', 'Unknown');
         }
 
-        return $output;
+        return $this->Hook->applyFilters('Helper.Comment.getStatus', $output, $this->comment['Comment']['approved']);
+    }
+
+    /**
+     * The status of a comment.
+     *
+     * @param int $contentId Post or Page id
+     *
+     * @return string|bool Status might be 'trash', 'approved', 'unapproved', 'spam'. False on failure.
+     */
+    function getCommentLink($contentId = null)
+    {
+        $link = $this->Html->link(
+            $this->getText(),
+            $this->Content->getPermalink($contentId) . '#comment-' . $this->getId()
+        );
+
+        return $this->Hook->applyFilters('Helper.Comment.getCommentLink', $link);
     }
 
     /**
      * Whether the current post is open for comments.
      *
+     * @param int $contentId Post or Page id
+     *
      * @return bool True if the comments are open
      */
-    public function commentsOpen()
+    public function commentsIsOpen($contentId = null)
     {
-        $comment_status = ('open' == $this->content[self::$model]['comment_status']);
-        $open = ('open' == $comment_status);
-        return $this->Hook->applyFilters('commentsOpen', $open);
-    }
+        $this->Content->getContentData($contentId);
 
-    /**
-     * Displays the link to the comments popup window for the current post ID.
-     *
-     * Is not meant to be displayed on single posts and pages. Should be used on the
-     * lists of posts
-     *
-     * @param bool|string $zero The string to display when no comments
-     * @param bool|string $one The string to display when only one comment is available
-     * @param bool|string $more The string to display when there are more than one comment
-     * @param string $css_class The CSS class to use for comments
-     * @param bool|string $none The string to display when comments have been turned off
-     *
-     * @return null Returns null on single posts and pages.
-     */
-    public function commentsPopupLink($zero = false, $one = false, $more = false, $css_class = '', $none = false)
-    {
-        if (false === $zero) {
-            $zero = __d('hurad', 'No Comments');
-        }
-        if (false === $one) {
-            $one = __d('hurad', '1 Comment');
-        }
-        if (false === $more) {
-            $more = __d('hurad', '% Comments');
-        }
-        if (false === $none) {
-            $none = __d('hurad', 'Comments Off');
-        }
+        $commentStatus = ('open' == $this->Content->content[$this->Content->contentModel]['comment_status']);
+        $open = ('open' == $commentStatus);
 
-        $number = $this->getCommentsNumber();
-
-        if (0 == $number && !$this->commentsOpen()) {
-            echo '<span' . ((!empty($css_class)) ? ' class="' . HuradSanitize::htmlClass(
-                        $css_class
-                    ) . '"' : '') . '>' . $none . '</span>';
-            return;
-        }
-
-        echo '<a href="';
-
-        if (0 == $number) {
-            echo $this->Link->getPermalink() . '#respond';
-        } else {
-            echo $this->getCommentsLink();
-        }
-        echo '"';
-
-        if (!empty($css_class)) {
-            echo ' class="' . $css_class . '" ';
-        }
-
-        if ($this->view_path == 'Posts') {
-            $title = $this->Post->theTitleAttribute();
-        } elseif ($this->view_path == 'Pages') {
-            $title = $this->Page->theTitleAttribute();
-        }
-
-        echo $this->Hook->applyFilters('comments_popup_link_attributes', '');
-
-        echo ' title="' . HuradSanitize::htmlAttribute(sprintf(__d('hurad', 'Comment on %s'), $title)) . '">';
-        $this->commentsNumber($zero, $one, $more);
-        echo '</a>';
+        return $this->Hook->applyFilters('Helper.Comment.commentsIsOpen', $open);
     }
 
     /**
      * Show list of comments and submit form
      *
-     * @param null $post
+     * @param array $content Post or Page content
      *
      * @return string
      */
-    public function template($post = null)
+    public function template($content = null)
     {
-        if ($post) {
-            $this->post = $post;
+        if ($content) {
+            $this->content = $content;
         }
 
-        return $this->_View->element('Comments/main', ['post' => $this->post]);
+        return $this->_View->element('Comments/main', ['content' => $this->content]);
     }
 
     /**
      * Show submit form
      *
-     * @param null $post
+     * @param array $content Post or Page content
      *
      * @return string
      */
-    public function form($post = null)
+    public function form($content = null)
     {
-        if ($post) {
-            $this->post = $post;
+        if ($content) {
+            $this->content = $content;
         }
 
-        if ($this->current_user) {
+        if ($this->currentUser) {
             $elementPath = 'Comments/logged-in-form';
         } else {
             $elementPath = 'Comments/logged-out-form';
         }
 
-        return $this->_View->element($elementPath, ['post' => $this->post]);
+        return $this->_View->element($elementPath, ['content' => $this->content]);
     }
 
     /**
      * Generate tree list comment
      *
-     * @param null $post
+     * @param array $content Post or Page content
      * @param array $settings
      *
      * @return string
      */
-    public function treeList($post = null, $settings = [])
+    public function treeList($content = null, $settings = [])
     {
-        if ($post) {
-            $this->post = $post;
+        if ($content) {
+            $this->content = $content;
         }
 
-        $data = ClassRegistry::init('Comment')->getComments($this->post['Post']['id']);
+        $data = ClassRegistry::init('Comment')->getComments(
+            $this->content[$this->contentModel]['id'],
+            'all',
+            ['conditions' => ['Comment.approved' => 1]]
+        );
 
         $defaults = [
             'callback' => [&$this, 'treeCallback'],
@@ -788,7 +668,7 @@ class CommentHelper extends AppHelper
     {
         return $this->_View->element(
             'Comments/item',
-            ['comment' => $data['data'], 'data' => $data, 'post' => $this->post]
+            ['comment' => $data['data'], 'data' => $data, 'content' => $this->content]
         );
     }
 }

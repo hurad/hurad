@@ -85,6 +85,6 @@ class EditorHelper extends AppHelper
             'filebrowserImageBrowseUrl' => '/admin/media/browse/images',
         ];
 
-        return $this->Hook->applyFilters('editor_config', $defaultConfigs, $this->getName());
+        return $this->Hook->applyFilters('Helper.Editor.editorConfig', $defaultConfigs, $this->getName());
     }
 }

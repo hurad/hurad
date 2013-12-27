@@ -48,10 +48,13 @@
     </div>
 
     <p style="display: none;">
-        <?php echo $this->Form->input('post_id', array('type' => 'hidden', 'value' => $post['Post']['id'])); ?>
+        <?php echo $this->Form->input(
+            'post_id',
+            ['type' => 'hidden', 'value' => $this->Content->content[$this->Content->contentModel]['id']]
+        ); ?>
     </p>
 
     <?php echo $this->Form->end(
-        array('label' => __d('hurad', 'Submit Comment'),'class'=>'btn btn-primary')
+        array('label' => __d('hurad', 'Submit Comment'), 'class' => 'btn btn-primary')
     ); ?>
 </div>

@@ -45,7 +45,7 @@
     <?php
     if (count($comments) > 0) {
         foreach ($comments as $comment) {
-            $this->Comment->setComment($comment['Comment']);
+            $this->Comment->setComment($comment);
             echo $this->Html->tableCells(
                 array(
                     array(

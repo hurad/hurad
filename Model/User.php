@@ -208,35 +208,33 @@ class User extends AppModel
         return $users;
     }
 
-    public function getUserData($user_id)
+    /**
+     * Get user
+     *
+     * @param int $userId User id
+     * @param array $query Find query
+     *
+     * @return array|bool If user exist return array else return false
+     */
+    public function getUser($userId = null, array $query = [])
     {
-        $user = $this->find(
-            'first',
-            array(
-                "conditions" => array('User.id' => $user_id),
-                "recursive" => 0
-            )
-        );
+        if (!$userId) {
+            $userId = $this->id;
+        }
+
+        $defaultQuery = [
+            "conditions" => ['User.id' => $userId],
+            "recursive" => -1
+        ];
+
+        $query = Hash::merge($defaultQuery, $query);
+
+        $user = $this->find('first', $query);
 
         if ($user) {
-            $user = $user['User'];
-
-            $metaList = $this->UserMeta->find(
-                'list',
-                array(
-                    'conditions' => array(
-                        'UserMeta.user_id' => $user_id
-                    ),
-                    'fields' => array(
-                        'UserMeta.meta_key',
-                        'UserMeta.meta_value'
-                    ),
-                )
-            );
-
-            $user = Set::merge($user, $metaList);
-
-            return $user;
+            $userMeta = $this->UserMeta->getData($userId);
+            $output = Hash::merge($user, $userMeta);
+            return $output;
         } else {
             return false;
         }

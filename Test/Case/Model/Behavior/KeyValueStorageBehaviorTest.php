@@ -9,13 +9,15 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
 {
     public $fixtures = ['app.userMeta'];
 
-
     public function setUp()
     {
         parent::setUp();
         $this->UserMeta = ClassRegistry::init('UserMeta');
     }
 
+    /**
+     * Save data test
+     */
     public function testSaveData()
     {
         $data = [
@@ -29,7 +31,7 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
 
         $this->UserMeta->user_id = 3;
         $this->UserMeta->saveData($data);
-        $this->assertEqual($this->UserMeta->getData(), $data['UserMeta']);
+        $this->assertEqual($this->UserMeta->getData(), $data);
 
         $dataTwo = [
             'UserMeta' => [
@@ -41,10 +43,13 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
         ];
         $this->UserMeta->user_id = 3;
         $this->UserMeta->saveData($dataTwo);
-        $this->assertNotEqual($this->UserMeta->getData(), $data['UserMeta']);
-        $this->assertEqual($this->UserMeta->getData(), $dataTwo['UserMeta']);
+        $this->assertNotEqual($this->UserMeta->getData(), $data);
+        $this->assertEqual($this->UserMeta->getData(), $dataTwo);
     }
 
+    /**
+     * Get data test
+     */
     public function testGetData()
     {
         $data = $this->UserMeta->getData();
@@ -54,11 +59,13 @@ class KeyValueStorageBehaviorTest extends CakeTestCase
         $data = $this->UserMeta->getData();
 
         $expected = [
-            'firstname' => 'Mohammad',
-            'lastname' => 'Abdoli Rad',
-            'nickname' => 'atkrad',
-            'bio' => '',
-            'display_name' => 'Mohammad'
+            'UserMeta' => [
+                'firstname' => 'Mohammad',
+                'lastname' => 'Abdoli Rad',
+                'nickname' => 'atkrad',
+                'bio' => '',
+                'display_name' => 'Mohammad'
+            ]
         ];
 
         $this->assertEqual($data, $expected);

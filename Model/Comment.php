@@ -14,56 +14,109 @@ class Comment extends AppModel
 {
 
     /**
-     * Display field
+     * Custom display field name. Display fields are used by Scaffold, in SELECT boxes' OPTION elements.
+     *
+     * This field is also used in `find('list')` when called with no extra parameters in the fields list
      *
      * @var string
      */
     public $displayField = 'content';
 
     /**
-     * Acts As
+     * List of behaviors to load when the model object is initialized. Settings can be
+     * passed to behaviors by using the behavior name as index. Eg:
+     *
+     * public $actsAs = array('Translate', 'MyBehavior' => array('setting1' => 'value1'))
      *
      * @var array
      */
-    public $actsAs = array('Tree');
-
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
+    public $actsAs = ['Tree'];
 
     /**
-     * belongsTo associations
+     * Detailed list of belongsTo associations.
      *
      * @var array
      */
-    public $belongsTo = array(
-        'Post' => array(
+    public $belongsTo = [
+        'Post' => [
             'className' => 'Post',
             'foreignKey' => 'post_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'counterCache' => true,
-            'counterScope' => array('Comment.approved' => 1)
-        ),
-        'User' => array(
+            'counterCache' => 'comment_count',
+            'counterScope' => ['Comment.approved' => 1]
+        ],
+        'User' => [
             'className' => 'User',
             'foreignKey' => 'user_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        )
-    );
+        ]
+    ];
 
-    public function getComments($postID, $type = 'all')
+    /**
+     * Get comment
+     *
+     * @param int $commentId Comment id
+     * @param array $query Find query
+     *
+     * @return array
+     */
+    public function getComment($commentId = null, $query = [])
     {
-        $comments = $this->find(
-            $type,
-            array(
-                'conditions' => array('post_id' => $postID),
-                'recursive' => -1,
-                'order' => 'lft ASC'
-            )
-        );
+        if (!$commentId) {
+            $commentId = $this->id;
+        }
+
+        $defaultQuery = [
+            'conditions' => ['Comment.id' => $commentId],
+            'recursive' => -1
+        ];
+
+        $query = Hash::merge($defaultQuery, $query);
+        $comment = $this->find('first', $query);
+
+        return $comment;
+    }
+
+    /**
+     * Get comments per post
+     *
+     * @param int $postId Post id
+     * @param string $type Find type, Default: "all"
+     * @param array $query Find query
+     *
+     * @return array
+     */
+    public function getComments($postId, $type = 'all', array $query = [])
+    {
+        if (!$type || $type == '') {
+            $type = 'all';
+        }
+
+        $defaultQuery = [
+            'conditions' => ['post_id' => $postId],
+            'recursive' => -1,
+            'order' => 'lft ASC'
+        ];
+
+        $query = Hash::merge($defaultQuery, $query);
+        $comments = $this->find($type, $query);
+
         return $comments;
+    }
+
+    public function getLatest($limit = 5, $approved = 1)
+    {
+        $this->recursive = -1;
+        $latest = $this->find(
+            'all',
+            [
+                'conditions' => ['Comment.approved' => $approved],
+                'limit' => $limit,
+                'order' => [
+                    'Comment.created' => 'DESC'
+                ]
+            ]
+        );
+
+        return $latest;
     }
 
     public function countComments($type = 'all')
@@ -109,5 +162,4 @@ class Comment extends AppModel
         }
         return $comments;
     }
-
 }

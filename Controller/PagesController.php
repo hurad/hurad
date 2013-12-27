@@ -24,13 +24,15 @@ class PagesController extends AppController
      *
      * @var array
      */
-    public $helpers = ['Page', 'Comment', 'Text', 'Editor' => ['name' => 'data[Page][content]']];
+    public $helpers = ['Content', 'Comment', 'Text', 'Editor' => ['name' => 'data[Page][content]']];
+
     /**
      * Other components utilized by PagesController
      *
      * @var array
      */
     public $components = array('RequestHandler', 'Hurad', 'Paginator');
+
     /**
      * Paginate settings
      *
@@ -55,7 +57,7 @@ class PagesController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'view', 'pageIndex');
+        $this->Auth->allow('index', 'view', 'pageIndex', 'viewById');
     }
 
     /**
@@ -114,6 +116,27 @@ class PagesController extends AppController
         } else {
             $this->set('page', $this->Page->findBySlug($slug));
             $this->_fallbackView($slug);
+        }
+    }
+
+    /**
+     * View post filtered by post id
+     *
+     * @param null|int $id
+     *
+     * @throws NotFoundException
+     */
+    public function viewById($id = null)
+    {
+        $this->Page->id = $id;
+        if (is_null($id) && !$this->Page->exists()) {
+            throw new NotFoundException(__d('hurad', 'Invalid page'));
+        }
+
+        $this->set('page', $this->Page->read(null, $id));
+
+        if (!$this->_fallbackView($id)) {
+            $this->render('view');
         }
     }
 
@@ -193,9 +216,12 @@ class PagesController extends AppController
     public function admin_edit($id = null)
     {
         $this->set('title_for_layout', __d('hurad', 'Edit Page'));
+
         if (!empty($this->request->data)) {
             if ($this->request->is('post') || $this->request->is('put')) {
-                $this->request->data['Page']['created'] = $this->Hurad->dateParse($this->request->data['Page']['created']);
+                $this->request->data['Page']['created'] = $this->Hurad->dateParse(
+                    $this->request->data['Page']['created']
+                );
                 $this->request->data['Page']['type'] = 'page';
                 $this->request->data['Page']['user_id'] = $this->Auth->user('id');
 
@@ -217,14 +243,14 @@ class PagesController extends AppController
                     $this->Session->setFlash(
                         __d('hurad', 'The Page has been saved.'),
                         'flash_message',
-                        array('class' => 'success')
+                        ['class' => 'success']
                     );
-                    $this->redirect(array('action' => 'index'));
+                    $this->redirect(['action' => 'index']);
                 } else {
                     $this->Session->setFlash(
                         __d('hurad', 'The Page could not be saved. Please, try again.'),
                         'flash_message',
-                        array('class' => 'danger')
+                        ['class' => 'danger']
                     );
                 }
             }
@@ -233,7 +259,7 @@ class PagesController extends AppController
         }
 
         $parentPages = $this->Page->generateTreeList(
-            array('Page.type' => 'page', 'Page.id !=' => $id),
+            ['Page.type' => 'page', 'Page.id !=' => $id],
             null,
             null,
             '_'
@@ -254,16 +280,19 @@ class PagesController extends AppController
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
+
         $this->Page->id = $id;
         if (!$this->Page->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid page'));
         }
+
         if ($this->Page->delete()) {
-            $this->Session->setFlash(__d('hurad', 'Page deleted.'), 'flash_message', array('class' => 'success'));
-            $this->redirect(array('action' => 'index'));
+            $this->Session->setFlash(__d('hurad', 'Page deleted.'), 'flash_message', ['class' => 'success']);
+            $this->redirect(['action' => 'index']);
         }
-        $this->Session->setFlash(__d('hurad', 'Page was not deleted.'), 'flash_message', array('class' => 'danger'));
-        $this->redirect(array('action' => 'index'));
+
+        $this->Session->setFlash(__d('hurad', 'Page was not deleted.'), 'flash_message', ['class' => 'danger']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -277,20 +306,23 @@ class PagesController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->user_id = $userId;
+
         if (is_null($userId) && !$this->Page->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid author'));
         }
+
         $this->Page->recursive = 0;
         $this->Paginator->settings = Hash::merge(
             $this->paginate,
-            array(
-                'Page' => array(
-                    'conditions' => array(
+            [
+                'Page' => [
+                    'conditions' => [
                         'Page.user_id' => $userId,
-                    )
-                )
-            )
+                    ]
+                ]
+            ]
         );
+
         $this->set('pages', $this->Paginator->paginate('Page'));
         $this->render('admin_index');
     }
@@ -304,48 +336,50 @@ class PagesController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->recursive = 0;
-        $this->paginate = array();
-        $this->paginate['limit'] = 25;
+
         switch ($action) {
             case 'publish':
                 $this->set('title_for_layout', __d('hurad', 'Pages Published'));
+
                 $this->Paginator->settings = Hash::merge(
                     $this->paginate,
-                    array(
-                        'Page' => array(
-                            'conditions' => array(
+                    [
+                        'Page' => [
+                            'conditions' => [
                                 'Page.status' => 'publish',
-                            )
-                        )
-                    )
+                            ]
+                        ]
+                    ]
                 );
                 break;
 
             case 'draft':
                 $this->set('title_for_layout', __d('hurad', 'Draft Pages'));
+
                 $this->Paginator->settings = Hash::merge(
                     $this->paginate,
-                    array(
-                        'Page' => array(
-                            'conditions' => array(
+                    [
+                        'Page' => [
+                            'conditions' => [
                                 'Page.status' => 'draft',
-                            )
-                        )
-                    )
+                            ]
+                        ]
+                    ]
                 );
                 break;
 
             case 'trash':
                 $this->set('title_for_layout', __d('hurad', 'Pages'));
+
                 $this->Paginator->settings = Hash::merge(
                     $this->paginate,
-                    array(
-                        'Page' => array(
-                            'conditions' => array(
+                    [
+                        'Page' => [
+                            'conditions' => [
                                 'Page.status' => 'trash',
-                            )
-                        )
-                    )
+                            ]
+                        ]
+                    ]
                 );
                 break;
         }

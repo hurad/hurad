@@ -22,8 +22,8 @@
             echo __(
                 'Logged in as %s. ',
                 $this->Html->link(
-                    $current_user['username'],
-                    array('admin' => true, 'controller' => 'users', 'action' => 'profile', $current_user['id'])
+                    $current_user['User']['username'],
+                    array('admin' => true, 'controller' => 'users', 'action' => 'profile')
                 )
             );
             echo $this->Html->link(
@@ -46,7 +46,10 @@
 
     <p style="display: none;">
         <?php
-        echo $this->Form->input('post_id', array('type' => 'hidden', 'value' => $post['Post']['id']));
+        echo $this->Form->input(
+            'post_id',
+            array('type' => 'hidden', 'value' => $content[$this->Content->contentModel]['id'])
+        );
         ?>
     </p>
 

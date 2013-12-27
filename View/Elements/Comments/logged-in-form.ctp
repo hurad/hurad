@@ -19,8 +19,8 @@
         echo __(
             'Logged in as %s. ',
             $this->Html->link(
-                $current_user['username'],
-                array('admin' => true, 'controller' => 'users', 'action' => 'profile', $current_user['id'])
+                $current_user['User']['username'],
+                ['admin' => true, 'controller' => 'users', 'action' => 'profile']
             )
         );
         echo $this->Html->link(

@@ -30,7 +30,7 @@ $this->set(
 );
 
 foreach ($posts as $post) {
-    $this->Post->setPost($post);
+    $this->Content->setContent($post, 'post');
 
     // You should import Sanitize
     // This is the part where we clean the body text for output as the description 

@@ -24,7 +24,7 @@ $this->Tree->addItemAttribute('class', $this->Comment->commentClass('', false, $
     <div class="comment-meta-data">
         <?php echo $this->Html->link(
             $this->Comment->getDate('', $comment) . __d('hurad', ' at ') . $this->Comment->getTime('', $comment),
-            $this->Post->getPermalink() . '#comment-' . $this->Comment->getId($comment)
+            $this->Content->getPermalink() . '#comment-' . $this->Comment->getId($comment)
         ); ?>
     </div>
 

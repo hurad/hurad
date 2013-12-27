@@ -2,23 +2,23 @@
     <?php
     $viewLink = $this->Html->link(
         __d('hurad', 'View'),
-        $this->Page->getPermalink(),
-        array('title' => __d('hurad', 'View “%s”', $this->Page->getTheTitle()), 'rel' => 'permalink')
+        $this->Content->getPermalink(),
+        array('title' => __d('hurad', 'View “%s”', $this->Content->getTitle()), 'rel' => 'permalink')
     );
     HuradRowActions::addAction('view', $viewLink, 'read');
 
     $editLink = $this->Html->link(
         __d('hurad', 'Edit'),
-        array('admin' => true, 'controller' => 'pages', 'action' => 'edit', $this->Page->getTheID()),
+        array('admin' => true, 'controller' => 'pages', 'action' => 'edit', $this->Content->getId()),
         array('title' => __d('hurad', 'Edit this item'))
     );
     HuradRowActions::addAction('edit', $editLink, 'edit_published_pages');
 
     $deleteLink = $this->Form->postLink(
         __d('hurad', 'Delete'),
-        array('admin' => true, 'action' => 'delete', $this->Page->getTheID()),
+        array('admin' => true, 'action' => 'delete', $this->Content->getId()),
         array('title' => __d('hurad', 'Delete this item')),
-        __d('hurad', 'Are you sure you want to delete "%s"?', $this->Page->getTheTitle())
+        __d('hurad', 'Are you sure you want to delete "%s"?', $this->Content->getTitle())
     );
     HuradRowActions::addAction('delete', $deleteLink, 'delete_pages');
 

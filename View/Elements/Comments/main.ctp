@@ -1,11 +1,11 @@
 <h4 class="comment-title">
-    <?= __d('hurad', '%s Comment', $post['Post']['comment_count']); ?>
+    <?= __d('hurad', '%s Comment', $this->Content->content[$this->Content->contentModel]['comment_count']); ?>
 </h4>
 
 <?php
-if ($this->Comment->commentsOpen()) {
-    echo $this->Comment->treeList($post);
-    echo $this->Comment->form($post);
+if ($this->Comment->commentsIsOpen()) {
+    echo $this->Comment->treeList($content);
+    echo $this->Comment->form($content);
 } else {
     echo __d('hurad', 'Comment Closed');
 }

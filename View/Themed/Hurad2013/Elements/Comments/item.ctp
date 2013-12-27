@@ -2,7 +2,7 @@
 if ($data['hasChildren']) {
     $this->Tree->addTypeAttribute('class', 'children');
 }
-$this->Tree->addItemAttribute('class', $this->Comment->commentClass('', false, $comment));
+$this->Tree->addItemAttribute('class', $this->Comment->getClass('', $comment));
 ?>
 
 <div id="comment-<?= $this->Comment->getId($comment); ?>" class="well well-sm">
@@ -22,7 +22,7 @@ $this->Tree->addItemAttribute('class', $this->Comment->commentClass('', false, $
         <div class="comment-meta-data">
             <?php echo $this->Html->link(
                 $this->Comment->getDate('', $comment) . __d('hurad', ' at ') . $this->Comment->getTime('', $comment),
-                $this->Post->getPermalink() . '#comment-' . $this->Comment->getId($comment)
+                $this->Content->getPermalink() . '#comment-' . $this->Comment->getId($comment)
             ); ?>
         </div>
     </div>
@@ -38,9 +38,8 @@ $this->Tree->addItemAttribute('class', $this->Comment->commentClass('', false, $
                 'Reply'
             ),
             array(
-                'controller' => 'Comments',
+                'controller' => 'comments',
                 'action' => 'reply',
-                $comment['Comment']['post_id'],
                 $this->Comment->getId($comment)
             ),
             array('class' => 'comment-reply-link')

@@ -166,28 +166,27 @@ class AdminLayoutHelper extends AppHelper
         }
     }
 
-    public function currentUser($info = 'username')
+    /**
+     * Get current user data
+     *
+     * @param string $field Field name
+     *
+     * @return bool|string
+     */
+    public function currentUser($field = 'username')
     {
-        $cu = $this->_View->get('current_user');
-        if (!$cu) {
+        $currentUser = $this->_View->get('current_user');
+
+        if (!$currentUser) {
             return false;
         }
-        switch ($info) {
-            case 'username':
-                if (isset($cu['User'])) {
-                    return $cu['User']['username'];
-                } else {
-                    return $cu['username'];
-                }
-                break;
 
-            case 'id':
-                if (isset($cu['User'])) {
-                    return $cu['User']['id'];
-                } else {
-                    return $cu['id'];
-                }
-                break;
+        if (array_key_exists($field, $currentUser['User'])) {
+            return $currentUser['User'][(string)$field];
+        } elseif (array_key_exists($field, $currentUser['UserMeta'])) {
+            return $currentUser['UserMeta'][(string)$field];
+        } else {
+            return false;
         }
     }
 
@@ -276,21 +275,21 @@ class AdminLayoutHelper extends AppHelper
 
     public function displayNameOptions($userID = null)
     {
-        $user = ClassRegistry::init('User')->getUserData($userID);
+        $user = ClassRegistry::init('User')->getUser($userID);
         $options = array();
-        $options[$user['username']] = $user['username'];
-        if (!empty($user['firstname']) && !empty($user['lastname'])) {
-            $options[$user['firstname'] . ' ' . $user['lastname']] = $user['firstname'] . ' ' . $user['lastname'];
-            $options[$user['lastname'] . ' ' . $user['firstname']] = $user['lastname'] . ' ' . $user['firstname'];
+        $options[$user['User']['username']] = $user['User']['username'];
+        if (!empty($user['UserMeta']['firstname']) && !empty($user['UserMeta']['lastname'])) {
+            $options[$user['UserMeta']['firstname'] . ' ' . $user['UserMeta']['lastname']] = $user['UserMeta']['firstname'] . ' ' . $user['UserMeta']['lastname'];
+            $options[$user['UserMeta']['lastname'] . ' ' . $user['UserMeta']['firstname']] = $user['UserMeta']['lastname'] . ' ' . $user['UserMeta']['firstname'];
         }
-        if (!empty($user['firstname']) && empty($user['lastname'])) {
-            $options[$user['firstname']] = $user['firstname'];
+        if (!empty($user['UserMeta']['firstname']) && empty($user['UserMeta']['lastname'])) {
+            $options[$user['UserMeta']['firstname']] = $user['UserMeta']['firstname'];
         }
-        if (empty($user['firstname']) && !empty($user['lastname'])) {
-            $options[$user['lastname']] = $user['lastname'];
+        if (empty($user['UserMeta']['firstname']) && !empty($user['UserMeta']['lastname'])) {
+            $options[$user['UserMeta']['lastname']] = $user['UserMeta']['lastname'];
         }
-        if (!empty($user['nickname'])) {
-            $options[$user['nickname']] = $user['nickname'];
+        if (!empty($user['UserMeta']['nickname'])) {
+            $options[$user['UserMeta']['nickname']] = $user['UserMeta']['nickname'];
         }
         return $options;
     }
@@ -332,5 +331,4 @@ class AdminLayoutHelper extends AppHelper
 
         return implode(" | ", $links);
     }
-
 }

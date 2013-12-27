@@ -70,28 +70,32 @@ class UserTest extends CakeTestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testGetUserData()
+    public function testGetUser()
     {
-        $result = $this->User->getUserData(1);
+        $result = $this->User->getUser(1);
 
-        $expected = array(
-            'id' => '1',
-            'username' => 'admin',
-            'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
-            'email' => 'admin@example.org',
-            'url' => '',
-            'role' => 'admin',
-            'activation_key' => '',
-            'reset_key' => '',
-            'status' => '0',
-            'created' => '2013-03-17 01:16:23',
-            'modified' => '2013-03-17 01:16:23',
-            'firstname' => 'Mohammad',
-            'lastname' => 'Abdoli Rad',
-            'nickname' => 'atkrad',
-            'bio' => '',
-            'display_name' => 'Mohammad'
-        );
+        $expected = [
+            'User' => [
+                'id' => '1',
+                'username' => 'admin',
+                'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
+                'email' => 'admin@example.org',
+                'url' => '',
+                'role' => 'admin',
+                'activation_key' => '',
+                'reset_key' => '',
+                'status' => '0',
+                'created' => '2013-03-17 01:16:23',
+                'modified' => '2013-03-17 01:16:23'
+            ],
+            'UserMeta' => [
+                'firstname' => 'Mohammad',
+                'lastname' => 'Abdoli Rad',
+                'nickname' => 'atkrad',
+                'bio' => '',
+                'display_name' => 'Mohammad'
+            ]
+        ];
 
         $this->assertEquals($expected, $result);
     }
@@ -111,7 +115,7 @@ class UserTest extends CakeTestCase
         //Delete user with UserMeta records
         $this->User->id = 2;
         $this->User->delete();
-        $result = $this->User->getUserData(2);
+        $result = $this->User->getUser(2);
         $this->assertFalse($result);
     }
 

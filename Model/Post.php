@@ -20,109 +20,82 @@ class Post extends AppModel
 {
 
     /**
-     * The displayField attribute specifies which database field should be used as a label for the record.
-     * The label is used in scaffolding and in find('list') calls.
+     * Custom display field name. Display fields are used by Scaffold, in SELECT boxes' OPTION elements.
+     *
+     * This field is also used in `find('list')` when called with no extra parameters in the fields list
      *
      * @var string
-     * @access public
      */
     public $displayField = 'title';
 
     /**
-     * Behaviors are attached to models through the $actsAs model class variable.
+     * List of behaviors to load when the model object is initialized. Settings can be
+     * passed to behaviors by using the behavior name as index. Eg:
+     *
+     * public $actsAs = array('Translate', 'MyBehavior' => array('setting1' => 'value1'))
      *
      * @var array
-     * @access public
      */
-    public $actsAs = array('Tree', 'Containable', 'HabtmCounterCache');
+    public $actsAs = ['Tree', 'Containable', 'HabtmCounterCache'];
 
     /**
-     * Define a belongsTo association in the Post model in order to get access to related User data.
+     * Detailed list of belongsTo associations.
      *
      * @var array
-     * @access public
      */
-    public $belongsTo = array(
-        'User' => array(
+    public $belongsTo = [
+        'User' => [
             'className' => 'User',
             'foreignKey' => 'user_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        )
-    );
+        ]
+    ];
 
     /**
-     * A hasMany association will allow us to fetch a post’s comments when we fetch a Post record.
+     * Detailed list of hasMany associations.
      *
      * @var array
-     * @access public
      */
-    public $hasMany = array(
-        'Comment' => array(
+    public $hasMany = [
+        'Comment' => [
             'className' => 'Comment',
             'foreignKey' => 'post_id',
             'dependent' => false,
-            'conditions' => array('Comment.approved' => 1),
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => '',
-        ),
-        'PostMeta' => array(
+            'conditions' => ['Comment.approved' => 1]
+        ],
+        'PostMeta' => [
             'className' => 'PostMeta',
             'foreignKey' => 'post_id',
             'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        )
-    );
+        ]
+    ];
 
     /**
-     * hasAndBelongsToMany associations
+     * Detailed list of hasAndBelongsToMany associations.
      *
      * @var array
-     * @access public
      */
-    public $hasAndBelongsToMany = array(
-        'Category' => array(
+    public $hasAndBelongsToMany = [
+        'Category' => [
             'className' => 'Category',
             'joinTable' => 'categories_posts',
             'foreignKey' => 'post_id',
             'associationForeignKey' => 'category_id',
-            'unique' => 'keepExisting',
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'finderQuery' => '',
-            'deleteQuery' => '',
-            'insertQuery' => '',
-        ),
-        'Tag' => array(
+            'unique' => 'keepExisting'
+        ],
+        'Tag' => [
             'className' => 'Tag',
             'joinTable' => 'posts_tags',
             'foreignKey' => 'post_id',
             'associationForeignKey' => 'tag_id',
-            'unique' => true,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-        ),
-    );
+            'unique' => true
+        ],
+    ];
 
+    /**
+     * Called after every deletion operation.
+     *
+     * @return void
+     */
     public function afterDelete()
     {
         parent::afterDelete();
@@ -132,22 +105,25 @@ class Post extends AppModel
     /**
      * Get first post.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param intiger $post_id Post ID
+     * @param int $postId Post id
+     * @param array $query Query options
      *
      * @return array
      */
-    public function getPost($post_id)
+    public function getPost($postId, array $query = [])
     {
+        $defaultQuery = [
+            "conditions" => ['Post.id' => $postId, 'Post.type' => 'post'],
+            "recursive" => -1
+        ];
+
+        $findQuery = Hash::merge($defaultQuery, $query);
+
         $post = $this->find(
             'first',
-            array(
-                "conditions" => array('Post.id' => $post_id),
-                "recursive" => 0
-            )
+            $findQuery
         );
+
         return $post;
     }
 

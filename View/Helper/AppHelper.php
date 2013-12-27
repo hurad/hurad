@@ -30,6 +30,7 @@ App::uses('Helper', 'View');
  *
  * @package       app.View.Helper
  *
+ * @property HtmlHelper $Html
  * @property AdminLayoutHelper $AdminLayout
  * @property AuthorHelper $Author
  * @property CommentHelper $Comment
@@ -39,8 +40,7 @@ App::uses('Helper', 'View');
  * @property GravatarHelper $Gravatar
  * @property HookHelper $Hook
  * @property LinkHelper $Link
- * @property PageHelper $Page
- * @property PostHelper $Post
+ * @property ContentHelper $Content
  * @property RoleHelper $Role
  * @property WidgetHelper $Widget
  *

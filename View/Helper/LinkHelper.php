@@ -96,56 +96,6 @@ class LinkHelper extends AppHelper
     }
 
     /**
-     * Retrieve full permalink for current post.
-     *
-     * @since 1.0.0
-     *
-     * @return string
-     */
-    function getPermalink()
-    {
-        $year = $this->Time->format('Y', $this->content[self::$model]['created']);
-        $month = $this->Time->format('m', $this->content[self::$model]['created']);
-        $day = $this->Time->format('d', $this->content[self::$model]['created']);
-        if ($this->content[self::$model]['type'] == 'post') {
-            switch (Configure::read('Permalink.common')) {
-                case 'default':
-                    $permalink = $this->Html->url(
-                        Configure::read('General.site_url') . "/p/" . $this->content[self::$model]['id']
-                    );
-                    break;
-                case 'day_name':
-                    $permalink = $this->Html->url(
-                        Configure::read(
-                            'General.site_url'
-                        ) . "/" . $year . "/" . $month . "/" . $day . "/" . $this->content[self::$model]['slug']
-                    );
-                    break;
-                case 'month_name':
-                    $permalink = $this->Html->url(
-                        Configure::read(
-                            'General.site_url'
-                        ) . "/" . $year . "/" . $month . "/" . $this->content[self::$model]['slug']
-                    );
-                    break;
-                default:
-                    break;
-            }
-        } elseif ($this->content[self::$model]['type'] == 'page') {
-            if (Configure::read('Permalink.common') == 'default') {
-                $permalink = $this->Html->url(
-                    Configure::read('General.site_url') . "/page/" . $this->content[self::$model]['id']
-                );
-            } else {
-                $permalink = $this->Html->url(
-                    Configure::read('General.site_url') . "/page/" . $this->content[self::$model]['slug']
-                );
-            }
-        }
-        return $this->Hook->applyFilters('post_link', $permalink);
-    }
-
-    /**
      * Retrieve the url to the admin area for the current site.
      *
      * @since 1.0.0

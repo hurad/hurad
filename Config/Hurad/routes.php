@@ -69,7 +69,7 @@ if (Configure::read('Permalink.common') == 'default') {
  * Comments
  */
 Router::connect(
-    '/comments/reply/:postID/:parentID',
+    '/comments/reply/:post_id/:parent_id',
     ['controller' => 'comments', 'action' => 'reply'],
-    ['pass' => ['postID', 'parentID'], 'postID' => '[0-9]+', 'parentID' => '[0-9]+']
+    ['post_id' => '[0-9]+', 'parent_id' => '[0-9]+']
 );

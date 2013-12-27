@@ -95,7 +95,7 @@ class AppController extends Controller
 
         if ($this->Auth->loggedIn() && Configure::read('Installed')) {
             //Set current_user var in all view
-            $this->set('current_user', (array)ClassRegistry::init('User')->getUserData($this->Auth->user('id')));
+            $this->set('current_user', (array)ClassRegistry::init('User')->getUser($this->Auth->user('id')));
         }
 
         //Set url var in all view
@@ -169,5 +169,4 @@ class AppController extends Controller
             $this->Cookie->delete('Auth.User');
         }
     }
-
 }

@@ -60,19 +60,19 @@
     <?php
     if (count($pages) > 0) {
         foreach ($pages as $page) {
-            $this->Page->setPage($page);
+            $this->Content->setContent($page, 'page');
             echo $this->Html->tableCells(
                 array(
                     array(
                         array(
                             $this->Html->link(
-                                '<strong>' . h($this->Page->getTheTitle()) . '</strong>',
+                                '<strong>' . h($this->Content->getTitle()) . '</strong>',
                                 array(
                                     'action' => 'edit',
-                                    $this->Page->getTheID()
+                                    $this->Content->getId()
                                 ),
                                 array(
-                                    'title' => __d('hurad', 'Edit “%s”', $this->Page->getTheTitle()),
+                                    'title' => __d('hurad', 'Edit “%s”', $this->Content->getTitle()),
                                     'escape' => false
                                 )
                             ) . $this->element('admin/Pages/row_actions', array('page' => $page)),
@@ -83,7 +83,7 @@
                         array(
                             $this->Html->link(
                                 $page['User']['username'],
-                                array('controller' => 'pages', 'action' => 'listByauthor', $this->Page->getTheID())
+                                array('controller' => 'pages', 'action' => 'listByauthor', $this->Content->getId())
                             ),
                             array(
                                 'class' => 'column-author'
@@ -98,7 +98,7 @@
                         array(
                             $this->Html->tag(
                                 'abbr',
-                                $this->Page->getTheDate(),
+                                $this->Content->getDate(),
                                 array('title' => $page['Page']['created'])
                             ) . '<br>' . $this->AdminLayout->postStatus($page['Page']['status']),
                             array(
@@ -108,10 +108,10 @@
                     ),
                 ),
                 array(
-                    'id' => 'page-' . $this->Page->getTheID()
+                    'id' => 'page-' . $this->Content->getId()
                 ),
                 array(
-                    'id' => 'page-' . $this->Page->getTheID()
+                    'id' => 'page-' . $this->Content->getId()
                 )
             );
         }

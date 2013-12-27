@@ -77,6 +77,7 @@ class UsersController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Users'));
 
+        $this->User->recursive = -1;
         $this->paginate = array_merge(
             $this->paginate,
             array(
@@ -169,11 +170,9 @@ class UsersController extends AppController
                 );
             }
         } else {
-            $this->request->data = $this->User->read(null, $id);
-
-            //Retrieve UserMeta.
+            $this->User->recursive = -1;
             $this->UserMeta->user_id = $id;
-            $this->request->data['UserMeta'] = $this->UserMeta->getData();
+            $this->request->data = Hash::merge($this->User->read(null, $id), $this->UserMeta->getData());
         }
     }
 

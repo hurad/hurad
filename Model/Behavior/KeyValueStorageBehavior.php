@@ -5,34 +5,52 @@
 class KeyValueStorageBehavior extends ModelBehavior
 {
     /**
-     * Settings
+     * Contains configuration settings for use with individual model objects. This
+     * is used because if multiple models use this Behavior, each will use the same
+     * object instance. Individual model settings should be stored as an
+     * associative array, keyed off of the model name.
      *
      * @var array
      */
-    public $settings = [];
-
-    /**
-     * Default settings
-     *
-     * @var array
-     */
-    protected $defaults = [
+    public $settings = [
         'key' => '__meta_key__',
         'value' => '__meta_value__',
         'foreign_key' => '__user_id__'
     ];
 
     /**
-     * Initiate behavior for the model using specified settings.
+     * Setup this behavior with the specified configuration settings.
      *
-     * @param Model $model
-     * @param array $settings
+     * @param Model $model Model using this behavior
+     * @param array $config Configuration settings for $model
      *
      * @return void
      */
-    public function setup(Model $model, $settings = [])
+    public function setup(Model $model, $config = [])
     {
-        $this->settings[$model->alias] = Hash::merge($this->defaults, $settings);
+        $this->settings[$model->alias] = Hash::merge($this->settings, $config);
+    }
+
+    /**
+     * After find callback. Can be used to modify any results returned by find.
+     *
+     * @param Model $model Model using this behavior
+     * @param mixed $results The results of the find operation
+     * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
+     *
+     * @return mixed An array value will replace the value of $results - any other value will be ignored.
+     */
+    public function afterFind(Model $model, $results, $primary = false)
+    {
+        parent::afterFind($model, $results, $primary);
+
+        $key = "{n}.{$model->alias}.{$this->settings[$model->alias]['key']}";
+        $value = "{n}.{$model->alias}.{$this->settings[$model->alias]['value']}";
+
+        $output = Hash::combine($results, $key, $value);
+        $results[$model->alias] = $output;
+
+        return $results;
     }
 
     /**
@@ -99,19 +117,27 @@ class KeyValueStorageBehavior extends ModelBehavior
         return true;
     }
 
-    public function getData(Model $model)
+    public function getData(Model $model, $foreignKey = null)
     {
-        $dataList = $model->find(
+        if (!$foreignKey) {
+            $foreignKey = $model->{$this->settings[$model->alias]['foreign_key']};
+        }
+
+        $dataList[$model->alias] = $model->find(
             'list',
             [
                 'fields' => [
                     "{$model->alias}.{$this->settings[$model->alias]['key']}",
                     "{$model->alias}.{$this->settings[$model->alias]['value']}"
                 ],
-                'conditions' => ["{$model->alias}.{$this->settings[$model->alias]['foreign_key']}" => $model->{$this->settings[$model->alias]['foreign_key']}]
+                'conditions' => ["{$model->alias}.{$this->settings[$model->alias]['foreign_key']}" => $foreignKey]
             ]
         );
 
-        return $dataList;
+        if ($dataList[$model->alias]) {
+            return $dataList;
+        } else {
+            return [];
+        }
     }
 }

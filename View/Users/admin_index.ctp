@@ -48,10 +48,10 @@
                 array(
                     array(
                         $this->Gravatar->image(
-                            $this->Author->getTheAuthorMeta('email'),
+                            $this->Author->getAuthorMeta('email'),
                             array('size' => '32', 'default' => 'mm', 'echo' => false)
                         ) . $this->Html->link(
-                            '<strong>' . $this->Author->getTheAuthorMeta('username') . '</strong>',
+                            '<strong>' . $this->Author->getAuthorMeta('username') . '</strong>',
                             array(
                                 'admin' => true,
                                 'controller' => 'users',
@@ -66,7 +66,7 @@
                     ),
                     array(
                         $this->Html->link(
-                            $this->Author->getTheAuthor(),
+                            $this->Author->getAuthor(),
                             array(
                                 'admin' => true,
                                 'controller' => 'users',
@@ -80,8 +80,8 @@
                     ),
                     array(
                         $this->Html->link(
-                            $this->Author->getTheAuthorMeta('email'),
-                            'mailto:' . $this->Author->getTheAuthorMeta('email')
+                            $this->Author->getAuthorMeta('email'),
+                            'mailto:' . $this->Author->getAuthorMeta('email')
                         ),
                         array(
                             'class' => 'column-email'

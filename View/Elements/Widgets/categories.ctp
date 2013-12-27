@@ -1,3 +1,3 @@
 <ul>
-    <?php $this->Post->list_categories(array('direction' => $data['direction'], 'sort' => $data['sort'])); ?>
+    <?= $this->Content->listCategories(['direction' => $data['direction'], 'sort' => $data['sort']]); ?>
 </ul>

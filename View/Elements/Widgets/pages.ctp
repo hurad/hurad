@@ -1,3 +1,3 @@
 <ul class="list-unstyled">
-    <?php $this->Page->listPages(); ?>
+    <?= $this->Content->listPages(); ?>
 </ul>

@@ -27,30 +27,32 @@ class PostsController extends AppController
      *
      * @var array
      */
-    public $helpers = ['Post', 'Comment', 'Text', 'Editor' => ['name' => 'data[Post][content]'], 'Utils.Tree'];
+    public $helpers = ['Content', 'Comment', 'Text', 'Editor' => ['name' => 'data[Post][content]'], 'Utils.Tree'];
+
     /**
      * Other components utilized by PostsController
      *
      * @var array
      */
-    public $components = array('RequestHandler', 'Role', 'Hurad', 'Paginator');
+    public $components = ['RequestHandler', 'Role', 'Hurad', 'Paginator'];
+
     /**
      * Paginate settings
      *
      * @var array
      */
-    public $paginate = array(
-        'Post' => array(
-            'conditions' => array(
-                'Post.status' => array('publish', 'draft'),
+    public $paginate = [
+        'Post' => [
+            'conditions' => [
+                'Post.status' => ['publish', 'draft'],
                 'Post.type' => 'post'
-            ),
+            ],
             'limit' => 25,
-            'order' => array(
+            'order' => [
                 'Post.created' => 'desc'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     /**
      * Called before the controller action.
@@ -174,9 +176,10 @@ class PostsController extends AppController
      */
     public function view($slug = null)
     {
-        $slug = HuradSanitize::title($slug);
-        $this->Post->slug = $slug;
-        if (is_null($slug) && !$this->Post->exists()) {
+        $slug = HuradSanitize::title($slug, 'dash', '');
+        $post = $this->Post->findBySlug($slug);
+
+        if (!$post) {
             throw new NotFoundException(__d('hurad', 'Invalid post'));
         } else {
             $this->set('post', $this->Post->findBySlug($slug));
@@ -662,5 +665,4 @@ class PostsController extends AppController
         }
         $this->redirect(array('action' => 'index'));
     }
-
 }

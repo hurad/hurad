@@ -118,7 +118,7 @@ echo $this->Form->create(
         echo $this->Form->input(
             'UserMeta.display_name',
             array(
-                'options' => $this->AdminLayout->displayNameOptions($current_user),
+                'options' => $this->AdminLayout->displayNameOptions($current_user['User']['id']),
                 'class' => 'form-control'
             )
         );

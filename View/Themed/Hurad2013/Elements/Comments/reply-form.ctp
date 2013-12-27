@@ -4,8 +4,7 @@
         'url' => array(
             'controller' => 'comments',
             'action' => 'reply',
-            Router::getParam('postID'),
-            Router::getParam('parentID')
+            Router::getParam('pass')[0]
         ),
         'class' => 'form-horizontal',
         'inputDefaults' => array(

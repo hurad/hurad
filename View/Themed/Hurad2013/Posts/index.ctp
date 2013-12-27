@@ -1,47 +1,50 @@
 <?php foreach ($posts as $post): ?>
-    <?php $this->Post->setPost($post); ?>
-    <div id="post-<?php $this->Post->theID(); ?>" <?php $this->Post->postClass('row'); ?>>
+    <?php $this->Content->setContent($post, 'post'); ?>
+    <div id="post-<?= $this->Content->getId(); ?>" class="<?= $this->Content->getClass('row'); ?>">
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3><strong><a href="<?= $this->Post->getPermalink(); ?>" title="<?php printf(
+                    <h3><strong><a href="<?= $this->Content->getPermalink(); ?>" title="<?php printf(
                                 __d('hurad', 'Permalink to %s'),
-                                $this->Post->theTitleAttribute()
-                            ); ?>"><?php $this->Post->theTitle(); ?></a></strong></h3>
+                                $this->Content->getTitle()
+                            ); ?>"><?= $this->Content->getTitle(); ?></a></strong></h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <?php $this->Post->theContent(__d('hurad', 'Read More ...')); ?>
+                    <?= $this->Content->getContent(__d('hurad', 'Read More ...')); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <p class="well well-sm">
                         <span class="glyphicon glyphicon-pencil"></span> <?php echo $this->Html->link(
-                            $this->Author->getTheAuthor(),
+                            $this->Author->getAuthor(),
                             $this->Author->getAuthorPostsUrl()
                         ); ?>
                         &nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-time"></span> <?= $this->Post->getDate(); ?>
+                        <span class="glyphicon glyphicon-time"></span> <?= $this->Content->getDate(); ?>
                         &nbsp;&nbsp;
                         <span class="glyphicon glyphicon-comment"></span>
-                        <?php $this->Comment->commentsPopupLink(
+                        <?=
+                        $this->Comment->getCommentsLink(
                             __('Leave a comment'),
                             __('1 Comment'),
                             __('% Comments')
                         ); ?>
                         &nbsp;&nbsp;
                         <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
-                        <?= $this->Post->the_category(', ', false) ?>
-                        &nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-tags"></span>&nbsp;
-                        <?=
-                        $this->Post->getTags(
-                            '</span><span class="label label-info">',
-                            '<span class="label label-default">',
-                            '</span>'
-                        ); ?>
+                        <?= $this->Content->getCategories() ?>
+                        <?php if ($this->Content->hasTags()): ?>
+                            &nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-tags"></span>&nbsp;
+                            <?=
+                            $this->Content->getTags(
+                                '</span><span class="label label-info">',
+                                '<span class="label label-default">',
+                                '</span>'
+                            ); ?>
+                        <?php endif; ?>
                     </p>
                 </div>
             </div>

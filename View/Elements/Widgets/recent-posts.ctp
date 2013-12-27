@@ -4,12 +4,12 @@
     <?php
     if (count($latestPosts) > 0) {
         foreach ($latestPosts as $post) {
-            $this->Post->setPost($post);
+            $this->Content->setContent($post, 'post');
             echo '<li>' . $this->Html->link(
-                    $this->Post->getTheTitle(),
-                    $this->Post->getPermalink(),
+                    $this->Content->getTitle(),
+                    $this->Content->getPermalink(),
                     [
-                        'title' => __d('hurad', 'Permalink to %s', $this->Post->theTitleAttribute()),
+                        'title' => __d('hurad', 'Permalink to %s', $this->Content->getTitle()),
                         'escape' => false
                     ]
                 ) . '</li>';

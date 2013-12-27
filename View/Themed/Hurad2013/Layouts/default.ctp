@@ -8,7 +8,7 @@
 <body>
 
 <div class="container">
-    <h1 class="text-muted"><?php echo Configure::read('General.site_name'); ?></h1>
+    <h1 class="text-muted"><a href="<?= $this->Link->siteUrl() ?>"><?= Configure::read('General.site_name'); ?></a></h1>
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">

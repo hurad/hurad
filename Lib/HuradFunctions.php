@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Class HuradFunctions
+ */
 class HuradFunctions
 {
     /**
@@ -142,7 +144,8 @@ class HuradFunctions
             Configure::read('decimal_point'),
             Configure::read('thousands_sep')
         );
-        return HuradHook::apply_filters('number_format_i18n', $formatted, $rawNumber);
+
+        return HuradHook::apply_filters('Lib.HuradFunctions.numberFormatI18n', $formatted, $rawNumber);
     }
 
     /**
@@ -179,4 +182,42 @@ class HuradFunctions
         return abs(intval($maybeInt));
     }
 
+    /**
+     * Converts formatted string to array
+     *
+     * A string formatted like 'sort=title;' will be converted to
+     * array('sort' => 'blog');
+     *
+     * @param string $string in this format: sort=title;direction=asc;
+     *
+     * @return array
+     */
+    public static function stringToArray($string)
+    {
+        $string = explode(';', $string);
+        $stringArr = [];
+
+        foreach ($string as $stringElement) {
+            if ($stringElement != null) {
+                $stringElementE = explode('=', $stringElement);
+                if (isset($stringElementE['1'])) {
+                    $stringArr[$stringElementE['0']] = $stringElementE['1'];
+                } else {
+                    $stringArr[] = $stringElement;
+                }
+            }
+        }
+
+        return $stringArr;
+    }
+
+    public static function parseArgs($args, $defaults = array())
+    {
+        if (is_string($args)) {
+            $strArr = self::stringToArray($args);
+            return array_merge($defaults, $strArr);
+        }
+
+        return null;
+    }
 }

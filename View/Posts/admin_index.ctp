@@ -74,19 +74,19 @@
     <?php
     if (count($posts) > 0) {
         foreach ($posts as $post) {
-            $this->Post->setPost($post);
+            $this->Content->setContent($post, 'post');
             echo $this->Html->tableCells(
                 array(
                     array(
                         array(
                             $this->Html->link(
-                                '<strong>' . h($this->Post->getTheTitle()) . '</strong>',
+                                '<strong>' . h($this->Content->getTitle()) . '</strong>',
                                 array(
                                     'action' => 'edit',
-                                    $this->Post->getTheID()
+                                    $this->Content->getId()
                                 ),
                                 array(
-                                    'title' => __d('hurad', 'Edit “%s”', $this->Post->getTheTitle()),
+                                    'title' => __d('hurad', 'Edit “%s”', $this->Content->getTitle()),
                                     'escape' => false
                                 )
                             ) . $this->element('admin/Posts/row_actions', array('post' => $post)),
@@ -104,13 +104,13 @@
                             )
                         ),
                         array(
-                            $this->Post->the_category('', false),
+                            $this->Content->getCategories('', false),
                             array(
                                 'class' => 'column-categories'
                             )
                         ),
                         array(
-                            $this->Post->getTags(),
+                            $this->Content->getTags(),
                             array(
                                 'class' => 'column-tags'
                             )
@@ -124,7 +124,7 @@
                         array(
                             $this->Html->tag(
                                 'abbr',
-                                $this->Post->getDate(),
+                                $this->Content->getDate(),
                                 array('title' => $post['Post']['created'])
                             ) . '<br>' . $this->AdminLayout->postStatus($post['Post']['status']),
                             array(
@@ -134,10 +134,10 @@
                     ),
                 ),
                 array(
-                    'id' => 'post-' . $this->Post->getTheID()
+                    'id' => 'post-' . $this->Content->getId()
                 ),
                 array(
-                    'id' => 'post-' . $this->Post->getTheID()
+                    'id' => 'post-' . $this->Content->getId()
                 )
             );
         }

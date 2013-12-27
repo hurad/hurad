@@ -24,34 +24,47 @@ class CommentsController extends AppController
 {
 
     /**
-     * An array containing the names of helpers this controller uses.
+     * An array containing the names of helpers this controller uses. The array elements should
+     * not contain the "Helper" part of the class name.
      *
-     * @var array
+     * Example: `public $helpers = array('Html', 'Js', 'Time', 'Ajax');`
+     *
+     * @var mixed A single name as a string or a list of names as an array.
      */
-    public $helpers = array('AdminLayout', 'Gravatar');
+    public $helpers = ['AdminLayout', 'Gravatar'];
+
     /**
-     * Other components utilized by CommentsController
+     * Array containing the names of components this controller uses. Component names
+     * should not contain the "Component" portion of the class name.
+     *
+     * Example: `public $components = array('Session', 'RequestHandler', 'Acl');`
      *
      * @var array
      */
-    public $components = array('RequestHandler', 'Paginator');
+    public $components = ['RequestHandler', 'Paginator'];
+
     /**
      * Paginate settings
      *
      * @var array
      */
-    public $paginate = array(
-        'conditions' => array(
-            'Comment.approved' => array(0, 1),
-        ),
-        'limit' => 25,
-        'order' => array(
-            'Comment.created' => 'desc'
-        )
-    );
+    public $paginate = [
+        'Comment' => [
+            'conditions' => [
+                'Comment.approved' => [0, 1],
+            ],
+            'limit' => 25,
+            'order' => [
+                'Comment.created' => 'desc'
+            ]
+        ]
+    ];
 
     /**
-     * Called before the controller action.
+     * Called before the controller action. You can use this method to configure and customize components
+     * or perform logic that needs to happen before each controller action.
+     *
+     * @return void
      */
     public function beforeFilter()
     {
@@ -65,6 +78,8 @@ class CommentsController extends AppController
     public function index()
     {
         $this->Comment->recursive = 0;
+
+        $this->Paginator->settings = Hash::merge($this->paginate, ['Conditions' => ['Comment.approved' => 0]]);
         $this->set('comments', $this->Paginator->paginate('Comment'));
     }
 
@@ -77,18 +92,15 @@ class CommentsController extends AppController
             $this->Comment->create();
 
             if ($this->Auth->loggedIn()) {
-                $this->request->data['Comment']['user_id'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['id'];
-                $this->request->data['Comment']['author'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['display_name'];
-                $this->request->data['Comment']['author_email'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['email'];
-                $this->request->data['Comment']['author_url'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['url'];
+                $user = $this->Comment->User->getUser($this->Auth->user('id'));
+                $this->request->data['Comment']['user_id'] = $user['User']['id'];
+                $this->request->data['Comment']['author'] = $user['UserMeta']['display_name'];
+                $this->request->data['Comment']['author_email'] = $user['User']['email'];
+                $this->request->data['Comment']['author_url'] = $user['User']['url'];
+            }
+
+            if ($this->Auth->user('role') == 'administrator') {
+                $this->request->data['Comment']['author_url'];
             }
 
             $request = new CakeRequest();
@@ -279,40 +291,31 @@ class CommentsController extends AppController
     /**
      * Reply comment
      *
-     * @param int $postID
-     * @param int $parentID
+     * @param int $parentId Comment parent id
      *
      * @throws NotFoundException
+     *
      */
-    public function reply($postID, $parentID)
+    public function reply($parentId)
     {
         if ($this->request->is('post')) {
-            $this->Comment->id = $parentID;
+            $this->Comment->id = $parentId;
             if (!$this->Comment->exists()) {
                 throw new NotFoundException(__d('hurad', 'Invalid comment'));
             }
 
-            $this->Comment->Post->id = $postID;
-            if (!$this->Comment->Post->exists()) {
-                throw new NotFoundException(__d('hurad', 'Invalid post'));
-            }
+            $comment = $this->Comment->getComment();
 
-            $this->request->data['Comment']['parent_id'] = $parentID;
-            $this->request->data['Comment']['post_id'] = $postID;
+            $this->request->data['Comment']['parent_id'] = $parentId;
+            $this->request->data['Comment']['post_id'] = $comment['Comment']['post_id'];
 
             if ($this->Auth->loggedIn()) {
-                $this->request->data['Comment']['user_id'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['id'];
-                $this->request->data['Comment']['author'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['display_name'];
-                $this->request->data['Comment']['author_email'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['email'];
-                $this->request->data['Comment']['author_url'] = $this->Comment->User->getUserData(
-                    $this->Auth->user('id')
-                )['url'];
+                $user = $this->Comment->User->getUser($this->Auth->user('id'));
+
+                $this->request->data['Comment']['user_id'] = $user['User']['id'];
+                $this->request->data['Comment']['author'] = $user['UserMeta']['display_name'];
+                $this->request->data['Comment']['author_email'] = $user['User']['email'];
+                $this->request->data['Comment']['author_url'] = $user['User']['url'];
             }
 
             $this->Comment->create();
@@ -464,5 +467,4 @@ class CommentsController extends AppController
         }
         $this->redirect(array('action' => 'index'));
     }
-
 }
