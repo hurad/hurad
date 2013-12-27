@@ -1,19 +1,19 @@
-inherit: true
-
 filter:
-    excluded_paths: [Vendor/*]
-
-before_commands:
-    - composer install
-    - mv Config/database.php.default Config/database.php
-
+    excluded_paths:
+        - 'Vendor/*'
 tools:
-    php_code_coverage:
-        test_command: Console/cake test app AllTests
-        excluded_dirs: [Vendor/*]
     php_cpd:
-            excluded_dirs:        [Vendor/*]
-            filter:
-                excluded_paths:       [Vendor/*]
-    php_pdepend: true
-        excluded_dirs: [Vendor/*]
+        excluded_dirs:
+            - Vendor
+        filter:
+            excluded_paths: ['Vendor/*']
+    php_pdepend:
+        excluded_dirs:
+            - Vendor
+    php_code_coverage:
+        test_command: 'Console/cake test app AllTests'
+        filter:
+            excluded_paths: ['Vendor/*']
+before_commands:
+    - 'composer install'
+    - 'mv Config/database.php.default Config/database.php'
