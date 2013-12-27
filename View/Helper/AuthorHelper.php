@@ -175,7 +175,7 @@ class AuthorHelper extends AppHelper
 
             $link = $this->Html->link(
                 $name,
-                $this->getAuthorPostsUrl($author['User']['id'], $author['User']['nicename']),
+                $this->getAuthorPostsUrl($author['User']['id']),
                 ['title' => __("Posts by %s", $author['UserMeta']['display_name'])]
             );
 

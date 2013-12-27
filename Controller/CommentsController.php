@@ -51,7 +51,7 @@ class CommentsController extends AppController
     public $paginate = [
         'Comment' => [
             'conditions' => [
-                'Comment.approved' => [0, 1],
+                'Comment.status' => ['approved', 'disapproved'],
             ],
             'limit' => 25,
             'order' => [
@@ -79,7 +79,10 @@ class CommentsController extends AppController
     {
         $this->Comment->recursive = 0;
 
-        $this->Paginator->settings = Hash::merge($this->paginate, ['Conditions' => ['Comment.approved' => 0]]);
+        $this->Paginator->settings = Hash::merge(
+            $this->paginate,
+            ['Conditions' => ['Comment.status' => 'disapproved']]
+        );
         $this->set('comments', $this->Paginator->paginate('Comment'));
     }
 
@@ -167,7 +170,7 @@ class CommentsController extends AppController
                     array(
                         'Comment' => array(
                             'conditions' => array(
-                                'Comment.approved' => 0,
+                                'Comment.status' => 'disapproved',
                             )
                         )
                     )
@@ -181,7 +184,7 @@ class CommentsController extends AppController
                     array(
                         'Comment' => array(
                             'conditions' => array(
-                                'Comment.approved' => 1,
+                                'Comment.status' => 'approved',
                             )
                         )
                     )
@@ -195,7 +198,7 @@ class CommentsController extends AppController
                     array(
                         'Comment' => array(
                             'conditions' => array(
-                                'Comment.approved' => 'spam',
+                                'Comment.status' => 'spam',
                             )
                         )
                     )
@@ -209,7 +212,7 @@ class CommentsController extends AppController
                     array(
                         'Comment' => array(
                             'conditions' => array(
-                                'Comment.approved' => 'trash',
+                                'Comment.status' => 'trash',
                             )
                         )
                     )
@@ -357,22 +360,22 @@ class CommentsController extends AppController
         }
         switch ($action) {
             case 'approved':
-                $data = array('id' => $id, 'approved' => '1');
+                $data = ['id' => $id, 'status' => 'approved'];
                 $msg = __d('hurad', 'Comments are approved.');
                 $err = __d('hurad', 'Comments are not approved, please try again.');
                 break;
             case 'disapproved':
-                $data = array('id' => $id, 'approved' => '0');
+                $data = array('id' => $id, 'status' => 'disapproved');
                 $msg = __d('hurad', 'Comment are unapproved.');
                 $err = __d('hurad', 'Comment are not unapproved, please try again.');
                 break;
             case 'spam':
-                $data = array('id' => $id, 'approved' => 'spam');
+                $data = array('id' => $id, 'status' => 'spam');
                 $msg = __d('hurad', 'Comment marked as spam.');
                 $err = __d('hurad', 'Comment didn\'t mark as spam, please try again.');
                 break;
             case 'trash':
-                $data = array('id' => $id, 'approved' => 'trash');
+                $data = array('id' => $id, 'status' => 'trash');
                 $msg = __d('hurad', 'Comment moved to trash.');
                 $err = __d('hurad', 'Comment didn\'t move to trash, please try again.');
                 break;
@@ -418,7 +421,7 @@ class CommentsController extends AppController
 
         switch ($action) {
             case 'approve':
-                if ($this->Comment->updateAll(array('Comment.approved' => '1'), array('Comment.id' => $ids))) {
+                if ($this->Comment->updateAll(array('Comment.status' => '"approved"'), array('Comment.id' => $ids))) {
                     $this->Session->setFlash(
                         __d('hurad', 'Comments are approved'),
                         'flash_message',
@@ -428,7 +431,11 @@ class CommentsController extends AppController
                 break;
 
             case 'disapprove':
-                if ($this->Comment->updateAll(array('Comment.approved' => '0'), array('Comment.id' => $ids))) {
+                if ($this->Comment->updateAll(
+                    array('Comment.status' => '"disapproved"'),
+                    array('Comment.id' => $ids)
+                )
+                ) {
                     $this->Session->setFlash(
                         __d('hurad', 'Comments are unapproved'),
                         'flash_message',
@@ -438,7 +445,7 @@ class CommentsController extends AppController
                 break;
 
             case 'spam':
-                if ($this->Comment->updateAll(array('Comment.approved' => '"spam"'), array('Comment.id' => $ids))) {
+                if ($this->Comment->updateAll(array('Comment.status' => '"spam"'), array('Comment.id' => $ids))) {
                     $this->Session->setFlash(
                         __d('hurad', 'Comments marked as spam.'),
                         'flash_message',
@@ -448,7 +455,7 @@ class CommentsController extends AppController
                 break;
 
             case 'trash':
-                if ($this->Comment->updateAll(array('Comment.approved' => '"trash"'), array('Comment.id' => $ids))) {
+                if ($this->Comment->updateAll(array('Comment.status' => '"trash"'), array('Comment.id' => $ids))) {
                     $this->Session->setFlash(
                         __d('hurad', 'Comments moved to trash.'),
                         'flash_message',

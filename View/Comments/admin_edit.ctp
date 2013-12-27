@@ -88,16 +88,16 @@ echo $this->Form->create(
 
 <div class="form-group">
     <?php echo $this->Form->label(
-        'approved',
+        'status',
         __d('hurad', 'Status'),
         array('class' => 'control-label col-lg-2')
     ); ?>
     <div class="col-lg-4">
         <?php echo $this->Form->select(
-            'approved',
+            'status',
             array(
-                '0' => __d('hurad', 'Disapprove'),
-                '1' => __d('hurad', 'Approve'),
+                'disapproved' => __d('hurad', 'Disapprove'),
+                'approved' => __d('hurad', 'Approve'),
                 'spam' => __d('hurad', 'Spam'),
                 'trash' => __d('hurad', 'Trash')
             ),

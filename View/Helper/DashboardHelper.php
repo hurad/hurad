@@ -32,7 +32,7 @@ class DashboardHelper extends AppHelper
         ?>
 
         <div id="comment-<?php $this->Comment->commentID(); ?>" <?php $this->Comment->commentClass(
-            array('comment-item', $this->Comment->getCommentStatus($comment['Comment']['approved']))
+            array('comment-item', $this->Comment->getCommentStatus($comment['Comment']['status']))
         ); ?>>
             <?php echo $this->Gravatar->image($this->Comment->getCommentAuthorEmail(), array('size' => '50')); ?>
             <div class="dashboard-comment-wrap">
@@ -49,7 +49,7 @@ class DashboardHelper extends AppHelper
                     <a href="http://localhost/wp3en/wp-admin/post.php?post=1&action=edit"><?php echo $comment['Post']['title']; ?></a>
                     <a class="comment-link" href="http://localhost/wp3en/?p=1#comment-3">#</a>
                     <span
-                        class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>><?php echo __(
+                        class="approve" <?php echo ($comment['Comment']['status']) ? 'style="display: none;"' : 'style=""'; ?>><?php echo __(
                             '[Pending]'
                         ); ?></span>
                 </h4>
@@ -59,7 +59,7 @@ class DashboardHelper extends AppHelper
 
                 <p class="row-actions">
                     <span
-                        class="approve" <?php echo ($comment['Comment']['approved']) ? 'style="display: none;"' : 'style=""'; ?>>
+                        class="approve" <?php echo ($comment['Comment']['status']) ? 'style="display: none;"' : 'style=""'; ?>>
                         <?php
                         echo $this->Js->link(
                             __d('hurad', 'Approve'),
@@ -76,7 +76,7 @@ class DashboardHelper extends AppHelper
                         ?>
                     </span>
                     <span
-                        class="unapprove" <?php echo ($comment['Comment']['approved']) ? 'style=""' : 'style="display: none;"'; ?>>
+                        class="unapprove" <?php echo ($comment['Comment']['status']) ? 'style=""' : 'style="display: none;"'; ?>>
                         <?php
                         echo $this->Js->link(
                             __d('hurad', 'Unapprove'),
@@ -211,7 +211,10 @@ class DashboardHelper extends AppHelper
                         <?php echo $this->Html->link($num_tags, array('controller' => 'tags', 'action' => 'index')); ?>
                     </td>
                     <td class="t tags">
-                        <?php echo $this->Html->link(__d('hurad', 'Tags'), array('controller' => 'tags', 'action' => 'index')); ?>
+                        <?php echo $this->Html->link(
+                            __d('hurad', 'Tags'),
+                            array('controller' => 'tags', 'action' => 'index')
+                        ); ?>
                     </td>
                 </tr>
                 </tbody>

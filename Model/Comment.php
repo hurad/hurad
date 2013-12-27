@@ -42,7 +42,7 @@ class Comment extends AppModel
             'className' => 'Post',
             'foreignKey' => 'post_id',
             'counterCache' => 'comment_count',
-            'counterScope' => ['Comment.approved' => 1]
+            'counterScope' => ['Comment.status' => 'approved']
         ],
         'User' => [
             'className' => 'User',
@@ -102,13 +102,13 @@ class Comment extends AppModel
         return $comments;
     }
 
-    public function getLatest($limit = 5, $approved = 1)
+    public function getLatest($limit = 5, $status = 'approved')
     {
         $this->recursive = -1;
         $latest = $this->find(
             'all',
             [
-                'conditions' => ['Comment.approved' => $approved],
+                'conditions' => ['Comment.status' => $status],
                 'limit' => $limit,
                 'order' => [
                     'Comment.created' => 'DESC'
@@ -130,7 +130,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                        array('Comment.approved' => 1)
+                        array('Comment.status' => 'approved')
                 )
             );
         } elseif ($type == 'moderated') {
@@ -138,7 +138,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                        array('Comment.approved' => 0)
+                        array('Comment.status' => 'disapproved')
                 )
             );
         } elseif ($type == 'spam') {
@@ -146,7 +146,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                        array('Comment.approved' => 'spam')
+                        array('Comment.status' => 'spam')
                 )
             );
         } elseif ($type == 'trash') {
@@ -154,7 +154,7 @@ class Comment extends AppModel
                 'count',
                 array(
                     'conditions' =>
-                        array('Comment.approved' => 'trash')
+                        array('Comment.status' => 'trash')
                 )
             );
         } else {

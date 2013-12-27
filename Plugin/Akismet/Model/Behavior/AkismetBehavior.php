@@ -45,7 +45,7 @@ class AkismetBehavior extends ModelBehavior
         ];
 
         if (Akismet::isSpam($data, Configure::read('Akismet.api_key'))) {
-            $model->data[$model->alias]['approved'] = 'spam';
+            $model->data[$model->alias]['status'] = 'spam';
         }
     }
 }

@@ -147,17 +147,17 @@ class AdminLayoutHelper extends AppHelper
         }
     }
 
-    public function approveLink($approved, $comment_id)
+    public function approveLink($status, $comment_id)
     {
-        switch ($approved) {
-            case '1':
+        switch ($status) {
+            case 'approved':
                 return $this->Html->link(
                     __d('hurad', 'Disapprove'),
                     array('action' => 'action', 'disapproved', $comment_id)
                 );
                 break;
 
-            case '0':
+            case 'disapproved':
                 return $this->Html->link(__d('hurad', 'Approve'), array('action' => 'action', 'approved', $comment_id));
                 break;
 
@@ -294,10 +294,10 @@ class AdminLayoutHelper extends AppHelper
         return $options;
     }
 
-    public function commentClass($approved = null)
+    public function commentClass($status = null)
     {
-        switch ($approved) {
-            case '0':
+        switch ($status) {
+            case 'disapproved':
                 return 'warning';
 
                 break;

@@ -1,6 +1,6 @@
 <div class="row-actions">
     <?php
-    $approvedLink = $this->AdminLayout->approveLink($comment['Comment']['approved'], $this->Comment->getId());
+    $approvedLink = $this->AdminLayout->approveLink($comment['Comment']['status'], $this->Comment->getId());
     HuradRowActions::addAction('approved', $approvedLink, 'manage_comments');
 
     $viewLink = $this->Html->link(

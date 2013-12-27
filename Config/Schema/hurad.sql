@@ -47,7 +47,7 @@ CREATE TABLE `$[prefix]comments` (
 	`author_url` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	`author_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	`content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`approved` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 0 NOT NULL,
+	`status` enum('approved','disapproved','spam','trash') NOT NULL DEFAULT 'disapproved',
 	`agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	`lft` int(11) NOT NULL,
 	`rght` int(11) NOT NULL,

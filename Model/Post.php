@@ -60,7 +60,7 @@ class Post extends AppModel
             'className' => 'Comment',
             'foreignKey' => 'post_id',
             'dependent' => false,
-            'conditions' => ['Comment.approved' => 1]
+            'conditions' => ['Comment.status' => 'approved']
         ],
         'PostMeta' => [
             'className' => 'PostMeta',

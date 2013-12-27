@@ -80,11 +80,11 @@
                 ),
                 array(
                     'id' => 'comment-' . $comment['Comment']['id'],
-                    'class' => $this->AdminLayout->commentClass($comment['Comment']['approved'])
+                    'class' => $this->AdminLayout->commentClass($comment['Comment']['status'])
                 ),
                 array(
                     'id' => 'comment-' . $comment['Comment']['id'],
-                    'class' => $this->AdminLayout->commentClass($comment['Comment']['approved'])
+                    'class' => $this->AdminLayout->commentClass($comment['Comment']['status'])
                 )
             );
         }

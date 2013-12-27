@@ -7,8 +7,8 @@ INSERT INTO `$[prefix]posts`(`id`, `parent_id`, `user_id`, `title`, `slug`, `con
 INSERT INTO `$[prefix]categories_posts`(`category_id`, `post_id`) VALUES
      (1, 1);
 
-INSERT INTO `$[prefix]comments`(`id`, `parent_id`, `post_id`, `user_id`, `author`, `author_email`, `author_url`, `author_ip`, `content`, `approved`, `agent`, `lft`, `rght`, `created`, `modified`) VALUES
-     (1, NULL, 1, 1, '$[username]', '$[email]', '', '$[client_ip]', 'This comment has been sent for testing, you can delete it', 1, '$[user_agent]', 1, 2, '$[created]', '$[modified]');
+INSERT INTO `$[prefix]comments`(`id`, `parent_id`, `post_id`, `user_id`, `author`, `author_email`, `author_url`, `author_ip`, `content`, `status`, `agent`, `lft`, `rght`, `created`, `modified`) VALUES
+     (1, NULL, 1, 1, '$[username]', '$[email]', '', '$[client_ip]', 'This comment has been sent for testing, you can delete it', 'approved', '$[user_agent]', 1, 2, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]users`(`id`, `username`, `password`, `email`, `url`, `role`, `status`, `created`, `modified`) VALUES
      (1, '$[username]', '$[password]', '$[email]', '', 'administrator', 0, '$[created]', '$[modified]');

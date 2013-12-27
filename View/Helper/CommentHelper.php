@@ -534,11 +534,11 @@ class CommentHelper extends AppHelper
     {
         $this->getComment($comment);
 
-        switch ($this->comment['Comment']['approved']) {
-            case'1';
+        switch ($this->comment['Comment']['status']) {
+            case 'approved';
                 $output = __d('hurad', 'Approved');
                 break;
-            case'0':
+            case 'disapproved':
                 $output = __d('hurad', 'Unapproved');
                 break;
             case'spam':
@@ -551,7 +551,7 @@ class CommentHelper extends AppHelper
                 $output = __d('hurad', 'Unknown');
         }
 
-        return $this->Hook->applyFilters('Helper.Comment.getStatus', $output, $this->comment['Comment']['approved']);
+        return $this->Hook->applyFilters('Helper.Comment.getStatus', $output, $this->comment['Comment']['status']);
     }
 
     /**
@@ -643,7 +643,7 @@ class CommentHelper extends AppHelper
         $data = ClassRegistry::init('Comment')->getComments(
             $this->content[$this->contentModel]['id'],
             'all',
-            ['conditions' => ['Comment.approved' => 1]]
+            ['conditions' => ['Comment.status' => 'approved']]
         );
 
         $defaults = [
