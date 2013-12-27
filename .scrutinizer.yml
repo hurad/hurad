@@ -1,19 +1,18 @@
 filter:
     excluded_paths:
         - 'Vendor/*'
-tools:
-    php_cpd:
-        excluded_dirs:
-            - Vendor
-        filter:
-            excluded_paths: ['Vendor/*']
-    php_pdepend:
-        excluded_dirs:
-            - Vendor
-    php_code_coverage:
-        test_command: 'Console/cake test app AllTests --coverage-clover=./report'
-        filter:
-            excluded_paths: ['Vendor/*']
 before_commands:
     - 'composer install'
     - 'mv Config/database.php.default Config/database.php'
+tools:
+    php_code_coverage:
+        test_command: 'Console/cake test app AllTests --coverage-clover=./report'
+    php_cpd:
+        excluded_dirs:
+            - Vendor
+    php_pdepend:
+        excluded_dirs:
+            - Vendor
+    php_loc:
+        excluded_dirs:
+            - Vendor
