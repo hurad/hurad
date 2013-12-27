@@ -2,6 +2,7 @@ filter:
     excluded_paths: [vendor/*, app/*, web/*]
 
 tools:
-    php_code_coverage: true
+    php_code_coverage:
+      test_command: Console/cake test app AllTests --coverage-clover
     php_cpd: true
     php_pdepend: true
