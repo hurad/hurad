@@ -11,7 +11,7 @@ tools:
         excluded_dirs:
             - Vendor
     php_code_coverage:
-        test_command: 'Console/cake test app AllTests'
+        test_command: 'Console/cake test app AllTests --coverage-clover=./report'
         filter:
             excluded_paths: ['Vendor/*']
 before_commands:
