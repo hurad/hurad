@@ -170,42 +170,4 @@ class TagsController extends AppController
         $this->Session->setFlash(__d('hurad', 'Tag was not deleted'), 'flash_message', array('class' => 'danger'));
         $this->redirect(array('action' => 'index'));
     }
-
-    /**
-     * Tag processes
-     */
-    public function admin_process()
-    {
-        $this->autoRender = false;
-        $action = $this->request->data['Tag']['action'];
-        $ids = array();
-        foreach ($this->request->data['Tag'] AS $id => $value) {
-            if ($id != 'action' && $value['id'] == 1) {
-                $ids[] = $id;
-            }
-        }
-
-        switch ($action) {
-            case 'delete':
-                if ($this->Tag->deleteAll(array('Tag.id' => $ids), true, true)) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Tags deleted.'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            default:
-                $this->Session->setFlash(
-                    __d('hurad', 'An error occurred.'),
-                    'flash_message',
-                    array('class' => 'danger')
-                );
-                break;
-        }
-
-        $this->redirect(array('action' => 'index'));
-    }
-
 }

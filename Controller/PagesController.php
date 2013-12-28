@@ -389,85 +389,6 @@ class PagesController extends AppController
     }
 
     /**
-     * Page processes
-     */
-    public function admin_process()
-    {
-        $this->autoRender = false;
-        $action = null;
-        if ($this->request->data['Page']['action']['top']) {
-            $action = $this->request->data['Page']['action']['top'];
-        } elseif ($this->request->data['Page']['action']['bot']) {
-            $action = $this->request->data['Page']['action']['bot'];
-        }
-        $ids = array();
-        foreach ($this->request->data['Page'] AS $id => $value) {
-            if ($id != 'action' && $value['id'] == 1) {
-                $ids[] = $id;
-            }
-        }
-
-        if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
-            $this->redirect(array('action' => 'index'));
-        } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        switch ($action) {
-            case 'delete':
-                if ($this->Page->deleteAll(array('Page.id' => $ids), true, true)) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Posts deleted.'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            case 'publish':
-                if ($this->Page->updateAll(array('Page.status' => "'publish'"), array('Page.id' => $ids))) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Pages published'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            case 'draft':
-                if ($this->Page->updateAll(array('Page.status' => "'draft'"), array('Page.id' => $ids))) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Pages drafted'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            case 'trash':
-                if ($this->Page->updateAll(array('Page.status' => "'trash'"), array('Page.id' => $ids))) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Pages move to trash'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            default:
-                $this->Session->setFlash(
-                    __d('hurad', 'An error occurred.'),
-                    'flash_message',
-                    array('class' => 'danger')
-                );
-                break;
-        }
-        $this->redirect(array('action' => 'index'));
-    }
-
-    /**
      * Specific view file
      *
      * @param string $viewName Slug or page id
@@ -488,5 +409,4 @@ class PagesController extends AppController
             return false;
         }
     }
-
 }

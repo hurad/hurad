@@ -516,48 +516,4 @@ class UsersController extends AppController
             $this->Cookie->delete($this->cookieName);
         }
     }
-
-    /**
-     * User processes
-     */
-    public function admin_process()
-    {
-        $this->autoRender = false;
-        $action = $this->request->data['User']['action'];
-        $ids = array();
-        foreach ($this->request->data['User'] AS $id => $value) {
-            if ($id != 'action' && $value['id'] == 1) {
-                $ids[] = $id;
-            }
-        }
-
-        if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
-            $this->redirect(array('action' => 'index'));
-        } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        switch ($action) {
-            case 'delete':
-                if ($this->User->deleteAll(array('User.id' => $ids), true, true)) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Users deleted.'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            default:
-                $this->Session->setFlash(
-                    __d('hurad', 'An error occurred.'),
-                    'flash_message',
-                    array('class' => 'danger')
-                );
-                break;
-        }
-        $this->redirect(array('action' => 'index'));
-    }
 }

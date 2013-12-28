@@ -154,49 +154,4 @@ class LinkcatsController extends AppController
         );
         $this->redirect(array('action' => 'index'));
     }
-
-    /**
-     * Link categories processes
-     */
-    public function admin_process()
-    {
-        $this->autoRender = false;
-        $action = $this->request->data['Linkcat']['action'];
-        $ids = array();
-        foreach ($this->request->data['Linkcat'] AS $id => $value) {
-            if ($id != 'action' && $value['id'] == 1) {
-                $ids[] = $id;
-            }
-        }
-
-        if (count($ids) == 0) {
-            $this->Session->setFlash(__d('hurad', 'No items selected.'), 'flash_message', array('class' => 'warning'));
-            $this->redirect(array('action' => 'index'));
-        } elseif ($action == null) {
-            $this->Session->setFlash(__d('hurad', 'No action selected.'), 'flash_message', array('class' => 'warning'));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        switch ($action) {
-            case 'delete':
-                if ($this->Linkcat->deleteAll(array('Linkcat.id' => $ids), true, true)) {
-                    $this->Session->setFlash(
-                        __d('hurad', 'Link categories deleted.'),
-                        'flash_message',
-                        array('class' => 'success')
-                    );
-                }
-                break;
-
-            default:
-                $this->Session->setFlash(
-                    __d('hurad', 'An error occurred.'),
-                    'flash_message',
-                    array('class' => 'danger')
-                );
-                break;
-        }
-        $this->redirect(array('action' => 'index'));
-    }
-
 }
