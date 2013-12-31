@@ -16,6 +16,16 @@ class PostMeta extends AppModel
     public $useTable = 'post_meta';
 
     /**
+     * List of behaviors to load when the model object is initialized. Settings can be
+     * passed to behaviors by using the behavior name as index. Eg:
+     *
+     * public $actsAs = array('Translate', 'MyBehavior' => array('setting1' => 'value1'))
+     *
+     * @var array
+     */
+    public $actsAs = ['KeyValueStorage' => ['key' => 'meta_key', 'value' => 'meta_value', 'foreign_key' => 'post_id']];
+
+    /**
      * Detailed list of belongsTo associations.
      *
      * @var array
