@@ -1,6 +1,6 @@
 # Plugin
-Plugin/DebugKit/
-Plugin/Utils/
+Plugin/*
+!Plugin/empty
 
 # tmp directory
 tmp/*
