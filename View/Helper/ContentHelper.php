@@ -9,12 +9,11 @@ class ContentHelper extends AppHelper
 {
 
     /**
-     * Other helpers used by this helper.
+     * List of helpers used by this helper
      *
      * @var array
-     * @access public
      */
-    public $helpers = ['Html', 'Time', 'General', 'Link', 'Hook', 'Author', 'Comment'];
+    public $helpers = ['Html', 'Time', 'General', 'Link', 'Hook', 'Author', 'Comment', 'Form'];
 
     /**
      * Current content array.
@@ -533,5 +532,44 @@ class ContentHelper extends AppHelper
         }
 
         return $out;
+    }
+
+    /**
+     * Load meta boxes in specific position
+     *
+     * @param string $position Meta box position
+     *
+     * @return string
+     */
+    public function loadMetaBoxes($position)
+    {
+        $metaBoxHtml = [];
+        foreach (HuradMetaBox::getMetaBoxes() as $metaBox) {
+            if ($metaBox['position'] != $position) {
+                continue;
+            }
+
+            if ($this->_View->elementExists($metaBox['plugin'] . '.' . $metaBox['element'])) {
+                $element = $this->_View->element(
+                    $metaBox['plugin'] . '.' . $metaBox['element'],
+                    ['prefix' => strtolower($metaBox['plugin'])]
+                );
+            } else {
+                $element = __d('hurad', 'Element not found: "%s"', "Elements/{$metaBox['element']}.ctp");
+            }
+
+
+            $metaBoxHtml[] = <<<HTML
+            <div class="panel panel-default">
+                <div class="panel-heading">{$metaBox['title']}</div>
+                <div class="panel-body">
+                    $element
+                </div>
+            </div>
+HTML;
+        }
+
+        $output = implode(' ', $metaBoxHtml);
+        return $output;
     }
 }
