@@ -54,14 +54,15 @@ class KeyValueStorageBehavior extends ModelBehavior
     }
 
     /**
-     * Before save method. Called before all saves
+     * Save data
      *
      * @param Model $model
-     * @param $data
+     * @param array $data
      *
+     * @throws CakeException
      * @return bool
      */
-    public function saveData(Model $model, $data)
+    public function saveData(Model $model, array $data)
     {
         $model->set($data);
         $keys = array_keys($data[$model->alias]);
@@ -81,6 +82,12 @@ class KeyValueStorageBehavior extends ModelBehavior
                 $dataTemplate[$model->alias][$this->settings[$model->alias]['foreign_key']] = $model->{$this->settings[$model->alias]['foreign_key']};
             } elseif (array_key_exists($this->settings[$model->alias]['foreign_key'], $data[$model->alias])) {
                 $dataTemplate[$model->alias][$this->settings[$model->alias]['foreign_key']] = $data[$model->alias][$this->settings[$model->alias]['foreign_key']];
+            } elseif ($this->settings[$model->alias]['foreign_key'] != false) {
+                throw new CakeException(__d(
+                    'hurad',
+                    'You should set foreign_key "%s"',
+                    $this->settings[$model->alias]['foreign_key']
+                ));
             }
 
             $list = $model->find(
