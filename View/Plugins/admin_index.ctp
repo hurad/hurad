@@ -40,7 +40,10 @@
                         )
                     ),
                     array(
-                        $plugin['description'],
+                        $plugin['description'] . $this->element(
+                            'admin/Plugins/info',
+                            ['plugin' => $plugin, 'alias' => $alias]
+                        ),
                         array(
                             'class' => 'column-description'
                         )
