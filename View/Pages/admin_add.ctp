@@ -64,6 +64,7 @@ echo $this->Form->create(
                         </div>
                     </div>
                 </div>
+                <?php echo $this->Content->loadMetaBoxes('Page.center'); ?>
             </div>
         </div>
         <div class="col-md-4">
@@ -161,6 +162,7 @@ echo $this->Form->create(
                         ); ?>
                     </div>
                 </div>
+                <?php echo $this->Content->loadMetaBoxes('Page.side'); ?>
             </div>
         </div>
     </div>

@@ -65,6 +65,7 @@ echo $this->Form->create(
                     </div>
                 </div>
             </div>
+            <?php echo $this->Content->loadMetaBoxes('Post.center'); ?>
         </div>
     </div>
     <div class="col-md-4">
@@ -173,6 +174,7 @@ echo $this->Form->create(
                     <?php echo $this->Form->input('Post.tags', array('class' => 'form-control')); ?>
                 </div>
             </div>
+            <?php echo $this->Content->loadMetaBoxes('Post.side'); ?>
         </div>
     </div>
 
