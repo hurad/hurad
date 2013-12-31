@@ -362,6 +362,9 @@ class PostsController extends AppController
 
             $this->Post->create();
             if ($this->Post->save($this->request->data)) {
+                $this->Post->PostMeta->post_id = $this->Post->getLastInsertID();
+                $this->Post->PostMeta->saveData($this->request->data);
+
                 $this->Session->setFlash(
                     __d('hurad', 'The post has been saved'),
                     'flash_message',
@@ -430,7 +433,9 @@ class PostsController extends AppController
 
             // save the data
             $this->Post->create();
-            if ($this->Post->save($this->request->data)) {
+            $this->Post->PostMeta->post_id = $id;
+
+            if ($this->Post->save($this->request->data) && $this->Post->PostMeta->saveData($this->request->data)) {
                 $this->Session->setFlash(
                     __d('hurad', 'The Post has been saved.'),
                     'flash_message',
@@ -452,8 +457,10 @@ class PostsController extends AppController
         }
 
         // get the posts current tags
-        $post = $id ? $this->Post->find('first', array('conditions' => array('Post.id' => $id))) : false;
+        $this->Post->PostMeta->post_id = $id;
+        $post = Hash::merge($this->Post->read(null, $id), $this->Post->PostMeta->getData());
         $categories = $this->Post->Category->generateTreeList();
+        $this->request->data = $post;
         $this->set(compact('post', 'categories'));
     }
 
