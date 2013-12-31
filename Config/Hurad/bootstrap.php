@@ -41,6 +41,7 @@ App::uses('HuradWidget', 'Lib');
 App::uses('HuradRole', 'Lib');
 App::uses('HuradNavigation', 'Lib');
 App::uses('HuradRowActions', 'Lib');
+App::uses('HuradMetaBox', 'Lib');
 
 /**
  * Include default capabilities
