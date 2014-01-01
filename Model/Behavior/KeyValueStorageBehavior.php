@@ -64,6 +64,10 @@ class KeyValueStorageBehavior extends ModelBehavior
      */
     public function saveData(Model $model, array $data)
     {
+        if (!array_key_exists($model->alias, $data)) {
+            return true;
+        }
+
         $model->set($data);
         $keys = array_keys($data[$model->alias]);
 
