@@ -555,44 +555,66 @@ class PostsController extends AppController
     public function admin_filter($action = null)
     {
         $this->Post->recursive = 1;
-        $this->paginate = array();
-        $this->paginate['limit'] = 25;
+
         switch ($action) {
             case 'publish':
                 $this->set('title_for_layout', __d('hurad', 'Posts Published'));
-                $this->paginate['conditions'] = array(
-                    'Post.status' => 'publish',
-                    'Post.type' => 'post'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    [
+                        'Post' => [
+                            'conditions' => [
+                                'Post.status' => 'publish'
+                            ]
+                        ]
+                    ]
                 );
                 break;
 
             case 'draft':
                 $this->set('title_for_layout', __d('hurad', 'Draft Posts'));
-                $this->paginate['conditions'] = array(
-                    'Post.status' => 'draft',
-                    'Post.type' => 'post'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    [
+                        'Post' => [
+                            'conditions' => [
+                                'Post.status' => 'draft'
+                            ]
+                        ]
+                    ]
                 );
                 break;
 
             case 'trash':
                 $this->set('title_for_layout', __d('hurad', 'Posts'));
-                $this->paginate['conditions'] = array(
-                    'Post.status' => 'trash',
-                    'Post.type' => 'post'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    [
+                        'Post' => [
+                            'conditions' => [
+                                'Post.status' => 'trash'
+                            ]
+                        ]
+                    ]
                 );
                 break;
 
             default:
                 $this->set('title_for_layout', __d('hurad', 'Posts'));
-                $this->paginate['conditions'] = array(
-                    'Post.status' => array('publish', 'draft'),
-                    'Post.type' => 'post'
+                $this->Paginator->settings = Hash::merge(
+                    $this->paginate,
+                    [
+                        'Post' => [
+                            'conditions' => [
+                                'Post.status' => ['publish', 'draft']
+                            ]
+                        ]
+                    ]
                 );
                 break;
         }
 
-        $this->paginate['order'] = array('Post.created' => 'desc');
-        $this->set('posts', $this->paginate('Post'));
+        $this->set('posts', $this->Paginator->paginate('Post'));
         $this->render('admin_index');
     }
 }
