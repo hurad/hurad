@@ -1,4 +1,18 @@
 <?php
+/**
+ * Category fixture
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 
 /**
  * Class CategoryFixture
@@ -7,41 +21,39 @@ class CategoryFixture extends CakeTestFixture
 {
 
     /**
-     * name property
+     * Name of the object
      *
-     * @var string 'Category'
-     * @access public
+     * @var string
      */
     public $name = 'Category';
 
     /**
-     * fields property
+     * Fields / Schema for the fixture.
+     * This array should match the output of Model::schema()
      *
      * @var array
-     * @access public
      */
-    public $fields = array(
-        'id' => array('type' => 'integer', 'key' => 'primary'),
-        'parent_id' => array('type' => 'integer', 'null' => true),
-        'name' => array('type' => 'string', 'length' => 200, 'null' => false),
-        'slug' => array('type' => 'string', 'length' => 200, 'null' => false),
-        'lft' => array('type' => 'integer', 'null' => false),
-        'rght' => array('type' => 'integer', 'null' => false),
-        'description' => array('type' => 'text', 'null' => false),
-        'post_count' => array('type' => 'integer', 'null' => false),
-        'path' => array('type' => 'string', 'length' => 250, 'null' => false),
+    public $fields = [
+        'id' => ['type' => 'integer', 'key' => 'primary'],
+        'parent_id' => ['type' => 'integer', 'null' => true],
+        'name' => ['type' => 'string', 'length' => 200, 'null' => false],
+        'slug' => ['type' => 'string', 'length' => 200, 'null' => false],
+        'lft' => ['type' => 'integer', 'null' => false],
+        'rght' => ['type' => 'integer', 'null' => false],
+        'description' => ['type' => 'text', 'null' => false],
+        'post_count' => ['type' => 'integer', 'null' => false],
+        'path' => ['type' => 'string', 'length' => 250, 'null' => false],
         'created' => 'datetime',
         'modified' => 'datetime'
-    );
+    ];
 
     /**
-     * records property
+     * Fixture records to be inserted.
      *
      * @var array
-     * @access public
      */
-    public $records = array(
-        array(
+    public $records = [
+        [
             'id' => '1',
             'parent_id' => 'NULL',
             'name' => 'PHP',
@@ -53,7 +65,6 @@ class CategoryFixture extends CakeTestFixture
             'path' => 'PHP',
             'created' => '2007-03-17 01:16:23',
             'modified' => '2007-03-17 01:16:23'
-        ),
-    );
-
+        ],
+    ];
 }

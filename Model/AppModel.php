@@ -1,42 +1,33 @@
 <?php
-
 /**
- * Application model for Cake.
- *
- * This file is application-wide model file. You can put all
- * application-wide model-related methods here.
+ * Application model
  *
  * PHP 5
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Model
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('Model', 'Model');
 
 /**
- * Application model for Cake.
+ * Application model
  *
  * Add your application-wide methods in the class below, your models
  * will inherit them.
- *
- * @package       app.Model
  */
-class AppModel extends Model {
-
-    public function __construct($id = false, $table = null, $ds = null) {
+class AppModel extends Model
+{
+    public function __construct($id = false, $table = null, $ds = null)
+    {
         parent::__construct($id, $table, $ds);
 
         App::uses('Hurad', 'Lib');
         Hurad::applyProperty('behavior', $this);
     }
-
 }

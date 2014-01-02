@@ -1,14 +1,25 @@
 <?php
-
+/**
+ * Comment model
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppModel', 'Model');
 
 /**
- * Comment Model
+ * Class Comment
  *
- * @property Comment $ParentComment
- * @property Post $Post
- * @property User $User
- * @property Comment $ChildComment
+ * @property Post    $Post
+ * @property User    $User
  */
 class Comment extends AppModel
 {
@@ -53,8 +64,8 @@ class Comment extends AppModel
     /**
      * Get comment
      *
-     * @param int $commentId Comment id
-     * @param array $query Find query
+     * @param int   $commentId Comment id
+     * @param array $query     Find query
      *
      * @return array
      */
@@ -78,9 +89,9 @@ class Comment extends AppModel
     /**
      * Get comments per post
      *
-     * @param int $postId Post id
-     * @param string $type Find type, Default: "all"
-     * @param array $query Find query
+     * @param int    $postId Post id
+     * @param string $type   Find type, Default: "all"
+     * @param array  $query  Find query
      *
      * @return array
      */

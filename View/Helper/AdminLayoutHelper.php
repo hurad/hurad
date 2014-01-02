@@ -1,37 +1,31 @@
 <?php
-
-App::uses('AppHelper', 'View/Helper');
-
 /**
- * Admin helper
- *
- * This file is consist of methods that are used in admin section.
+ * Admin Layout helper
  *
  * PHP 5
  *
- * Hurad(tm) : Content Management System is based on CakePHP 2.2 (http://hurad.org)
- * Copyright 2012, Hurad CMS.
- *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2012, Hurad.
- * @link          http://hurad.org Hurad(tm) Project
- * @package       Hurad
- * @category      Helper
- * @since         v 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
+App::uses('AppHelper', 'View/Helper');
+
+/**
+ * Class AdminLayoutHelper
  */
 class AdminLayoutHelper extends AppHelper
 {
-
     /**
-     * Other helpers used by this helper
+     * List of helpers used by this helper
      *
      * @var array
-     * @access public
      */
-    public $helpers = array('Html', 'Js', 'Form', 'Role', 'Post', 'Page');
+    public $helpers = ['Html', 'Js', 'Form', 'Role', 'Content'];
 
     public function postStatus($value)
     {

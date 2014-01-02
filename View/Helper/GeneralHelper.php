@@ -1,22 +1,31 @@
 <?php
-
+/**
+ * General helper
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Description of GeneralHelper
- *
- * @author mohammad
+ * Class GeneralHelper
  */
 class GeneralHelper extends AppHelper
 {
-
     /**
-     * Other helpers used by this helper
+     * List of helpers used by this helper
      *
      * @var array
-     * @access public
      */
-    public $helpers = array('Time', 'Hook');
+    public $helpers = ['Time', 'Hook'];
 
     /**
      * Current post array
@@ -27,6 +36,12 @@ class GeneralHelper extends AppHelper
     public $content = array();
     private static $model = null;
 
+    /**
+     * Default Constructor
+     *
+     * @param View  $View     The View this helper is being attached to.
+     * @param array $settings Configuration settings for the helper.
+     */
     public function __construct(\View $View, $settings = array())
     {
         parent::__construct($View, $settings);
@@ -46,13 +61,10 @@ class GeneralHelper extends AppHelper
      * HTML output can be filtered with 'the_date'.
      * Date string output can be filtered with 'get_the_date'.
      *
-     * @since 1.0.0
-     * @uses get_the_date()
-     *
-     * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
+     * @param string $d      Optional. PHP date format defaults to the date_format option if not specified.
      * @param string $before Optional. Output before the date.
-     * @param string $after Optional. Output after the date.
-     * @param bool $echo Optional, default is display. Whether to echo the date or return it.
+     * @param string $after  Optional. Output after the date.
+     * @param bool   $echo   Optional, default is display. Whether to echo the date or return it.
      *
      * @return string|null Null if displaying, string if retrieving.
      */
@@ -79,8 +91,6 @@ class GeneralHelper extends AppHelper
      *
      * Unlike the_date() this function will always return the date.
      * Modify output with 'get_the_date' filter.
-     *
-     * @since 1.0.0
      *
      * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
      *
@@ -112,12 +122,10 @@ class GeneralHelper extends AppHelper
     /**
      * Display the date on which the post was last modified.
      *
-     * @since 1.0.0
-     *
-     * @param string $d Optional. PHP date format defaults to the date_format option if not specified.
+     * @param string $d      Optional. PHP date format defaults to the date_format option if not specified.
      * @param string $before Optional. Output before the date.
-     * @param string $after Optional. Output after the date.
-     * @param bool $echo Optional, default is display. Whether to echo the date or return it.
+     * @param string $after  Optional. Output after the date.
+     * @param bool   $echo   Optional, default is display. Whether to echo the date or return it.
      *
      * @return string|null Null if displaying, string if retrieving.
      */
@@ -136,8 +144,6 @@ class GeneralHelper extends AppHelper
 
     /**
      * Retrieve the date on which the post was last modified.
-     *
-     * @since 1.0.0
      *
      * @param string $d Optional. PHP date format. Defaults to the "date_format" option
      *
@@ -169,8 +175,6 @@ class GeneralHelper extends AppHelper
     /**
      * Retrieve the time at which the post was written.
      *
-     * @since 1.0.0
-     *
      * @param string $d Optional Either 'G', 'U', or php date format defaults to the value specified in the time_format option.
      *
      * @return string
@@ -189,8 +193,6 @@ class GeneralHelper extends AppHelper
     /**
      * Retrieve the time at which the post was written.
      *
-     * @since 1.0.0
-     *
      * @param string $d Optional Either 'G', 'U', or php date format.
      *
      * @return string
@@ -206,8 +208,6 @@ class GeneralHelper extends AppHelper
     /**
      * Display the time at which the post was last modified.
      *
-     * @since 1.0.0
-     *
      * @param string $d Optional Either 'G', 'U', or php date format defaults to the value specified in the time_format option.
      */
     public function theModifiedTime($d = '')
@@ -217,8 +217,6 @@ class GeneralHelper extends AppHelper
 
     /**
      * Retrieve the time at which the post was last modified.
-     *
-     * @since 1.0.0
      *
      * @param string $d Optional Either 'G', 'U', or php date format defaults to the value specified in the time_format option.
      *
@@ -238,8 +236,6 @@ class GeneralHelper extends AppHelper
     /**
      * Retrieve the time at which the post was last modified.
      *
-     * @since 1.0.0
-     *
      * @param string $d Optional, default is 'U'. Either 'G', 'U', or php date format.
      *
      * @return string Returns timestamp
@@ -251,5 +247,4 @@ class GeneralHelper extends AppHelper
 
         return $this->Hook->applyFilters('get_post_modified_time', $time, $d);
     }
-
 }

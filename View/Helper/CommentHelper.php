@@ -1,5 +1,18 @@
 <?php
-
+/**
+ * Comment helper
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppHelper', 'View/Helper');
 
 /**
@@ -52,7 +65,7 @@ class CommentHelper extends AppHelper
     /**
      * Default Constructor
      *
-     * @param View $View The View this helper is being attached to.
+     * @param View  $View     The View this helper is being attached to.
      * @param array $settings Configuration settings for the helper.
      */
     public function __construct(View $View, $settings = [])
@@ -86,7 +99,7 @@ class CommentHelper extends AppHelper
      * Get comment
      *
      * @param array|string $comment Comment array or comment id
-     * @param array $query Find query
+     * @param array        $query   Find query
      */
     protected function getComment($comment, array $query = [])
     {
@@ -140,10 +153,10 @@ class CommentHelper extends AppHelper
     /**
      * Return the html email link to the author of the current comment.
      *
-     * @param string $linkText The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     * @param array|string $comment Comment array or comment id
+     * @param string       $linkText The text to display instead of the comment author's email address
+     * @param string       $before   The text or HTML to display before the email link.
+     * @param string       $after    The text or HTML to display after the email link.
+     * @param array|string $comment  Comment array or comment id
      *
      * @return string
      */
@@ -218,10 +231,10 @@ class CommentHelper extends AppHelper
     /**
      * Retrieves the HTML link of the url of the author of the current comment.
      *
-     * @param string $linkText The text to display instead of the comment author's email address
-     * @param string $before The text or HTML to display before the email link.
-     * @param string $after The text or HTML to display after the email link.
-     * @param array|string $comment Comment array or comment id
+     * @param string       $linkText The text to display instead of the comment author's email address
+     * @param string       $before   The text or HTML to display before the email link.
+     * @param string       $after    The text or HTML to display after the email link.
+     * @param array|string $comment  Comment array or comment id
      *
      * @return string The HTML link between the $before and $after parameters
      */
@@ -244,7 +257,7 @@ class CommentHelper extends AppHelper
     /**
      * Returns the classes for the comment div as an array
      *
-     * @param string|array $class One or more classes to add to the class list
+     * @param string|array $class   One or more classes to add to the class list
      * @param array|string $comment Comment array or comment id
      *
      * @return array Array of classes
@@ -328,7 +341,7 @@ class CommentHelper extends AppHelper
     /**
      * Retrieve the comment date of the current comment.
      *
-     * @param string $format
+     * @param string       $format
      * @param array|string $comment Comment array or comment id
      *
      * @return string The comment's date
@@ -405,10 +418,10 @@ class CommentHelper extends AppHelper
     /**
      * Retrieves the link to the current post comments.
      *
-     * @param bool|string $zero Text for no comments
-     * @param bool|string $one Text for one comment
-     * @param bool|string $more Text for more than one comment
-     * @param int $contentId Post or Page id
+     * @param bool|string $zero      Text for no comments
+     * @param bool|string $one       Text for one comment
+     * @param bool|string $more      Text for more than one comment
+     * @param int         $contentId Post or Page id
      *
      * @return string The link to the comments
      */
@@ -452,10 +465,10 @@ class CommentHelper extends AppHelper
      *
      * @uses applyFilters() Calls the 'comments_number' hook on the output and number of comments respectively.
      *
-     * @param bool|string $zero Text for no comments
-     * @param bool|string $one Text for one comment
-     * @param bool|string $more Text for more than one comment
-     * @param int $contentId Post or Page id
+     * @param bool|string $zero      Text for no comments
+     * @param bool|string $one       Text for one comment
+     * @param bool|string $more      Text for more than one comment
+     * @param int         $contentId Post or Page id
      *
      * @return mixed
      */
@@ -495,7 +508,7 @@ class CommentHelper extends AppHelper
     /**
      * Retrieve the comment time of the current comment.
      *
-     * @param string $format Time format
+     * @param string       $format  Time format
      * @param array|string $comment Comment array or comment id
      *
      * @return string The formatted time

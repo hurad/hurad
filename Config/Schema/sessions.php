@@ -1,6 +1,4 @@
 <?php
-/*Sessions schema generated on: 2007-11-25 07:11:54 : 1196004714*/
-
 /**
  * This is Sessions Schema file
  *
@@ -8,24 +6,19 @@
  *
  * PHP 5
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config.Schema
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
  */
 
-/*
- *
+/**
  * Using the Schema command line utility
  * cake schema run create Sessions
- *
  */
 class SessionsSchema extends CakeSchema
 {
@@ -47,5 +40,4 @@ class SessionsSchema extends CakeSchema
         'expires' => array('type' => 'integer', 'null' => true, 'default' => null),
         'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
     );
-
 }

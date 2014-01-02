@@ -1,33 +1,55 @@
 <?php
-
+/**
+ * Page model
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppModel', 'Model');
 
 /**
- * Page Model
+ * Class Page
  *
  * @property User $User
  */
 class Page extends AppModel
 {
-
     /**
-     * Display field
+     * Custom display field name. Display fields are used by Scaffold, in SELECT boxes' OPTION elements.
+     *
+     * This field is also used in `find('list')` when called with no extra parameters in the fields list
      *
      * @var string
      */
     public $displayField = 'title';
-    public $actsAs = array('Tree', 'Containable');
 
     /**
-     * Use Table
-     * This model uses posts table.
+     * List of behaviors to load when the model object is initialized. Settings can be
+     * passed to behaviors by using the behavior name as index. Eg:
+     *
+     * public $actsAs = array('Translate', 'MyBehavior' => array('setting1' => 'value1'))
+     *
+     * @var array
+     */
+    public $actsAs = ['Tree', 'Containable'];
+
+    /**
+     * Custom database table name, or null/false if no table association is desired.
      *
      * @var string
      */
     public $useTable = 'posts';
 
     /**
-     * belongsTo associations
+     * Detailed list of belongsTo associations.
      *
      * @var array
      */
@@ -39,7 +61,7 @@ class Page extends AppModel
     ];
 
     /**
-     * hasMany associations
+     * Detailed list of hasMany associations.
      *
      * @var array
      */
@@ -54,8 +76,8 @@ class Page extends AppModel
     /**
      * Get page.
      *
-     * @param int $pageId Page id
-     * @param array $query Query options
+     * @param int   $pageId Page id
+     * @param array $query  Query options
      *
      * @return array
      */

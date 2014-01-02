@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Author helper
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Description of AuthorHelper
- *
- * @author mohammad
+ * Class AuthorHelper
  */
 class AuthorHelper extends AppHelper
 {
@@ -87,7 +98,7 @@ class AuthorHelper extends AppHelper
      *
      * @param string $field selects the field of the users record.
      *
-     * @echo string The author's field from the current author's DB.
+     * @echo  string The author's field from the current author's DB.
      */
     public function theAuthorMeta($field = '')
     {

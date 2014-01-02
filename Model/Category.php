@@ -1,91 +1,106 @@
 <?php
-
+/**
+ * Category model
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppModel', 'Model');
 
 /**
- * Category Model
+ * Class Category
  *
  * @property Category $ParentCategory
  * @property Category $ChildCategory
- * @property Post $Post
+ * @property Post     $Post
  */
 class Category extends AppModel
 {
-
     /**
-     * Display field
+     * Custom display field name. Display fields are used by Scaffold, in SELECT boxes' OPTION elements.
+     *
+     * This field is also used in `find('list')` when called with no extra parameters in the fields list
      *
      * @var string
      */
     public $displayField = 'name';
-    public $validate = array(
-        'name' => array(
-            'nameRule-1' => array(
+
+    /**
+     * List of validation rules. It must be an array with the field name as key and using
+     * as value one of the following possibilities
+     *
+     * @var array
+     */
+    public $validate = [
+        'name' => [
+            'nameRule-1' => [
                 'rule' => 'notEmpty',
-            )
-        ),
-        'slug' => array(
-            'slugRule-1' => array(
+            ]
+        ],
+        'slug' => [
+            'slugRule-1' => [
                 'rule' => 'notEmpty',
                 'last' => true
-            ),
-            'slugRule-2' => array(
+            ],
+            'slugRule-2' => [
                 'rule' => 'isUnique',
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
     /**
-     * Acts As
+     * List of behaviors to load when the model object is initialized. Settings can be
+     * passed to behaviors by using the behavior name as index. Eg:
+     *
+     * public $actsAs = array('Translate', 'MyBehavior' => array('setting1' => 'value1'))
      *
      * @var array
      */
-    public $actsAs = array('Tree', 'Containable');
+    public $actsAs = ['Tree', 'Containable'];
 
     /**
-     * hasMany associations
+     * Detailed list of hasMany associations.
      *
      * @var array
      */
-    public $hasMany = array(
-        'ChildCategory' => array(
+    public $hasMany = [
+        'ChildCategory' => [
             'className' => 'Category',
             'foreignKey' => 'parent_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        )
-    );
+            'dependent' => false
+        ]
+    ];
 
     /**
-     * hasAndBelongsToMany associations
+     * Detailed list of hasAndBelongsToMany associations.
      *
      * @var array
      */
-    public $hasAndBelongsToMany = array(
-        'Post' => array(
+    public $hasAndBelongsToMany = [
+        'Post' => [
             'className' => 'Post',
             'joinTable' => 'categories_posts',
             'foreignKey' => 'category_id',
             'associationForeignKey' => 'post_id',
-            'unique' => 'keepExisting',
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'finderQuery' => '',
-            'deleteQuery' => '',
-            'insertQuery' => ''
-        )
-    );
+            'unique' => 'keepExisting'
+        ]
+    ];
 
+    /**
+     * Called before every deletion operation.
+     *
+     * @param boolean $cascade If true records that depend on this record will also be deleted
+     *
+     * @return boolean True if the operation should continue, false if it should abort
+     */
     public function beforeDelete($cascade = true)
     {
         parent::beforeDelete($cascade);
@@ -125,6 +140,15 @@ class Category extends AppModel
         }
     }
 
+    /**
+     * Called after each successful save operation.
+     *
+     * @param boolean $created True if this save created a new record
+     * @param array   $options Options passed from Model::save().
+     *
+     * @return void
+     * @see  Model::save()
+     */
     public function afterSave($created, $options = array())
     {
         parent::afterSave($created);
@@ -167,6 +191,15 @@ class Category extends AppModel
         }
     }
 
+    /**
+     * Called before each save operation, after validation. Return a non-true result
+     * to halt the save.
+     *
+     * @param array $options Options passed from Model::save().
+     *
+     * @return boolean True if the operation should continue, false if it should abort
+     * @see Model::save()
+     */
     public function beforeSave($options = array())
     {
         parent::beforeSave($options);
@@ -190,5 +223,4 @@ class Category extends AppModel
 
         return $category;
     }
-
 }

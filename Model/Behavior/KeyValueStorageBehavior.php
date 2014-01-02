@@ -1,5 +1,20 @@
 <?php
 /**
+ * Key Value Storage behavior
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
+
+/**
  * Class KeyValueStorageBehavior
  */
 class KeyValueStorageBehavior extends ModelBehavior
@@ -21,7 +36,7 @@ class KeyValueStorageBehavior extends ModelBehavior
     /**
      * Setup this behavior with the specified configuration settings.
      *
-     * @param Model $model Model using this behavior
+     * @param Model $model  Model using this behavior
      * @param array $config Configuration settings for $model
      *
      * @return void
@@ -34,8 +49,8 @@ class KeyValueStorageBehavior extends ModelBehavior
     /**
      * After find callback. Can be used to modify any results returned by find.
      *
-     * @param Model $model Model using this behavior
-     * @param mixed $results The results of the find operation
+     * @param Model   $model   Model using this behavior
+     * @param mixed   $results The results of the find operation
      * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
      *
      * @return mixed An array value will replace the value of $results - any other value will be ignored.

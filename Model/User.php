@@ -1,127 +1,132 @@
 <?php
-
+/**
+ * User model
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppModel', 'Model');
 App::uses('UserMeta', 'Model');
 
 /**
- * User Model
+ * Class User
  *
  * @property Comment $Comment
- * @property Post $Post
+ * @property Post    $Post
  */
 class User extends AppModel
 {
-
     /**
-     * Display field
+     * Custom display field name. Display fields are used by Scaffold, in SELECT boxes' OPTION elements.
+     *
+     * This field is also used in `find('list')` when called with no extra parameters in the fields list
      *
      * @var string
      */
     public $displayField = 'username';
-    public $actsAs = array('Containable');
-
-//The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
-     * hasMany associations
+     * List of behaviors to load when the model object is initialized. Settings can be
+     * passed to behaviors by using the behavior name as index. Eg:
+     *
+     * public $actsAs = array('Translate', 'MyBehavior' => array('setting1' => 'value1'))
      *
      * @var array
      */
-    public $hasMany = array(
-        'Comment' => array(
+    public $actsAs = ['Containable'];
+
+    /**
+     * Detailed list of hasMany associations.
+     *
+     * @var array
+     */
+    public $hasMany = [
+        'Comment' => [
             'className' => 'Comment',
             'foreignKey' => 'user_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'Post' => array(
+            'dependent' => false
+        ],
+        'Post' => [
             'className' => 'Post',
             'foreignKey' => 'user_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'UserMeta' => array(
+            'dependent' => false
+        ],
+        'UserMeta' => [
             'className' => 'UserMeta',
             'foreignKey' => 'user_id',
-            'dependent' => false,
-            'conditions' => '',
-            //'fields' => array('meta_key', 'meta_value'),
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-        'Media' => array(
+            'dependent' => false
+        ],
+        'Media' => [
             'className' => 'Media',
             'foreignKey' => 'user_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
-        ),
-    );
-    public $validate = array(
-        'username' => array(
-            'usernameRule-1' => array(
-                'rule' => array('minLength', 5),
+            'dependent' => false
+        ],
+    ];
+
+    /**
+     * List of validation rules. It must be an array with the field name as key and using
+     * as value one of the following possibilities
+     *
+     * @var array
+     */
+    public $validate = [
+        'username' => [
+            'usernameRule-1' => [
+                'rule' => ['minLength', 5],
                 'last' => true
-            ),
-            'usernameRule-2' => array(
+            ],
+            'usernameRule-2' => [
                 'rule' => 'isUnique',
-            ),
-            'usernameRule-3' => array(
+            ],
+            'usernameRule-3' => [
                 'rule' => 'notEmpty',
-            )
-        ),
-        'email' => array(
-            'emailRule-1' => array(
+            ]
+        ],
+        'email' => [
+            'emailRule-1' => [
                 'rule' => 'email',
-            ),
-            'emailRule-2' => array(
+            ],
+            'emailRule-2' => [
                 'rule' => 'isUnique',
                 'last' => true
-            ),
-        ),
-        'url' => array(
-            'urlRule-1' => array(
+            ],
+        ],
+        'url' => [
+            'urlRule-1' => [
                 'rule' => 'url',
                 'allowEmpty' => true
-            ),
-        ),
-        'password' => array(
-            'passwordRule-1' => array(
-                'rule' => array('between', 5, 32),
-            )
-        ),
-        'confirm_password' => array(
-            'confirmPasswordRule-1' => array(
+            ],
+        ],
+        'password' => [
+            'passwordRule-1' => [
+                'rule' => ['between', 5, 32],
+            ]
+        ],
+        'confirm_password' => [
+            'confirmPasswordRule-1' => [
                 'rule' => 'checkPasswords',
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
-    public function beforeValidate($options = array())
+    /**
+     * Called during validation operations, before validation. Please note that custom
+     * validation rules can be defined in $validate.
+     *
+     * @param array $options Options passed from Model::save().
+     *
+     * @return boolean True if validate operation should continue, false to abort
+     * @see Model::save()
+     */
+    public function beforeValidate($options = [])
     {
         parent::beforeValidate($options);
         if (Router::getParam('action') == 'admin_profile') {
@@ -132,6 +137,15 @@ class User extends AppModel
         }
     }
 
+    /**
+     * Called before each save operation, after validation. Return a non-true result
+     * to halt the save.
+     *
+     * @param array $options Options passed from Model::save().
+     *
+     * @return boolean True if the operation should continue, false if it should abort
+     * @see Model::save()
+     */
     public function beforeSave($options = array())
     {
         parent::beforeSave($options);
@@ -140,6 +154,15 @@ class User extends AppModel
         }
     }
 
+    /**
+     * Called after each successful save operation.
+     *
+     * @param boolean $created True if this save created a new record
+     * @param array   $options Options passed from Model::save().
+     *
+     * @return void
+     * @see Model::save()
+     */
     public function afterSave($created, $options = array())
     {
         parent::afterSave($created);
@@ -155,6 +178,13 @@ class User extends AppModel
         }
     }
 
+    /**
+     * Called before every deletion operation.
+     *
+     * @param boolean $cascade If true records that depend on this record will also be deleted
+     *
+     * @return boolean True if the operation should continue, false if it should abort
+     */
     public function beforeDelete($cascade = true)
     {
         parent::beforeDelete($cascade);
@@ -164,15 +194,16 @@ class User extends AppModel
         }
     }
 
+    /**
+     * Called after every deletion operation.
+     *
+     * @return void
+     */
     public function afterDelete()
     {
         parent::afterDelete();
 
-        if ($this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false)) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false);
     }
 
     function checkPasswords()
@@ -211,8 +242,8 @@ class User extends AppModel
     /**
      * Get user
      *
-     * @param int $userId User id
-     * @param array $query Find query
+     * @param int   $userId User id
+     * @param array $query  Find query
      *
      * @return array|bool If user exist return array else return false
      */

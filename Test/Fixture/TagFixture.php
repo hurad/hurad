@@ -1,4 +1,18 @@
 <?php
+/**
+ * Tag fixture
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 
 /**
  * Class TagFixture
@@ -7,37 +21,35 @@ class TagFixture extends CakeTestFixture
 {
 
     /**
-     * name property
+     * Name of the object
      *
-     * @var string 'Tag'
-     * @access public
+     * @var string
      */
     public $name = 'Tag';
 
     /**
-     * fields property
+     * Fields / Schema for the fixture.
+     * This array should match the output of Model::schema()
      *
      * @var array
-     * @access public
      */
-    public $fields = array(
-        'id' => array('type' => 'integer', 'key' => 'primary'),
-        'name' => array('type' => 'string', 'length' => 200, 'null' => false),
-        'slug' => array('type' => 'string', 'length' => 200, 'null' => false),
-        'description' => array('type' => 'text', 'null' => false),
-        'post_count' => array('type' => 'integer', 'null' => false),
+    public $fields = [
+        'id' => ['type' => 'integer', 'key' => 'primary'],
+        'name' => ['type' => 'string', 'length' => 200, 'null' => false],
+        'slug' => ['type' => 'string', 'length' => 200, 'null' => false],
+        'description' => ['type' => 'text', 'null' => false],
+        'post_count' => ['type' => 'integer', 'null' => false],
         'created' => 'datetime',
         'modified' => 'datetime'
-    );
+    ];
 
     /**
-     * records property
+     * Fixture records to be inserted.
      *
      * @var array
-     * @access public
      */
-    public $records = array(
-        array(
+    public $records = [
+        [
             'id' => '1',
             'name' => 'CSS',
             'slug' => 'css',
@@ -45,7 +57,6 @@ class TagFixture extends CakeTestFixture
             'post_count' => '5',
             'created' => '2007-03-17 01:16:23',
             'modified' => '2007-03-17 01:16:23'
-        ),
-    );
-
+        ],
+    ];
 }

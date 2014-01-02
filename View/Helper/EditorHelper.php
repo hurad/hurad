@@ -1,5 +1,18 @@
 <?php
-
+/**
+ * Editor helper
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppHelper', 'View/Helper');
 
 /**
@@ -9,12 +22,12 @@ class EditorHelper extends AppHelper
 {
 
     /**
-     * Other helpers used by this helper
+     * List of helpers used by this helper
      *
      * @var array
-     * @access public
      */
     public $helpers = ['Html', 'Js', 'Hook'];
+
     /**
      * Textarea name
      *
@@ -25,7 +38,7 @@ class EditorHelper extends AppHelper
     /**
      * Default Constructor
      *
-     * @param View $view The View this helper is being attached to.
+     * @param View  $view     The View this helper is being attached to.
      * @param array $settings Configuration settings for the helper.
      */
     public function __construct(View $view, $settings = array())

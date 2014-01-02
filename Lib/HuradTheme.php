@@ -1,16 +1,30 @@
 <?php
-
+/**
+ * Theme library
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 
 /**
- * Description of HuradTheme
+ * Class HuradTheme
  *
- * @author mohammad
+ * @todo Complete phpDoc
  */
-class HuradTheme {
-
-    public static function getThemeData() {
+class HuradTheme
+{
+    public static function getThemeData()
+    {
         $defaults = array(
             'name' => '',
             'description' => '',
@@ -38,22 +52,26 @@ class HuradTheme {
         return $themes;
     }
 
-    public static function activate($alias) {
+    public static function activate($alias)
+    {
         if ($alias == '') {
-            return FALSE;
+            return false;
         }
+
         ClassRegistry::init('Option')->write('template', $alias);
-        return TRUE;
+
+        return true;
     }
 
-    public static function delete($alias) {
+    public static function delete($alias)
+    {
         $viewPath = App::path('View');
         $folder = new Folder($viewPath[0] . 'Themed' . DS . $alias . DS);
 
         if ($folder->delete()) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
-    }
 
+        return false;
+    }
 }

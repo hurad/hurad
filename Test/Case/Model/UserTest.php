@@ -1,5 +1,18 @@
 <?php
-
+/**
+ * User test
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('User', 'Model');
 
 /**
@@ -7,10 +20,16 @@ App::uses('User', 'Model');
  */
 class UserTest extends CakeTestCase
 {
-
     public $fixtures = array('app.user', 'app.userMeta');
     public $User;
 
+    /**
+     * Setup the test case, backup the static object values so they can be restored.
+     * Specifically backs up the contents of Configure and paths in App if they have
+     * not already been backed up.
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -118,5 +137,4 @@ class UserTest extends CakeTestCase
         $result = $this->User->getUser(2);
         $this->assertFalse($result);
     }
-
 }

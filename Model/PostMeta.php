@@ -1,5 +1,18 @@
 <?php
-
+/**
+ * Post Meta model
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppModel', 'Model');
 
 /**
@@ -7,7 +20,6 @@ App::uses('AppModel', 'Model');
  */
 class PostMeta extends AppModel
 {
-
     /**
      * Custom database table name, or null/false if no table association is desired.
      *
@@ -30,25 +42,25 @@ class PostMeta extends AppModel
      *
      * @var array
      */
-    public $belongsTo = array(
-        'Post' => array(
+    public $belongsTo = [
+        'Post' => [
             'className' => 'Post',
             'foreignKey' => 'post_id',
-        )
-    );
+        ]
+    ];
 
     public function getPostMeta($post_id, $meta_key)
     {
         $this->recursive = -1;
         return $this->find(
             'first',
-            array(
-                'fields' => array('meta_value'),
-                'conditions' => array(
+            [
+                'fields' => ['meta_value'],
+                'conditions' => [
                     'PostMeta.post_id' => $post_id,
                     'PostMeta.meta_key' => $meta_key,
-                )
-            )
+                ]
+            ]
         );
     }
 }

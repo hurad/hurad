@@ -1,47 +1,58 @@
 <?php
+/**
+ * User fixture
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 
 /**
  * Class UserFixture
  */
 class UserFixture extends CakeTestFixture
 {
-
     /**
-     * name property
+     * Name of the object
      *
-     * @var string 'User'
-     * @access public
+     * @var string
      */
     public $name = 'User';
 
     /**
-     * fields property
+     * Fields / Schema for the fixture.
+     * This array should match the output of Model::schema()
      *
      * @var array
-     * @access public
      */
-    public $fields = array(
-        'id' => array('type' => 'integer', 'key' => 'primary'),
-        'username' => array('type' => 'string', 'length' => 60, 'null' => false),
-        'password' => array('type' => 'string', 'length' => 64, 'null' => false),
-        'email' => array('type' => 'string', 'length' => 100, 'null' => false),
-        'url' => array('type' => 'string', 'length' => 100, 'null' => false),
-        'role' => array('type' => 'string', 'length' => 20, 'null' => false),
-        'activation_key' => array('type' => 'string', 'length' => 60, 'null' => false),
-        'reset_key' => array('type' => 'string', 'length' => 60, 'null' => false),
-        'status' => array('type' => 'integer', 'null' => false),
+    public $fields = [
+        'id' => ['type' => 'integer', 'key' => 'primary'],
+        'username' => ['type' => 'string', 'length' => 60, 'null' => false],
+        'password' => ['type' => 'string', 'length' => 64, 'null' => false],
+        'email' => ['type' => 'string', 'length' => 100, 'null' => false],
+        'url' => ['type' => 'string', 'length' => 100, 'null' => false],
+        'role' => ['type' => 'string', 'length' => 20, 'null' => false],
+        'activation_key' => ['type' => 'string', 'length' => 60, 'null' => false],
+        'reset_key' => ['type' => 'string', 'length' => 60, 'null' => false],
+        'status' => ['type' => 'integer', 'null' => false],
         'created' => 'datetime',
         'modified' => 'datetime'
-    );
+    ];
 
     /**
-     * records property
+     * Fixture records to be inserted.
      *
      * @var array
-     * @access public
      */
-    public $records = array(
-        array(
+    public $records = [
+        [
             'id' => 1,
             'username' => 'admin',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -53,8 +64,8 @@ class UserFixture extends CakeTestFixture
             'status' => 0,
             'created' => '2013-03-17 01:16:23',
             'modified' => '2013-03-17 01:16:23'
-        ),
-        array(
+        ],
+        [
             'id' => 2,
             'username' => 'editor',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -66,8 +77,8 @@ class UserFixture extends CakeTestFixture
             'status' => 0,
             'created' => '2013-03-18 01:18:23',
             'modified' => '2013-03-18 01:18:23'
-        ),
-        array(
+        ],
+        [
             'id' => 3,
             'username' => 'author',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -79,8 +90,8 @@ class UserFixture extends CakeTestFixture
             'status' => 0,
             'created' => '2013-03-19 01:20:23',
             'modified' => '2013-03-19 01:20:23'
-        ),
-        array(
+        ],
+        [
             'id' => 4,
             'username' => 'user',
             'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
@@ -92,7 +103,6 @@ class UserFixture extends CakeTestFixture
             'status' => 0,
             'created' => '2013-03-20 01:22:23',
             'modified' => '2013-03-20 01:22:23'
-        ),
-    );
-
+        ],
+    ];
 }

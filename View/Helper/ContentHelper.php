@@ -1,9 +1,22 @@
 <?php
-
+/**
+ * Content helper
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * Class PostHelper
+ * Class ContentHelper
  */
 class ContentHelper extends AppHelper
 {
@@ -34,10 +47,10 @@ class ContentHelper extends AppHelper
     public $contentType = null;
 
     /**
-     * Constructor method
+     * Default Constructor
      *
-     * @param View $View
-     * @param array $settings
+     * @param View  $View     The View this helper is being attached to.
+     * @param array $settings Configuration settings for the helper.
      */
     public function __construct(\View $View, $settings = [])
     {
@@ -74,7 +87,7 @@ class ContentHelper extends AppHelper
     /**
      * Set post in loop
      *
-     * @param array $content
+     * @param array  $content
      * @param string $type Content type, post or page
      *
      * @internal param array $post
@@ -99,8 +112,8 @@ class ContentHelper extends AppHelper
     /**
      * Get content data
      *
-     * @param $contentId Content id
-     * @param array $query Find query
+     * @param       $contentId Content id
+     * @param array $query     Find query
      */
     public function getContentData($contentId, array $query = [])
     {
@@ -149,7 +162,7 @@ class ContentHelper extends AppHelper
     /**
      * Retrieve the post content.
      *
-     * @param int $contentId Post or Page id
+     * @param int    $contentId    Post or Page id
      * @param string $moreLinkText Optional. Content for when there is more text.
      *
      * @return string
@@ -238,8 +251,8 @@ class ContentHelper extends AppHelper
     /**
      * Retrieve the classes for the post div as an string.
      *
-     * @param string|array $class One or more classes to add to the class list.
-     * @param int $contentId Post or Page id
+     * @param string|array $class     One or more classes to add to the class list.
+     * @param int          $contentId Post or Page id
      *
      * @return array Array of classes.
      */
@@ -273,7 +286,7 @@ class ContentHelper extends AppHelper
      * Retrieve the post categories.
      *
      * @param string $separator Categories separator
-     * @param int $contentId Post or Page id
+     * @param int    $contentId Post or Page id
      *
      * @return string
      */
@@ -311,9 +324,9 @@ class ContentHelper extends AppHelper
      * Retrieve the post tags.
      *
      * @param string $separator Tags separator
-     * @param string $before Before tags
-     * @param string $after After tags
-     * @param int $contentId Post or Page id
+     * @param string $before    Before tags
+     * @param string $after     After tags
+     * @param int    $contentId Post or Page id
      *
      * @return string
      */

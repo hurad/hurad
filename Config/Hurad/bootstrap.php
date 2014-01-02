@@ -1,4 +1,24 @@
 <?php
+/**
+ * This file is included in app/Config/bootstrap.php file
+ *
+ * This file should load/create any application wide configuration settings, such as
+ * Caching, Logging, loading additional configuration files.
+ *
+ * You should also use this file to include any files that provide global functions/constants
+ * that your application uses.
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 
 Configure::write('Hurad.version', "0.1.0-alpha.6");
 

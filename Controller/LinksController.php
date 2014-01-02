@@ -4,11 +4,14 @@
  *
  * PHP 5
  *
- * @link http://hurad.org Hurad Project
- * @copyright Copyright (c) 2012-2013, Hurad (http://hurad.org)
- * @package app.Controller
- * @since Version 0.1.0
- * @license http://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (GPL-2.0)
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('AppController', 'Controller');
 
@@ -20,17 +23,25 @@ App::uses('AppController', 'Controller');
 class LinksController extends AppController
 {
     /**
-     * An array containing the names of helpers this controller uses.
+     * An array containing the names of helpers this controller uses. The array elements should
+     * not contain the "Helper" part of the class name.
      *
-     * @var array
+     * Example: `public $helpers = array('Html', 'Js', 'Time', 'Ajax');`
+     *
+     * @var mixed A single name as a string or a list of names as an array.
      */
-    public $helpers = array('AdminLayout');
+    public $helpers = ['AdminLayout'];
+
     /**
-     * Other components utilized by CommentsController
+     * Array containing the names of components this controller uses. Component names
+     * should not contain the "Component" portion of the class name.
+     *
+     * Example: `public $components = array('Session', 'RequestHandler', 'Acl');`
      *
      * @var array
      */
-    public $components = array('Paginator');
+    public $components = ['Paginator'];
+
     /**
      * Paginate settings
      *
@@ -45,7 +56,10 @@ class LinksController extends AppController
     );
 
     /**
-     * Called before the controller action.
+     * Called before the controller action. You can use this method to configure and customize components
+     * or perform logic that needs to happen before each controller action.
+     *
+     * @return void
      */
     public function beforeFilter()
     {

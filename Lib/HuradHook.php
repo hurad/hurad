@@ -1,4 +1,18 @@
 <?php
+/**
+ * Hook library
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 
 /**
  * The Hook API is located in this file, which allows for creating actions
@@ -16,7 +30,7 @@
  * change prefix global variable from "wp_" to "hr_"
  *
  * @copyright (c) 2006-2012, WordPress
- * @since 1.0.0
+ * @since         1.0.0
  */
 class HuradHook
 {
@@ -25,7 +39,6 @@ class HuradHook
      * Stores all of the filters
      *
      * @var array
-     * @access public
      */
     public static $hr_filter = array();
 
@@ -33,7 +46,6 @@ class HuradHook
      * Merges the filter hooks using this function.
      *
      * @var array
-     * @access public
      */
     public static $merged_filters = array();
 
@@ -41,7 +53,6 @@ class HuradHook
      * stores the list of current filters with the current one last
      *
      * @var array
-     * @access public
      */
     public static $hr_current_filter = array();
 
@@ -49,7 +60,6 @@ class HuradHook
      * Increments the amount of times action was triggered.
      *
      * @var array
-     * @access public
      */
     public static $hr_actions = array();
 
@@ -83,13 +93,10 @@ class HuradHook
      * is even a string. It is up to you to take care and this is done for
      * optimization purposes, so everything is as quick as possible.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the filter to hook the $function_to_add to.
+     * @param string   $tag             The name of the filter to hook the $function_to_add to.
      * @param callback $function_to_add The name of the function to be called when the filter is applied.
-     * @param int $priority optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
-     * @param int $accepted_args optional. The number of arguments the function accept (default 1).
+     * @param int      $priority        optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
+     * @param int      $accepted_args   optional. The number of arguments the function accept (default 1).
      *
      * @return boolean true
      */
@@ -107,11 +114,8 @@ class HuradHook
     /**
      * Check if any filter has been registered for a hook.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the filter hook.
-     * @param callback $function_to_check optional.
+     * @param string        $tag               The name of the filter hook.
+     * @param bool|callable $function_to_check optional.
      *
      * @return mixed If $function_to_check is omitted, returns boolean for whether the hook has anything registered.
      * When checking a specific function, the priority of that hook is returned, or false if the function is not attached.
@@ -156,12 +160,8 @@ class HuradHook
      * $value = apply_filters('example_filter', 'filter me', 'arg1', 'arg2');
      * </code>
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the filter hook.
-     * @param mixed $value The value on which the filters hooked to <tt>$tag</tt> are applied on.
-     * @param mixed $var,... Additional variables passed to the functions hooked to <tt>$tag</tt>.
+     * @param string $tag   The name of the filter hook.
+     * @param mixed  $value The value on which the filters hooked to <tt>$tag</tt> are applied on.
      *
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
@@ -219,14 +219,11 @@ class HuradHook
     /**
      * Execute functions hooked on a specific filter hook, specifying arguments in an array.
      *
-     * @see apply_filters() This function is identical, but the arguments passed to the
+     * @see    apply_filters() This function is identical, but the arguments passed to the
      * functions hooked to <tt>$tag</tt> are supplied using an array.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the filter hook.
-     * @param array $args The arguments supplied to the functions hooked to <tt>$tag</tt>
+     * @param string $tag  The name of the filter hook.
+     * @param array  $args The arguments supplied to the functions hooked to <tt>$tag</tt>
      *
      * @return mixed The filtered value after all hooked functions are applied to it.
      */
@@ -285,13 +282,9 @@ class HuradHook
      * when the hook was added. This goes for both filters and actions. No warning
      * will be given on removal failure.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The filter hook to which the function to be removed is hooked.
+     * @param string   $tag                The filter hook to which the function to be removed is hooked.
      * @param callback $function_to_remove The name of the function which should be removed.
-     * @param int $priority optional. The priority of the function (default: 10).
-     * @param int $accepted_args optional. The number of arguments the function accepts (default: 1).
+     * @param int      $priority           optional. The priority of the function (default: 10).
      *
      * @return boolean Whether the function existed before it was removed.
      */
@@ -315,11 +308,8 @@ class HuradHook
     /**
      * Remove all of the hooks from a filter.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The filter to remove hooks from.
-     * @param int $priority The priority number to remove.
+     * @param string   $tag      The filter to remove hooks from.
+     * @param bool|int $priority The priority number to remove.
      *
      * @return bool True when finished.
      */
@@ -343,9 +333,6 @@ class HuradHook
     /**
      * Retrieve the name of the current filter or action.
      *
-     * @since 1.0.0
-     * @access public
-     *
      * @return string Hook name of the current filter or action.
      */
     public static function current_filter()
@@ -361,15 +348,14 @@ class HuradHook
      * one or more of its PHP functions are executed at these points, using the
      * Action API.
      *
-     * @uses add_filter() Adds an action. Parameter list and functionality are the same.
+     * @uses   add_filter() Adds an action. Parameter list and functionality are the same.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the action to which the $function_to_add is hooked.
+     * @param string   $tag             The name of the action to which the $function_to_add is hooked.
      * @param callback $function_to_add The name of the function you wish to be called.
-     * @param int $priority optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
-     * @param int $accepted_args optional. The number of arguments the function accept (default 1).
+     * @param int      $priority        optional. Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
+     * @param int      $accepted_args   optional. The number of arguments the function accept (default 1).
+     *
+     * @return bool
      */
     public static function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1)
     {
@@ -386,14 +372,11 @@ class HuradHook
      * You can pass extra arguments to the hooks, much like you can with
      * apply_filters().
      *
-     * @see apply_filters() This function works similar with the exception that
+     * @see    apply_filters() This function works similar with the exception that
      * nothing is returned and only the functions or methods are called.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the action to be executed.
-     * @param mixed $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
+     * @param string $tag     The name of the action to be executed.
+     * @param mixed  $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
      *
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
@@ -460,9 +443,6 @@ class HuradHook
     /**
      * Retrieve the number of times an action is fired.
      *
-     * @since 1.0.0
-     * @access public
-     *
      * @param string $tag The name of the action hook.
      *
      * @return int The number of times action hook <tt>$tag</tt> is fired
@@ -479,14 +459,11 @@ class HuradHook
     /**
      * Execute functions hooked on a specific action hook, specifying arguments in an array.
      *
-     * @see do_action() This function is identical, but the arguments passed to the
+     * @see    do_action() This function is identical, but the arguments passed to the
      * functions hooked to <tt>$tag</tt> are supplied using an array.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The name of the action to be executed.
-     * @param array $args The arguments supplied to the functions hooked to <tt>$tag</tt>
+     * @param string $tag  The name of the action to be executed.
+     * @param array  $args The arguments supplied to the functions hooked to <tt>$tag</tt>
      *
      * @return null Will return null if $tag does not exist in $wp_filter array
      */
@@ -542,12 +519,10 @@ class HuradHook
     /**
      * Check if any action has been registered for a hook.
      *
-     * @since 1.0.0
-     * @access public
-     * @see has_filter() has_action() is an alias of has_filter().
+     * @see    has_filter() has_action() is an alias of has_filter().
      *
-     * @param string $tag The name of the action hook.
-     * @param callback $function_to_check optional.
+     * @param string        $tag               The name of the action hook.
+     * @param bool|callable $function_to_check optional.
      *
      * @return mixed If $function_to_check is omitted, returns boolean for whether the hook has anything registered.
      * When checking a specific function, the priority of that hook is returned, or false if the function is not attached.
@@ -566,12 +541,9 @@ class HuradHook
      * method can be used to remove default functions attached to a specific filter
      * hook and possibly replace them with a substitute.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The action hook to which the function to be removed is hooked.
+     * @param string   $tag                The action hook to which the function to be removed is hooked.
      * @param callback $function_to_remove The name of the function which should be removed.
-     * @param int $priority optional The priority of the function (default: 10).
+     * @param int      $priority           optional The priority of the function (default: 10).
      *
      * @return boolean Whether the function is removed.
      */
@@ -583,11 +555,8 @@ class HuradHook
     /**
      * Remove all of the hooks from an action.
      *
-     * @since 1.0.0
-     * @access public
-     *
-     * @param string $tag The action to remove hooks from.
-     * @param int $priority The priority number to remove them from.
+     * @param string   $tag      The action to remove hooks from.
+     * @param bool|int $priority The priority number to remove them from.
      *
      * @return bool True when finished.
      */
@@ -607,13 +576,9 @@ class HuradHook
      * functions. This function does not check for the existence of the all hook, so
      * it will fail unless the all hook exists prior to this function call.
      *
-     * @since 1.0.0
-     * @access private
-     *
-     * @uses $hr_filter Used to process all of the functions in the 'all' hook
+     * @uses     $hr_filter Used to process all of the functions in the 'all' hook
      *
      * @param array $args The collected parameters from the hook that was called.
-     * @param string $hook Optional. The hook name that was used to call the 'all' hook.
      */
     private static function _hr_call_all_hook($args)
     {
@@ -644,10 +609,7 @@ class HuradHook
      * Functions and static method callbacks are just returned as strings and
      * shouldn't have any speed penalty.
      *
-     * @since 1.0.0
-     * @access private
-     *
-     * @param string $tag Used in counting how many hooks were applied
+     * @param string   $tag      Used in counting how many hooks were applied
      * @param callback $function Used for creating unique id
      * @param int|bool $priority Used in counting how many hooks were applied. If === false and $function is an object reference, we return the unique id only if it already has one, false otherwise.
      *
@@ -696,5 +658,4 @@ class HuradHook
             }
         }
     }
-
 }

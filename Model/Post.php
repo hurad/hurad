@@ -1,20 +1,22 @@
 <?php
-
-App::uses('AppModel', 'Model');
-
 /**
- * Post model for Hurad.
+ * Post model
  *
- * Licensed under The GPLv3 License
+ * PHP 5
+ *
+ * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @todo Edit phpDoc
- * @package Hurad
- * @category Model
- * @since 1.0.0
- * @license GPLv3 License (http://opensource.org/licenses/GPL-3.0)
- * @link http://hurad.org Hurad Project
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
+App::uses('AppModel', 'Model');
+
+/**
+ * Class Post
  */
 class Post extends AppModel
 {
@@ -105,8 +107,8 @@ class Post extends AppModel
     /**
      * Get first post.
      *
-     * @param int $postId Post id
-     * @param array $query Query options
+     * @param int   $postId Post id
+     * @param array $query  Query options
      *
      * @return array
      */
@@ -129,9 +131,6 @@ class Post extends AppModel
 
     /**
      * Count all posts.
-     *
-     * @since 1.0.0
-     * @access public
      *
      * @param string $status Post status
      *

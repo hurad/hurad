@@ -1,32 +1,39 @@
 <?php
-
+/**
+ * Link helper
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
 App::uses('AppHelper', 'View/Helper');
 
 /**
- * LinkHelper
- *
- * @copyright (c) 2006-2013, WordPress Link Template Functions
- *
- * @since 1.0.0
+ * Class LinkHelper
  */
 class LinkHelper extends AppHelper
 {
-
     /**
-     * Other helpers used by this helper
+     * List of helpers used by this helper
      *
      * @var array
-     * @access public
      */
-    public $helpers = array('Html', 'Time', 'Hook');
+    public $helpers = ['Html', 'Time', 'Hook'];
 
     /**
-     * Current post array
+     * Current post or page array
      *
      * @var array
-     * @access public
      */
-    public $content = array();
+    public $content = [];
+
     /**
      * Model of content
      *
@@ -57,8 +64,7 @@ class LinkHelper extends AppHelper
     /**
      * Display the permalink for the current post.
      *
-     * @since 1.0.0
-     * @uses apply_filters() Calls 'the_permalink' filter on the permalink string.
+     * @uses  apply_filters() Calls 'the_permalink' filter on the permalink string.
      */
     function thePermalink()
     {
@@ -70,8 +76,6 @@ class LinkHelper extends AppHelper
      *
      * The permalink mode title will use the post title for the 'a' element 'id'
      * attribute. The id mode uses 'post-' with the post ID for the 'id' attribute.
-     *
-     * @since 1.0.0
      *
      * @param string $mode Permalink mode can be either 'title', 'id', or default, which is 'id'.
      */
@@ -98,10 +102,9 @@ class LinkHelper extends AppHelper
     /**
      * Retrieve the url to the admin area for the current site.
      *
-     * @since 1.0.0
-     * @uses getAdminUrl()
+     * @uses  getAdminUrl()
      *
-     * @param string $path Optional path relative to the admin url.
+     * @param string $path   Optional path relative to the admin url.
      * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
      *
      * @return string Admin url link with optional path appended.
@@ -114,10 +117,9 @@ class LinkHelper extends AppHelper
     /**
      * Retrieve the url to the admin area for a given site.
      *
-     * @since 1.0.0
-     * @uses getSiteUrl()
+     * @uses  getSiteUrl()
      *
-     * @param string $path Optional path relative to the admin url.
+     * @param string $path   Optional path relative to the admin url.
      * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
      *
      * @return string Admin url link with optional path appended.
@@ -140,11 +142,9 @@ class LinkHelper extends AppHelper
      * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
      * overridden.
      *
-     * @since 1.0.0
+     * @uses  getSiteUrl()
      *
-     * @uses getSiteUrl()
-     *
-     * @param string $path Optional. Path relative to the site url.
+     * @param string $path   Optional. Path relative to the site url.
      * @param string $scheme Optional. Scheme to give the site url context. See set_url_scheme().
      *
      * @return string Site url link with optional path appended.
@@ -161,10 +161,9 @@ class LinkHelper extends AppHelper
      * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
      * overridden.
      *
-     * @since 1.0.0
-     * @uses setUrlScheme()
+     * @uses  setUrlScheme()
      *
-     * @param string $path Optional. Path relative to the site url.
+     * @param string $path   Optional. Path relative to the site url.
      * @param string $scheme Optional. Scheme to give the site url context. Currently 'http', 'https', 'login', 'login_post', 'admin', or 'relative'.
      *
      * @return string Site url link with optional path appended.
@@ -185,9 +184,7 @@ class LinkHelper extends AppHelper
     /**
      * Set the scheme for a URL
      *
-     * @since 1.0.0
-     *
-     * @param string $url Absolute url that includes a scheme
+     * @param string $url    Absolute url that includes a scheme
      * @param string $scheme Optional. Scheme to give $url. Currently 'http', 'https', 'login', 'login_post', 'admin', or 'relative'.
      *
      * @return string $url URL with chosen scheme.
@@ -207,5 +204,4 @@ class LinkHelper extends AppHelper
 
         return $this->Hook->applyFilters('set_url_scheme', $url, $scheme, $originalScheme);
     }
-
 }

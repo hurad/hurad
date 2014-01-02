@@ -1,24 +1,17 @@
 <?php
-
 /**
  * Application level Controller
  *
- * This file is application-wide controller file. You can put all
- * application-wide controller-related methods here.
- *
  * PHP 5
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
  * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('Controller', 'Controller');
 
@@ -28,45 +21,55 @@ App::uses('Controller', 'Controller');
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
- * @package       app.Controller
  * @property HuradComponent $Hurad
- * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
 {
-
-    public $components = array(
-        'Security' => array('csrfUseOnce' => false),
+    /**
+     * Array containing the names of components this controller uses. Component names
+     * should not contain the "Component" portion of the class name.
+     *
+     * Example: `public $components = array('Session', 'RequestHandler', 'Acl');`
+     *
+     * @var array
+     */
+    public $components = [
+        'Security' => ['csrfUseOnce' => false],
         'Role',
         'Cookie',
         'Session',
-        'Auth' => array(
-            //'fields' => array('username' => 'username', 'password' => 'password'),
-            'loginAction' => array(
+        'Auth' => [
+            'loginAction' => [
                 'admin' => false,
                 'controller' => 'users',
                 'action' => 'login'
-            ),
+            ],
             'loginRedirect' => '/admin',
-            'logoutAction' => array(
+            'logoutAction' => [
                 'admin' => false,
                 'controller' => 'users',
                 'action' => 'logout'
-            ),
-            'logoutRedirect' => array(
+            ],
+            'logoutRedirect' => [
                 'admin' => false,
                 'controller' => 'users',
                 'action' => 'login'
-            ),
-            'authorize' => array('Controller'),
-            'flash' => array(
+            ],
+            'authorize' => ['Controller'],
+            'flash' => [
                 'element' => 'auth',
                 'key' => 'auth',
-                'params' => array()
-            )
-        )
-    );
+                'params' => []
+            ]
+        ]
+    ];
 
+    /**
+     * Called before the controller action. You can use this method to configure and customize components
+     * or perform logic that needs to happen before each controller action.
+     *
+     * @return void
+     */
     public function beforeFilter()
     {
         parent::beforeFilter();

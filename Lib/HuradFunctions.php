@@ -1,6 +1,23 @@
 <?php
 /**
+ * Functions library
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
+
+/**
  * Class HuradFunctions
+ *
+ * @todo Complete phpDoc
  */
 class HuradFunctions
 {
@@ -57,7 +74,7 @@ class HuradFunctions
      * Encode the Unicode values to be used in the URI.
      *
      * @param string $utf8String Max length of the string
-     * @param int $length
+     * @param int    $length
      *
      * @return string String with Unicode encoded for URI.
      */
@@ -111,7 +128,7 @@ class HuradFunctions
      * Extract a slice of an array, given a list of keys.
      *
      * @param array $array The original array
-     * @param array $keys The list of keys
+     * @param array $keys  The list of keys
      *
      * @return array The array slice
      */
@@ -130,7 +147,7 @@ class HuradFunctions
     /**
      * Convert integer number to format based on the locale.
      *
-     * @param int $number The number to convert based on locale.
+     * @param int $number   The number to convert based on locale.
      * @param int $decimals Precision of the number of decimal places.
      *
      * @return string Converted number in string format.
