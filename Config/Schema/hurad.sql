@@ -74,7 +74,7 @@ CREATE TABLE `$[prefix]links` (
 	COLLATE=utf8_general_ci,
 	ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `media` (
+CREATE TABLE IF NOT EXISTS `$[prefix]media` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `title` varchar(255) NOT NULL,

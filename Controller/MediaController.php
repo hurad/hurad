@@ -70,16 +70,32 @@ class MediaController extends AppController
             $path = date('Y') . DS . date('m');
 
             if ($upload['error']) {
-                $this->redirect(['action' => 'index']);
                 $this->Session->setFlash(
                     __d('hurad', 'File could not be uploaded. Please, try again.'),
                     'flash_message',
                     ['class' => 'danger']
                 );
+                $this->redirect(['action' => 'index']);
             }
 
             $folder = new Folder(WWW_ROOT . 'files' . DS . $path, true, 0755);
-            move_uploaded_file($upload['tmp_name'], $folder->pwd() . DS . $prefix . $upload['name']);
+            if (!is_writable(WWW_ROOT . 'files')) {
+                $this->Session->setFlash(
+                    __d('hurad', '%s is not writable', WWW_ROOT . 'files'),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'index']);
+            }
+
+            if (!move_uploaded_file($upload['tmp_name'], $folder->pwd() . DS . $prefix . $upload['name'])) {
+                $this->Session->setFlash(
+                    __d('hurad', 'File could not be uploaded. Please, try again.'),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'index']);
+            }
 
             $file = new File($folder->pwd() . DS . $prefix . $upload['name']);
 

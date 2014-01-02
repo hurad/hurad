@@ -35,8 +35,8 @@ class Hurad
 
         switch ($type) {
             case 'behavior':
-                foreach (self::$behavior as $i => $array) {
-                    if (key_exists($prop->name, $array)) {
+                foreach (self::$behavior as $array) {
+                    if (array_key_exists($prop->name, $array)) {
                         $prop->actsAs = array_merge($prop->actsAs, array($array[$prop->name]));
                     }
                 }
