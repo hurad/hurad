@@ -51,9 +51,9 @@ foreach ($posts as $post) {
     echo $this->Rss->item(
         [],
         [
-            'title' => $post['Post']['title'],
-            'link' => $this->Post->getPermalink(),
-            'guid' => ['url' => $this->Post->getPermalink(), 'isPermaLink' => 'true'],
+            'title' => $this->Content->getTitle(),
+            'link' => $this->Content->getPermalink(),
+            'guid' => ['url' => $this->Content->getPermalink(), 'isPermaLink' => 'true'],
             'description' => $bodyText,
             'author' => $post['User']['email'] . ' (' . $post['User']['username'] . ')',
             'pubDate' => $this->Time->toRSS($post['Post']['created'])
