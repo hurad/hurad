@@ -28,8 +28,8 @@ class HuradPlugin
      */
     public static function getPluginData()
     {
-        $dir = new Folder(APP . DS . 'Plugin');
-        $files = $dir->read(true, array('empty'));
+        $dir = new Folder(APP . 'Plugin');
+        $files = $dir->read(true, ['empty']);
         $plugins = [];
 
         foreach ($files[0] as $folder) {
@@ -145,16 +145,27 @@ class HuradPlugin
 
         if (Configure::check('Plugins') && !empty($plugins)) {
             $plugins = explode(',', $plugins);
+
+            $dir = new Folder(APP . 'Plugin');
+            $availableDir = $dir->read(true, ['empty']);
+
             foreach ($plugins as $pluginFolder) {
-                $bs = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'bootstrap.php');
-                $rt = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'routes.php');
-                if ($bs->exists()) {
+                if (!in_array($pluginFolder, $availableDir[0])) {
+                    continue;
+                }
+
+                $bootstrap = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'bootstrap.php');
+                $routes = new File(APP . 'Plugin' . DS . $pluginFolder . DS . 'Config' . DS . 'routes.php');
+
+                if ($bootstrap->exists()) {
                     $config[$pluginFolder]['bootstrap'] = true;
                 }
-                if ($rt->exists()) {
+
+                if ($routes->exists()) {
                     $config[$pluginFolder]['routes'] = true;
                 }
-                if ($bs->exists() == false && $rt->exists() == false) {
+
+                if ($bootstrap->exists() === false && $routes->exists() === false) {
                     $config[$pluginFolder] = array();
                 }
             }
