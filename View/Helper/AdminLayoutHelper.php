@@ -141,18 +141,31 @@ class AdminLayoutHelper extends AppHelper
         }
     }
 
-    public function approveLink($status, $comment_id)
+    public function toggleCommentLink($status, $commentId)
     {
         switch ($status) {
             case 'approved':
                 return $this->Html->link(
                     __d('hurad', 'Disapprove'),
-                    array('action' => 'action', 'disapproved', $comment_id)
+                    array('action' => 'action', 'disapproved', $commentId)
                 );
                 break;
 
             case 'disapproved':
-                return $this->Html->link(__d('hurad', 'Approve'), array('action' => 'action', 'approved', $comment_id));
+                return $this->Html->link(__d('hurad', 'Approve'), array('action' => 'action', 'approved', $commentId));
+                break;
+
+            case 'spam':
+                return $this->Html->link(__d('hurad', 'Un Spam'), array('action' => 'action', 'approved', $commentId));
+                break;
+
+            case 'trash':
+                return $this->Form->postLink(
+                    __d('hurad', 'Delete'),
+                    array('admin' => true, 'controller' => 'comments', 'action' => 'delete', $commentId),
+                    null,
+                    __d('hurad', 'Are you sure you want to delete “#%s”?', $commentId)
+                );
                 break;
 
             default:

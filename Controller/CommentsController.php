@@ -44,7 +44,7 @@ class CommentsController extends AppController
      *
      * @var array
      */
-    public $components = ['RequestHandler', 'Paginator'];
+    public $components = ['RequestHandler', 'Paginator', 'Hurad'];
 
     /**
      * Paginate settings
@@ -117,7 +117,6 @@ class CommentsController extends AppController
                 $this->request->data['Comment']['author_url']
             );
             if ($this->Comment->save($this->request->data)) {
-                $this->redirect($this->referer());
                 $this->Hurad->sendEmail(
                     $this->request->data['Comment']['author_email'],
                     __d('hurad', 'Comment Submit'),
@@ -127,15 +126,18 @@ class CommentsController extends AppController
                 $this->Session->setFlash(
                     __d('hurad', 'The comment has been saved'),
                     'flash_message',
-                    array('class' => 'success')
+                    ['class' => 'success'],
+                    'comment-flash'
                 );
-                $this->redirect(array('action' => 'index'));
+                $this->redirect($this->referer());
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'The comment could not be saved. Please, try again.'),
                     'flash_message',
-                    array('class' => 'danger')
+                    ['class' => 'danger'],
+                    'comment-flash'
                 );
+                $this->redirect($this->referer());
             }
         }
     }
@@ -163,73 +165,46 @@ class CommentsController extends AppController
                     )
                 )
             );
+        } else {
+            switch ($action) {
+                case 'disapproved':
+                    $this->set('title_for_layout', __d('hurad', 'Pending comments'));
+                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    break;
+
+                case 'approved':
+                    $this->set('title_for_layout', __d('hurad', 'Approved comments'));
+                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    break;
+
+                case 'spam':
+                    $this->set('title_for_layout', __d('hurad', 'Spams'));
+                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    break;
+
+                case 'trash':
+                    $this->set('title_for_layout', __d('hurad', 'Trashes'));
+                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    break;
+
+                default:
+                    $settings = ['Comment' => ['conditions' => ['Comment.status' => ['approved', 'disapproved']]]];
+            }
+
+            $count['all'] = $this->Comment->counter();
+            $count['disapproved'] = $this->Comment->counter('disapproved');
+            $count['approved'] = $this->Comment->counter('approved');
+            $count['spam'] = $this->Comment->counter('spam');
+            $count['trash'] = $this->Comment->counter('trash');
+
+            $this->Paginator->settings = Hash::merge(
+                $this->paginate,
+                $settings
+            );
+
+            $this->set(compact('count'));
         }
 
-        switch ($action) {
-            case 'moderated':
-                $this->set('title_for_layout', __d('hurad', 'Moderated comments'));
-                $this->Paginator->settings = array_merge(
-                    $this->paginate,
-                    array(
-                        'Comment' => array(
-                            'conditions' => array(
-                                'Comment.status' => 'disapproved',
-                            )
-                        )
-                    )
-                );
-                break;
-
-            case 'approved':
-                $this->set('title_for_layout', __d('hurad', 'Approved comments'));
-                $this->Paginator->settings = array_merge(
-                    $this->paginate,
-                    array(
-                        'Comment' => array(
-                            'conditions' => array(
-                                'Comment.status' => 'approved',
-                            )
-                        )
-                    )
-                );
-                break;
-
-            case 'spam':
-                $this->set('title_for_layout', __d('hurad', 'Spams'));
-                $this->Paginator->settings = array_merge(
-                    $this->paginate,
-                    array(
-                        'Comment' => array(
-                            'conditions' => array(
-                                'Comment.status' => 'spam',
-                            )
-                        )
-                    )
-                );
-                break;
-
-            case 'trash':
-                $this->set('title_for_layout', __d('hurad', 'Trashes'));
-                $this->Paginator->settings = array_merge(
-                    $this->paginate,
-                    array(
-                        'Comment' => array(
-                            'conditions' => array(
-                                'Comment.status' => 'trash',
-                            )
-                        )
-                    )
-                );
-                break;
-        }
-
-        $countComments['all'] = $this->Comment->countComments();
-        $countComments['moderated'] = $this->Comment->countComments('moderated');
-        $countComments['approved'] = $this->Comment->countComments('approved');
-        $countComments['spam'] = $this->Comment->countComments('spam');
-        $countComments['trash'] = $this->Comment->countComments('trash');
-
-        $this->set('countComments', $countComments);
         $this->set('comments', $this->Paginator->paginate('Comment'));
     }
 
@@ -282,16 +257,19 @@ class CommentsController extends AppController
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
+
         $this->Comment->id = $id;
         if (!$this->Comment->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid comment'));
         }
+
         if ($this->Comment->delete()) {
             $this->Session->setFlash(__d('hurad', 'Comment was deleted'), 'flash_message', array('class' => 'success'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect($this->request->referer());
         }
+
         $this->Session->setFlash(__d('hurad', 'Comment was not deleted'), 'flash_message', array('class' => 'danger'));
-        $this->redirect(array('action' => 'index'));
+        $this->redirect($this->request->referer());
     }
 
     /**
@@ -329,16 +307,18 @@ class CommentsController extends AppController
                 $this->Session->setFlash(
                     __d('hurad', 'The reply of comment has been saved.'),
                     'flash_message',
-                    array('class' => 'success')
+                    ['class' => 'success'],
+                    'comment-flash'
                 );
-                $this->redirect(array('controller' => 'posts', 'action' => 'index'));
+                $this->redirect($this->Hurad->getPermalink($comment['Comment']['post_id']));
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'The comment could not be saved. Please, try again.'),
                     'flash_message',
-                    array('class' => 'danger')
+                    ['class' => 'danger'],
+                    'comment-flash'
                 );
-                $this->redirect(array('controller' => 'posts', 'action' => 'index'));
+                $this->redirect($this->Hurad->getPermalink($comment['Comment']['post_id']));
             }
         }
     }

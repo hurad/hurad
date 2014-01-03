@@ -40,27 +40,27 @@ class EmailConfig
 
     public $default = array(
         'transport' => 'Mail',
-        'from' => 'you@localhost',
-        //'charset' => 'utf-8',
-        //'headerCharset' => 'utf-8',
+        'from' => 'info@example.com',
+        'charset' => 'utf-8',
+        'headerCharset' => 'utf-8',
     );
 
     public $smtp = array(
         'transport' => 'Smtp',
-        'from' => array('site@localhost' => 'My Site'),
+        'from' => array('info@example.com' => 'My Site'),
         'host' => 'localhost',
         'port' => 25,
         'timeout' => 30,
-        'username' => 'user',
-        'password' => 'secret',
+//        'username' => 'user',
+//        'password' => 'secret',
         'client' => null,
         'log' => false,
-        //'charset' => 'utf-8',
-        //'headerCharset' => 'utf-8',
+        'charset' => 'utf-8',
+        'headerCharset' => 'utf-8',
     );
 
     public $fast = array(
-        'from' => 'you@localhost',
+        'from' => 'info@example.com',
         'sender' => null,
         'to' => null,
         'cc' => null,
@@ -86,7 +86,7 @@ class EmailConfig
         'password' => 'secret',
         'client' => null,
         'log' => true,
-        //'charset' => 'utf-8',
-        //'headerCharset' => 'utf-8',
+        'charset' => 'utf-8',
+        'headerCharset' => 'utf-8',
     );
 }

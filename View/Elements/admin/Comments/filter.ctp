@@ -3,26 +3,26 @@
     if ($url == "admin/comments") {
         echo $this->Html->tag('li', NULL, array('class' => 'active'));
         echo $this->Html->link(
-            __d('hurad', 'All ') . $this->Html->tag('span', $countComments['all'], array('class' => 'badge')),
+            __d('hurad', 'All ') . $this->Html->tag('span', $count['all'], array('class' => 'badge')),
             array('admin' => TRUE, 'action' => 'index'),
             array('escape' => false)
         );
     } else {
         echo $this->Html->tag('li', NULL);
         echo $this->Html->link(
-            __d('hurad', 'All ') . $this->Html->tag('span', $countComments['all'], array('class' => 'badge')),
+            __d('hurad', 'All ') . $this->Html->tag('span', $count['all'], array('class' => 'badge')),
             array('admin' => TRUE, 'action' => 'index'),
             array('escape' => false)
         );
     }
 
-    if ($countComments['moderated']) {
-        if (stripos($url, "admin/comments/index/moderated") !== false) {
+    if ($count['disapproved']) {
+        if (stripos($url, "admin/comments/index/disapproved") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
                 __d('hurad', 'Pending ') . $this->Html->tag(
                     'span',
-                    $countComments['moderated'],
+                    $count['disapproved'],
                     array('class' => 'badge badge-info')
                 ),
                 array('admin' => TRUE, 'action' => 'index', 'moderated'),
@@ -33,22 +33,22 @@
             echo $this->Html->link(
                 __d('hurad', 'Pending ') . $this->Html->tag(
                     'span',
-                    $countComments['moderated'],
+                    $count['disapproved'],
                     array('class' => 'badge badge-info')
                 ),
-                array('admin' => TRUE, 'action' => 'index', 'moderated'),
+                array('admin' => TRUE, 'action' => 'index', 'disapproved'),
                 array('escape' => false)
             );
         }
     }
 
-    if ($countComments['approved']) {
+    if ($count['approved']) {
         if (stripos($url, "admin/comments/index/approved") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
                 __d('hurad', 'Approved ') . $this->Html->tag(
                     'span',
-                    $countComments['approved'],
+                    $count['approved'],
                     array('class' => 'badge badge-success')
                 ),
                 array('admin' => TRUE, 'action' => 'index', 'approved'),
@@ -59,7 +59,7 @@
             echo $this->Html->link(
                 __d('hurad', 'Approved ') . $this->Html->tag(
                     'span',
-                    $countComments['approved'],
+                    $count['approved'],
                     array('class' => 'badge badge-success')
                 ),
                 array('admin' => TRUE, 'action' => 'index', 'approved'),
@@ -68,31 +68,39 @@
         }
     }
 
-    if ($countComments['spam']) {
+    if ($count['spam']) {
         if (stripos($url, "admin/comments/index/spam") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
-                __d('hurad', 'Spam ') . $this->Html->tag('span', $countComments['spam'], array('class' => 'badge badge-warning')),
+                __d('hurad', 'Spam ') . $this->Html->tag(
+                    'span',
+                    $count['spam'],
+                    array('class' => 'badge badge-warning')
+                ),
                 array('admin' => TRUE, 'action' => 'index', 'spam'),
                 array('class' => 'current', 'escape' => false)
             );
         } else {
             echo $this->Html->tag('li', NULL);
             echo $this->Html->link(
-                __d('hurad', 'Spam ') . $this->Html->tag('span', $countComments['spam'], array('class' => 'badge badge-warning')),
+                __d('hurad', 'Spam ') . $this->Html->tag(
+                    'span',
+                    $count['spam'],
+                    array('class' => 'badge badge-warning')
+                ),
                 array('admin' => TRUE, 'action' => 'index', 'spam'),
                 array('escape' => false)
             );
         }
     }
 
-    if ($countComments['trash']) {
+    if ($count['trash']) {
         if (stripos($url, "admin/comments/index/trash") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
                 __d('hurad', 'Trash ') . $this->Html->tag(
                     'span',
-                    $countComments['trash'],
+                    $count['trash'],
                     array('class' => 'badge badge-important')
                 ),
                 array('admin' => TRUE, 'action' => 'index', 'trash'),
@@ -103,7 +111,7 @@
             echo $this->Html->link(
                 __d('hurad', 'Trash ') . $this->Html->tag(
                     'span',
-                    $countComments['trash'],
+                    $count['trash'],
                     array('class' => 'badge badge-important')
                 ),
                 array('admin' => TRUE, 'action' => 'index', 'trash'),

@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-8"><?php echo $this->element(
                 'admin/Comments/filter',
-                array('countComments' => $countComments)
+                array('count' => $count)
             ); ?></div>
         <div class="col-md-4"><?php echo $this->element('admin/Comments/search'); ?></div>
     </div>

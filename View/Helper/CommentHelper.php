@@ -570,14 +570,19 @@ class CommentHelper extends AppHelper
     /**
      * The status of a comment.
      *
-     * @param int $contentId Post or Page id
+     * @param int    $contentId Post or Page id
+     * @param string $text      Link text
      *
-     * @return string|bool Status might be 'trash', 'approved', 'unapproved', 'spam'. False on failure.
+     * @return string|bool Status might be 'trash', 'approved', 'disapproved', 'spam'. False on failure.
      */
-    function getCommentLink($contentId = null)
+    function getCommentLink($contentId = null, $text = null)
     {
+        if (!$text) {
+            $text = $this->getText();
+        }
+
         $link = $this->Html->link(
-            $this->getText(),
+            $text,
             $this->Content->getPermalink($contentId) . '#comment-' . $this->getId()
         );
 

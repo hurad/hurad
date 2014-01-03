@@ -130,47 +130,36 @@ class Comment extends AppModel
         return $latest;
     }
 
-    public function countComments($type = 'all')
+    /**
+     * Comment counter
+     *
+     * @param string $status Comment status
+     * @param array  $query  Find query
+     *
+     * @return array
+     */
+    public function counter($status = 'all', array $query = [])
     {
-        if ($type == null) {
-            return false;
-        } elseif ($type == 'all') {
-            $comments = $this->find('count');
-        } elseif ($type == 'approved') {
-            $comments = $this->find(
-                'count',
-                array(
-                    'conditions' =>
-                        array('Comment.status' => 'approved')
-                )
-            );
-        } elseif ($type == 'moderated') {
-            $comments = $this->find(
-                'count',
-                array(
-                    'conditions' =>
-                        array('Comment.status' => 'disapproved')
-                )
-            );
-        } elseif ($type == 'spam') {
-            $comments = $this->find(
-                'count',
-                array(
-                    'conditions' =>
-                        array('Comment.status' => 'spam')
-                )
-            );
-        } elseif ($type == 'trash') {
-            $comments = $this->find(
-                'count',
-                array(
-                    'conditions' =>
-                        array('Comment.status' => 'trash')
-                )
-            );
-        } else {
-            return false;
+        switch ($status) {
+            case 'approved':
+            case 'disapproved':
+            case 'spam':
+            case 'trash':
+                $defaultQuery = ['conditions' => ['Comment.status' => $status]];
+                break;
+
+            case 'all':
+                $defaultQuery = ['conditions' => ['Comment.status' => ['approved', 'disapproved']]];
+                break;
+
+            default:
+                $defaultQuery = [];
+                break;
         }
-        return $comments;
+
+        $query = Hash::merge($defaultQuery, $query);
+        $count = $this->find('count', $query);
+
+        return $count;
     }
 }

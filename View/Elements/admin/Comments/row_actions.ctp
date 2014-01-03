@@ -1,37 +1,65 @@
 <div class="row-actions">
     <?php
-    $approvedLink = $this->AdminLayout->approveLink($comment['Comment']['status'], $this->Comment->getId());
-    HuradRowActions::addAction('approved', $approvedLink, 'manage_comments');
+    $approvedLink = $this->AdminLayout->toggleCommentLink($comment['Comment']['status'], $this->Comment->getId());
 
-    $viewLink = $this->Html->link(
-        __d('hurad', 'View'),
-        array('admin' => true, 'controller' => 'comments', 'action' => 'view', $this->Comment->getId())
-    );
-    HuradRowActions::addAction('view', $viewLink, 'manage_comments');
+    $viewLink = $this->Comment->getCommentLink($comment['Comment']['post_id'], __d('hurad', 'View'));
 
     $editLink = $this->Html->link(
         __d('hurad', 'Edit'),
-        array('admin' => true, 'controller' => 'comments', 'action' => 'edit', $this->Comment->getId())
+        ['admin' => true, 'controller' => 'comments', 'action' => 'edit', $this->Comment->getId()]
     );
-    HuradRowActions::addAction('edit', $editLink, 'manage_comments');
 
-    $spamLink = $this->Html->link(
-        __d('hurad', 'Spam'),
-        array('admin' => true, 'controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->getId())
-    );
-    HuradRowActions::addAction('spam', $spamLink, 'manage_comments');
+    if ($comment['Comment']['status'] == 'spam') {
+        $spamLink = $this->AdminLayout->toggleCommentLink($comment['Comment']['status'], $this->Comment->getId());
+    } else {
+        $spamLink = $this->Html->link(
+            __d('hurad', 'Spam'),
+            ['admin' => true, 'controller' => 'comments', 'action' => 'action', 'spam', $this->Comment->getId()]
+        );
+    }
 
-    $trashLink = $this->Html->link(
-        __d('hurad', 'Trash'),
-        array(
-            'admin' => true,
-            'controller' => 'comments',
-            'action' => 'action',
-            'trash',
-            $this->Comment->getId()
-        )
-    );
-    HuradRowActions::addAction('trash', $trashLink, 'manage_comments');
+    if ($comment['Comment']['status'] == 'trash') {
+        $trashLink = $this->AdminLayout->toggleCommentLink($comment['Comment']['status'], $this->Comment->getId());
+    } else {
+        $trashLink = $this->Html->link(
+            __d('hurad', 'Trash'),
+            [
+                'admin' => true,
+                'controller' => 'comments',
+                'action' => 'action',
+                'trash',
+                $this->Comment->getId()
+            ]
+        );
+    }
+
+
+    if (!Router::getParam('pass')) {
+        HuradRowActions::addAction('approved', $approvedLink, 'manage_comments');
+        HuradRowActions::addAction('view', $viewLink, 'manage_comments');
+        HuradRowActions::addAction('edit', $editLink, 'manage_comments');
+        HuradRowActions::addAction('spam', $spamLink, 'manage_comments');
+        HuradRowActions::addAction('trash', $trashLink, 'manage_comments');
+    } else {
+        switch (Router::getParam('pass')[0]) {
+            case 'approved':
+            case 'disapproved':
+                HuradRowActions::addAction('approved', $approvedLink, 'manage_comments');
+                HuradRowActions::addAction('view', $viewLink, 'manage_comments');
+                HuradRowActions::addAction('edit', $editLink, 'manage_comments');
+                HuradRowActions::addAction('spam', $spamLink, 'manage_comments');
+                HuradRowActions::addAction('trash', $trashLink, 'manage_comments');
+                break;
+
+            case 'spam':
+            case 'trash':
+                HuradRowActions::addAction('view', $viewLink, 'manage_comments');
+                HuradRowActions::addAction('edit', $editLink, 'manage_comments');
+                HuradRowActions::addAction('spam', $spamLink, 'manage_comments');
+                HuradRowActions::addAction('trash', $trashLink, 'manage_comments');
+                break;
+        }
+    }
 
     $actions = HuradHook::apply_filters('comment_row_actions', HuradRowActions::getActions(), $comment);
     echo $this->AdminLayout->rowActions($actions);
