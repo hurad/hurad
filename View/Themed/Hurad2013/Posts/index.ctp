@@ -51,3 +51,11 @@
         </div>
     </div>
 <?php endforeach; ?>
+<section class="bottom-table">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Bulk Actions -->
+        </div>
+        <div class="col-md-8"><?php echo $this->element('paginator'); ?></div>
+    </div>
+</section>
