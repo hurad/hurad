@@ -4,95 +4,155 @@
         <?php
         echo $this->Form->create(
             'Installer',
-            array(
+            [
                 'class' => 'form-horizontal',
-                'inputDefaults' => array(
+                'inputDefaults' => [
                     'div' => false,
                     'label' => false
-                )
-            )
+                ]
+            ]
         );
         ?>
-        <div class="form-group">
-            <?php echo $this->Form->label(
-                'database',
-                __d('hurad', 'Database name'),
-                array('class' => 'control-label col-lg-3')
-            ); ?>
-            <div class="col-lg-6">
-                <?php echo $this->Form->input(
+        <?php if (empty($contentFile)) { ?>
+            <div class="form-group<?php echo $this->Form->isFieldError('database') ? ' has-error' : ''; ?>">
+                <?php echo $this->Form->label(
                     'database',
-                    array('placeholder' => __d('hurad', 'Database name'), 'class' => 'form-control')
+                    __d('hurad', 'Database name'),
+                    ['class' => 'control-label col-lg-3']
                 ); ?>
+                <div class="col-lg-6">
+                    <?php echo $this->Form->input(
+                        'database',
+                        [
+                            'error' => [
+                                'attributes' => [
+                                    'wrap' => 'span',
+                                    'class' => 'help-block'
+                                ]
+                            ],
+                            'placeholder' => __d('hurad', 'Database name'),
+                            'class' => 'form-control',
+                            'required' => false
+                        ]
+                    ); ?>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <?php echo $this->Form->label(
-                'login',
-                __d('hurad', 'Database username'),
-                array('class' => 'control-label col-lg-3')
-            ); ?>
-            <div class="col-lg-6">
-                <?php echo $this->Form->input(
+            <div class="form-group<?php echo $this->Form->isFieldError('login') ? ' has-error' : ''; ?>">
+                <?php echo $this->Form->label(
                     'login',
-                    array('placeholder' => __d('hurad', 'Database username'), 'class' => 'form-control')
+                    __d('hurad', 'Database username'),
+                    ['class' => 'control-label col-lg-3']
                 ); ?>
+                <div class="col-lg-6">
+                    <?php echo $this->Form->input(
+                        'login',
+                        [
+                            'error' => [
+                                'attributes' => [
+                                    'wrap' => 'span',
+                                    'class' => 'help-block'
+                                ]
+                            ],
+                            'placeholder' => __d('hurad', 'Database username'),
+                            'class' => 'form-control',
+                            'required' => false
+                        ]
+                    ); ?>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <?php echo $this->Form->label(
-                'password',
-                __d('hurad', 'Database password'),
-                array('class' => 'control-label col-lg-3')
-            ); ?>
-            <div class="col-lg-6">
-                <?php echo $this->Form->input(
+            <div class="form-group<?php echo $this->Form->isFieldError('password') ? ' has-error' : ''; ?>">
+                <?php echo $this->Form->label(
                     'password',
-                    array('placeholder' => __d('hurad', 'Database password'), 'class' => 'form-control')
+                    __d('hurad', 'Database password'),
+                    ['class' => 'control-label col-lg-3']
                 ); ?>
+                <div class="col-lg-6">
+                    <?php echo $this->Form->input(
+                        'password',
+                        [
+                            'error' => [
+                                'attributes' => [
+                                    'wrap' => 'span',
+                                    'class' => 'help-block'
+                                ]
+                            ],
+                            'placeholder' => __d('hurad', 'Database password'),
+                            'class' => 'form-control',
+                            'required' => false
+                        ]
+                    ); ?>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <?php echo $this->Form->label(
-                'host',
-                __d('hurad', 'Database host'),
-                array('class' => 'control-label col-lg-3')
-            ); ?>
-            <div class="col-lg-6">
-                <?php
-                echo $this->Form->input(
+            <div class="form-group<?php echo $this->Form->isFieldError('host') ? ' has-error' : ''; ?>">
+                <?php echo $this->Form->label(
                     'host',
-                    array(
-                        'placeholder' => __d('hurad', 'Database host'),
-                        'value' => 'localhost',
-                        'class' => 'form-control'
-                    )
-                );
-                ?>
+                    __d('hurad', 'Database host'),
+                    ['class' => 'control-label col-lg-3']
+                ); ?>
+                <div class="col-lg-6">
+                    <?php
+                    echo $this->Form->input(
+                        'host',
+                        [
+                            'error' => [
+                                'attributes' => [
+                                    'wrap' => 'span',
+                                    'class' => 'help-block'
+                                ]
+                            ],
+                            'placeholder' => __d('hurad', 'Database host'),
+                            'value' => 'localhost',
+                            'class' => 'form-control',
+                            'required' => false
+                        ]
+                    );
+                    ?>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <?php echo $this->Form->label(
-                'prefix',
-                __d('hurad', 'Tables prefix'),
-                array('class' => 'control-label col-lg-3')
-            ); ?>
-            <div class="col-lg-6">
-                <?php
-                echo $this->Form->input(
+            <div class="form-group<?php echo $this->Form->isFieldError('prefix') ? ' has-error' : ''; ?>">
+                <?php echo $this->Form->label(
                     'prefix',
-                    array(
-                        'placeholder' => __d('hurad', 'Tables prefix'),
-                        'value' => 'hr_',
-                        'class' => 'form-control'
-                    )
-                );
-                ?>
+                    __d('hurad', 'Tables prefix'),
+                    ['class' => 'control-label col-lg-3']
+                ); ?>
+                <div class="col-lg-6">
+                    <?php
+                    echo $this->Form->input(
+                        'prefix',
+                        [
+                            'error' => [
+                                'attributes' => [
+                                    'wrap' => 'span',
+                                    'class' => 'help-block'
+                                ]
+                            ],
+                            'placeholder' => __d('hurad', 'Tables prefix'),
+                            'value' => 'hr_',
+                            'class' => 'form-control',
+                            'required' => false
+                        ]
+                    );
+                    ?>
+                </div>
             </div>
-        </div>
+        <?php } else { ?>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <?php echo $this->Form->input(
+                        'content',
+                        [
+                            'class' => 'form-control',
+                            'type' => 'textarea',
+                            'rows' => '15',
+                            'value' => $contentFile,
+                        ]
+                    ); ?>
+                </div>
+            </div>
+        <?php } ?>
         <?php echo $this->Form->button(
             __d('hurad', 'Install Database'),
-            array('type' => 'submit', 'class' => 'btn btn-primary')
+            ['type' => 'submit', 'class' => 'btn btn-primary']
         ); ?>
         <?php echo $this->Form->end(); ?>
     </div>

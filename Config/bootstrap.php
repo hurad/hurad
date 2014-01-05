@@ -146,7 +146,7 @@ if (Configure::read('Installed')) {
 
 function isInstalled()
 {
-    if (file_exists(CONFIG . 'database.php')) {
+    if (isConnected()) {
         App::uses('ConnectionManager', 'Model');
         $dataSource = ConnectionManager::getDataSource('default');
 
@@ -182,4 +182,20 @@ function isInstalled()
     }
 
     return !in_array(false, $installed);
+}
+
+function isConnected()
+{
+    if (is_file(CONFIG . 'database.php')) {
+        try {
+            App::uses('ConnectionManager', 'Model');
+            ConnectionManager::getDataSource('default');
+        } catch (Exception $e) {
+            return false;
+        }
+    } else {
+        return false;
+    }
+
+    return true;
 }

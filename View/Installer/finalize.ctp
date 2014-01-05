@@ -1,66 +1,126 @@
-<?php echo $this->element('Installer/header', array('message' => __("Hurad configuration"))); ?>
+<?php echo $this->element('Installer/header', ['message' => __d('hurad', 'Hurad configuration')]); ?>
 <?php
 echo $this->Form->create(
     'Installer',
-    array(
+    [
         'class' => 'form-horizontal',
-        'inputDefaults' => array(
+        'inputDefaults' => [
             'div' => false,
             'label' => false
-        )
-    )
+        ]
+    ]
 );
 ?>
-<div class="form-group">
-    <?php echo $this->Form->label('title', __d('hurad', 'Weblog Title'), array('class' => 'control-label col-lg-3')); ?>
+<div class="form-group<?php echo $this->Form->isFieldError('site_title') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label(
+        'site_title',
+        __d('hurad', 'Weblog Title'),
+        ['class' => 'control-label col-lg-3']
+    ); ?>
     <div class="col-lg-6">
         <?php echo $this->Form->input(
-            'title',
-            array('placeholder' => __d('hurad', 'Weblog Title'), 'class' => 'form-control')
+            'site_title',
+            [
+                'error' => [
+                    'attributes' => [
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    ]
+                ],
+                'placeholder' => __d('hurad', 'Weblog Title'),
+                'class' => 'form-control',
+                'required' => false
+            ]
         ); ?>
     </div>
 </div>
-<div class="form-group">
+<div class="form-group<?php echo $this->Form->isFieldError('site_username') ? ' has-error' : ''; ?>">
     <?php echo $this->Form->label(
-        'username',
+        'site_username',
         __d('hurad', 'Admin Username'),
-        array('class' => 'control-label col-lg-3')
+        ['class' => 'control-label col-lg-3']
     ); ?>
     <div class="col-lg-6">
         <?php echo $this->Form->input(
-            'username',
-            array('placeholder' => __d('hurad', 'Admin Username'), 'class' => 'form-control')
+            'site_username',
+            [
+                'error' => [
+                    'attributes' => [
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    ]
+                ],
+                'placeholder' => __d('hurad', 'Admin Username'),
+                'class' => 'form-control',
+                'required' => false
+            ]
         ); ?>
     </div>
 </div>
-<div class="form-group">
-    <?php echo $this->Form->label('password', __d('hurad', 'Password'), array('class' => 'control-label col-lg-3')); ?>
-    <div class="col-lg-6">
-        <?php echo $this->Form->input(
-            'password',
-            array('placeholder' => __d('hurad', 'Password'), 'class' => 'form-control')
-        ); ?>
-    </div>
-</div>
-<div class="form-group">
+<div class="form-group<?php echo $this->Form->isFieldError('site_password') ? ' has-error' : ''; ?>">
     <?php echo $this->Form->label(
-        'confirm_password',
-        __d('hurad', 'Confirm Password'),
-        array('class' => 'control-label col-lg-3')
+        'site_password',
+        __d('hurad', 'Password'),
+        ['class' => 'control-label col-lg-3']
     ); ?>
     <div class="col-lg-6">
         <?php echo $this->Form->input(
-            'confirm_password',
-            array('type' => 'password', 'placeholder' => __d('hurad', 'Confirm Password'), 'class' => 'form-control')
+            'site_password',
+            [
+                'error' => [
+                    'attributes' => [
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    ]
+                ],
+                'placeholder' => __d('hurad', 'Password'),
+                'class' => 'form-control',
+                'required' => false
+            ]
         ); ?>
     </div>
 </div>
-<div class="form-group">
-    <?php echo $this->Form->label('email', __d('hurad', 'Email'), array('class' => 'control-label col-lg-3')); ?>
+<div class="form-group<?php echo $this->Form->isFieldError('site_confirm_password') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label(
+        'site_confirm_password',
+        __d('hurad', 'Confirm Password'),
+        ['class' => 'control-label col-lg-3']
+    ); ?>
+    <div class="col-lg-6">
+        <?php echo $this->Form->input(
+            'site_confirm_password',
+            [
+                'error' => [
+                    'attributes' => [
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    ]
+                ],
+                'type' => 'password',
+                'placeholder' => __d('hurad', 'Confirm Password'),
+                'class' => 'form-control',
+                'required' => false
+            ]
+        ); ?>
+    </div>
+</div>
+<div class="form-group<?php echo $this->Form->isFieldError('email') ? ' has-error' : ''; ?>">
+    <?php echo $this->Form->label('email', __d('hurad', 'Email'), ['class' => 'control-label col-lg-3']); ?>
     <div class="col-lg-6">
         <?php echo $this->Form->input(
             'email',
-            array('placeholder' => __d('hurad', 'Email'), 'class' => 'form-control')
+            [
+                'error' => [
+                    'attributes' => [
+                        'wrap' => 'span',
+                        'class' => 'help-block'
+                    ]
+                ],
+                'placeholder' => __d('hurad', 'Email'),
+                'class' => 'form-control',
+                'type' => 'text',
+                'required' => false
+            ]
         ); ?>
     </div>
 </div>

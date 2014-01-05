@@ -26,4 +26,90 @@ class Installer extends AppModel
      * @var string
      */
     public $useTable = false;
+
+    /**
+     * Name of the validation string domain to use when translating validation errors.
+     *
+     * @var string
+     */
+    public $validationDomain = 'hurad';
+
+    /**
+     * List of validation rules. It must be an array with the field name as key and using
+     * as value one of the following possibilities
+     *
+     * @var array
+     */
+    public $validate = [
+        'database' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'This field cannot be left blank.'
+            ]
+        ],
+        'login' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'This field cannot be left blank.'
+            ]
+        ],
+        'password' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'This field cannot be left blank.'
+            ]
+        ],
+        'host' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'This field cannot be left blank.'
+            ]
+        ],
+        'prefix' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'This field cannot be left blank.'
+            ]
+        ],
+        'site_title' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'Site title cannot be left blank.'
+            ]
+        ],
+        'site_username' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'Admin username cannot be left blank.'
+            ]
+        ],
+        'site_password' => [
+            'notEmpty' => [
+                'rule' => 'notEmpty',
+                'message' => 'Password cannot be left blank.'
+            ]
+        ],
+        'site_confirm_password' => [
+            'equalTo' => [
+                'rule' => ['checkPasswords', 'site_password'],
+                'message' => 'This value must be equal to password.'
+            ]
+        ],
+        'email' => [
+            'email' => [
+                'rule' => ['email'],
+                'message' => 'Please supply a valid email address.'
+            ]
+        ],
+    ];
+
+    public function checkPasswords()
+    {
+        if ($this->data['Installer']['site_confirm_password'] === $this->data['Installer']['site_password']) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
