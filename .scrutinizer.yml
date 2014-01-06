@@ -5,7 +5,7 @@ before_commands:
     - 'composer install'
 tools:
     php_code_coverage:
-        test_command: 'Console/cake test app AllTests --coverage-clover=./report'
+        test_command: 'Console/cake test app AllTests'
     php_cpd:
         excluded_dirs:
             - Vendor
