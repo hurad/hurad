@@ -3,7 +3,6 @@ filter:
         - 'Vendor/*'
 before_commands:
     - 'composer install'
-    - 'mv Config/database.php.default Config/database.php'
 tools:
     php_code_coverage:
         test_command: 'Console/cake test app AllTests --coverage-clover=./report'
