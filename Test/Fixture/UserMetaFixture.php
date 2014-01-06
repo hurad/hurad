@@ -27,6 +27,13 @@ class UserMetaFixture extends CakeTestFixture
     public $name = 'UserMeta';
 
     /**
+     * Full Table Name
+     *
+     * @var string
+     */
+    public $table = 'user_meta';
+
+    /**
      * Fields / Schema for the fixture.
      * This array should match the output of Model::schema()
      *

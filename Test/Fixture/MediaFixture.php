@@ -28,6 +28,13 @@ class MediaFixture extends CakeTestFixture
     public $name = 'Media';
 
     /**
+     * Full Table Name
+     *
+     * @var string
+     */
+    public $table = 'media';
+
+    /**
      * Fields / Schema for the fixture.
      * This array should match the output of Model::schema()
      *

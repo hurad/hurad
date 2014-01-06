@@ -28,6 +28,13 @@ class PostFixture extends CakeTestFixture
     public $name = 'Post';
 
     /**
+     * Full Table Name
+     *
+     * @var string
+     */
+    public $table = 'posts';
+
+    /**
      * Fields / Schema for the fixture.
      * This array should match the output of Model::schema()
      *

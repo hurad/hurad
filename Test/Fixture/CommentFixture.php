@@ -27,6 +27,13 @@ class CommentFixture extends CakeTestFixture
     public $name = 'Comment';
 
     /**
+     * Full Table Name
+     *
+     * @var string
+     */
+    public $table = 'comments';
+
+    /**
      * Fields / Schema for the fixture.
      * This array should match the output of Model::schema()
      *
