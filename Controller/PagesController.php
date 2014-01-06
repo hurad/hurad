@@ -72,30 +72,6 @@ class PagesController extends AppController
         $this->Auth->allow('index', 'view', 'pageIndex', 'viewById');
     }
 
-    /**
-     * List of pages
-     */
-    public function index()
-    {
-        if ($this->RequestHandler->isRss()) {
-            $pages = $this->Page->find('all', array('limit' => 20, 'order' => 'Page.created DESC'));
-            $this->set(compact('pages'));
-        } else {
-            $this->Paginator->settings = Hash::merge(
-                $this->paginate,
-                array(
-                    'Page' => array(
-                        'contain' => array('User', 'Comment'),
-                        'conditions' => array(
-                            'Page.status' => array('publish'),
-                        ),
-                    )
-                )
-            );
-            $this->set('pages', $this->Paginator->paginate('Page'));
-        }
-    }
-
     public function pageIndex()
     {
         $pages = $this->Page->find(
