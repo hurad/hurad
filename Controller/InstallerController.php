@@ -20,6 +20,8 @@ App::uses('File', 'Utility');
 
 /**
  * Class InstallerController
+ *
+ * @property Installer $Installer
  */
 class InstallerController extends AppController
 {
@@ -41,6 +43,8 @@ class InstallerController extends AppController
      * @var mixed A single name as a string or a list of names as an array.
      */
     public $uses = [];
+
+    protected $dbConfigFileContent = null;
 
     /**
      * Called before the controller action. You can use this method to configure and customize components
@@ -73,73 +77,117 @@ class InstallerController extends AppController
     public function database()
     {
         $this->set('title_for_layout', __d('hurad', 'Database Configuration'));
-        $defaults = array(
-            'datasource' => 'Database/Mysql',
-            'persistent' => false,
-            'host' => 'localhost',
-            'login' => 'root',
-            'password' => '',
-            'database' => 'hurad',
-            'prefix' => 'hr_',
-        );
 
-        if (!empty($this->request->data)) {
-            $config = Hash::merge($defaults, $this->request->data['Installer']);
+        if ($this->request->is('post')) {
+            $this->Installer->set($this->request->data);
 
-            $file = new File(CONFIG . 'database.php', true, 0644);
+            if ($this->Installer->validates()) {
+                if (!$this->isValidConnection(
+                        'validation_test',
+                        $this->request->data['Installer']
+                    ) && !array_key_exists('content', $this->request->data['Installer'])
+                ) {
+                    $this->Session->setFlash(
+                        __d('hurad', 'Database connection "Mysql" is missing, or could not be created.'),
+                        'flash_message',
+                        ['class' => 'danger']
+                    );
+                    $this->redirect(['action' => 'database']);
+                }
 
-            $databaseConfig = <<<CONFIG
-<?php
+                $file = new File(CONFIG . 'database.php', true, 0644);
+                $databaseConfig = $this->getDatabaseConfig($this->request->data['Installer']);
 
-class DATABASE_CONFIG {
+                if (!$file->exists()) {
+                    $this->Session->setFlash(
+                        __d(
+                            'hurad',
+                            'Hurad can not create <b>"Config/database.php"</b>. <br> Please create <b>"Config/database.php"</b> and insert the following content in it.'
+                        ),
+                        'flash_message',
+                        ['class' => 'danger']
+                    );
+                    $this->Session->write('contentFile', $databaseConfig);
+                    $this->Session->write('databaseConfig', $this->request->data['Installer']);
+                    $this->redirect(['action' => 'config']);
+                } else {
+                    if (!$file->writable() && !array_key_exists('content', $this->request->data['Installer'])) {
+                        $this->Session->setFlash(
+                            __d(
+                                'hurad',
+                                'Hurad can not insert database config in <b>"Config/database.php"</b>. <br> Please insert the following content in <b>"Config/database.php"</b>.'
+                            ),
+                            'flash_message',
+                            ['class' => 'danger']
+                        );
+                        $this->Session->write('contentFile', $databaseConfig);
+                        $this->Session->write('databaseConfig', $this->request->data['Installer']);
+                        $this->redirect(['action' => 'config']);
+                    } else {
+                        $file->write($databaseConfig);
 
-    public \$default = array(
-        'datasource' => 'Database/Mysql',
-        'persistent' => false,
-        'host' => '{$config['host']}',
-        'login' => '{$config['login']}',
-        'password' => '{$config['password']}',
-        'database' => '{$config['database']}',
-        'prefix' => '{$config['prefix']}',
-    );
+                        try {
+                            $dataSource = ConnectionManager::getDataSource('default');
 
-    public \$test = array(
-        'datasource' => 'Database/Mysql',
-        'persistent' => false,
-        'host' => '{$config['host']}',
-        'login' => '{$config['login']}',
-        'password' => '{$config['password']}',
-        'database' => '{$config['database']}_test',
-    );
+                            if ($dataSource->connected) {
+                                if ($this->__executeSQL(
+                                    'hurad.sql',
+                                    $dataSource,
+                                    ['$[prefix]' => $this->request->data['Installer']['prefix']]
+                                )
+                                ) {
 
-}
-CONFIG;
-
-            if ($file->write($databaseConfig)) {
-                try {
-                    $dataSource = ConnectionManager::getDataSource('default');
-
-                    if ($dataSource->connected) {
-                        if ($this->__executeSQL('hurad.sql', $dataSource, array('$[prefix]' => $config['prefix']))) {
-
-                            $this->Session->setFlash(
-                                __d('hurad', 'Database successfuly installed'),
-                                'flash_message',
-                                array('class' => 'success')
-                            );
-                            $this->redirect(array('action' => 'finalize'));
+                                    $this->Session->setFlash(
+                                        __d('hurad', 'Database successfully installed'),
+                                        'flash_message',
+                                        ['class' => 'success']
+                                    );
+                                    $this->redirect(['action' => 'finalize']);
+                                }
+                            }
+                        } catch (Exception $exc) {
+                            $this->Session->setFlash($exc->getMessage(), 'flash_message', ['class' => 'danger']);
                         }
                     }
-                } catch (MissingConnectionException $exc) {
-                    $this->Session->setFlash($exc->getMessage(), 'flash_message', array('class' => 'danger'));
                 }
-            } else {
-                $this->Session->setFlash(
-                    __d('hurad', 'Hurad not write Config/database.php'),
-                    'flash_message',
-                    array('class' => 'danger')
-                );
-                $this->redirect(array('action' => 'database'));
+            }
+        }
+    }
+
+    public function config()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Save database Configuration'));
+
+        if (!strpos($this->request->referer(), 'installer/database') && !$this->request->is('post')) {
+            $this->redirect(['action' => 'database']);
+        } else {
+            if ($contentFile = $this->Session->read('contentFile')) {
+                $this->set(compact('contentFile'));
+            }
+        }
+
+        if ($this->request->is('post')) {
+            try {
+                $dataSource = ConnectionManager::getDataSource('default');
+
+                if ($dataSource->connected) {
+                    if ($this->__executeSQL(
+                        'hurad.sql',
+                        $dataSource,
+                        ['$[prefix]' => $this->Session->read('databaseConfig')['prefix']]
+                    )
+                    ) {
+                        $this->Session->setFlash(
+                            __d('hurad', 'Database successfully installed'),
+                            'flash_message',
+                            ['class' => 'success']
+                        );
+                        $this->redirect(['action' => 'finalize']);
+                    }
+                }
+            } catch (Exception $exc) {
+                $this->Session->setFlash($exc->getMessage(), 'flash_message', ['class' => 'danger']);
+                $this->redirect(['action' => 'database']);
             }
         }
     }
@@ -153,42 +201,46 @@ CONFIG;
         $dataSource = ConnectionManager::getDataSource('default');
 
         if ($this->request->is('post')) {
-            $search = array();
+            $this->Installer->set($this->request->data);
 
-            $search['$[prefix]'] = $dataSource->config['prefix'];
+            if ($this->Installer->validates()) {
+                $search = [];
 
-            App::uses('CakeTime', 'Utility');
-            $search['$[created]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
-            $search['$[modified]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
+                $search['$[prefix]'] = $dataSource->config['prefix'];
 
-            $request = new CakeRequest();
-            $search['$[client_ip]'] = $request->clientIp();
-            $search['$[user_agent]'] = $request::header('USER_AGENT');
+                App::uses('CakeTime', 'Utility');
+                $search['$[created]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
+                $search['$[modified]'] = CakeTime::format('Y-m-d H:i:s', strtotime('now'));
 
-            $search['$[username]'] = $this->request->data['Installer']['username'];
-            $search['$[email]'] = $this->request->data['Installer']['email'];
-            $search['$[password]'] = Security::hash($this->request->data['Installer']['password'], null, true);
-            $search['$[title]'] = $this->request->data['Installer']['title'];
+                $request = new CakeRequest();
+                $search['$[client_ip]'] = $request->clientIp();
+                $search['$[user_agent]'] = $request::header('USER_AGENT');
 
-            $serverName = env("SERVER_NAME");
-            $url = Router::url('/');
-            $search['$[site_url]'] = rtrim("http://" . $serverName . $url, '/');
+                $search['$[username]'] = $this->request->data['Installer']['site_username'];
+                $search['$[email]'] = $this->request->data['Installer']['email'];
+                $search['$[password]'] = Security::hash($this->request->data['Installer']['site_password'], null, true);
+                $search['$[title]'] = $this->request->data['Installer']['site_title'];
 
-            if ($dataSource->connected) {
-                if ($this->__executeSQL("hurad_defaults.sql", $dataSource, $search)) {
+                $serverName = env("SERVER_NAME");
+                $url = Router::url('/');
+                $search['$[site_url]'] = rtrim("http://" . $serverName . $url, '/');
+
+                if ($dataSource->connected) {
+                    if ($this->__executeSQL("hurad_defaults.sql", $dataSource, $search)) {
+                        $this->Session->setFlash(
+                            __d('hurad', 'Hurad successfully installed.'),
+                            'flash_message',
+                            array('class' => 'success')
+                        );
+                        $this->redirect(array('action' => 'welcome'));
+                    }
+                } else {
                     $this->Session->setFlash(
-                        __d('hurad', 'Hurad successfully installed.'),
+                        __d('hurad', 'Not connected to database.'),
                         'flash_message',
-                        array('class' => 'success')
+                        array('class' => 'danger')
                     );
-                    $this->redirect(array('action' => 'welcome'));
                 }
-            } else {
-                $this->Session->setFlash(
-                    __d('hurad', 'Not connected to database.'),
-                    'flash_message',
-                    array('class' => 'danger')
-                );
             }
         }
     }
@@ -247,4 +299,88 @@ CONFIG;
         }
     }
 
+    /**
+     * Default database config
+     *
+     * @param array $config
+     *
+     * @return string
+     */
+    protected function getDatabaseConfig(array $config)
+    {
+        $databaseConfig = <<<CONFIG
+<?php
+/**
+ * In this file you set up your database connection details.
+ *
+ * PHP 5
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) 2012-2014, Hurad (http://hurad.org)
+ * @link      http://hurad.org Hurad Project
+ * @since     Version 0.1.0
+ * @license   http://opensource.org/licenses/MIT MIT license
+ */
+
+/**
+ * Database configuration class.
+ * You can specify multiple configurations for production, development and testing.
+ */
+class DATABASE_CONFIG {
+
+    public \$default = array(
+        'datasource' => 'Database/Mysql',
+        'persistent' => false,
+        'host' => '{$config['host']}',
+        'login' => '{$config['login']}',
+        'password' => '{$config['password']}',
+        'database' => '{$config['database']}',
+        'prefix' => '{$config['prefix']}',
+        'encoding' => 'utf8'
+    );
+
+    public \$test = array(
+        'datasource' => 'Database/Mysql',
+        'persistent' => false,
+        'host' => '{$config['host']}',
+        'login' => '{$config['login']}',
+        'password' => '{$config['password']}',
+        'database' => '{$config['database']}_test',
+        'prefix' => '{$config['prefix']}',
+        'encoding' => 'utf8'
+    );
+}
+
+CONFIG;
+
+        return $databaseConfig;
+    }
+
+    protected function isValidConnection($name = '', array $config = [])
+    {
+        $default = [
+            'datasource' => 'Database/Mysql',
+            'persistent' => false,
+            'host' => 'localhost',
+            'login' => 'user',
+            'password' => 'password',
+            'database' => 'database_name',
+            'prefix' => '',
+            'encoding' => 'utf8',
+        ];
+
+        $config = Hash::merge($default, $config);
+
+        try {
+            ConnectionManager::create($name, $config);
+            ConnectionManager::getDataSource($name);
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
 }
