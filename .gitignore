@@ -29,9 +29,6 @@ tmp/*
 ehthumbs.db
 Thumbs.db
 
-# Config file
-/Config/database.php
-
 # Composer files
 composer.phar
 composer.lock
