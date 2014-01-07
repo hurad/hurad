@@ -4,8 +4,6 @@ filter:
 before_commands:
     - 'composer install'
 tools:
-    external_code_coverage:
-        timeout: 1800
     php_cpd:
         excluded_dirs:
             - Vendor
