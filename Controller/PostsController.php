@@ -93,18 +93,27 @@ class PostsController extends AppController
                 )
             );
             $this->set(compact('posts'));
+
         } else {
+            if (Configure::check('Read.show_posts_per_page')) {
+                $limit = Configure::read('Read.show_posts_per_page');
+            } else {
+                $limit = 5;
+            }
+
             $this->Paginator->settings = Hash::merge(
                 $this->paginate,
-                array(
-                    'Post' => array(
-                        'conditions' => array(
-                            'Post.status' => array('publish'),
-                        ),
-                        'contain' => array('Category', 'User', 'Tag', 'Comment'),
-                    )
-                )
+                [
+                    'Post' => [
+                        'conditions' => [
+                            'Post.status' => 'publish',
+                        ],
+                        'limit' => $limit,
+                        'contain' => ['Category', 'User', 'Tag', 'Comment'],
+                    ]
+                ]
             );
+
             $this->set('posts', $this->Paginator->paginate('Post'));
         }
     }

@@ -39,24 +39,17 @@ class OptionsController extends AppController
      */
     public function admin_prefix($prefix = null)
     {
-        $prefix_name = array(
+        $prefix_name = [
             'general' => __d('hurad', 'General'),
             'comment' => __d('hurad', 'Comment'),
             'permalink' => __d('hurad', 'Permalink'),
-        );
+            'read' => __d('hurad', 'Read'),
+        ];
+
         $this->set('title_for_layout', sprintf(__d('hurad', '%s Option'), $prefix_name[$prefix]));
 
-        $options = $this->Option->find(
-            'all',
-            array(
-                'conditions' => array(
-                    'Option.name LIKE' => $prefix . '.%',
-                ),
-            )
-        );
-
-        if (count($options) == 0) {
-            $this->Session->setFlash(__d('hurad', 'Invalid Option name'), 'flash_message', array('class' => 'danger'));
+        if (!array_key_exists($prefix, $prefix_name)) {
+            $this->Session->setFlash(__d('hurad', 'Invalid Option name'), 'flash_message', ['class' => 'danger']);
             /* @todo Set admin prefix config */
             $this->redirect('/admin');
         }
@@ -69,7 +62,7 @@ class OptionsController extends AppController
                     break;
             }
 
-            $opt = array();
+            $opt = [];
 
             foreach ($this->request->data as $optionArray) {
                 foreach ($optionArray as $option => $value) {
@@ -82,13 +75,13 @@ class OptionsController extends AppController
                 $this->Session->setFlash(
                     __d('hurad', 'Options have been updated!'),
                     'flash_message',
-                    array('class' => 'success')
+                    ['class' => 'success']
                 );
             } else {
                 $this->Session->setFlash(
                     __d('hurad', 'Unable to update ' . $prefix . ' options.'),
                     'error-option',
-                    array('errors' => $this->Option->validationErrors)
+                    ['errors' => $this->Option->validationErrors]
                 );
             }
         } else {
