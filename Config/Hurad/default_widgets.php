@@ -55,3 +55,10 @@ HuradWidget::registerWidget(
         'element' => 'text',
     ]
 );
+
+HuradWidget::registerWidget(
+    [
+        'title' => __d('hurad', 'Links'),
+        'element' => 'links',
+    ]
+);

@@ -17,12 +17,12 @@ echo $this->Form->create(
 
 <div class="form-group">
     <?php echo $this->Form->label(
-        'menuId',
+        'menu_id',
         __d('hurad', 'Select Category'),
         array('class' => 'control-label col-lg-2')
     ); ?>
     <div class="col-lg-4">
-        <?php echo $this->Form->select('menuId', $linkCats, array('empty' => false, 'class' => 'form-control')); ?>
+        <?php echo $this->Form->select('menu_id', $linkCats, array('empty' => false, 'class' => 'form-control')); ?>
     </div>
     <span class="help-block">
         <?php echo __d(
