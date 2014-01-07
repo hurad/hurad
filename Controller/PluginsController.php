@@ -89,7 +89,40 @@ class PluginsController extends AppController
         }
     }
 
-    /*
-     * @todo add admin_delete method
+    /**
+     * Delete plugin
+     *
+     * @param string $alias Name of plugin
+     *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
      */
+    public function admin_delete($alias)
+    {
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+
+        if (!array_key_exists($alias, HuradPlugin::getPluginData())) {
+            throw new NotFoundException(__d('hurad', 'Plugin not exist'));
+        }
+
+        if (HuradPlugin::isActive($alias)) {
+            throw new MethodNotAllowedException();
+        }
+
+        $output = HuradPlugin::delete($alias);
+
+        if ($output === true) {
+            $this->Session->setFlash(__d('hurad', 'Plugin deleted'), 'flash_message', array('class' => 'success'));
+            $this->redirect(array('action' => 'index'));
+        } else {
+            $this->Session->setFlash(
+                __d('hurad', '<b>Occurred error:</b><br>') . implode('<br>', $output),
+                'flash_message',
+                array('class' => 'danger')
+            );
+            $this->redirect(array('action' => 'index'));
+        }
+    }
 }

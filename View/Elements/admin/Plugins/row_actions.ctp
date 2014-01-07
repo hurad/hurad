@@ -18,7 +18,10 @@
         null,
         __d('hurad', 'Are you sure you want to delete "%s"?', $alias)
     );
-    HuradRowActions::addAction('delete', $deleteLink, 'delete_plugins');
+
+    if (!HuradPlugin::isActive($alias)) {
+        HuradRowActions::addAction('delete', $deleteLink, 'delete_plugins');
+    }
 
     $actions = HuradHook::apply_filters('plugin_row_actions', HuradRowActions::getActions(), $alias);
     echo $this->AdminLayout->rowActions($actions);
