@@ -61,13 +61,12 @@ class Post extends AppModel
         'Comment' => [
             'className' => 'Comment',
             'foreignKey' => 'post_id',
-            'dependent' => false,
-            'conditions' => ['Comment.status' => 'approved']
+            'dependent' => true
         ],
         'PostMeta' => [
             'className' => 'PostMeta',
             'foreignKey' => 'post_id',
-            'dependent' => false,
+            'dependent' => true
         ]
     ];
 
@@ -92,17 +91,6 @@ class Post extends AppModel
             'unique' => true
         ],
     ];
-
-    /**
-     * Called after every deletion operation.
-     *
-     * @return void
-     */
-    public function afterDelete()
-    {
-        parent::afterDelete();
-        $this->PostMeta->deleteAll(array('PostMeta.post_id' => $this->id), false);
-    }
 
     /**
      * Get first post.

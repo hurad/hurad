@@ -143,7 +143,7 @@ echo $this->Form->create(
                                     'type' => 'text',
                                     'class' => 'form-control',
                                     'data-format' => 'dd/MM/yyyy hh:mm:ss',
-                                    'value' => date('d/m/Y H:i:s')
+                                    'value' => date('m/d/Y H:i:s')
                                 )
                             ); ?>
                         </div>
