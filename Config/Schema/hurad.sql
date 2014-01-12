@@ -132,6 +132,7 @@ CREATE TABLE `$[prefix]posts` (
 	`comment_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 	`comment_count` int(11) NOT NULL,
 	`type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	`sticky` tinyint(1) NOT NULL DEFAULT '0',
 	`lft` int(11) NOT NULL,
 	`rght` int(11) NOT NULL,
 	`created` datetime NOT NULL,

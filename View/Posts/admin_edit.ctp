@@ -94,6 +94,20 @@ echo $this->Form->create(
                         );
                         ?>
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <?php
+                            echo $this->Form->input(
+                                'sticky',
+                                [
+                                    'class' => 'checkbox',
+                                    'type' => 'checkbox',
+                                ]
+                            );
+                            echo __d('hurad', 'Stick this post in first page');
+                            ?>
+                        </label>
+                    </div>
                     <div class="form-group">
                         <?php echo $this->Form->label(
                             'comment_status',

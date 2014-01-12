@@ -110,6 +110,7 @@ class PostsController extends AppController
                         ],
                         'limit' => $limit,
                         'contain' => ['Category', 'User', 'Tag', 'Comment'],
+                        'order' => ['Post.sticky' => 'DESC'],
                     ]
                 ]
             );
