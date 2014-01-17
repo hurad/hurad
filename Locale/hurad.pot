@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-12-20 12:02+0000\n"
+"POT-Creation-Date: 2014-01-17 16:07+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,58 +14,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Config/Hurad/default_capabilities.php:5
-#: View/Helper/AdminLayoutHelper.php:136
+#: Config/Hurad/default_capabilities.php:20
+#: View/Helper/AdminLayoutHelper.php:130
 #: View/Users/admin_add.ctp:168
 msgid "Administrator"
 msgstr ""
 
-#: Config/Hurad/default_capabilities.php:6
+#: Config/Hurad/default_capabilities.php:21
 #: View/Elements/admin/Options/general.ctp:95
-#: View/Helper/AdminLayoutHelper.php:139
+#: View/Helper/AdminLayoutHelper.php:133
 #: View/Users/admin_add.ctp:167
 msgid "Editor"
 msgstr ""
 
-#: Config/Hurad/default_capabilities.php:7
+#: Config/Hurad/default_capabilities.php:22
 #: View/Comments/admin_index.ctp:23;109
 #: View/Elements/admin/Options/general.ctp:94
-#: View/Helper/AdminLayoutHelper.php:142
+#: View/Helper/AdminLayoutHelper.php:136
 #: View/Pages/admin_index.ctp:35;142
 #: View/Posts/admin_index.ctp:35;168
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:35
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:34
 #: View/Users/admin_add.ctp:166
 msgid "Author"
 msgstr ""
 
-#: Config/Hurad/default_capabilities.php:8
+#: Config/Hurad/default_capabilities.php:23
 #: View/Elements/admin/Options/general.ctp:93
-#: View/Helper/AdminLayoutHelper.php:145
+#: View/Helper/AdminLayoutHelper.php:139
 #: View/Media/admin_browse.ctp:29;115
 #: View/Media/admin_index.ctp:32;118
 #: View/Users/admin_add.ctp:165
 msgid "User"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:4
-#: Controller/UsersController.php:70
+#: Config/Hurad/default_navigation.php:19
+#: Controller/UsersController.php:97
 #: View/Users/admin_dashboard.ctp:5
 msgid "Dashboard"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:9
+#: Config/Hurad/default_navigation.php:24
 msgid "Home"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:13;21
-#: Controller/PostsController.php:217;246;275;300;568;576
+#: Config/Hurad/default_navigation.php:28;36
+#: Controller/PostsController.php:243;272;301;326;612;626
 #: View/Categories/admin_index.ctp:41;134
 #: View/Posts/index.ctp:2
 #: View/Tags/admin_index.ctp:41;124
 msgid "Posts"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:28;64;86;115;203
+#: Config/Hurad/default_navigation.php:43;79;101;130;218
 #: View/Categories/admin_index.ctp:7
 #: View/Linkcats/admin_index.ctp:7
 #: View/Media/admin_index.ctp:5
@@ -75,852 +75,902 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:35
-#: Config/Hurad/default_widgets.php:11
-#: Controller/CategoriesController.php:73
-#: View/Posts/admin_add.ctp:151
-#: View/Posts/admin_edit.ctp:153
+#: Config/Hurad/default_navigation.php:50
+#: Config/Hurad/default_widgets.php:26
+#: Controller/CategoriesController.php:87
+#: View/Posts/admin_add.ctp:161
+#: View/Posts/admin_edit.ctp:163
 #: View/Posts/admin_index.ctp:42;174
 msgid "Categories"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:42
+#: Config/Hurad/default_navigation.php:57
 msgid "Post Tags"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:49
+#: Config/Hurad/default_navigation.php:64
 msgid "Media"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:57
-#: Controller/MediaController.php:48;141
+#: Config/Hurad/default_navigation.php:72
+#: Controller/MediaController.php:69;191
 msgid "Media Library"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:71;79
-#: Controller/LinksController.php:70
+#: Config/Hurad/default_navigation.php:86;94
+#: Config/Hurad/default_widgets.php:61
+#: Controller/LinksController.php:84
 #: View/Linkcats/admin_index.ctp:48;131
 #: View/Links/index.ctp:2
 msgid "Links"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:93
-#: Controller/LinkcatsController.php:48
+#: Config/Hurad/default_navigation.php:108
+#: Controller/LinkcatsController.php:55
 msgid "Link Categories"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:100
-#: Config/Hurad/default_widgets.php:23
-#: Controller/PagesController.php:125;278;305;339
+#: Config/Hurad/default_navigation.php:115
+#: Config/Hurad/default_widgets.php:47
+#: Controller/PagesController.php:137;296;326;361
 msgid "Pages"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:108
+#: Config/Hurad/default_navigation.php:123
 msgid "All Pages"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:122
-#: Controller/CommentsController.php:132
-#: View/Helper/DashboardHelper.php:236
+#: Config/Hurad/default_navigation.php:137
+#: Controller/CommentsController.php:153
+#: View/Helper/DashboardHelper.php:255
 #: View/Pages/admin_index.ctp:42;148
 #: View/Posts/admin_index.ctp:56;186
 msgid "Comments"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:130
+#: Config/Hurad/default_navigation.php:145
 msgid "All Comments"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:137
+#: Config/Hurad/default_navigation.php:152
 msgid "Appearance"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:145
-#: Controller/ThemesController.php:34
+#: Config/Hurad/default_navigation.php:160
+#: Controller/ThemesController.php:48
 msgid "Themes"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:152
+#: Config/Hurad/default_navigation.php:167
 msgid "Widgets"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:159
+#: Config/Hurad/default_navigation.php:174
 msgid "All Menus"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:166
-#: Controller/MenusController.php:58
+#: Config/Hurad/default_navigation.php:181
+#: Controller/MenusController.php:67
 msgid "Add Menu"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:173;181
-#: Controller/PluginsController.php:32
+#: Config/Hurad/default_navigation.php:188;196
+#: Controller/PluginsController.php:47
 msgid "Plugins"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:188
-#: Controller/UsersController.php:78
+#: Config/Hurad/default_navigation.php:203
+#: Controller/UsersController.php:105
 msgid "Users"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:196
+#: Config/Hurad/default_navigation.php:211
 msgid "All Users"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:210
+#: Config/Hurad/default_navigation.php:225
 msgid "Edit Profile"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:217
+#: Config/Hurad/default_navigation.php:232
 msgid "Options"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:225
-#: Controller/OptionsController.php:37
+#: Config/Hurad/default_navigation.php:240
+#: Controller/OptionsController.php:43
 msgid "General"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:232
-#: Controller/OptionsController.php:38
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:23;68
+#: Config/Hurad/default_navigation.php:247
+#: Controller/OptionsController.php:46
+msgid "Read"
+msgstr ""
+
+#: Config/Hurad/default_navigation.php:254
+#: Controller/OptionsController.php:44
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:22;67
 msgid "Comment"
 msgstr ""
 
-#: Config/Hurad/default_navigation.php:239
+#: Config/Hurad/default_navigation.php:261
 msgid "Permalinks"
 msgstr ""
 
-#: Config/Hurad/default_widgets.php:5
+#: Config/Hurad/default_widgets.php:19
 msgid "Authors"
 msgstr ""
 
-#: Config/Hurad/default_widgets.php:17
+#: Config/Hurad/default_widgets.php:33
 msgid "Recent Posts"
 msgstr ""
 
-#: Config/Hurad/default_widgets.php:29
+#: Config/Hurad/default_widgets.php:40
+msgid "Recent Comments"
+msgstr ""
+
+#: Config/Hurad/default_widgets.php:54
 msgid "Text"
 msgstr ""
 
-#: Controller/CategoriesController.php:91
-#: View/Posts/admin_add.ctp:163
+#: Controller/CategoriesController.php:105
+#: View/Posts/admin_add.ctp:173
+#: View/Posts/admin_edit.ctp:175
 msgid "Add New Category"
 msgstr ""
 
-#: Controller/CategoriesController.php:96;131
+#: Controller/CategoriesController.php:110;145
 msgid "The category has been saved"
 msgstr ""
 
-#: Controller/CategoriesController.php:103;138
+#: Controller/CategoriesController.php:117;152
 msgid "The category could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/CategoriesController.php:123
+#: Controller/CategoriesController.php:137
 msgid "Edit Category"
 msgstr ""
 
-#: Controller/CategoriesController.php:126;166
-#: Controller/PostsController.php:249
+#: Controller/CategoriesController.php:140;180
+#: Controller/PostsController.php:275
 msgid "Invalid category"
 msgstr ""
 
-#: Controller/CategoriesController.php:169
+#: Controller/CategoriesController.php:183
 msgid "You could not delete Uncategorized category."
 msgstr ""
 
-#: Controller/CategoriesController.php:178
+#: Controller/CategoriesController.php:192
 msgid "Category was deleted"
 msgstr ""
 
-#: Controller/CategoriesController.php:185
+#: Controller/CategoriesController.php:199
 msgid "Category was not deleted"
 msgstr ""
 
-#: Controller/CategoriesController.php:213
-#: Controller/CommentsController.php:409
-msgid "No item selected."
-msgstr ""
-
-#: Controller/CategoriesController.php:216
-#: Controller/CommentsController.php:412
-#: Controller/LinkcatsController.php:176
-#: Controller/LinksController.php:285
-#: Controller/PagesController.php:380
-#: Controller/PostsController.php:610
-#: Controller/UsersController.php:539
-msgid "No action selected."
-msgstr ""
-
-#: Controller/CategoriesController.php:226
-msgid "Categories was deleted."
-msgstr ""
-
-#: Controller/CategoriesController.php:234
-#: Controller/CommentsController.php:377;459
-#: Controller/LinkcatsController.php:193
-#: Controller/LinksController.php:322
-#: Controller/PagesController.php:427
-#: Controller/PostsController.php:657
-#: Controller/TagsController.php:201
-#: Controller/UsersController.php:467;480;556
-msgid "An error occurred."
-msgstr ""
-
-#: Controller/CommentsController.php:105
+#: Controller/CommentsController.php:123
 msgid "Comment Submit"
 msgstr ""
 
-#: Controller/CommentsController.php:107
+#: Controller/CommentsController.php:125
 msgid "Your comment submit in blog waiting to approve by admin."
 msgstr ""
 
-#: Controller/CommentsController.php:110;235
+#: Controller/CommentsController.php:128;236
 msgid "The comment has been saved"
 msgstr ""
 
-#: Controller/CommentsController.php:117;242;328
+#: Controller/CommentsController.php:136;243;324
 msgid "The comment could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/CommentsController.php:152
-msgid "Moderated comments"
-msgstr ""
-
-#: Controller/CommentsController.php:166
+#: Controller/CommentsController.php:172
 msgid "Approved comments"
 msgstr ""
 
-#: Controller/CommentsController.php:180
+#: Controller/CommentsController.php:177
+msgid "Pending comments"
+msgstr ""
+
+#: Controller/CommentsController.php:182
 msgid "Spams"
 msgstr ""
 
-#: Controller/CommentsController.php:194
+#: Controller/CommentsController.php:187
 msgid "Trashes"
 msgstr ""
 
-#: Controller/CommentsController.php:227
+#: Controller/CommentsController.php:228
 msgid "Edit Comment"
 msgstr ""
 
-#: Controller/CommentsController.php:230;269;292;353
+#: Controller/CommentsController.php:231;271;296;351
 msgid "Invalid comment"
 msgstr ""
 
-#: Controller/CommentsController.php:272
+#: Controller/CommentsController.php:275
 msgid "Comment was deleted"
 msgstr ""
 
-#: Controller/CommentsController.php:275
+#: Controller/CommentsController.php:279
 msgid "Comment was not deleted"
 msgstr ""
 
-#: Controller/CommentsController.php:297
-#: Controller/PostsController.php:180;198;472
-msgid "Invalid post"
-msgstr ""
-
-#: Controller/CommentsController.php:321
+#: Controller/CommentsController.php:316
 msgid "The reply of comment has been saved."
 msgstr ""
 
-#: Controller/CommentsController.php:358
+#: Controller/CommentsController.php:357
 msgid "Comments are approved."
 msgstr ""
 
-#: Controller/CommentsController.php:359
+#: Controller/CommentsController.php:358
 msgid "Comments are not approved, please try again."
 msgstr ""
 
-#: Controller/CommentsController.php:363
+#: Controller/CommentsController.php:362
 msgid "Comment are unapproved."
 msgstr ""
 
-#: Controller/CommentsController.php:364
+#: Controller/CommentsController.php:363
 msgid "Comment are not unapproved, please try again."
 msgstr ""
 
-#: Controller/CommentsController.php:368
+#: Controller/CommentsController.php:367
 msgid "Comment marked as spam."
 msgstr ""
 
-#: Controller/CommentsController.php:369
+#: Controller/CommentsController.php:368
 msgid "Comment didn't mark as spam, please try again."
 msgstr ""
 
-#: Controller/CommentsController.php:373
+#: Controller/CommentsController.php:372
 msgid "Comment moved to trash."
 msgstr ""
 
-#: Controller/CommentsController.php:374
+#: Controller/CommentsController.php:373
 msgid "Comment didn't move to trash, please try again."
 msgstr ""
 
-#: Controller/CommentsController.php:420
-msgid "Comments are approved"
-msgstr ""
-
-#: Controller/CommentsController.php:430
-msgid "Comments are unapproved"
-msgstr ""
-
-#: Controller/CommentsController.php:440
-msgid "Comments marked as spam."
-msgstr ""
-
-#: Controller/CommentsController.php:450
-msgid "Comments moved to trash."
-msgstr ""
-
-#: Controller/InstallerController.php:49
+#: Controller/InstallerController.php:71
 msgid "Welcome to Hurad installer"
 msgstr ""
 
-#: Controller/InstallerController.php:57
+#: Controller/InstallerController.php:79
 msgid "Database Configuration"
 msgstr ""
 
-#: Controller/InstallerController.php:108
-msgid "Database successfuly installed"
+#: Controller/InstallerController.php:91
+msgid "Database connection \"Mysql\" is missing, or could not be created."
 msgstr ""
 
-#: Controller/InstallerController.php:120
-msgid "Hurad not write Config/database.php"
+#: Controller/InstallerController.php:103
+msgid "Hurad can not create <b>\"Config/database.php\"</b>. <br> Please create <b>\"Config/database.php\"</b> and insert the following content in it."
 msgstr ""
 
-#: Controller/InstallerController.php:134
+#: Controller/InstallerController.php:116
+msgid "Hurad can not insert database config in <b>\"Config/database.php\"</b>. <br> Please insert the following content in <b>\"Config/database.php\"</b>."
+msgstr ""
+
+#: Controller/InstallerController.php:141;181
+msgid "Database successfully installed"
+msgstr ""
+
+#: Controller/InstallerController.php:159
+#: View/Installer/config.ctp:1
+msgid "Save database Configuration"
+msgstr ""
+
+#: Controller/InstallerController.php:200
 msgid "Hurad Configuration"
 msgstr ""
 
-#: Controller/InstallerController.php:162
+#: Controller/InstallerController.php:231
 msgid "Hurad successfully installed."
 msgstr ""
 
-#: Controller/InstallerController.php:170
+#: Controller/InstallerController.php:239
 msgid "Not connected to database."
 msgstr ""
 
-#: Controller/InstallerController.php:185
+#: Controller/InstallerController.php:255
 msgid "Welcome to Hurad"
 msgstr ""
 
-#: Controller/InstallerController.php:189
+#: Controller/InstallerController.php:259
 msgid "/tmp directory not writable."
 msgstr ""
 
-#: Controller/InstallerController.php:224
+#: Controller/InstallerController.php:294
 msgid "File \"Config/Schema/%s\" not exists."
 msgstr ""
 
-#: Controller/LinkcatsController.php:70
+#: Controller/LinkcatsController.php:77
 #: View/Linkcats/admin_add.ctp:89
 msgid "Add New Link Category"
 msgstr ""
 
-#: Controller/LinkcatsController.php:76;108
+#: Controller/LinkcatsController.php:83;115
 msgid "The link category has been saved"
 msgstr ""
 
-#: Controller/LinkcatsController.php:83;115
+#: Controller/LinkcatsController.php:90;122
 msgid "The link category could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/LinkcatsController.php:100
+#: Controller/LinkcatsController.php:107
 msgid "Edit Link Category"
 msgstr ""
 
-#: Controller/LinkcatsController.php:103;140
+#: Controller/LinkcatsController.php:110;147
 msgid "Invalid link category"
 msgstr ""
 
-#: Controller/LinkcatsController.php:144
+#: Controller/LinkcatsController.php:151
 msgid "Link category deleted"
 msgstr ""
 
-#: Controller/LinkcatsController.php:151
+#: Controller/LinkcatsController.php:158
 msgid "Link category was not deleted"
 msgstr ""
 
-#: Controller/LinkcatsController.php:173
-#: Controller/LinksController.php:282
-#: Controller/PagesController.php:377
-#: Controller/PostsController.php:607
-#: Controller/UsersController.php:536
-msgid "No items selected."
-msgstr ""
-
-#: Controller/LinkcatsController.php:184
-msgid "Link categories deleted."
-msgstr ""
-
-#: Controller/LinksController.php:100;160
-#: Controller/MenusController.php:91;128
+#: Controller/LinksController.php:114;174
+#: Controller/MenusController.php:100;137
 msgid "Invalid menu"
 msgstr ""
 
-#: Controller/LinksController.php:117
+#: Controller/LinksController.php:131
 msgid "Links: %s"
 msgstr ""
 
-#: Controller/LinksController.php:132
+#: Controller/LinksController.php:146
 msgid "Add New Link"
 msgstr ""
 
-#: Controller/LinksController.php:137;170;212
+#: Controller/LinksController.php:151;184;226
 msgid "The link has been saved"
 msgstr ""
 
-#: Controller/LinksController.php:144;177;219
+#: Controller/LinksController.php:158;191;233
 msgid "The link could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/LinksController.php:165
+#: Controller/LinksController.php:179
 msgid "Add New Link to: %s"
 msgstr ""
 
-#: Controller/LinksController.php:204
+#: Controller/LinksController.php:218
 msgid "Edit Link"
 msgstr ""
 
-#: Controller/LinksController.php:207;252
+#: Controller/LinksController.php:221;266
 msgid "Invalid link"
 msgstr ""
 
-#: Controller/LinksController.php:255
+#: Controller/LinksController.php:269
 msgid "Link deleted"
 msgstr ""
 
-#: Controller/LinksController.php:258
+#: Controller/LinksController.php:272
 msgid "Link was not deleted"
 msgstr ""
 
-#: Controller/LinksController.php:293
-msgid "Links deleted."
-msgstr ""
-
-#: Controller/LinksController.php:303
-msgid "Links visible"
-msgstr ""
-
-#: Controller/LinksController.php:313
-msgid "Links invisible"
-msgstr ""
-
-#: Controller/MediaController.php:59
+#: Controller/MediaController.php:81
 msgid "Add Media"
 msgstr ""
 
-#: Controller/MediaController.php:69
+#: Controller/MediaController.php:87
+msgid "File successfully uploaded."
+msgstr ""
+
+#: Controller/MediaController.php:93
+#: Model/Media.php:110;235
 msgid "File could not be uploaded. Please, try again."
 msgstr ""
 
-#: Controller/MediaController.php:116
+#: Controller/MediaController.php:114
+msgid "Edit media"
+msgstr ""
+
+#: Controller/MediaController.php:119
+msgid "The media has been saved"
+msgstr ""
+
+#: Controller/MediaController.php:126
+msgid "The media could not be saved. Please, try again."
+msgstr ""
+
+#: Controller/MediaController.php:151
 msgid "Media file deleted"
 msgstr ""
 
-#: Controller/MediaController.php:120
+#: Controller/MediaController.php:155
 msgid "Media file was not deleted"
 msgstr ""
 
-#: Controller/MenusController.php:48
+#: Controller/MenusController.php:57
 msgid "Menus"
 msgstr ""
 
-#: Controller/MenusController.php:64;96
+#: Controller/MenusController.php:73;105
 msgid "The menu has been saved"
 msgstr ""
 
-#: Controller/MenusController.php:71;103
+#: Controller/MenusController.php:80;112
 msgid "The menu could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/MenusController.php:88
+#: Controller/MenusController.php:97
 msgid "Edit Menu"
 msgstr ""
 
-#: Controller/MenusController.php:131
+#: Controller/MenusController.php:140
 msgid "Menu deleted"
 msgstr ""
 
-#: Controller/MenusController.php:134
+#: Controller/MenusController.php:143
 msgid "Menu was not deleted"
 msgstr ""
 
-#: Controller/OptionsController.php:39
+#: Controller/OptionsController.php:45
 msgid "Permalink"
 msgstr ""
 
-#: Controller/OptionsController.php:41
+#: Controller/OptionsController.php:49
 msgid "%s Option"
 msgstr ""
 
-#: Controller/OptionsController.php:53
+#: Controller/OptionsController.php:52
 msgid "Invalid Option name"
 msgstr ""
 
-#: Controller/OptionsController.php:77
+#: Controller/OptionsController.php:76
 msgid "Options have been updated!"
 msgstr ""
 
-#: Controller/OptionsController.php:83
+#: Controller/OptionsController.php:82
 msgid "Unable to update "
 msgstr ""
 
-#: Controller/PagesController.php:113;259
+#: Controller/PagesController.php:104;122;275
 msgid "Invalid page"
 msgstr ""
 
-#: Controller/PagesController.php:150
+#: Controller/PagesController.php:162
 msgid "Add Page"
 msgstr ""
 
-#: Controller/PagesController.php:171
+#: Controller/PagesController.php:183
 msgid "The page has been saved"
 msgstr ""
 
-#: Controller/PagesController.php:178
+#: Controller/PagesController.php:190
 msgid "The page could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/PagesController.php:195
+#: Controller/PagesController.php:207
 msgid "Edit Page"
 msgstr ""
 
-#: Controller/PagesController.php:218
+#: Controller/PagesController.php:233
 msgid "The Page has been saved."
 msgstr ""
 
-#: Controller/PagesController.php:225
+#: Controller/PagesController.php:240
 msgid "The Page could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/PagesController.php:262
+#: Controller/PagesController.php:279
 msgid "Page deleted."
 msgstr ""
 
-#: Controller/PagesController.php:265
+#: Controller/PagesController.php:283
 msgid "Page was not deleted."
 msgstr ""
 
-#: Controller/PagesController.php:281
-#: Controller/PostsController.php:220
+#: Controller/PagesController.php:300
+#: Controller/PostsController.php:246
 msgid "Invalid author"
 msgstr ""
 
-#: Controller/PagesController.php:311
+#: Controller/PagesController.php:331
 msgid "Pages Published"
 msgstr ""
 
-#: Controller/PagesController.php:325
+#: Controller/PagesController.php:346
 msgid "Draft Pages"
 msgstr ""
 
-#: Controller/PagesController.php:388
-#: Controller/PostsController.php:618
-msgid "Posts deleted."
-msgstr ""
-
-#: Controller/PagesController.php:398
-msgid "Pages published"
-msgstr ""
-
-#: Controller/PagesController.php:408
-msgid "Pages drafted"
-msgstr ""
-
-#: Controller/PagesController.php:418
-msgid "Pages move to trash"
-msgstr ""
-
-#: Controller/PluginsController.php:49
+#: Controller/PluginsController.php:64
 msgid "Plugin deactivate"
 msgstr ""
 
-#: Controller/PluginsController.php:56
+#: Controller/PluginsController.php:71
 msgid "The plugin could not be deactivate. Please, try again."
 msgstr ""
 
-#: Controller/PluginsController.php:64
+#: Controller/PluginsController.php:79
 msgid "Plugin activate"
 msgstr ""
 
-#: Controller/PluginsController.php:68
+#: Controller/PluginsController.php:83
 msgid "The plugin could not be activate. Please, try again."
 msgstr ""
 
-#: Controller/PostsController.php:278
-#: Controller/TagsController.php:125;164
+#: Controller/PluginsController.php:107
+msgid "Plugin not exist"
+msgstr ""
+
+#: Controller/PluginsController.php:117
+msgid "Plugin deleted"
+msgstr ""
+
+#: Controller/PluginsController.php:121
+msgid "<b>Occurred error:</b><br>"
+msgstr ""
+
+#: Controller/PostsController.php:206;224;505
+msgid "Invalid post"
+msgstr ""
+
+#: Controller/PostsController.php:304
+#: Controller/TagsController.php:135;174
 msgid "Invalid tag"
 msgstr ""
 
-#: Controller/PostsController.php:323
+#: Controller/PostsController.php:349
 msgid "Add Post"
 msgstr ""
 
-#: Controller/PostsController.php:363
+#: Controller/PostsController.php:392
 msgid "The post has been saved"
 msgstr ""
 
-#: Controller/PostsController.php:370
+#: Controller/PostsController.php:399
 msgid "The post could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/PostsController.php:387
+#: Controller/PostsController.php:416
 msgid "Edit Post"
 msgstr ""
 
-#: Controller/PostsController.php:432
+#: Controller/PostsController.php:463
 msgid "The Post has been saved."
 msgstr ""
 
-#: Controller/PostsController.php:439
+#: Controller/PostsController.php:470
 msgid "The Post could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/PostsController.php:475
+#: Controller/PostsController.php:508
 msgid "Post deleted"
 msgstr ""
 
-#: Controller/PostsController.php:478
+#: Controller/PostsController.php:511
 msgid "Post was not deleted"
 msgstr ""
 
-#: Controller/PostsController.php:552
+#: Controller/PostsController.php:584
 msgid "Posts Published"
 msgstr ""
 
-#: Controller/PostsController.php:560
+#: Controller/PostsController.php:598
 msgid "Draft Posts"
 msgstr ""
 
-#: Controller/PostsController.php:628
-msgid "Posts published"
-msgstr ""
-
-#: Controller/PostsController.php:638
-msgid "Posts drafted"
-msgstr ""
-
-#: Controller/PostsController.php:648
-msgid "Posts move to trash"
-msgstr ""
-
-#: Controller/TagsController.php:78
-#: View/Helper/DashboardHelper.php:214
-#: View/Posts/admin_add.ctp:171
-#: View/Posts/admin_edit.ctp:164
+#: Controller/TagsController.php:88
+#: View/Helper/DashboardHelper.php:231
+#: View/Posts/admin_add.ctp:181
+#: View/Posts/admin_edit.ctp:183
 #: View/Posts/admin_index.ctp:49;180
 msgid "Tags"
 msgstr ""
 
-#: Controller/TagsController.php:88
+#: Controller/TagsController.php:98
 #: View/Tags/admin_add.ctp:90
 msgid "Add Tag"
 msgstr ""
 
-#: Controller/TagsController.php:98;130
+#: Controller/TagsController.php:108;140
 msgid "The tag has been saved"
 msgstr ""
 
-#: Controller/TagsController.php:105;137
+#: Controller/TagsController.php:115;147
 msgid "The tag could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/TagsController.php:122
+#: Controller/TagsController.php:132
 msgid "Edit Tag"
 msgstr ""
 
-#: Controller/TagsController.php:167
+#: Controller/TagsController.php:177
 msgid "Tag deleted"
 msgstr ""
 
-#: Controller/TagsController.php:170
+#: Controller/TagsController.php:180
 msgid "Tag was not deleted"
 msgstr ""
 
-#: Controller/TagsController.php:192
-msgid "Tags deleted."
-msgstr ""
-
-#: Controller/ThemesController.php:55
+#: Controller/ThemesController.php:69
 msgid "Invalid Theme."
 msgstr ""
 
-#: Controller/ThemesController.php:60
+#: Controller/ThemesController.php:74
 msgid "%s Theme successfully deleted."
 msgstr ""
 
-#: Controller/ThemesController.php:66
+#: Controller/ThemesController.php:80
 msgid "Occurred error."
 msgstr ""
 
-#: Controller/ThemesController.php:79
+#: Controller/ThemesController.php:93
 msgid "Theme activated."
 msgstr ""
 
-#: Controller/ThemesController.php:83
+#: Controller/ThemesController.php:97
 msgid "Theme activation failed."
 msgstr ""
 
-#: Controller/UsersController.php:104
+#: Controller/UsersController.php:132
 msgid "Add new user"
 msgstr ""
 
-#: Controller/UsersController.php:109;158
+#: Controller/UsersController.php:137;186
 msgid "The user has been saved"
 msgstr ""
 
-#: Controller/UsersController.php:116;166;346
+#: Controller/UsersController.php:144;194;372
 msgid "The user could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/UsersController.php:133
+#: Controller/UsersController.php:161
 #: View/Elements/admin/user_info.ctp:10
 msgid "Profile"
 msgstr ""
 
-#: Controller/UsersController.php:142;195
+#: Controller/UsersController.php:170;221
 msgid "Invalid user"
 msgstr ""
 
-#: Controller/UsersController.php:147
+#: Controller/UsersController.php:175
 msgid "You do not have permission to access this section."
 msgstr ""
 
-#: Controller/UsersController.php:198
+#: Controller/UsersController.php:224
 msgid "User deleted"
 msgstr ""
 
-#: Controller/UsersController.php:201
+#: Controller/UsersController.php:227
 msgid "User was not deleted"
 msgstr ""
 
-#: Controller/UsersController.php:211
+#: Controller/UsersController.php:237
 msgid "Login to admin section"
 msgstr ""
 
-#: Controller/UsersController.php:213
+#: Controller/UsersController.php:239
 msgid "You already login."
 msgstr ""
 
-#: Controller/UsersController.php:222
+#: Controller/UsersController.php:248
 msgid "%s you have successfully logged in"
 msgstr ""
 
-#: Controller/UsersController.php:229
+#: Controller/UsersController.php:255
 msgid "Your username or password was incorrect."
 msgstr ""
 
-#: Controller/UsersController.php:266
+#: Controller/UsersController.php:292
 msgid "You are successfully logout"
 msgstr ""
 
-#: Controller/UsersController.php:272
+#: Controller/UsersController.php:298
 msgid "You already logout."
 msgstr ""
 
-#: Controller/UsersController.php:289
+#: Controller/UsersController.php:315
 msgid "Change Password"
 msgstr ""
 
-#: Controller/UsersController.php:291
+#: Controller/UsersController.php:317
 msgid "You are change password"
 msgstr ""
 
-#: Controller/UsersController.php:298
+#: Controller/UsersController.php:324
 msgid "Your password has been updated"
 msgstr ""
 
-#: Controller/UsersController.php:305
+#: Controller/UsersController.php:331
 msgid "Could not be changed password. Please, try again."
 msgstr ""
 
-#: Controller/UsersController.php:319
+#: Controller/UsersController.php:345
 #: View/Users/register.ctp:101
 msgid "Register"
 msgstr ""
 
-#: Controller/UsersController.php:327
+#: Controller/UsersController.php:353
 msgid "Register to %s"
 msgstr ""
 
-#: Controller/UsersController.php:339
+#: Controller/UsersController.php:365
 msgid "Congratulations, You are Successfully register"
 msgstr ""
 
-#: Controller/UsersController.php:382
+#: Controller/UsersController.php:408
 msgid "Invalid Key"
 msgstr ""
 
-#: Controller/UsersController.php:391
+#: Controller/UsersController.php:417
 msgid "Confirmed your account"
 msgstr ""
 
-#: Controller/UsersController.php:393
+#: Controller/UsersController.php:419
 msgid "Thank you confirm your account"
 msgstr ""
 
-#: Controller/UsersController.php:396
+#: Controller/UsersController.php:422
 msgid "User confirm."
 msgstr ""
 
-#: Controller/UsersController.php:403
+#: Controller/UsersController.php:429
 msgid "Could not be confirm your email. Please, try again."
 msgstr ""
 
-#: Controller/UsersController.php:411
+#: Controller/UsersController.php:437
 msgid "Your activation key not valid."
 msgstr ""
 
-#: Controller/UsersController.php:429
+#: Controller/UsersController.php:455
 msgid "Invalid username."
 msgstr ""
 
-#: Controller/UsersController.php:439;464
+#: Controller/UsersController.php:465;490
 msgid "Reset Password"
 msgstr ""
 
-#: Controller/UsersController.php:449
+#: Controller/UsersController.php:475
 msgid "An email has been sent with instructions for resetting your password."
 msgstr ""
 
-#: Controller/UsersController.php:489
+#: Controller/UsersController.php:493;506
+msgid "An error occurred."
+msgstr ""
+
+#: Controller/UsersController.php:515
 msgid "Your password has been reset successfully."
 msgstr ""
 
-#: Controller/UsersController.php:496
+#: Controller/UsersController.php:522
 msgid "An error occurred. Please try again."
 msgstr ""
 
-#: Controller/UsersController.php:547
-msgid "Users deleted."
+#: Lib/HuradMetaBox.php:67
+msgid "Plugin path is not readable"
 msgstr ""
 
-#: Lib/HuradWidget.php:20
+#: Lib/HuradMetaBox.php:71
+msgid "You should use meta box in plugin"
+msgstr ""
+
+#: Lib/HuradWidget.php:34
 msgid "Sidebar %d"
 msgstr ""
 
-#: Lib/HuradWidget.php:21
+#: Lib/HuradWidget.php:35
 msgid "Default description for this sidebar"
 msgstr ""
 
-#: Lib/HuradWidget.php:46
+#: Lib/HuradWidget.php:60
 msgid "Widget %d"
 msgstr ""
 
-#: Lib/HuradWidget.php:47
+#: Lib/HuradWidget.php:61
 msgid "Default description for this widget"
 msgstr ""
 
-#: Model/Media.php:39
-msgid "Invalid file"
+#: Model/Comment.php:79
+#: View/Helper/DashboardHelper.php:272
+msgid "Approved"
 msgstr ""
 
-#: Plugin/Akismet/Config/bootstrap.php:8
-msgid "Akismet Configuration"
+#: Model/Comment.php:80
+#: Model/Post.php:115
+#: View/Helper/DashboardHelper.php:290
+msgid "Pending"
 msgstr ""
 
-#: Plugin/HelloWorld/Config/bootstrap.php:6
-msgid "Hello World"
+#: Model/Comment.php:81
+#: View/Elements/admin/Comments/row_actions.ctp:16
+#: View/Helper/DashboardHelper.php:132;308
+msgid "Spam"
+msgstr ""
+
+#: Model/Comment.php:82
+#: Model/Post.php:117
+#: View/Elements/admin/Comments/row_actions.ctp:25
+#: View/Helper/AdminLayoutHelper.php:37
+#: View/Helper/DashboardHelper.php:149
+msgid "Trash"
+msgstr ""
+
+#: Model/Comment.php:190
+#: Model/Page.php:133
+#: Model/Post.php:199
+msgid "Status \"%s\" not found."
+msgstr ""
+
+#: Model/Media.php:70
+msgid "Invalid media file"
+msgstr ""
+
+#: Model/Media.php:87
+msgid "File could not be uploaded. please increase \"post_max_size\" in php.ini"
+msgstr ""
+
+#: Model/Media.php:106
+msgid "%s is not writable"
+msgstr ""
+
+#: Model/Media.php:150;172
+msgid "Invalid media file."
+msgstr ""
+
+#: Model/Media.php:204
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
+msgstr ""
+
+#: Model/Media.php:208
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
+msgstr ""
+
+#: Model/Media.php:215
+msgid "The uploaded file was only partially uploaded."
+msgstr ""
+
+#: Model/Media.php:219
+msgid "No file was uploaded."
+msgstr ""
+
+#: Model/Media.php:223
+msgid "Missing a temporary folder."
+msgstr ""
+
+#: Model/Media.php:227
+msgid "Failed to write file to disk."
+msgstr ""
+
+#: Model/Media.php:231
+msgid "A PHP extension stopped the file upload."
+msgstr ""
+
+#: Model/Post.php:114
+#: View/Helper/AdminLayoutHelper.php:33
+#: View/Pages/admin_add.ctp:73;140
+#: View/Pages/admin_edit.ctp:74
+#: View/Posts/admin_add.ctp:74;155
+#: View/Posts/admin_edit.ctp:76
+msgid "Publish"
+msgstr ""
+
+#: Model/Post.php:116
+#: View/Helper/AdminLayoutHelper.php:35
+msgid "Draft"
+msgstr ""
+
+#: Model/Post.php:133
+msgid "Open"
+msgstr ""
+
+#: Model/Post.php:134
+msgid "Close"
+msgstr ""
+
+#: Model/Post.php:135
+msgid "Disable"
+msgstr ""
+
+#: Model/Behavior/KeyValueStorageBehavior.php:135
+msgid "You should set foreign_key \"%s\""
 msgstr ""
 
 #: View/Categories/admin_add.ctp:19
@@ -938,7 +988,7 @@ msgstr ""
 #: View/Menus/admin_add.ctp:19
 #: View/Menus/admin_edit.ctp:19
 #: View/Menus/admin_index.ctp:18;112
-#: View/Plugins/admin_index.ctp:13;65
+#: View/Plugins/admin_index.ctp:13;68
 #: View/Posts/view.ctp:46
 #: View/Tags/admin_add.ctp:19
 #: View/Tags/admin_edit.ctp:19
@@ -959,6 +1009,7 @@ msgstr ""
 #: View/Users/admin_profile.ctp:34
 #: View/Users/login.ctp:21
 #: View/Users/register.ctp:21
+#: Model/Installer.php:validation for field database;validation for field login;validation for field password;validation for field host;validation for field prefix
 msgid "This field cannot be left blank."
 msgstr ""
 
@@ -1013,12 +1064,14 @@ msgstr ""
 #: View/Linkcats/admin_index.ctp:41;125
 #: View/Links/admin_add.ctp:62
 #: View/Links/admin_edit.ctp:62
+#: View/Media/admin_add.ctp:65
 #: View/Media/admin_browse.ctp:22;109
+#: View/Media/admin_edit.ctp:82
 #: View/Media/admin_index.ctp:25;112
 #: View/Menus/admin_add.ctp:33
 #: View/Menus/admin_edit.ctp:33
 #: View/Menus/admin_index.ctp:39;130
-#: View/Plugins/admin_index.ctp:20;71
+#: View/Plugins/admin_index.ctp:20;74
 #: View/Tags/admin_add.ctp:76
 #: View/Tags/admin_edit.ctp:76
 #: View/Tags/admin_index.ctp:27;112
@@ -1081,7 +1134,7 @@ msgstr ""
 
 #: View/Comments/admin_edit.ctp:78
 #: View/Comments/admin_index.ctp:29;115
-#: View/Helper/DashboardHelper.php:164
+#: View/Helper/DashboardHelper.php:180
 msgid "Content"
 msgstr ""
 
@@ -1089,33 +1142,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: View/Comments/admin_edit.ctp:99
-#: View/Helper/AdminLayoutHelper.php:155
-msgid "Disapprove"
-msgstr ""
-
-#: View/Comments/admin_edit.ctp:100
-#: View/Helper/AdminLayoutHelper.php:161
-#: View/Helper/DashboardHelper.php:65
-msgid "Approve"
-msgstr ""
-
-#: View/Comments/admin_edit.ctp:101
-#: View/Elements/admin/Comments/row_actions.ctp:19
-#: View/Helper/CommentHelper.php:627
-#: View/Helper/DashboardHelper.php:116;289
-msgid "Spam"
-msgstr ""
-
-#: View/Comments/admin_edit.ctp:102
-#: View/Elements/admin/Comments/row_actions.ctp:25
-#: View/Helper/AdminLayoutHelper.php:43
-#: View/Helper/CommentHelper.php:630
-#: View/Helper/DashboardHelper.php:133
-msgid "Trash"
-msgstr ""
-
-#: View/Comments/admin_edit.ctp:110
+#: View/Comments/admin_edit.ctp:105
 msgid "Update Comment"
 msgstr ""
 
@@ -1124,11 +1151,22 @@ msgid "Reply to"
 msgstr ""
 
 #: View/Comments/admin_index.ctp:96
+#: View/Elements/Widgets/recent-comments.ctp:11
 msgid "No comments were found"
 msgstr ""
 
 #: View/Elements/auth.ctp:3
 msgid "Warning!"
+msgstr ""
+
+#: View/Elements/paginator.ctp:7
+#: View/Elements/admin/paginator.ctp:7
+msgid "Previous"
+msgstr ""
+
+#: View/Elements/paginator.ctp:16
+#: View/Elements/admin/paginator.ctp:16
+msgid "Next"
 msgstr ""
 
 #: View/Elements/Comments/item.ctp:20
@@ -1143,7 +1181,7 @@ msgstr ""
 
 #: View/Elements/Comments/item.ctp:37
 #: View/Themed/Hurad2013/Elements/Comments/item.ctp:36
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:19
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:18
 msgid "Reply"
 msgstr ""
 
@@ -1166,7 +1204,7 @@ msgstr ""
 
 #: View/Elements/Comments/logged-in-form.ctp:46
 #: View/Elements/Comments/logged-out-form.ctp:47
-#: View/Themed/Hurad2013/Elements/Comments/logged-in-form.ctp:54
+#: View/Themed/Hurad2013/Elements/Comments/logged-in-form.ctp:57
 msgid "Post Comment"
 msgstr ""
 
@@ -1195,13 +1233,15 @@ msgid "Comment Closed"
 msgstr ""
 
 #: View/Elements/Comments/reply-form.ctp:9;14;24
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:31
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:30
 msgid "Add Comment"
 msgstr ""
 
 #: View/Elements/Widgets/authors-form.ctp:2
 #: View/Elements/Widgets/categories-form.ctp:2
+#: View/Elements/Widgets/links-form.ctp:2
 #: View/Elements/Widgets/pages-form.ctp:2
+#: View/Elements/Widgets/recent-comments-form.ctp:2
 #: View/Elements/Widgets/recent-posts-form.ctp:2
 #: View/Elements/Widgets/text-form.ctp:2
 msgid "Title:"
@@ -1212,14 +1252,14 @@ msgid "Show full name:"
 msgstr ""
 
 #: View/Elements/Widgets/authors-form.ctp:11;21;31
-#: View/Helper/AdminLayoutHelper.php:55
+#: View/Helper/AdminLayoutHelper.php:49
 #: View/Links/admin_add.ctp:132
 #: View/Links/admin_edit.ctp:132
 msgid "No"
 msgstr ""
 
 #: View/Elements/Widgets/authors-form.ctp:11;21;31
-#: View/Helper/AdminLayoutHelper.php:53
+#: View/Helper/AdminLayoutHelper.php:47
 #: View/Links/admin_add.ctp:131
 #: View/Links/admin_edit.ctp:131
 msgid "Yes"
@@ -1253,6 +1293,15 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
+#: View/Elements/Widgets/links-form.ctp:7
+msgid "Select Category:"
+msgstr ""
+
+#: View/Elements/Widgets/links.ctp:28
+msgid "Link category not found."
+msgstr ""
+
+#: View/Elements/Widgets/recent-comments-form.ctp:7
 #: View/Elements/Widgets/recent-posts-form.ctp:7
 msgid "Number:"
 msgstr ""
@@ -1301,7 +1350,7 @@ msgid "Draft "
 msgstr ""
 
 #: View/Elements/admin/pages_filter.ctp:90;96
-#: View/Elements/admin/Comments/filter.ctp:93;104
+#: View/Elements/admin/Comments/filter.ctp:101;112
 #: View/Elements/admin/Pages/filter.ctp:83;90
 #: View/Elements/admin/Posts/filter.ctp:83;90
 msgid "Trash "
@@ -1317,14 +1366,6 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: View/Elements/admin/paginator.ctp:7
-msgid "Previous"
-msgstr ""
-
-#: View/Elements/admin/paginator.ctp:16
-msgid "Next"
-msgstr ""
-
 #: View/Elements/admin/paginator.ctp:30
 msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total"
 msgstr ""
@@ -1334,7 +1375,7 @@ msgid "Logout"
 msgstr ""
 
 #: View/Elements/admin/Categories/row_actions.ctp:4
-#: View/Elements/admin/Comments/row_actions.ctp:13
+#: View/Elements/admin/Comments/row_actions.ctp:8
 #: View/Elements/admin/Linkcats/row_actions.ctp:4
 #: View/Elements/admin/Links/row_actions.ctp:7
 #: View/Elements/admin/Media/row_actions.ctp:23
@@ -1343,7 +1384,7 @@ msgstr ""
 #: View/Elements/admin/Posts/row_actions.ctp:11
 #: View/Elements/admin/Tags/row_actions.ctp:4
 #: View/Elements/admin/Users/row_actions.ctp:4
-#: View/Helper/DashboardHelper.php:102
+#: View/Helper/DashboardHelper.php:118
 #: View/Links/index.ctp:46
 #: View/Posts/index.ctp:41
 #: View/Posts/view.ctp:67
@@ -1353,13 +1394,14 @@ msgstr ""
 #: View/Elements/admin/Categories/row_actions.ctp:10
 #: View/Elements/admin/Linkcats/row_actions.ctp:10
 #: View/Elements/admin/Links/row_actions.ctp:13
-#: View/Elements/admin/Media/row_actions.ctp:13;38
+#: View/Elements/admin/Media/row_actions.ctp:13;42
 #: View/Elements/admin/Menus/row_actions.ctp:10
 #: View/Elements/admin/Pages/row_actions.ctp:18
 #: View/Elements/admin/Plugins/row_actions.ctp:16
 #: View/Elements/admin/Posts/row_actions.ctp:23
 #: View/Elements/admin/Tags/row_actions.ctp:10
 #: View/Elements/admin/Users/row_actions.ctp:10
+#: View/Helper/AdminLayoutHelper.php:164
 #: View/Links/index.ctp:48
 #: View/Posts/index.ctp:43
 #: View/Posts/view.ctp:71
@@ -1370,7 +1412,7 @@ msgstr ""
 #: View/Elements/admin/Categories/row_actions.ctp:13
 #: View/Elements/admin/Linkcats/row_actions.ctp:13
 #: View/Elements/admin/Links/row_actions.ctp:16
-#: View/Elements/admin/Media/row_actions.ctp:16;41
+#: View/Elements/admin/Media/row_actions.ctp:16;45
 #: View/Elements/admin/Menus/row_actions.ctp:13
 #: View/Elements/admin/Posts/row_actions.ctp:26
 #: View/Elements/admin/Tags/row_actions.ctp:13
@@ -1386,11 +1428,11 @@ msgstr ""
 msgid "Approved "
 msgstr ""
 
-#: View/Elements/admin/Comments/filter.ctp:75;82
+#: View/Elements/admin/Comments/filter.ctp:75;86
 msgid "Spam "
 msgstr ""
 
-#: View/Elements/admin/Comments/row_actions.ctp:7
+#: View/Elements/admin/Comments/row_actions.ctp:5
 #: View/Elements/admin/Pages/row_actions.ctp:4
 #: View/Elements/admin/Posts/row_actions.ctp:4
 #: View/Links/index.ctp:45
@@ -1415,7 +1457,7 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: View/Elements/admin/Media/row_actions.ctp:34
+#: View/Elements/admin/Media/row_actions.ctp:35
 msgid "Direct link"
 msgstr ""
 
@@ -1486,10 +1528,12 @@ msgstr ""
 #: View/Elements/admin/Options/comment.ctp:285
 #: View/Elements/admin/Options/general.ctp:157
 #: View/Elements/admin/Options/permalink.ctp:90
+#: View/Elements/admin/Options/read.ctp:34
 #: View/Linkcats/admin_edit.ctp:90
 #: View/Links/admin_edit.ctp:157
-#: View/Pages/admin_edit.ctp:145
-#: View/Posts/admin_edit.ctp:147
+#: View/Media/admin_edit.ctp:98
+#: View/Pages/admin_edit.ctp:141
+#: View/Posts/admin_edit.ctp:157
 msgid "Update"
 msgstr ""
 
@@ -1569,6 +1613,10 @@ msgstr ""
 msgid "Month and name"
 msgstr ""
 
+#: View/Elements/admin/Options/read.ctp:26
+msgid "Show posts per page"
+msgstr ""
+
 #: View/Elements/admin/Pages/row_actions.ctp:6
 #: View/Elements/admin/Posts/row_actions.ctp:6
 msgid "View “%s”"
@@ -1587,6 +1635,18 @@ msgstr ""
 #: View/Elements/admin/Pages/row_actions.ctp:21
 #: View/Elements/admin/Plugins/row_actions.ctp:19
 msgid "Are you sure you want to delete \"%s\"?"
+msgstr ""
+
+#: View/Elements/admin/Plugins/info.ctp:7
+msgid "Version %s"
+msgstr ""
+
+#: View/Elements/admin/Plugins/info.ctp:12;14
+msgid "By %s"
+msgstr ""
+
+#: View/Elements/admin/Plugins/info.ctp:19
+msgid "Visit plugin home page"
 msgstr ""
 
 #: View/Elements/admin/Plugins/row_actions.ctp:4
@@ -1610,155 +1670,146 @@ msgstr ""
 msgid "If you did not request a password reset, then please ignore this email."
 msgstr ""
 
-#: View/Helper/AdminLayoutHelper.php:39
-#: View/Pages/admin_add.ctp:72;86;144
-#: View/Pages/admin_edit.ctp:73;87
-#: View/Posts/admin_add.ctp:73;87;145
-#: View/Posts/admin_edit.ctp:75;89
-msgid "Publish"
-msgstr ""
-
-#: View/Helper/AdminLayoutHelper.php:41
-#: View/Pages/admin_add.ctp:87
-#: View/Pages/admin_edit.ctp:88
-#: View/Posts/admin_add.ctp:88
-#: View/Posts/admin_edit.ctp:90
-msgid "Draft"
-msgstr ""
-
-#: View/Helper/AdminLayoutHelper.php:45;57
-#: View/Helper/CommentHelper.php:633
+#: View/Helper/AdminLayoutHelper.php:39;51
 msgid "Unknown"
 msgstr ""
 
-#: View/Helper/AdminLayoutHelper.php:81
+#: View/Helper/AdminLayoutHelper.php:75
 msgid "This key is valid."
 msgstr ""
 
-#: View/Helper/AdminLayoutHelper.php:85
+#: View/Helper/AdminLayoutHelper.php:79
 msgid "This key is not valid."
 msgstr ""
 
-#: View/Helper/CommentHelper.php:158
+#: View/Helper/AdminLayoutHelper.php:149
+msgid "Disapprove"
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:155
+#: View/Helper/DashboardHelper.php:81
+msgid "Approve"
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:159
+msgid "Un Spam"
+msgstr ""
+
+#: View/Helper/AdminLayoutHelper.php:167
+msgid "Are you sure you want to delete “#%s”?"
+msgstr ""
+
+#: View/Helper/CommentHelper.php:130
 msgid "Anonymous"
 msgstr ""
 
-#: View/Helper/CommentHelper.php:552;674
+#: View/Helper/CommentHelper.php:483
 msgid "% Comments"
 msgstr ""
 
-#: View/Helper/CommentHelper.php:555;668
+#: View/Helper/CommentHelper.php:486
 msgid "No Comments"
 msgstr ""
 
-#: View/Helper/CommentHelper.php:558;671
+#: View/Helper/CommentHelper.php:488
 msgid "1 Comment"
 msgstr ""
 
-#: View/Helper/CommentHelper.php:621
-#: View/Helper/DashboardHelper.php:253
-msgid "Approved"
+#: View/Helper/ContentHelper.php:175
+msgid "(more...)"
 msgstr ""
 
-#: View/Helper/CommentHelper.php:624
-msgid "Unapproved"
+#: View/Helper/ContentHelper.php:303;309;347;353
+msgid "View all posts in %s"
 msgstr ""
 
-#: View/Helper/CommentHelper.php:677
-msgid "Comments Off"
-msgstr ""
-
-#: View/Helper/CommentHelper.php:710
-msgid "Comment on %s"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:25
-msgid "No comments yet."
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:40
-msgid "From"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:48
-msgid "on"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:82
-msgid "Unapprove"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:176
-msgid "Post"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:190
-msgid "Page"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:204
-#: View/Links/admin_index.ctp:35;141
-msgid "Category"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:221
-msgid "Discussion"
-msgstr ""
-
-#: View/Helper/DashboardHelper.php:271
-msgid "Pending"
-msgstr ""
-
-#: View/Helper/GravatarHelper.php:19
-msgid "Avatar"
-msgstr ""
-
-#: View/Helper/PageHelper.php:258
+#: View/Helper/ContentHelper.php:519
 #: View/Pages/admin_index.ctp:123
 msgid "No pages were found"
 msgstr ""
 
-#: View/Helper/PostHelper.php:204
-msgid "(more...)"
+#: View/Helper/ContentHelper.php:571
+msgid "Element not found: \"%s\""
 msgstr ""
 
-#: View/Helper/PostHelper.php:339;345;371;377
-msgid "View all posts in %s"
+#: View/Helper/DashboardHelper.php:41
+msgid "No comments yet."
 msgstr ""
 
-#: View/Installer/database.ctp:19;25
+#: View/Helper/DashboardHelper.php:56
+msgid "From"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:64
+msgid "on"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:98
+msgid "Unapprove"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:192
+msgid "Post"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:206
+msgid "Page"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:220
+#: View/Links/admin_index.ctp:35;141
+msgid "Category"
+msgstr ""
+
+#: View/Helper/DashboardHelper.php:240
+msgid "Discussion"
+msgstr ""
+
+#: View/Helper/GravatarHelper.php:37
+msgid "Avatar"
+msgstr ""
+
+#: View/Installer/config.ctp:30
+msgid "Continue"
+msgstr ""
+
+#: View/Installer/database.ctp:20;33
 msgid "Database name"
 msgstr ""
 
-#: View/Installer/database.ctp:32;38
+#: View/Installer/database.ctp:43;56
 msgid "Database username"
 msgstr ""
 
-#: View/Installer/database.ctp:45;51
+#: View/Installer/database.ctp:66;79
 msgid "Database password"
 msgstr ""
 
-#: View/Installer/database.ctp:58;66
+#: View/Installer/database.ctp:89;103
 msgid "Database host"
 msgstr ""
 
-#: View/Installer/database.ctp:77;85
+#: View/Installer/database.ctp:115;129
 msgid "Tables prefix"
 msgstr ""
 
-#: View/Installer/database.ctp:94
+#: View/Installer/database.ctp:154
 msgid "Install Database"
 msgstr ""
 
-#: View/Installer/finalize.ctp:15;19
+#: View/Installer/finalize.ctp:1
+msgid "Hurad configuration"
+msgstr ""
+
+#: View/Installer/finalize.ctp:17;30
 msgid "Weblog Title"
 msgstr ""
 
-#: View/Installer/finalize.ctp:26;32
+#: View/Installer/finalize.ctp:40;53
 msgid "Admin Username"
 msgstr ""
 
-#: View/Installer/finalize.ctp:37;41
+#: View/Installer/finalize.ctp:63;76
 #: View/Users/admin_add.ctp:108
 #: View/Users/admin_profile.ctp:169
 #: View/Users/login.ctp:52
@@ -1766,68 +1817,68 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: View/Installer/finalize.ctp:48;54
+#: View/Installer/finalize.ctp:86;100
 #: View/Users/admin_profile.ctp:195
 #: View/Users/register.ctp:72
 msgid "Confirm Password"
 msgstr ""
 
-#: View/Installer/finalize.ctp:59;63
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:46
+#: View/Installer/finalize.ctp:108;119
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:45
 #: View/Users/admin_profile.ctp:130
 #: View/Users/register.ctp:94
 msgid "Email"
 msgstr ""
 
-#: View/Installer/finalize.ctp:70
+#: View/Installer/finalize.ctp:130
 msgid "Finish :)"
 msgstr ""
 
 #: View/Installer/index.ctp:8
-msgid "Your version of PHP is 5.3.0 or higher."
+msgid "Your version of PHP is 5.4.0 or higher."
 msgstr ""
 
-#: View/Installer/index.ctp:11
-msgid "Your version of PHP is too low. You need PHP 5.3.0 or higher to use Hurad."
+#: View/Installer/index.ctp:12
+msgid "Your version of PHP is too low. You need PHP 5.4.0 or higher to use Hurad."
 msgstr ""
 
-#: View/Installer/index.ctp:20
+#: View/Installer/index.ctp:21
 msgid "Your tmp directory is writable."
 msgstr ""
 
-#: View/Installer/index.ctp:23
+#: View/Installer/index.ctp:25
 msgid "Your tmp directory is NOT writable."
 msgstr ""
 
-#: View/Installer/index.ctp:39
+#: View/Installer/index.ctp:35
+msgid "The %s is being used for core caching. To change the config edit APP/Config/core.php <em>"
+msgstr ""
+
+#: View/Installer/index.ctp:43
 msgid "Your cache is NOT working. Please check the settings in APP/Config/core.php"
 msgstr ""
 
-#: View/Installer/index.ctp:95
+#: View/Installer/index.ctp:53
 msgid "PCRE has not been compiled with Unicode support."
 msgstr ""
 
-#: View/Installer/index.ctp:110
+#: View/Installer/index.ctp:55
+msgid "Recompile PCRE with Unicode support by adding <code>--enable-unicode-properties</code> when configuring"
+msgstr ""
+
+#: View/Installer/index.ctp:69
 msgid "Official website"
 msgstr ""
 
-#: View/Installer/index.ctp:113
-msgid "Hurad Documentation"
-msgstr ""
-
-#: View/Installer/index.ctp:116
-msgid "Hurad API"
-msgstr ""
-
-#: View/Installer/index.ctp:119
+#: View/Installer/index.ctp:72
 msgid "Hurad Source Code"
 msgstr ""
 
-#: View/Installer/index.ctp:122
+#: View/Installer/index.ctp:75
 msgid "Hurad Issues"
 msgstr ""
 
-#: View/Installer/index.ctp:126
+#: View/Installer/index.ctp:79
 msgid "If you are ready to install, then click here"
 msgstr ""
 
@@ -1961,11 +2012,16 @@ msgstr ""
 msgid "New Menu"
 msgstr ""
 
-#: View/Media/admin_add.ctp:20
+#: View/Media/admin_add.ctp:24
+#: View/Media/admin_edit.ctp:22
+msgid "Tile"
+msgstr ""
+
+#: View/Media/admin_add.ctp:44
 msgid "Choose File"
 msgstr ""
 
-#: View/Media/admin_add.ctp:35
+#: View/Media/admin_add.ctp:82
 msgid "Upload"
 msgstr ""
 
@@ -1974,6 +2030,18 @@ msgstr ""
 #: View/Pages/admin_index.ctp:49;154
 #: View/Posts/admin_index.ctp:63;192
 msgid "Date"
+msgstr ""
+
+#: View/Media/admin_edit.ctp:42
+msgid "Mime type"
+msgstr ""
+
+#: View/Media/admin_edit.ctp:54
+msgid "Web address"
+msgstr ""
+
+#: View/Media/admin_edit.ctp:70
+msgid "File size"
 msgstr ""
 
 #: View/Menus/admin_add.ctp:25
@@ -2015,56 +2083,43 @@ msgstr ""
 msgid "Excerpt"
 msgstr ""
 
-#: View/Pages/admin_add.ctp:77
-#: View/Pages/admin_edit.ctp:78
-#: View/Posts/admin_add.ctp:78
-#: View/Posts/admin_edit.ctp:80
-msgid "Post Status:"
+#: View/Pages/admin_add.ctp:78
+msgid "Page Status:"
 msgstr ""
 
 #: View/Pages/admin_add.ctp:96
 #: View/Pages/admin_edit.ctp:97
-#: View/Posts/admin_add.ctp:97
-#: View/Posts/admin_edit.ctp:99
+#: View/Posts/admin_add.ctp:111
+#: View/Posts/admin_edit.ctp:113
 msgid "Comment Status:"
 msgstr ""
 
-#: View/Pages/admin_add.ctp:105
-#: View/Pages/admin_edit.ctp:106
-#: View/Posts/admin_add.ctp:106
-#: View/Posts/admin_edit.ctp:108
-msgid "Open"
-msgstr ""
-
-#: View/Pages/admin_add.ctp:106
-#: View/Pages/admin_edit.ctp:107
-#: View/Posts/admin_add.ctp:107
-#: View/Posts/admin_edit.ctp:109
-msgid "Close"
-msgstr ""
-
-#: View/Pages/admin_add.ctp:107
-#: View/Pages/admin_edit.ctp:108
-#: View/Posts/admin_add.ctp:108
-#: View/Posts/admin_edit.ctp:110
-msgid "Disable"
-msgstr ""
-
-#: View/Pages/admin_add.ctp:116
-#: View/Pages/admin_edit.ctp:117
-#: View/Posts/admin_add.ctp:117
-#: View/Posts/admin_edit.ctp:119
+#: View/Pages/admin_add.ctp:112
+#: View/Pages/admin_edit.ctp:113
+#: View/Posts/admin_add.ctp:127
+#: View/Posts/admin_edit.ctp:129
 msgid "Publish date:"
 msgstr ""
 
-#: View/Pages/admin_add.ctp:160
-#: View/Pages/admin_edit.ctp:161
+#: View/Pages/admin_add.ctp:156
+#: View/Pages/admin_edit.ctp:157
 msgid "(No Parent)"
+msgstr ""
+
+#: View/Pages/admin_edit.ctp:79
+#: View/Posts/admin_add.ctp:79
+#: View/Posts/admin_edit.ctp:81
+msgid "Post Status:"
 msgstr ""
 
 #: View/Pages/admin_index.ctp:28;136
 #: View/Posts/admin_index.ctp:28;162
 msgid "Title"
+msgstr ""
+
+#: View/Posts/admin_add.ctp:104
+#: View/Posts/admin_edit.ctp:106
+msgid "Stick this post in first page"
 msgstr ""
 
 #: View/Posts/index.ctp:74
@@ -2128,15 +2183,15 @@ msgstr ""
 msgid "Update Tag"
 msgstr ""
 
-#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:55
+#: View/Themed/Hurad2013/Elements/Comments/logged-out-form.ctp:58
 msgid "Submit Comment"
 msgstr ""
 
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:57
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:56
 msgid "Url"
 msgstr ""
 
-#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:79
+#: View/Themed/Hurad2013/Elements/Comments/reply-form.ctp:78
 msgid "Submit reply"
 msgstr ""
 
@@ -2360,5 +2415,25 @@ msgstr ""
 
 #: View/Widgets/admin_index.ctp:232
 msgid "In this theme not supported dynamic sidebar."
+msgstr ""
+
+#: Model/Installer.php:validation for field site_title
+msgid "Site title cannot be left blank."
+msgstr ""
+
+#: Model/Installer.php:validation for field site_username
+msgid "Admin username cannot be left blank."
+msgstr ""
+
+#: Model/Installer.php:validation for field site_password
+msgid "Password cannot be left blank."
+msgstr ""
+
+#: Model/Installer.php:validation for field site_confirm_password
+msgid "This value must be equal to password."
+msgstr ""
+
+#: Model/Installer.php:validation for field email
+msgid "Please supply a valid email address."
 msgstr ""
 
