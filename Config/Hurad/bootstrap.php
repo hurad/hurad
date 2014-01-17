@@ -20,7 +20,7 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 
-Configure::write('Hurad.version', "0.1.0-alpha.6");
+Configure::write('Hurad.version', "0.1.0-alpha.7");
 
 /**
  * Load Options
