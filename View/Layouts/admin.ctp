@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="<?= Configure::read('Hurad.language.catalog')['direction'] ?>">
 <head>
     <title><?php echo $title_for_layout; ?> &#8212; <?php echo __d('hurad', 'Huard'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

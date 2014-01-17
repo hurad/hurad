@@ -75,6 +75,7 @@ App::uses('HuradRole', 'Lib');
 App::uses('HuradNavigation', 'Lib');
 App::uses('HuradRowActions', 'Lib');
 App::uses('HuradMetaBox', 'Lib');
+App::uses('HuradL10n', 'Lib');
 
 /**
  * Include default capabilities
@@ -105,3 +106,7 @@ $theme_bootstrap = APP . 'View' . DS . 'Themed' . DS . Configure::read(
 if (is_file($theme_bootstrap) && file_exists($theme_bootstrap)) {
     include $theme_bootstrap;
 }
+
+Configure::write('Config.language', Configure::read('General.language'));
+Configure::write('Hurad.language', Configure::read('General.language'));
+Configure::write('Hurad.language.catalog', HuradL10n::getAvailableLocale()[Configure::read('General.language')]);
