@@ -14,6 +14,7 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('AppController', 'Controller');
+App::uses('Post', 'Model');
 
 /**
  * Class PostsController
@@ -53,7 +54,7 @@ class PostsController extends AppController
     public $paginate = [
         'Post' => [
             'conditions' => [
-                'Post.status' => ['publish', 'draft'],
+                'Post.status' => [Post::STATUS_PUBLISH, Post::STATUS_PENDING, Post::STATUS_DRAFT],
                 'Post.type' => 'post'
             ],
             'limit' => 25,
@@ -87,7 +88,7 @@ class PostsController extends AppController
                     'limit' => 20,
                     'order' => 'Post.created DESC',
                     'conditions' => array(
-                        'Post.status' => 'publish',
+                        'Post.status' => Post::STATUS_PUBLISH,
                         'Post.type' => 'post',
                     )
                 )
@@ -106,7 +107,7 @@ class PostsController extends AppController
                 [
                     'Post' => [
                         'conditions' => [
-                            'Post.status' => 'publish',
+                            'Post.status' => Post::STATUS_PUBLISH,
                         ],
                         'limit' => $limit,
                         'contain' => ['Category', 'User', 'Tag', 'Comment'],
@@ -165,7 +166,7 @@ class PostsController extends AppController
                 break;
 
             case 'author':
-                $conditions = ['Post.status' => ['publish'], ['User.username' => $slug]];
+                $conditions = ['Post.status' => [Post::STATUS_PUBLISH], ['User.username' => $slug]];
                 $joins = [];
                 break;
 
@@ -354,8 +355,8 @@ class PostsController extends AppController
             'slug' => '',
             'content' => '',
             'excerpt' => '',
-            'status' => 'draft',
-            'comment_status' => 'open',
+            'status' => Post::STATUS_DRAFT,
+            'comment_status' => Post::COMMENT_STATUS_OPEN,
             'comment_count' => 0,
             'type' => 'post',
         );
@@ -421,8 +422,8 @@ class PostsController extends AppController
             'slug' => '',
             'content' => '',
             'excerpt' => '',
-            'status' => 'draft',
-            'comment_status' => 'open',
+            'status' => Post::STATUS_DRAFT,
+            'comment_status' => Post::COMMENT_STATUS_OPEN,
             'comment_count' => 0,
             'type' => 'post',
         );
@@ -586,7 +587,7 @@ class PostsController extends AppController
                     [
                         'Post' => [
                             'conditions' => [
-                                'Post.status' => 'publish'
+                                'Post.status' => Post::STATUS_PUBLISH
                             ]
                         ]
                     ]
@@ -600,7 +601,7 @@ class PostsController extends AppController
                     [
                         'Post' => [
                             'conditions' => [
-                                'Post.status' => 'draft'
+                                'Post.status' => Post::STATUS_DRAFT
                             ]
                         ]
                     ]
@@ -614,7 +615,7 @@ class PostsController extends AppController
                     [
                         'Post' => [
                             'conditions' => [
-                                'Post.status' => 'trash'
+                                'Post.status' => Post::STATUS_TRASH
                             ]
                         ]
                     ]
@@ -628,7 +629,7 @@ class PostsController extends AppController
                     [
                         'Post' => [
                             'conditions' => [
-                                'Post.status' => ['publish', 'draft']
+                                'Post.status' => [Post::STATUS_PUBLISH, Post::STATUS_DRAFT]
                             ]
                         ]
                     ]

@@ -75,19 +75,18 @@ echo $this->Form->create(
                         <div class="form-group">
                             <?php echo $this->Form->label(
                                 'status',
-                                __d('hurad', 'Post Status:'),
+                                __d('hurad', 'Page Status:'),
                                 array('class' => 'control-label')
                             ); ?>
                             <?php
                             echo $this->Form->input(
                                 'status',
-                                array(
+                                [
                                     'class' => 'form-control',
-                                    'options' => array(
-                                        'publish' => __d('hurad', 'Publish'),
-                                        'draft' => __d('hurad', 'Draft')
-                                    )
-                                )
+                                    'options' => Post::getStatus(
+                                            [Post::STATUS_PUBLISH, Post::STATUS_PENDING, Post::STATUS_DRAFT]
+                                        )
+                                ]
                             );
                             ?>
                         </div>
@@ -100,14 +99,10 @@ echo $this->Form->create(
                             <?php
                             echo $this->Form->input(
                                 'comment_status',
-                                array(
+                                [
                                     'class' => 'form-control',
-                                    'options' => array(
-                                        'open' => __d('hurad', 'Open'),
-                                        'close' => __d('hurad', 'Close'),
-                                        'disable' => __d('hurad', 'Disable')
-                                    )
-                                )
+                                    'options' => Post::getCommentStatus()
+                                ]
                             );
                             ?>
                         </div>

@@ -95,12 +95,7 @@ echo $this->Form->create(
     <div class="col-lg-4">
         <?php echo $this->Form->select(
             'status',
-            array(
-                'disapproved' => __d('hurad', 'Disapprove'),
-                'approved' => __d('hurad', 'Approve'),
-                'spam' => __d('hurad', 'Spam'),
-                'trash' => __d('hurad', 'Trash')
-            ),
+            Comment::getStatus(),
             array('class' => 'form-control', 'empty' => false)
         ); ?>
     </div>

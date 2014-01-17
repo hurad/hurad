@@ -16,16 +16,16 @@
         );
     }
 
-    if ($count['disapproved']) {
-        if (stripos($url, "admin/comments/index/disapproved") !== false) {
+    if ($count['pending']) {
+        if (stripos($url, "admin/comments/index/pending") !== false) {
             echo $this->Html->tag('li', NULL, array('class' => 'active'));
             echo $this->Html->link(
                 __d('hurad', 'Pending ') . $this->Html->tag(
                     'span',
-                    $count['disapproved'],
+                    $count['pending'],
                     array('class' => 'badge badge-info')
                 ),
-                array('admin' => TRUE, 'action' => 'index', 'moderated'),
+                array('admin' => TRUE, 'action' => 'index', 'pending'),
                 array('escape' => false)
             );
         } else {
@@ -33,10 +33,10 @@
             echo $this->Html->link(
                 __d('hurad', 'Pending ') . $this->Html->tag(
                     'span',
-                    $count['disapproved'],
+                    $count['pending'],
                     array('class' => 'badge badge-info')
                 ),
-                array('admin' => TRUE, 'action' => 'index', 'disapproved'),
+                array('admin' => TRUE, 'action' => 'index', 'pending'),
                 array('escape' => false)
             );
         }

@@ -14,6 +14,7 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('AppController', 'Controller');
+App::uses('Post', 'Model');
 
 /**
  * Class PagesController
@@ -50,7 +51,7 @@ class PagesController extends AppController
     public $paginate = [
         'Page' => [
             'conditions' => [
-                'Page.status' => ['publish', 'draft'],
+                'Page.status' => [Post::STATUS_PUBLISH, Post::STATUS_DRAFT, Post::STATUS_PENDING],
                 'Page.type' => 'page'
             ],
             'limit' => 25,
@@ -334,7 +335,7 @@ class PagesController extends AppController
                     [
                         'Page' => [
                             'conditions' => [
-                                'Page.status' => 'publish',
+                                'Page.status' => Post::STATUS_PUBLISH,
                             ]
                         ]
                     ]
@@ -349,7 +350,7 @@ class PagesController extends AppController
                     [
                         'Page' => [
                             'conditions' => [
-                                'Page.status' => 'draft',
+                                'Page.status' => Post::STATUS_DRAFT,
                             ]
                         ]
                     ]
@@ -364,7 +365,7 @@ class PagesController extends AppController
                     [
                         'Page' => [
                             'conditions' => [
-                                'Page.status' => 'trash',
+                                'Page.status' => Post::STATUS_TRASH,
                             ]
                         ]
                     ]

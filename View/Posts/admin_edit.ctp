@@ -86,10 +86,9 @@ echo $this->Form->create(
                             'status',
                             array(
                                 'class' => 'form-control',
-                                'options' => array(
-                                    'publish' => __d('hurad', 'Publish'),
-                                    'draft' => __d('hurad', 'Draft')
-                                )
+                                'options' => Post::getStatus(
+                                        [Post::STATUS_PUBLISH, Post::STATUS_PENDING, Post::STATUS_DRAFT]
+                                    )
                             )
                         );
                         ?>
@@ -119,11 +118,7 @@ echo $this->Form->create(
                             'comment_status',
                             array(
                                 'class' => 'form-control',
-                                'options' => array(
-                                    'open' => __d('hurad', 'Open'),
-                                    'close' => __d('hurad', 'Close'),
-                                    'disable' => __d('hurad', 'Disable')
-                                )
+                                'options' => Post::getCommentStatus()
                             )
                         );
                         ?>
@@ -174,6 +169,15 @@ echo $this->Form->create(
                         ); ?>
                     </div>
                 </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <?php echo $this->Html->link(
+                            __d('hurad', 'Add New Category'),
+                            ['controller' => 'categories', 'action' => 'add'],
+                            ['target' => '_blank']
+                        ); ?>
+                    </li>
+                </ul>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading"><?php echo __d('hurad', 'Tags'); ?></div>

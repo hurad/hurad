@@ -29,11 +29,11 @@ class AdminLayoutHelper extends AppHelper
 
     public function postStatus($value)
     {
-        if ($value == 'publish') {
+        if ($value == Post::STATUS_PUBLISH) {
             $output = $this->Html->tag('span', __d('hurad', 'Publish'), array('class' => 'label label-success'));
-        } elseif ($value == 'draft') {
+        } elseif ($value == Post::STATUS_DRAFT) {
             $output = $this->Html->tag('span', __d('hurad', 'Draft'), array('class' => 'label label-warning'));
-        } elseif ($value == 'trash') {
+        } elseif ($value == Post::STATUS_TRASH) {
             $output = $this->Html->tag('span', __d('hurad', 'Trash'), array('class' => 'label label-important'));
         } else {
             $output = __d('hurad', 'Unknown');
@@ -144,22 +144,22 @@ class AdminLayoutHelper extends AppHelper
     public function toggleCommentLink($status, $commentId)
     {
         switch ($status) {
-            case 'approved':
+            case Comment::STATUS_APPROVED:
                 return $this->Html->link(
                     __d('hurad', 'Disapprove'),
                     array('action' => 'action', 'disapproved', $commentId)
                 );
                 break;
 
-            case 'disapproved':
+            case Comment::STATUS_PENDING:
                 return $this->Html->link(__d('hurad', 'Approve'), array('action' => 'action', 'approved', $commentId));
                 break;
 
-            case 'spam':
+            case Comment::STATUS_SPAM:
                 return $this->Html->link(__d('hurad', 'Un Spam'), array('action' => 'action', 'approved', $commentId));
                 break;
 
-            case 'trash':
+            case Comment::STATUS_TRASH:
                 return $this->Form->postLink(
                     __d('hurad', 'Delete'),
                     array('admin' => true, 'controller' => 'comments', 'action' => 'delete', $commentId),
@@ -309,12 +309,12 @@ class AdminLayoutHelper extends AppHelper
     public function commentClass($status = null)
     {
         switch ($status) {
-            case 'disapproved':
+            case Comment::STATUS_PENDING:
                 return 'warning';
 
                 break;
 
-            case 'spam':
+            case Comment::STATUS_SPAM:
                 return 'error';
 
                 break;

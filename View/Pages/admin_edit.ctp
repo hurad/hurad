@@ -84,10 +84,9 @@ echo $this->Form->create(
                                 'status',
                                 [
                                     'class' => 'form-control',
-                                    'options' => [
-                                        'publish' => __d('hurad', 'Publish'),
-                                        'draft' => __d('hurad', 'Draft')
-                                    ]
+                                    'options' => Post::getStatus(
+                                            [Post::STATUS_PUBLISH, Post::STATUS_PENDING, Post::STATUS_DRAFT]
+                                        )
                                 ]
                             );
                             ?>
@@ -103,11 +102,7 @@ echo $this->Form->create(
                                 'comment_status',
                                 [
                                     'class' => 'form-control',
-                                    'options' => [
-                                        'open' => __d('hurad', 'Open'),
-                                        'close' => __d('hurad', 'Close'),
-                                        'disable' => __d('hurad', 'Disable')
-                                    ]
+                                    'options' => Post::getCommentStatus()
                                 ]
                             );
                             ?>

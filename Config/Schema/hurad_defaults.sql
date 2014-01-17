@@ -2,23 +2,20 @@ INSERT INTO `$[prefix]categories`(`id`, `parent_id`, `name`, `slug`, `lft`, `rgh
      (1, NULL, 'Uncategorized', 'uncategorized', 1, 2, 'Default Description', 1, 'Uncategorized', '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]posts`(`id`, `parent_id`, `user_id`, `title`, `slug`, `content`, `excerpt`, `status`, `comment_status`, `comment_count`, `type`, `lft`, `rght`, `created`, `modified`) VALUES
-     (1, NULL, 1, 'Sample Post', 'sample-post', 'Sample Post', '', 'publish', 'open', 1, 'post', 1, 2, '$[created]', '$[modified]');
+     (1, NULL, 1, 'Sample Post', 'sample-post', 'Sample Post', '', 2, 2, 1, 'post', 1, 2, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]categories_posts`(`category_id`, `post_id`) VALUES
      (1, 1);
 
 INSERT INTO `$[prefix]comments`(`id`, `parent_id`, `post_id`, `user_id`, `author`, `author_email`, `author_url`, `author_ip`, `content`, `status`, `agent`, `lft`, `rght`, `created`, `modified`) VALUES
-     (1, NULL, 1, 1, '$[username]', '$[email]', '', '$[client_ip]', 'This comment has been sent for testing, you can delete it', 'approved', '$[user_agent]', 1, 2, '$[created]', '$[modified]');
+     (1, NULL, 1, 1, '$[username]', '$[email]', '', '$[client_ip]', 'This comment has been sent for testing, you can delete it', 3, '$[user_agent]', 1, 2, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]users`(`id`, `username`, `password`, `email`, `url`, `role`, `status`, `created`, `modified`) VALUES
      (1, '$[username]', '$[password]', '$[email]', '', 'administrator', 0, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]user_meta` (`id`, `user_id`, `meta_key`, `meta_value`) VALUES
-    (1, 1, 'first_name', ''),
-    (2, 1, 'last_name', ''),
-    (3, 1, 'nickname', '$[username]'),
-    (4, 1, 'bio', ''),
-    (5, 1, 'display_name', '$[username]');
+    (1, 1, 'nickname', '$[username]'),
+    (2, 1, 'display_name', '$[username]');
 
 INSERT INTO `$[prefix]options` (`id`, `name`, `value`) VALUES
     (1, 'General.site_url', '$[site_url]'),

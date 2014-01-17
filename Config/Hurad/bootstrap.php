@@ -27,21 +27,34 @@ Configure::write('Hurad.version', "0.1.0-alpha.6");
  */
 App::uses('ClassRegistry', 'Utility');
 
-$options = ClassRegistry::init('Option')->find(
-    'all',
-    array(
-        'fields' => array(
-            'Option.name',
-            'Option.value',
+$options = Cache::read('Hurad.Options');
+
+if ($options === false) {
+    $options = ClassRegistry::init('Option')->find(
+        'all',
+        array(
+            'fields' => array(
+                'Option.name',
+                'Option.value',
+            )
         )
-    )
-);
-foreach ($options AS $option) {
-    $_options[$option['Option']['name']] = $option['Option']['value'];
-    Configure::write($option['Option']['name'], $option['Option']['value']);
+    );
+
+    $_options = [];
+    foreach ($options AS $option) {
+        $_options[$option['Option']['name']] = $option['Option']['value'];
+        Configure::write($option['Option']['name'], $option['Option']['value']);
+    }
+
+    //Write all options in "Options" key
+    Configure::write('Hurad.Options', $_options);
+    Cache::write('Hurad.Options', $options);
+} else {
+    foreach ($options AS $option) {
+        $_options[$option['Option']['name']] = $option['Option']['value'];
+        Configure::write($option['Option']['name'], $option['Option']['value']);
+    }
 }
-//Write all options in "Options" key
-Configure::write('Hurad.Options', $_options);
 
 /**
  * Load HuradHook Lib and include default filters
@@ -76,7 +89,7 @@ config('Hurad/default_navigation');
 /**
  * Load all active plugins
  */
-HuradPlugin::loadAll(array('Utils'));
+HuradPlugin::loadAll(['Utils']);
 
 /**
  * Include default widgets

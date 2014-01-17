@@ -61,6 +61,30 @@ class Comment extends AppModel
         ]
     ];
 
+    const STATUS_TRASH = 0;
+    const STATUS_SPAM = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_APPROVED = 3;
+
+    /**
+     * Get post statuses
+     *
+     * @param null|array $status
+     *
+     * @return array|string
+     */
+    public static function getStatus($status = null)
+    {
+        $statuses = [
+            self::STATUS_APPROVED => __d('hurad', 'Approved'),
+            self::STATUS_PENDING => __d('hurad', 'Pending'),
+            self::STATUS_SPAM => __d('hurad', 'Spam'),
+            self::STATUS_TRASH => __d('hurad', 'Trash')
+        ];
+
+        return parent::enum($status, $statuses);
+    }
+
     /**
      * Get comment
      *
@@ -113,7 +137,7 @@ class Comment extends AppModel
         return $comments;
     }
 
-    public function getLatest($limit = 5, $status = 'approved')
+    public function getLatest($limit = 5, $status = self::STATUS_APPROVED)
     {
         $this->recursive = -1;
         $latest = $this->find(
@@ -136,24 +160,34 @@ class Comment extends AppModel
      * @param string $status Comment status
      * @param array  $query  Find query
      *
-     * @return array
+     * @throws CakeException
+     * @return int
      */
     public function counter($status = 'all', array $query = [])
     {
         switch ($status) {
-            case 'approved':
-            case 'disapproved':
-            case 'spam':
-            case 'trash':
-                $defaultQuery = ['conditions' => ['Comment.status' => $status]];
+            case 'all':
+                $defaultQuery = ['conditions' => ['Comment.status' => [self::STATUS_APPROVED, self::STATUS_PENDING]]];
                 break;
 
-            case 'all':
-                $defaultQuery = ['conditions' => ['Comment.status' => ['approved', 'disapproved']]];
+            case 'approved':
+                $defaultQuery = ['conditions' => ['Comment.status' => self::STATUS_APPROVED]];
+                break;
+
+            case 'pending':
+                $defaultQuery = ['conditions' => ['Comment.status' => self::STATUS_PENDING]];
+                break;
+
+            case 'spam':
+                $defaultQuery = ['conditions' => ['Comment.status' => self::STATUS_SPAM]];
+                break;
+
+            case 'trash':
+                $defaultQuery = ['conditions' => ['Comment.status' => self::STATUS_TRASH]];
                 break;
 
             default:
-                $defaultQuery = [];
+                throw new CakeException(__d('hurad', 'Status "%s" not found.', $status));
                 break;
         }
 

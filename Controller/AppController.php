@@ -40,6 +40,7 @@ class AppController extends Controller
         'Session',
         'Auth' => [
             'loginAction' => [
+                'plugin' => false,
                 'admin' => false,
                 'controller' => 'users',
                 'action' => 'login'

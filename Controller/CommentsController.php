@@ -14,6 +14,7 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('AppController', 'Controller');
+App::uses('Comment', 'Model');
 App::uses('CakeEmail', 'Network/Email');
 
 /**
@@ -54,7 +55,7 @@ class CommentsController extends AppController
     public $paginate = [
         'Comment' => [
             'conditions' => [
-                'Comment.status' => ['approved', 'disapproved'],
+                'Comment.status' => [Comment::STATUS_APPROVED, Comment::STATUS_PENDING],
             ],
             'limit' => 25,
             'order' => [
@@ -84,7 +85,7 @@ class CommentsController extends AppController
 
         $this->Paginator->settings = Hash::merge(
             $this->paginate,
-            ['Conditions' => ['Comment.status' => 'disapproved']]
+            ['Conditions' => ['Comment.status' => Comment::STATUS_PENDING]]
         );
         $this->set('comments', $this->Paginator->paginate('Comment'));
     }
@@ -167,39 +168,46 @@ class CommentsController extends AppController
             );
         } else {
             switch ($action) {
-                case 'disapproved':
-                    $this->set('title_for_layout', __d('hurad', 'Pending comments'));
-                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
-                    break;
-
                 case 'approved':
                     $this->set('title_for_layout', __d('hurad', 'Approved comments'));
-                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    $status = Comment::STATUS_APPROVED;
+                    break;
+
+                case 'pending':
+                    $this->set('title_for_layout', __d('hurad', 'Pending comments'));
+                    $status = Comment::STATUS_PENDING;
                     break;
 
                 case 'spam':
                     $this->set('title_for_layout', __d('hurad', 'Spams'));
-                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    $status = Comment::STATUS_SPAM;
                     break;
 
                 case 'trash':
                     $this->set('title_for_layout', __d('hurad', 'Trashes'));
-                    $settings = ['Comment' => ['conditions' => ['Comment.status' => $action]]];
+                    $status = Comment::STATUS_TRASH;
                     break;
 
                 default:
-                    $settings = ['Comment' => ['conditions' => ['Comment.status' => ['approved', 'disapproved']]]];
+                    $status = [Comment::STATUS_APPROVED, Comment::STATUS_PENDING];
+                    break;
             }
 
             $count['all'] = $this->Comment->counter();
-            $count['disapproved'] = $this->Comment->counter('disapproved');
+            $count['pending'] = $this->Comment->counter('pending');
             $count['approved'] = $this->Comment->counter('approved');
             $count['spam'] = $this->Comment->counter('spam');
             $count['trash'] = $this->Comment->counter('trash');
 
             $this->Paginator->settings = Hash::merge(
-                $this->paginate,
-                $settings
+                [
+                    'Comment' => [
+                        'conditions' => [
+                            'Comment.status' => $status,
+                        ]
+                    ]
+                ],
+                $this->paginate
             );
 
             $this->set(compact('count'));
@@ -336,34 +344,36 @@ class CommentsController extends AppController
     {
         $this->autoRender = false;
         $this->Comment->id = $id;
+
         if (is_null($action)) {
             return false;
         } elseif (!$this->Comment->exists()) {
             throw new NotFoundException(__d('hurad', 'Invalid comment'));
         }
+
         switch ($action) {
             case 'approved':
-                $data = ['id' => $id, 'status' => 'approved'];
+                $data['Comment'] = ['id' => $id, 'status' => Comment::STATUS_APPROVED];
                 $msg = __d('hurad', 'Comments are approved.');
                 $err = __d('hurad', 'Comments are not approved, please try again.');
                 break;
             case 'disapproved':
-                $data = array('id' => $id, 'status' => 'disapproved');
+                $data['Comment'] = ['id' => $id, 'status' => Comment::STATUS_PENDING];
                 $msg = __d('hurad', 'Comment are unapproved.');
                 $err = __d('hurad', 'Comment are not unapproved, please try again.');
                 break;
             case 'spam':
-                $data = array('id' => $id, 'status' => 'spam');
+                $data['Comment'] = ['id' => $id, 'status' => Comment::STATUS_SPAM];
                 $msg = __d('hurad', 'Comment marked as spam.');
                 $err = __d('hurad', 'Comment didn\'t mark as spam, please try again.');
                 break;
             case 'trash':
-                $data = array('id' => $id, 'status' => 'trash');
+                $data['Comment'] = ['id' => $id, 'status' => Comment::STATUS_TRASH];
                 $msg = __d('hurad', 'Comment moved to trash.');
                 $err = __d('hurad', 'Comment didn\'t move to trash, please try again.');
                 break;
             default:
-                $this->Session->setFlash(__d('hurad', 'An error occurred.'), 'error');
+                throw new NotFoundException();
                 break;
         }
 
@@ -371,11 +381,11 @@ class CommentsController extends AppController
             $this->Comment->save($data);
         } else {
             if ($this->Comment->save($data)) {
-                $this->Session->setFlash($msg, 'flash_message', array('class' => 'success'));
-                $this->redirect(array('action' => 'index'));
+                $this->Session->setFlash($msg, 'flash_message', ['class' => 'success']);
+                $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash($err, 'flash_message', array('class' => 'danger'));
-                $this->redirect(array('action' => 'index'));
+                $this->Session->setFlash($err, 'flash_message', ['class' => 'danger']);
+                $this->redirect(['action' => 'index']);
             }
         }
     }

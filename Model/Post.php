@@ -92,6 +92,52 @@ class Post extends AppModel
         ],
     ];
 
+    const STATUS_TRASH = 0;
+    const STATUS_DRAFT = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_PUBLISH = 3;
+
+    const COMMENT_STATUS_DISABLE = 0;
+    const COMMENT_STATUS_CLOSE = 1;
+    const COMMENT_STATUS_OPEN = 2;
+
+    /**
+     * Get post statuses
+     *
+     * @param null|array $status
+     *
+     * @return array|string
+     */
+    public static function getStatus($status = null)
+    {
+        $statuses = [
+            self::STATUS_PUBLISH => __d('hurad', 'Publish'),
+            self::STATUS_PENDING => __d('hurad', 'Pending'),
+            self::STATUS_DRAFT => __d('hurad', 'Draft'),
+            self::STATUS_TRASH => __d('hurad', 'Trash')
+        ];
+
+        return parent::enum($status, $statuses);
+    }
+
+    /**
+     * Get comment statuses
+     *
+     * @param null|array $status
+     *
+     * @return array|string
+     */
+    public static function getCommentStatus($status = null)
+    {
+        $statuses = [
+            self::COMMENT_STATUS_OPEN => __d('hurad', 'Open'),
+            self::COMMENT_STATUS_CLOSE => __d('hurad', 'Close'),
+            self::COMMENT_STATUS_DISABLE => __d('hurad', 'Disable')
+        ];
+
+        return parent::enum($status, $statuses);
+    }
+
     /**
      * Get first post.
      *
@@ -122,64 +168,41 @@ class Post extends AppModel
      *
      * @param string $status Post status
      *
-     * @return intiger Number of all posts in specify type.
+     * @throws CakeException
+     * @return int Number of all posts in specify status.
      */
     public function countPosts($status = 'all')
     {
-        $this->unbindModel(array('hasOne' => array('CategoriesPost', 'PostsTag')));
+        $this->unbindModel(['hasOne' => ['CategoriesPost', 'PostsTag']]);
         switch ($status) {
             case 'all':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Post.status' => array('publish', 'draft'),
-                            'Post.type' => 'post'
-                        )
-                    )
-                );
+                $status = [self::STATUS_PUBLISH, self::STATUS_PENDING, self::STATUS_DRAFT];
                 break;
 
             case 'publish':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Post.status' => 'publish',
-                            'Post.type' => 'post'
-                        )
-                    )
-                );
+                $status = self::STATUS_PUBLISH;
+                break;
+
+            case 'pending':
+                $status = self::STATUS_PENDING;
                 break;
 
             case 'draft':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Post.status' => 'draft',
-                            'Post.type' => 'post'
-                        )
-                    )
-                );
+                $status = self::STATUS_DRAFT;
                 break;
 
             case 'trash':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Post.status' => 'trash',
-                            'Post.type' => 'post'
-                        )
-                    )
-                );
+                $status = self::STATUS_TRASH;
                 break;
 
             default:
+                throw new CakeException(__d('hurad', 'Status "%s" not found.', $status));
                 break;
         }
-        return $num;
+
+        $count = $this->find('count', ['conditions' => ['Post.status' => $status, 'Post.type' => 'post']]);
+
+        return $count;
     }
 
     public function countUserPosts($user_id)
@@ -200,7 +223,7 @@ class Post extends AppModel
         $latestPosts = $this->find(
             'all',
             [
-                'conditions' => ['Post.status' => 'publish', 'Post.type' => 'post'],
+                'conditions' => ['Post.status' => self::STATUS_PUBLISH, 'Post.type' => 'post'],
                 'limit' => $limit,
                 'order' => [
                     'Post.created' => 'desc'
