@@ -2,7 +2,7 @@ INSERT INTO `$[prefix]categories`(`id`, `parent_id`, `name`, `slug`, `lft`, `rgh
      (1, NULL, 'Uncategorized', 'uncategorized', 1, 2, 'Default Description', 1, 'Uncategorized', '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]posts`(`id`, `parent_id`, `user_id`, `title`, `slug`, `content`, `excerpt`, `status`, `comment_status`, `comment_count`, `type`, `lft`, `rght`, `created`, `modified`) VALUES
-     (1, NULL, 1, 'Sample Post', 'sample-post', 'Sample Post', '', 2, 2, 1, 'post', 1, 2, '$[created]', '$[modified]');
+     (1, NULL, 1, 'Sample Post', 'sample-post', 'Sample Post', '', 3, 2, 1, 'post', 1, 2, '$[created]', '$[modified]');
 
 INSERT INTO `$[prefix]categories_posts`(`category_id`, `post_id`) VALUES
      (1, 1);
