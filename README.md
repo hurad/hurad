@@ -39,6 +39,22 @@ Develop branch is UNSTABLE and used to test new features before releasing them.
 
 Please feel free to contribute to the Hurad with new issues, requests, unit tests and code fixes or new features. If you want to contribute some code, create a feature branch from develop, and send us your pull request. Unit tests for new features and issues detected are mandatory to keep quality high.
 
+## Versioning ##
+
+For transparency into our release cycle and in striving to maintain backward compatibility, Hurad is maintained under the Semantic Versioning guidelines. Sometimes we screw up, but we'll adhere to these rules whenever possible.
+
+Releases will be numbered with the following format:
+
+`<major>.<minor>.<patch>`
+
+And constructed with the following guidelines:
+
+- Breaking backward compatibility **bumps the major** while resetting minor and patch
+- New additions without breaking backward compatibility **bumps the minor** while resetting the patch
+- Bug fixes and misc changes **bumps only the patch**
+
+For more information on SemVer, please visit <http://semver.org/>.
+
 ## Links ##
 
   * **Official website**: [http://hurad.org](http://hurad.org)
