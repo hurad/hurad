@@ -14,6 +14,9 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 
+/**
+ * Authors widget
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Authors'),
@@ -21,6 +24,9 @@ HuradWidget::registerWidget(
     ]
 );
 
+/**
+ * Categories widget
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Categories'),
@@ -28,6 +34,9 @@ HuradWidget::registerWidget(
     ]
 );
 
+/**
+ * Recent Posts widgets
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Recent Posts'),
@@ -35,6 +44,9 @@ HuradWidget::registerWidget(
     ]
 );
 
+/**
+ * Recent Comments widgets
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Recent Comments'),
@@ -42,6 +54,9 @@ HuradWidget::registerWidget(
     ]
 );
 
+/**
+ * Pages widget
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Pages'),
@@ -49,6 +64,9 @@ HuradWidget::registerWidget(
     ]
 );
 
+/**
+ * Text widget
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Text'),
@@ -56,9 +74,22 @@ HuradWidget::registerWidget(
     ]
 );
 
+/**
+ * Links widget
+ */
 HuradWidget::registerWidget(
     [
         'title' => __d('hurad', 'Links'),
         'element' => 'links',
+    ]
+);
+
+/**
+ * RSS widget
+ */
+HuradWidget::registerWidget(
+    [
+        'title' => __d('hurad', 'RSS'),
+        'element' => 'rss',
     ]
 );
