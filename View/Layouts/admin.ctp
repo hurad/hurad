@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html dir="<?= Configure::read('Hurad.language.catalog')['direction'] ?>">
+<html dir="<?= Configure::read('Hurad.language.catalog.direction') ?>">
 <head>
     <title><?php echo $title_for_layout; ?> &#8212; <?php echo __d('hurad', 'Huard'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <?php echo $this->Html->charset(); ?>
-    <?php echo $this->Html->css(array('bootstrap.min.css', 'admin/main')); ?>
+    <?php echo $this->Html->css(Hash::merge(['bootstrap.min.css', 'admin/main'], $cssRTL)); ?>
     <?php echo $this->fetch('css'); ?>
     <?php
     echo $this->AdminLayout->jsVar();
