@@ -24,7 +24,7 @@
                 }
             }
         } else {
-            echo '<li>' . __d('hurad', 'No comments were found') . '</li>';
+            echo '<li>' . __d('hurad', 'No items were found') . '</li>';
         }
     } catch (Exception $e) {
         echo '<li>' . $e->getMessage() . '</li>';
