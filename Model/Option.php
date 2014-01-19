@@ -142,6 +142,18 @@ class Option extends AppModel
 
         $this->id = false;
         if ($this->save($option)) {
+            $loadOptions = $this->find(
+                'all',
+                [
+                    'fields' => [
+                        'Option.name',
+                        'Option.value',
+                    ]
+                ]
+            );
+
+            Cache::write('Hurad.Options', $loadOptions);
+
             Configure::write($name, $value);
             return true;
         } else {
