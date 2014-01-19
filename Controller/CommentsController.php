@@ -359,8 +359,8 @@ class CommentsController extends AppController
                 break;
             case 'disapproved':
                 $data['Comment'] = ['id' => $id, 'status' => Comment::STATUS_PENDING];
-                $msg = __d('hurad', 'Comment are unapproved.');
-                $err = __d('hurad', 'Comment are not unapproved, please try again.');
+                $msg = __d('hurad', 'Comments are unapproved.');
+                $err = __d('hurad', 'Comments are not unapproved, please try again.');
                 break;
             case 'spam':
                 $data['Comment'] = ['id' => $id, 'status' => Comment::STATUS_SPAM];

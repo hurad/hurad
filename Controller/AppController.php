@@ -197,7 +197,7 @@ class AppController extends Controller
                 'recursive' => 0
             ]
         );
-        
+
         if ($this->Auth->login($user['User'])) {
             $this->Cookie->write('Auth.User', $cookie, true, '+2 weeks');
         } else {
