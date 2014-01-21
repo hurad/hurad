@@ -1,4 +1,4 @@
-# Hurad [![Build Status](https://secure.travis-ci.org/hurad/hurad.png)](http://travis-ci.org/hurad/hurad) [![Dependency Status](https://www.versioneye.com/user/projects/52bda689ec13750b1c00007e/badge.png)](https://www.versioneye.com/user/projects/52bda689ec13750b1c00007e)
+# Hurad [![Build Status](https://secure.travis-ci.org/hurad/hurad.png)](http://travis-ci.org/hurad/hurad) [![Dependency Status](https://www.versioneye.com/user/projects/52bda689ec13750b1c00007e/badge.png)](https://www.versioneye.com/user/projects/52bda689ec13750b1c00007e) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hurad/hurad/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 Hurad is a free and opensource content managment which is base on [CakePHP](http://cakephp.org) framework under
 the [GPL2 License](https://github.com/hurad/hurad/blob/master/LICENSE.txt). Some parts of this system are similar to [WordPress](http://wordpress.org) and some of them got from it.
 
