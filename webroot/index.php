@@ -59,8 +59,7 @@ if (!defined('APP_DIR')) {
  * The following line differs from its sibling
  * /lib/Cake/Console/Templates/skel/webroot/index.php
  */
-define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . APP_DIR . '/Vendor/pear-pear.cakephp.org/CakePHP');
-
+define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . APP_DIR . '/Vendor/cakephp/cakephp/lib');
 /**
  * Editing below this line should NOT be necessary.
  * Change at your own risk.
