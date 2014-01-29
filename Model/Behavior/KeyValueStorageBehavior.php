@@ -139,13 +139,7 @@ class KeyValueStorageBehavior extends ModelBehavior
                 ));
             }
 
-            $list = $model->find(
-                'list',
-                [
-                    'fields' => ["{$model->alias}.{$this->settings[$model->alias]['key']}", "{$model->alias}.id"],
-                    'conditions' => ["{$model->alias}.{$this->settings[$model->alias]['foreign_key']}" => $model->{$this->settings[$model->alias]['foreign_key']}]
-                ]
-            );
+            $list = $this->getData($model);
 
             $arrObj = new ArrayObject($data[$model->alias]);
             $iterator = $arrObj->getIterator();
