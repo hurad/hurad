@@ -47,4 +47,21 @@ class Hurad
         }
     }
 
+    /**
+     * Dispatch event
+     *
+     * @param string $name    Name of the event
+     * @param object $subject the object that this event applies to (usually the object that is generating the event)
+     * @param mixed  $data    any value you wish to be transported with this event to it can be read by listeners
+     */
+    public static function dispatchEvent($name, $subject = null, $data = [])
+    {
+        $event = new CakeEvent($name, $subject, $data);
+
+        if (!$subject) {
+            CakeEventManager::instance()->dispatch($event);
+        } else {
+            $subject->getEventManager()->dispatch($event);
+        }
+    }
 }
