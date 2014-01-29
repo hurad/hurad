@@ -4,6 +4,7 @@
     <title><?php echo $title_for_layout; ?> | <?php echo Configure::read('General.site_name'); ?></title>
     <?php echo $this->Html->css(array('bootstrap.min', 'main')); ?>
     <?php echo $this->Html->script(array('jquery-1.9.0.min', 'bootstrap.min')); ?>
+    <?php Hurad::dispatchEvent('View.Header'); ?>
 </head>
 <body>
 
@@ -54,5 +55,6 @@
             date('Y')
         ) ?></p>
 </nav>
+<?php Hurad::dispatchEvent('View.Footer'); ?>
 </body>
 </html>
