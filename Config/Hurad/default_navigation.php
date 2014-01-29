@@ -197,6 +197,13 @@ HuradNavigation::addSubMenu(
     ['plugin' => null, 'admin' => true, 'controller' => 'plugins', 'action' => 'index'],
     'activate_plugins'
 );
+HuradNavigation::addSubMenu(
+    'plugins',
+    'add_new_plugin',
+    __d('hurad', 'Add New'),
+    ['plugin' => null, 'admin' => true, 'controller' => 'plugins', 'action' => 'install'],
+    'manage_plugins'
+);
 
 HuradNavigation::addMenu(
     'users',

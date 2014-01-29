@@ -125,4 +125,72 @@ class PluginsController extends AppController
             $this->redirect(array('action' => 'index'));
         }
     }
+
+    public function admin_install()
+    {
+        $this->set('title_for_layout', __d('hurad', 'Add New Plugin'));
+
+        if ($this->request->is('post')) {
+            $prefix = uniqid() . '_';
+            $upload = $this->request->data['Plugins']['plugin'];
+
+            if ($upload['error']) {
+                $this->Session->setFlash(
+                    __d('hurad', 'File could not be uploaded. Please, try again.'),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'install']);
+            }
+
+            $folder = new Folder(__DIR__ . DS . '../tmp' . DS);
+
+            if (!is_writable($folder->pwd())) {
+                $this->Session->setFlash(
+                    __d('hurad', '%s is not writable', $folder->pwd()),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'install']);
+            }
+
+            if ($upload['type'] != 'application/zip') {
+                $this->Session->setFlash(
+                    __d('hurad', 'Just plugin with .zip extension is allowed.'),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'install']);
+            }
+
+            $zipHandler = new ZipArchive();
+//            if (!$zipHandler->open($fileName)) {
+            if (($res = $zipHandler->open($upload['tmp_name'])) !== true) {
+                $this->Session->setFlash(
+                    __d('hurad', 'Zip extraction failed with error: ' . $zipHandler->getStatusString()),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'install']);
+            }
+
+            if ($zipHandler->extractTo(__DIR__ . DS . '../Plugin' . DS)) {
+                $zipHandler->close();
+                $this->Session->setFlash(
+                    __d('hurad', 'Plugin installed successfully.'),
+                    'flash_message',
+                    ['class' => 'success']
+                );
+                $this->redirect(['action' => 'install']);
+            }
+            $zipHandler->close();
+            $this->Session->setFlash(
+                __d('hurad', 'Plugin installation failed!'),
+                'flash_message',
+                ['class' => 'danger']
+            );
+            @unlink($fileName);
+            $this->redirect(['action' => 'install']);
+        }
+    }
 }
