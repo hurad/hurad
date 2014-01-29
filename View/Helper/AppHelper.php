@@ -39,5 +39,34 @@ App::uses('Helper', 'View');
  */
 class AppHelper extends Helper
 {
+    /**
+     * Check in PHP file use FormHelper or not
+     *
+     * @param string $fileContent PHP file content
+     *
+     * @return bool
+     */
+    public function hasFormHelper($fileContent)
+    {
+        $arrayObject = new ArrayObject(token_get_all($fileContent));
+        $iterator = $arrayObject->getIterator();
 
+        $hasFormHelper = [];
+        $index = 0;
+        while ($iterator->valid()) {
+            if (is_array($iterator->current()) && ($iterator->current()[1] == 'Form' || $iterator->current(
+                    )[1] == 'form')
+            ) {
+                $iterator->seek(($index + 1));
+
+                if ($iterator->current()[0] == 359) {
+                    $hasFormHelper[] = $index;
+                }
+            }
+            $index++;
+            $iterator->next();
+        }
+
+        return (bool)count($hasFormHelper);
+    }
 }

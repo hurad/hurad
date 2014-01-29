@@ -26,7 +26,7 @@ class ContentHelper extends AppHelper
      *
      * @var array
      */
-    public $helpers = ['Html', 'Time', 'General', 'Link', 'Hook', 'Author', 'Comment', 'Form'];
+    public $helpers = ['Html', 'Time', 'General', 'Link', 'Hook', 'Author', 'Comment', 'Form', 'PluginForm'];
 
     /**
      * Current content array.
@@ -563,10 +563,21 @@ class ContentHelper extends AppHelper
             }
 
             if ($this->_View->elementExists($metaBox['plugin'] . '.' . $metaBox['element'])) {
-                $element = $this->_View->element(
-                    $metaBox['plugin'] . '.' . $metaBox['element'],
-                    ['prefix' => strtolower($metaBox['plugin'])]
-                );
+                $this->PluginForm->pluginName = $metaBox['plugin'];
+
+                if ($this->hasFormHelper(
+                    file_get_contents(
+                        APP . 'Plugin/' . $metaBox['plugin'] . '/View/Elements/' . $metaBox['element'] . '.ctp'
+                    )
+                )
+                ) {
+                    $element = __d('hurad', 'You are not use form helper.');
+                } else {
+                    $element = $this->_View->element(
+                        $metaBox['plugin'] . '.' . $metaBox['element'],
+                        ['prefix' => strtolower($metaBox['plugin'])]
+                    );
+                }
             } else {
                 $element = __d('hurad', 'Element not found: "%s"', "Elements/{$metaBox['element']}.ctp");
             }
