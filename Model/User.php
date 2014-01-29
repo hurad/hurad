@@ -62,7 +62,7 @@ class User extends AppModel
         'UserMeta' => [
             'className' => 'UserMeta',
             'foreignKey' => 'user_id',
-            'dependent' => false
+            'dependent' => true
         ],
         'Media' => [
             'className' => 'Media',
@@ -192,18 +192,8 @@ class User extends AppModel
         if ($this->id == 1) {
             return false;
         }
-    }
 
-    /**
-     * Called after every deletion operation.
-     *
-     * @return void
-     */
-    public function afterDelete()
-    {
-        parent::afterDelete();
-
-        $this->UserMeta->deleteAll(array('UserMeta.user_id' => $this->id), false);
+        return true;
     }
 
     function checkPasswords()

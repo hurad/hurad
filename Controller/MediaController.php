@@ -14,11 +14,11 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 App::uses('AppController', 'Controller');
-App::uses('Folder', 'Utility');
-App::uses('File', 'Utility');
 
 /**
  * Class MediaController
+ *
+ * @property Media $Media
  */
 class MediaController extends AppController
 {
@@ -47,108 +47,129 @@ class MediaController extends AppController
     ];
 
     /**
+     * Called before the controller action. You can use this method to configure and customize components
+     * or perform logic that needs to happen before each controller action.
+     *
+     * @return void
+     */
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+
+        if ($this->request->params['action'] == 'admin_add') {
+            $this->Security->csrfCheck = false;
+        }
+    }
+
+    /**
      * List of media
      */
     public function admin_index()
     {
         $this->set('title_for_layout', __d('hurad', 'Media Library'));
+
         $this->Media->recursive = 0;
         $this->Paginator->settings = $this->paginate;
         $this->set('media', $this->Paginator->paginate('Media'));
     }
 
     /**
-     * Add media
+     * Add media file
      */
     public function admin_add()
     {
         $this->set('title_for_layout', __d('hurad', 'Add Media'));
 
         if ($this->request->is('post')) {
-            $prefix = uniqid() . '_';
-            $upload = $this->request->data['Media']['file'];
-            $path = date('Y') . DS . date('m');
+            try {
+                if ($this->Media->addMedia($this->request->data)) {
+                    $this->Session->setFlash(
+                        __d('hurad', 'File successfully uploaded.'),
+                        'flash_message',
+                        ['class' => 'success']
+                    );
+                } else {
+                    $this->Session->setFlash(
+                        __d('hurad', 'File could not be uploaded. Please, try again.'),
+                        'flash_message',
+                        ['class' => 'danger']
+                    );
+                }
 
-            if ($upload['error']) {
-                $this->Session->setFlash(
-                    __d('hurad', 'File could not be uploaded. Please, try again.'),
-                    'flash_message',
-                    ['class' => 'danger']
-                );
                 $this->redirect(['action' => 'index']);
-            }
-
-            $folder = new Folder(WWW_ROOT . 'files' . DS . $path, true, 0755);
-            if (!is_writable(WWW_ROOT . 'files')) {
-                $this->Session->setFlash(
-                    __d('hurad', '%s is not writable', WWW_ROOT . 'files'),
-                    'flash_message',
-                    ['class' => 'danger']
-                );
-                $this->redirect(['action' => 'index']);
-            }
-
-            if (!move_uploaded_file($upload['tmp_name'], $folder->pwd() . DS . $prefix . $upload['name'])) {
-                $this->Session->setFlash(
-                    __d('hurad', 'File could not be uploaded. Please, try again.'),
-                    'flash_message',
-                    ['class' => 'danger']
-                );
-                $this->redirect(['action' => 'index']);
-            }
-
-            $file = new File($folder->pwd() . DS . $prefix . $upload['name']);
-
-            $this->request->data['Media']['user_id'] = $this->Auth->user('id');
-            $this->request->data['Media']['name'] = $prefix . $upload['name'];
-            $this->request->data['Media']['original_name'] = $upload['name'];
-            $this->request->data['Media']['mime_type'] = $file->mime();
-            $this->request->data['Media']['size'] = $file->size();
-            $this->request->data['Media']['extension'] = $file->ext();
-            $this->request->data['Media']['path'] = $path;
-            $this->request->data['Media']['web_path'] = Configure::read(
-                    'General.site_url'
-                ) . '/' . 'files' . '/' . $path . '/' . $prefix . $upload['name'];
-
-            $this->Media->create();
-            if ($this->Media->save($this->request->data)) {
+            } catch (CakeBaseException $e) {
+                $this->Session->setFlash($e->getMessage(), 'flash_message', ['class' => 'danger']);
                 $this->redirect(['action' => 'index']);
             }
         }
     }
 
+    /**
+     * Edit media file
+     *
+     * @param int $mediaId Media id
+     */
+    public function admin_edit($mediaId)
+    {
+        $this->set('title_for_layout', __d('hurad', 'Edit media'));
+
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->Media->editMedia($mediaId, $this->request->data)) {
+                $this->Session->setFlash(
+                    __d('hurad', 'The media has been saved'),
+                    'flash_message',
+                    array('class' => 'success')
+                );
+                $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(
+                    __d('hurad', 'The media could not be saved. Please, try again.'),
+                    'flash_message',
+                    array('class' => 'danger')
+                );
+            }
+        } else {
+            $this->request->data = $this->Media->read(null, $mediaId);
+        }
+    }
+
+    /**
+     * Delete media file
+     *
+     * @param int $id Media id
+     *
+     * @throws NotFoundException
+     * @throws MethodNotAllowedException
+     */
     public function admin_delete($id)
     {
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
 
-        $media = $this->Media->getMedia($id);
-
-        if ($this->Media->delete()) {
-            $file = new File(WWW_ROOT . 'files' . DS . $media['Media']['path'] . DS . $media['Media']['name']);
-
-            if ($file->exists()) {
-                $file->delete();
-                if ($file->Folder->dirsize() <= 0) {
-                    $file->Folder->delete();
-                }
-            }
-
+        if ($this->Media->deleteMedia($id)) {
             $this->Session->setFlash(__d('hurad', 'Media file deleted'), 'flash_message', ['class' => 'success']);
             $this->redirect($this->request->referer());
+        } else {
+            $this->Session->setFlash(
+                __d('hurad', 'Media file was not deleted'),
+                'flash_message',
+                ['class' => 'danger']
+            );
+            $this->redirect($this->request->referer());
         }
-        $this->Session->setFlash(
-            __d('hurad', 'Media file was not deleted'),
-            'flash_message',
-            ['class' => 'danger']
-        );
-        $this->redirect($this->request->referer());
     }
 
-    public function admin_download($id)
+    /**
+     * Download media
+     *
+     * @param int $mediaId Media id
+     *
+     * @return CakeResponse
+     */
+    public function admin_download($mediaId)
     {
-        $file = $this->Media->getMedia($id);
+        $file = $this->Media->getMedia($mediaId);
         $this->response->file(
             WWW_ROOT . 'files' . DS . $file['Media']['path'] . DS . $file['Media']['name'],
             ['download' => true, 'name' => $file['Media']['original_name']]
@@ -157,7 +178,14 @@ class MediaController extends AppController
         return $this->response;
     }
 
-    public function admin_browse($type = null)
+    /**
+     * Browse media file
+     *
+     * @param string $type Browse type: image, movie, ...
+     *
+     * @throws MethodNotAllowedException
+     */
+    public function admin_browse($type)
     {
         $this->layout = 'browse';
         $this->set('title_for_layout', __d('hurad', 'Media Library'));
@@ -174,7 +202,7 @@ class MediaController extends AppController
                 ]
             );
         } else {
-            $this->Paginator->settings = $this->paginate;
+            throw new MethodNotAllowedException();
         }
 
         $this->Media->recursive = 0;

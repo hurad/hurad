@@ -1,18 +1,16 @@
 <div class="page-header">
-    <h2><?php echo $title_for_layout; ?></h2>
+    <h2><?= $title_for_layout; ?></h2>
 </div>
 
-<?php
-$maxSize = ini_get('upload_max_filesize');
-echo $this->Form->create(
+<?=
+$this->Form->create(
     'Media',
     [
         'class' => 'form-horizontal',
         'inputDefaults' => [
             'label' => false,
             'div' => false
-        ],
-        'type' => 'file'
+        ]
     ]
 );
 ?>
@@ -40,21 +38,40 @@ echo $this->Form->create(
 <div class="form-group">
     <?=
     $this->Form->label(
-        'media_file',
-        __d('hurad', 'Choose File'),
+        'mime_type',
+        __d('hurad', 'Mime type'),
         ['class' => 'control-label col-lg-2']
     ); ?>
     <div class="col-lg-4">
-        <?=
-        $this->Form->input(
-            'media_file',
-            [
-                'required' => false, //For disable HTML5 validation
-                'type' => 'file',
-                'class' => 'form-control'
-            ]
-        );
-        ?>
+        <p class="form-control-static"><?= $this->data['Media']['mime_type'] ?></p>
+    </div>
+</div>
+
+<div class="form-group">
+    <?=
+    $this->Form->label(
+        'web_path',
+        __d('hurad', 'Web address'),
+        ['class' => 'control-label col-lg-2']
+    ); ?>
+    <div class="col-lg-4">
+        <p class="form-control-static"><?=
+            $this->Html->link(
+                $this->data['Media']['original_name'],
+                $this->data['Media']['web_path']
+            ) ?></p>
+    </div>
+</div>
+
+<div class="form-group">
+    <?=
+    $this->Form->label(
+        'size',
+        __d('hurad', 'File size'),
+        ['class' => 'control-label col-lg-2']
+    ); ?>
+    <div class="col-lg-4">
+        <p class="form-control-static"><?= CakeNumber::toReadableSize($this->data['Media']['size']) ?></p>
     </div>
 </div>
 
@@ -78,7 +95,6 @@ echo $this->Form->create(
     </div>
 </div>
 
-<?= $this->Form->hidden('MAX_FILE_SIZE', ['value' => CakeNumber::fromReadableSize($maxSize)]); ?>
-<?= $this->Form->button(__d('hurad', 'Upload'), ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
+<?= $this->Form->button(__d('hurad', 'Update'), ['type' => 'submit', 'class' => 'btn btn-primary']); ?>
 
 <?= $this->Form->end(); ?>

@@ -249,7 +249,7 @@ class UsersController extends AppController
                             'flash_message',
                             array('class' => 'success')
                         );
-                        $this->redirect($this->Auth->redirectUrl($this->Auth->loginRedirect));
+                        $this->redirect($this->Auth->redirectUrl());
                     } else {
                         $this->Session->setFlash(
                             __d('hurad', 'Your username or password was incorrect.'),

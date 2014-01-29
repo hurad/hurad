@@ -30,4 +30,30 @@ class AppModel extends Model
         App::uses('Hurad', 'Lib');
         Hurad::applyProperty('behavior', $this);
     }
+
+    /**
+     * Get enum options
+     *
+     * @param string|array|null $value
+     * @param array             $options
+     *
+     * @return array|string
+     */
+    public static function enum($value, $options)
+    {
+        if (is_array($value) && !is_null($value)) {
+            $removeOptions = array_diff($value, $options);
+
+            $newOptions = [];
+            foreach ($removeOptions as $option) {
+                $newOptions[$option] = $options[$option];
+            }
+
+            return $newOptions;
+        } elseif (!is_array($value) && !is_null($value) && array_key_exists($value, $options)) {
+            return $options[(string)$value];
+        } else {
+            return $options;
+        }
+    }
 }

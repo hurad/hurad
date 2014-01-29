@@ -20,28 +20,41 @@
  * @license   http://opensource.org/licenses/MIT MIT license
  */
 
-Configure::write('Hurad.version', "0.1.0-alpha.6");
+Configure::write('Hurad.version', "0.1.0-alpha.7");
 
 /**
  * Load Options
  */
 App::uses('ClassRegistry', 'Utility');
 
-$options = ClassRegistry::init('Option')->find(
-    'all',
-    array(
-        'fields' => array(
-            'Option.name',
-            'Option.value',
+$options = Cache::read('Hurad.Options');
+
+if ($options === false) {
+    $options = ClassRegistry::init('Option')->find(
+        'all',
+        array(
+            'fields' => array(
+                'Option.name',
+                'Option.value',
+            )
         )
-    )
-);
-foreach ($options AS $option) {
-    $_options[$option['Option']['name']] = $option['Option']['value'];
-    Configure::write($option['Option']['name'], $option['Option']['value']);
+    );
+
+    $_options = [];
+    foreach ($options AS $option) {
+        $_options[$option['Option']['name']] = $option['Option']['value'];
+        Configure::write($option['Option']['name'], $option['Option']['value']);
+    }
+
+    //Write all options in "Options" key
+    Configure::write('Hurad.Options', $_options);
+    Cache::write('Hurad.Options', $options);
+} else {
+    foreach ($options AS $option) {
+        $_options[$option['Option']['name']] = $option['Option']['value'];
+        Configure::write($option['Option']['name'], $option['Option']['value']);
+    }
 }
-//Write all options in "Options" key
-Configure::write('Hurad.Options', $_options);
 
 /**
  * Load HuradHook Lib and include default filters
@@ -62,6 +75,7 @@ App::uses('HuradRole', 'Lib');
 App::uses('HuradNavigation', 'Lib');
 App::uses('HuradRowActions', 'Lib');
 App::uses('HuradMetaBox', 'Lib');
+App::uses('HuradL10n', 'Lib');
 
 /**
  * Include default capabilities
@@ -76,7 +90,7 @@ config('Hurad/default_navigation');
 /**
  * Load all active plugins
  */
-HuradPlugin::loadAll(array('Utils'));
+HuradPlugin::loadAll(['Utils']);
 
 /**
  * Include default widgets
@@ -92,3 +106,7 @@ $theme_bootstrap = APP . 'View' . DS . 'Themed' . DS . Configure::read(
 if (is_file($theme_bootstrap) && file_exists($theme_bootstrap)) {
     include $theme_bootstrap;
 }
+
+Configure::write('Config.language', Configure::read('General.language'));
+Configure::write('Hurad.language', Configure::read('General.language'));
+Configure::write('Hurad.language.catalog', HuradL10n::getAvailableLocale()[Configure::read('General.language')]);

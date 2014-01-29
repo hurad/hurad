@@ -40,6 +40,7 @@ class AppController extends Controller
         'Session',
         'Auth' => [
             'loginAction' => [
+                'plugin' => false,
                 'admin' => false,
                 'controller' => 'users',
                 'action' => 'login'
@@ -85,7 +86,7 @@ class AppController extends Controller
             $this->layout = 'install';
             $this->theme = false;
         } else {
-            $this->__cookieCheck();
+            $this->cookieCheck();
         }
 
         //Load admin layout
@@ -113,7 +114,10 @@ class AppController extends Controller
         //Set user_cookie var in all view
         $this->set('user_cookie', $this->Cookie->read('Hurad_User'));
 
-        $this->set('isadmin', $this->isAdmin());
+        $this->set('isAdmin', $this->isAdmin());
+
+        $this->set('isRTL', $this->isRTL());
+        $this->set('cssRTL', $this->setRtlCSS());
 
         //Load Option model in all controller
         //$this->options = Configure::read('options');
@@ -146,26 +150,54 @@ class AppController extends Controller
         if (!is_null($this->Auth->user()) && $this->Auth->user('role') == 'administrator') {
             $admin = true;
         }
+
         return $admin;
     }
 
-    private function __cookieCheck()
+    /**
+     * Check language is rtl or not
+     *
+     * @return bool
+     */
+    protected function isRTL()
+    {
+        return ('rtl' == Configure::read('Hurad.language.catalog.direction'));
+    }
+
+    /**
+     * Set admin rtl css
+     *
+     * @return array
+     */
+    protected function setRtlCSS()
+    {
+        $css = [];
+        if ('rtl' == Configure::read('Hurad.language.catalog.direction')) {
+            $css[] = 'bootstrap.min.rtl.css';
+        }
+
+        return $css;
+    }
+
+    protected function cookieCheck()
     {
         $cookie = $this->Cookie->read('Auth.User');
         if (!is_array($cookie) || $this->Auth->user()) {
             return;
         }
+
         $user = ClassRegistry::init('User')->find(
             'first',
-            array(
-                'fields' => array('User.username', 'User.password', 'User.role', 'User.email', 'User.url'),
-                'conditions' => array(
+            [
+                'fields' => ['User.username', 'User.password', 'User.role', 'User.email', 'User.url'],
+                'conditions' => [
                     'User.username' => $cookie['User']['username'],
                     'User.password' => Security::hash($cookie['User']['password'], null, true)
-                ),
+                ],
                 'recursive' => 0
-            )
+            ]
         );
+
         if ($this->Auth->login($user['User'])) {
             $this->Cookie->write('Auth.User', $cookie, true, '+2 weeks');
         } else {

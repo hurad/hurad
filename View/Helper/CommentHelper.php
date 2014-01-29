@@ -546,23 +546,7 @@ class CommentHelper extends AppHelper
     function getStatus($comment)
     {
         $this->getComment($comment);
-
-        switch ($this->comment['Comment']['status']) {
-            case 'approved';
-                $output = __d('hurad', 'Approved');
-                break;
-            case 'disapproved':
-                $output = __d('hurad', 'Unapproved');
-                break;
-            case'spam':
-                $output = __d('hurad', 'Spam');
-                break;
-            case'trash':
-                $output = __d('hurad', 'Trash');
-                break;
-            default:
-                $output = __d('hurad', 'Unknown');
-        }
+        $output = Comment::getStatus($this->comment['Comment']['status']);
 
         return $this->Hook->applyFilters('Helper.Comment.getStatus', $output, $this->comment['Comment']['status']);
     }
@@ -600,8 +584,8 @@ class CommentHelper extends AppHelper
     {
         $this->Content->getContentData($contentId);
 
-        $commentStatus = ('open' == $this->Content->content[$this->Content->contentModel]['comment_status']);
-        $open = ('open' == $commentStatus);
+        $commentStatus = (Post::COMMENT_STATUS_OPEN == $this->Content->content[$this->Content->contentModel]['comment_status']);
+        $open = (Post::COMMENT_STATUS_OPEN == $commentStatus);
 
         return $this->Hook->applyFilters('Helper.Comment.commentsIsOpen', $open);
     }
@@ -661,7 +645,7 @@ class CommentHelper extends AppHelper
         $data = ClassRegistry::init('Comment')->getComments(
             $this->content[$this->contentModel]['id'],
             'all',
-            ['conditions' => ['Comment.status' => 'approved']]
+            ['conditions' => ['Comment.status' => Comment::STATUS_APPROVED]]
         );
 
         $defaults = [

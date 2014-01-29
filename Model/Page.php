@@ -103,63 +103,39 @@ class Page extends AppModel
      *
      * @param string $status Page status
      *
-     * @return intiger Number of all pages in specify status.
+     * @throws CakeException
+     * @return int Number of all pages in specify status.
      */
     public function countPages($status = 'all')
     {
         switch ($status) {
             case 'all':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Page.status' => array('publish', 'draft'),
-                            'Page.type' => 'page'
-                        )
-                    )
-                );
+                $status = [Post::STATUS_PUBLISH, Post::STATUS_PENDING, Post::STATUS_DRAFT];
                 break;
 
             case 'publish':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Page.status' => 'publish',
-                            'Page.type' => 'page'
-                        )
-                    )
-                );
+                $status = Post::STATUS_PUBLISH;
+                break;
+
+            case 'pending':
+                $status = Post::STATUS_PENDING;
                 break;
 
             case 'draft':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Page.status' => 'draft',
-                            'Page.type' => 'page'
-                        )
-                    )
-                );
+                $status = Post::STATUS_DRAFT;
                 break;
 
             case 'trash':
-                $num = $this->find(
-                    'count',
-                    array(
-                        'conditions' => array(
-                            'Page.status' => 'trash',
-                            'Page.type' => 'page'
-                        )
-                    )
-                );
+                $status = Post::STATUS_TRASH;
                 break;
 
             default:
+                throw new CakeException(__d('hurad', 'Status "%s" not found.', $status));
                 break;
         }
 
-        return $num;
+        $count = $this->find('count', ['conditions' => ['Page.status' => $status, 'Page.type' => 'page']]);
+
+        return $count;
     }
 }

@@ -102,6 +102,24 @@ echo $this->Form->create(
     </div>
 </div>
 <div class="form-group">
+    <?php echo $this->Form->label(
+        'language',
+        __d('hurad', 'Default Language'),
+        array('class' => 'control-label col-lg-2')
+    ); ?>
+    <div class="col-lg-4">
+        <?php
+        echo $this->Form->input(
+            'language',
+            array(
+                'options' => Hash::combine(HuradL10n::getAvailableLocale(), '{s}.locale', '{s}.language'),
+                'class' => 'form-control'
+            )
+        );
+        ?>
+    </div>
+</div>
+<div class="form-group">
     <?php echo $this->Form->label('timezone', __d('hurad', 'Timezone'), array('class' => 'control-label col-lg-2')); ?>
     <div class="col-lg-4">
         <?php echo $this->Form->select('timezone', $this->Time->listTimezones(), array('class' => 'form-control')); ?>

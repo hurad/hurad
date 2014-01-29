@@ -59,11 +59,41 @@ class KeyValueStorageBehavior extends ModelBehavior
     {
         parent::afterFind($model, $results, $primary);
 
-        $key = "{n}.{$model->alias}.{$this->settings[$model->alias]['key']}";
-        $value = "{n}.{$model->alias}.{$this->settings[$model->alias]['value']}";
+        if ($primary && array_key_exists($model->alias, $results[0])) {
+            $arrObj = new ArrayObject($results);
+            $iterator = $arrObj->getIterator();
 
-        $output = Hash::combine($results, $key, $value);
-        $results[$model->alias] = $output;
+            while ($iterator->valid()) {
+                $result = [];
+                if (isset($iterator->current()[$model->alias]) && count($iterator->current()[$model->alias]) > 0) {
+                    $key = "{$model->alias}.{$this->settings[$model->alias]['key']}";
+                    $value = "{$model->alias}.{$this->settings[$model->alias]['value']}";
+
+                    $result = Hash::combine($iterator->current(), $key, $value);
+                }
+
+                if (!array_key_exists(
+                        $this->settings[$model->alias]['key'],
+                        $iterator->current()[$model->alias]
+                    ) && !array_key_exists($this->settings[$model->alias]['value'], $iterator->current()[$model->alias])
+                ) {
+                    $results[$iterator->key()][$model->alias] = Hash::merge(
+                        $iterator->current()[$model->alias],
+                        $result
+                    );
+                } else {
+                    $results[$iterator->key()][$model->alias] = $result;
+                }
+
+                $iterator->next();
+            }
+        } elseif (array_key_exists($model->alias, $results)) {
+            $key = "{n}.{$model->alias}.{$this->settings[$model->alias]['key']}";
+            $value = "{n}.{$model->alias}.{$this->settings[$model->alias]['value']}";
+
+            $output = Hash::combine($results, $key, $value);
+            $results[$model->alias] = $output;
+        }
 
         return $results;
     }
@@ -156,7 +186,8 @@ class KeyValueStorageBehavior extends ModelBehavior
                     "{$model->alias}.{$this->settings[$model->alias]['key']}",
                     "{$model->alias}.{$this->settings[$model->alias]['value']}"
                 ],
-                'conditions' => ["{$model->alias}.{$this->settings[$model->alias]['foreign_key']}" => $foreignKey]
+                'conditions' => ["{$model->alias}.{$this->settings[$model->alias]['foreign_key']}" => $foreignKey],
+                'callbacks' => false
             ]
         );
 

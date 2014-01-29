@@ -250,6 +250,13 @@ HuradNavigation::addSubMenu(
 );
 HuradNavigation::addSubMenu(
     'options',
+    'read',
+    __d('hurad', 'Read'),
+    ['plugin' => null, 'admin' => true, 'controller' => 'options', 'action' => 'prefix', 'read'],
+    'manage_options'
+);
+HuradNavigation::addSubMenu(
+    'options',
     'comment',
     __d('hurad', 'Comment'),
     ['plugin' => null, 'admin' => true, 'controller' => 'options', 'action' => 'prefix', 'comment'],

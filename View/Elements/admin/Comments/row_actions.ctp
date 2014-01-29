@@ -9,7 +9,7 @@
         ['admin' => true, 'controller' => 'comments', 'action' => 'edit', $this->Comment->getId()]
     );
 
-    if ($comment['Comment']['status'] == 'spam') {
+    if ($comment['Comment']['status'] == Comment::STATUS_SPAM) {
         $spamLink = $this->AdminLayout->toggleCommentLink($comment['Comment']['status'], $this->Comment->getId());
     } else {
         $spamLink = $this->Html->link(
@@ -18,7 +18,7 @@
         );
     }
 
-    if ($comment['Comment']['status'] == 'trash') {
+    if ($comment['Comment']['status'] == Comment::STATUS_TRASH) {
         $trashLink = $this->AdminLayout->toggleCommentLink($comment['Comment']['status'], $this->Comment->getId());
     } else {
         $trashLink = $this->Html->link(
@@ -43,7 +43,7 @@
     } else {
         switch (Router::getParam('pass')[0]) {
             case 'approved':
-            case 'disapproved':
+            case 'pending':
                 HuradRowActions::addAction('approved', $approvedLink, 'manage_comments');
                 HuradRowActions::addAction('view', $viewLink, 'manage_comments');
                 HuradRowActions::addAction('edit', $editLink, 'manage_comments');
