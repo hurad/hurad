@@ -19,7 +19,7 @@
         "php": ">=5.4.0",
         "cakephp/cakephp": "2.4.*",
         "cakedc/utils": ">=1.3",
-        "hurad/hello-world": ">=0.1.*"
+        "hurad/hello-world": "0.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
