@@ -23,18 +23,6 @@ class PluginsController extends AppController
     /**
      * An array containing the class names of models this controller uses.
      *
-     * Example: `public $uses = array('Product', 'Post', 'Comment');`
-     *
-     * Can be set to several values to express different options:
-     *
-     * - `true` Use the default inflected model name.
-     * - `array()` Use only models defined in the parent class.
-     * - `false` Use no models at all, do not merge with parent class either.
-     * - `array('Post', 'Comment')` Use only the Post and Comment models. Models
-     *   Will also be merged with the parent class.
-     *
-     * The default value is `true`.
-     *
      * @var mixed A single name as a string or a list of names as an array.
      */
     public $uses = [];
@@ -126,12 +114,14 @@ class PluginsController extends AppController
         }
     }
 
+    /**
+     * Install action
+     */
     public function admin_install()
     {
         $this->set('title_for_layout', __d('hurad', 'Add New Plugin'));
 
         if ($this->request->is('post')) {
-            $prefix = uniqid() . '_';
             $upload = $this->request->data['Plugins']['plugin'];
 
             if ($upload['error']) {
@@ -164,7 +154,7 @@ class PluginsController extends AppController
             }
 
             $zipHandler = new ZipArchive();
-//            if (!$zipHandler->open($fileName)) {
+
             if (($res = $zipHandler->open($upload['tmp_name'])) !== true) {
                 $this->Session->setFlash(
                     __d('hurad', 'Zip extraction failed with error: ' . $zipHandler->getStatusString()),
@@ -189,7 +179,7 @@ class PluginsController extends AppController
                 'flash_message',
                 ['class' => 'danger']
             );
-            @unlink($fileName);
+
             $this->redirect(['action' => 'install']);
         }
     }
