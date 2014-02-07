@@ -20,11 +20,19 @@ App::uses('AppHelper', 'View/Helper');
  */
 class RoleHelper extends AppHelper
 {
+    /**
+     * Check current user can capability or not
+     *
+     * @param string $cap User capability
+     *
+     * @return bool
+     */
     public function currentUserCan($cap)
     {
         if (isset($this->_View->viewVars['current_user'])) {
             $role = $this->_View->viewVars['current_user']['User']['role'];
-            return in_array($cap, HuradRole::$roles[$role]['capabilities']);
+
+            return in_array($cap, HuradRole::getRole($role)['capabilities']);
         }
 
         return false;
