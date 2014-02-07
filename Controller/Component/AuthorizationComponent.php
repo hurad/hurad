@@ -18,10 +18,10 @@ App::uses('Component', 'Controller');
 /**
  * Class RoleComponent
  */
-class RoleComponent extends Component
+class AuthorizationComponent extends Component
 {
 
-    public function checkAuthorization($user)
+    final public function checkAuthorization($user)
     {
         $controller = Inflector::camelize(Router::getParam());
         if (is_callable(array($this, 'check' . $controller . 'Authorization'))) {
@@ -36,13 +36,13 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
-                return $this->denyAuth(array('admin_edit', 'admin_delete', 'admin_filter', 'admin_process'));
+                return Hurad::denyAuth(['admin_edit', 'admin_delete', 'admin_filter', 'admin_process']);
                 break;
             case "user":
-                return $this->allowAuth(array('index', 'view', 'viewById'));
+                return Hurad::allowAuth(['index', 'view', 'viewById']);
                 break;
         }
     }
@@ -52,11 +52,11 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
             case "user":
-                return $this->allowAuth(array('index'));
+                return Hurad::allowAuth('index');
                 break;
         }
     }
@@ -66,11 +66,11 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
             case "user":
-                return $this->allowAuth(array('index'));
+                return Hurad::allowAuth('index');
                 break;
         }
     }
@@ -80,11 +80,11 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
             case "user":
-                return $this->allowAuth(array('index'));
+                return Hurad::allowAuth('index');
                 break;
         }
     }
@@ -94,11 +94,11 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
         }
     }
@@ -108,11 +108,11 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
             case "user":
-                return $this->allowAuth(array('index', 'view'));
+                return Hurad::allowAuth(['index', 'view']);
                 break;
         }
     }
@@ -122,11 +122,11 @@ class RoleComponent extends Component
         switch ($user['role']) {
             case "administrator":
             case "editor":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "author":
             case "user":
-                return $this->allowAuth(array('index', 'add', 'reply'));
+                return Hurad::allowAuth(['index', 'add', 'reply']);
                 break;
         }
     }
@@ -135,12 +135,12 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
         }
     }
@@ -149,12 +149,12 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
         }
     }
@@ -163,12 +163,12 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
         }
     }
@@ -177,12 +177,12 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
         }
     }
@@ -191,12 +191,12 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
         }
     }
@@ -205,12 +205,12 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth(array('admin_delete', 'admin_add', 'admin_index'));
+                return Hurad::denyAuth(['admin_delete', 'admin_add', 'admin_index']);
                 break;
         }
     }
@@ -219,61 +219,13 @@ class RoleComponent extends Component
     {
         switch ($user['role']) {
             case "administrator":
-                return $this->allowAuth();
+                return Hurad::allowAuth();
                 break;
             case "editor":
             case "author":
             case "user":
-                return $this->denyAuth();
+                return Hurad::denyAuth();
                 break;
-        }
-    }
-
-    /**
-     * @param null|array|string $methods
-     *
-     * @return bool
-     */
-    public function denyAuth($methods = null)
-    {
-        if (is_null($methods)) {
-            return false;
-        }
-
-        $methods = array($methods);
-
-        if (is_array($methods)) {
-            if (in_array(Router::getParam("action"), $methods)) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param null|array|string $methods
-     *
-     * @return bool
-     */
-    public function allowAuth($methods = null)
-    {
-        if (is_null($methods)) {
-            return true;
-        }
-
-        $methods = array($methods);
-
-        if (is_array($methods)) {
-            if (in_array(Router::getParam("action"), $methods)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
         }
     }
 }

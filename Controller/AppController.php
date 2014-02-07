@@ -35,7 +35,7 @@ class AppController extends Controller
      */
     public $components = [
         'Security' => ['csrfUseOnce' => false],
-        'Role',
+        'Authorization',
         'Cookie',
         'Session',
         'Auth' => [
@@ -60,7 +60,7 @@ class AppController extends Controller
             'flash' => [
                 'element' => 'auth',
                 'key' => 'auth',
-                'params' => []
+                'params' => ['class' => 'danger']
             ]
         ]
     ];
@@ -136,7 +136,7 @@ class AppController extends Controller
      */
     public function isAuthorized($user)
     {
-        return $this->Role->checkAuthorization($user);
+        return $this->Authorization->checkAuthorization($user);
     }
 
     /**
