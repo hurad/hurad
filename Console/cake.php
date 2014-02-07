@@ -17,7 +17,7 @@
 
 if (!defined('CAKE_CORE_INCLUDE_PATH')) {
     define('DS', DIRECTORY_SEPARATOR);
-    define('CAKE_CORE_INCLUDE_PATH', __DIR__ . '/../Vendor/pear-pear.cakephp.org/CakePHP');
+    define('CAKE_CORE_INCLUDE_PATH', __DIR__ . '/../Vendor/cakephp/cakephp/lib');
     define('CAKEPHP_SHELL', true);
     if (!defined('CORE_PATH')) {
         define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
