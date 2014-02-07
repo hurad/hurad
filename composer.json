@@ -7,10 +7,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Mohammad Abdoli Rad",
-            "email": "m.abdolirad@gmail.com",
-            "homepage": "http://magzilla.org",
-            "role": "Author"
+            "name": "Hurad Community",
+            "homepage": "https://github.com/hurad/hurad/graphs/contributors"
         }
     ],
     "support": {
@@ -21,7 +19,7 @@
         "php": ">=5.4.0",
         "cakephp/cakephp": "2.4.*",
         "cakedc/utils": ">=1.3",
-        "hurad/hello-world": ">=0.1.0"
+        "hurad/hello-world": ">=0.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
