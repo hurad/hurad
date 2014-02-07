@@ -44,7 +44,7 @@ class PostsController extends AppController
      *
      * @var array
      */
-    public $components = ['RequestHandler', 'Role', 'Hurad', 'Paginator'];
+    public $components = ['RequestHandler', 'Hurad', 'Paginator'];
 
     /**
      * Paginate settings
