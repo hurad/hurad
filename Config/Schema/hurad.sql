@@ -1,5 +1,3 @@
-
-
 DROP TABLE IF EXISTS `$[prefix]categories`;
 DROP TABLE IF EXISTS `$[prefix]categories_posts`;
 DROP TABLE IF EXISTS `$[prefix]comments`;
@@ -16,166 +14,280 @@ DROP TABLE IF EXISTS `$[prefix]users`;
 
 
 CREATE TABLE `$[prefix]categories` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`parent_id` bigint(20) unsigned DEFAULT NULL,
-	`name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`slug` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`lft` bigint(20) unsigned NOT NULL,
-	`rght` bigint(20) unsigned NOT NULL,
-	`description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`post_count` int(11) unsigned NOT NULL,
-	`path` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`),
-	UNIQUE KEY `slug` (`slug`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`          BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `parent_id`   BIGINT(20) UNSIGNED DEFAULT NULL,
+  `name`        VARCHAR(200)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `slug`        VARCHAR(200)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `lft`         BIGINT(20) UNSIGNED     NOT NULL,
+  `rght`        BIGINT(20) UNSIGNED     NOT NULL,
+  `description` LONGTEXT
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `post_count`  INT(11) UNSIGNED        NOT NULL,
+  `path`        VARCHAR(250)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `created`     DATETIME                NOT NULL,
+  `modified`    DATETIME                NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]categories_slug_unique` (`slug`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]categories_posts` (
-	`category_id` bigint(20) unsigned NOT NULL,
-	`post_id` bigint(20) unsigned NOT NULL,	PRIMARY KEY  (`category_id`, `post_id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `category_id` BIGINT(20) UNSIGNED NOT NULL,
+  `post_id`     BIGINT(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`category_id`, `post_id`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]comments` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`parent_id` bigint(20) unsigned DEFAULT NULL,
-	`post_id` bigint(20) unsigned NOT NULL,
-	`user_id` bigint(20) unsigned DEFAULT 0 NOT NULL,
-	`author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`author_email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`author_url` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`author_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT 'trash, spam, pending, approved',
-	`agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`lft` bigint(20) unsigned NOT NULL,
-	`rght` bigint(20) unsigned NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`           BIGINT(20) UNSIGNED           NOT NULL AUTO_INCREMENT,
+  `parent_id`    BIGINT(20) UNSIGNED DEFAULT NULL,
+  `post_id`      BIGINT(20) UNSIGNED           NOT NULL,
+  `user_id`      BIGINT(20) UNSIGNED DEFAULT 0 NOT NULL,
+  `author`       VARCHAR(255)
+                 CHARACTER SET utf8
+                 COLLATE utf8_general_ci       NOT NULL,
+  `author_email` VARCHAR(100)
+                 CHARACTER SET utf8
+                 COLLATE utf8_general_ci       NOT NULL,
+  `author_url`   VARCHAR(200)
+                 CHARACTER SET utf8
+                 COLLATE utf8_general_ci       NOT NULL,
+  `author_ip`    VARCHAR(100)
+                 CHARACTER SET utf8
+                 COLLATE utf8_general_ci       NOT NULL,
+  `content`      LONGTEXT
+                 CHARACTER SET utf8
+                 COLLATE utf8_general_ci       NOT NULL,
+  `status`       TINYINT(2) UNSIGNED           NOT NULL DEFAULT '2'
+  COMMENT 'trash, spam, pending, approved',
+  `agent`        TEXT
+                 CHARACTER SET utf8
+                 COLLATE utf8_general_ci       NOT NULL,
+  `lft`          BIGINT(20) UNSIGNED           NOT NULL,
+  `rght`         BIGINT(20) UNSIGNED           NOT NULL,
+  `created`      DATETIME                      NOT NULL,
+  `modified`     DATETIME                      NOT NULL,
+  PRIMARY KEY (`id`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]links` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`parent_id` bigint(20) unsigned DEFAULT NULL,
-	`menu_id` bigint(20) unsigned NOT NULL,
-	`name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`target` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`rel` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`visible` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`rating` int(11) unsigned NULL DEFAULT NULL,
-	`lft` bigint(20) unsigned NOT NULL,
-	`rght` bigint(20) unsigned NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`          BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `parent_id`   BIGINT(20) UNSIGNED DEFAULT NULL,
+  `menu_id`     BIGINT(20) UNSIGNED     NOT NULL,
+  `name`        VARCHAR(255)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `description` LONGTEXT
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `url`         TEXT
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `target`      VARCHAR(255)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `rel`         VARCHAR(255)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `visible`     VARCHAR(20)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `rating`      INT(11) UNSIGNED        NULL DEFAULT NULL,
+  `lft`         BIGINT(20) UNSIGNED     NOT NULL,
+  `rght`        BIGINT(20) UNSIGNED     NOT NULL,
+  `created`     DATETIME                NOT NULL,
+  `modified`    DATETIME                NOT NULL,
+  PRIMARY KEY (`id`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE IF NOT EXISTS `$[prefix]media` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) unsigned NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `name` varchar(255) NOT NULL COMMENT 'Generated name with extension',
-  `original_name` varchar(255) NOT NULL COMMENT 'Original name with extension',
-  `mime_type` varchar(255) NOT NULL,
-  `size` bigint(20) unsigned NOT NULL,
-  `extension` varchar(5) NOT NULL,
-  `path` varchar(12) NOT NULL,
-  `web_path` text NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `id`            BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id`       BIGINT(20) UNSIGNED NOT NULL,
+  `title`         VARCHAR(255)        NOT NULL,
+  `description`   LONGTEXT            NOT NULL,
+  `name`          VARCHAR(255)        NOT NULL
+  COMMENT 'Generated name with extension',
+  `original_name` VARCHAR(255)        NOT NULL
+  COMMENT 'Original name with extension',
+  `mime_type`     VARCHAR(255)        NOT NULL,
+  `size`          BIGINT(20) UNSIGNED NOT NULL,
+  `extension`     VARCHAR(5)          NOT NULL,
+  `path`          VARCHAR(12)         NOT NULL,
+  `web_path`      TEXT                NOT NULL,
+  `created`       DATETIME            NOT NULL,
+  `modified`      DATETIME            NOT NULL,
+  PRIMARY KEY (`id`))
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8
+  AUTO_INCREMENT =1;
 
 CREATE TABLE `$[prefix]menus` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`slug` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`link_count` int(11) unsigned NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`),
-	UNIQUE KEY `slug` (`slug`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`          BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `name`        VARCHAR(255)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `slug`        VARCHAR(255)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `description` TEXT
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `type`        VARCHAR(50)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `link_count`  INT(11) UNSIGNED        NOT NULL,
+  `created`     DATETIME                NOT NULL,
+  `modified`    DATETIME                NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]menus_slug_unique` (`slug`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]options` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`value` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,	PRIMARY KEY  (`id`),
-	UNIQUE KEY `name` (`name`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`    BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `name`  VARCHAR(255)
+          CHARACTER SET utf8
+          COLLATE utf8_general_ci NOT NULL,
+  `value` LONGTEXT
+          CHARACTER SET utf8
+          COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]options_name_unique` (`name`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]post_meta` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`post_id` bigint(20) unsigned DEFAULT 0 NOT NULL,
-	`meta_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`meta_value` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`         BIGINT(20) UNSIGNED           NOT NULL AUTO_INCREMENT,
+  `post_id`    BIGINT(20) UNSIGNED DEFAULT 0 NOT NULL,
+  `meta_key`   VARCHAR(255)
+               CHARACTER SET utf8
+               COLLATE utf8_general_ci       NOT NULL,
+  `meta_value` LONGTEXT
+               CHARACTER SET utf8
+               COLLATE utf8_general_ci       NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]post_meta_post_id_meta_key_unique` (`post_id`, `meta_key`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]posts` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`parent_id` bigint(20) unsigned DEFAULT NULL,
-	`user_id` bigint(20) NOT NULL,
-	`title` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`slug` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`excerpt` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`status` tinyint(2) unsigned NOT NULL DEFAULT '3' COMMENT 'trash, draft, pending, publish',
-	`comment_status` tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT 'disable, close, open',
-	`comment_count` int(11) unsigned NOT NULL,
-	`type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`sticky` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	`lft` bigint(20) unsigned NOT NULL,
-	`rght` bigint(20) unsigned NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`             BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `parent_id`      BIGINT(20) UNSIGNED DEFAULT NULL,
+  `user_id`        BIGINT(20)              NOT NULL,
+  `title`          VARCHAR(255)
+                   CHARACTER SET utf8
+                   COLLATE utf8_general_ci NOT NULL,
+  `slug`           VARCHAR(100)
+                   CHARACTER SET utf8
+                   COLLATE utf8_general_ci NOT NULL,
+  `content`        LONGTEXT
+                   CHARACTER SET utf8
+                   COLLATE utf8_general_ci NOT NULL,
+  `excerpt`        LONGTEXT
+                   CHARACTER SET utf8
+                   COLLATE utf8_general_ci NOT NULL,
+  `status`         TINYINT(2) UNSIGNED     NOT NULL DEFAULT '3'
+  COMMENT 'trash, draft, pending, publish',
+  `comment_status` TINYINT(2) UNSIGNED     NOT NULL DEFAULT '2'
+  COMMENT 'disable, close, open',
+  `comment_count`  INT(11) UNSIGNED        NOT NULL,
+  `type`           VARCHAR(20)
+                   CHARACTER SET utf8
+                   COLLATE utf8_general_ci NOT NULL,
+  `sticky`         TINYINT(1) UNSIGNED     NOT NULL DEFAULT '0',
+  `lft`            BIGINT(20) UNSIGNED     NOT NULL,
+  `rght`           BIGINT(20) UNSIGNED     NOT NULL,
+  `created`        DATETIME                NOT NULL,
+  `modified`       DATETIME                NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]posts_slug_unique` (`slug`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]posts_tags` (
-	`post_id` bigint(20) unsigned NOT NULL,
-	`tag_id` bigint(20) unsigned NOT NULL,	PRIMARY KEY  (`post_id`, `tag_id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `post_id` BIGINT(20) UNSIGNED NOT NULL,
+  `tag_id`  BIGINT(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`post_id`, `tag_id`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]tags` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`slug` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`post_count` int(11) unsigned NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`),
-	UNIQUE KEY `slug` (`slug`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`          BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `name`        VARCHAR(255)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `slug`        VARCHAR(100)
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `description` LONGTEXT
+                CHARACTER SET utf8
+                COLLATE utf8_general_ci NOT NULL,
+  `post_count`  INT(11) UNSIGNED        NOT NULL,
+  `created`     DATETIME                NOT NULL,
+  `modified`    DATETIME                NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]tags_slug_unique` (`slug`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
 CREATE TABLE `$[prefix]user_meta` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`user_id` bigint(20) unsigned DEFAULT 0 NOT NULL,
-	`meta_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`meta_value` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`         BIGINT(20) UNSIGNED           NOT NULL AUTO_INCREMENT,
+  `user_id`    BIGINT(20) UNSIGNED DEFAULT 0 NOT NULL,
+  `meta_key`   VARCHAR(255)
+               CHARACTER SET utf8
+               COLLATE utf8_general_ci       NOT NULL,
+  `meta_value` LONGTEXT
+               CHARACTER SET utf8
+               COLLATE utf8_general_ci       NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]user_meta_user_id_meta_key_unique` (`user_id`, `meta_key`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE = InnoDB;
 
 CREATE TABLE `$[prefix]users` (
-	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-	`username` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`url` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`role` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`status` int(11) unsigned NOT NULL,
-	`created` datetime NOT NULL,
-	`modified` datetime NOT NULL,	PRIMARY KEY  (`id`)) 	DEFAULT CHARSET=utf8,
-	COLLATE=utf8_general_ci,
-	ENGINE=InnoDB;
+  `id`       BIGINT(20) UNSIGNED     NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(60)
+             CHARACTER SET utf8
+             COLLATE utf8_general_ci NOT NULL,
+  `password` VARCHAR(64)
+             CHARACTER SET utf8
+             COLLATE utf8_general_ci NOT NULL,
+  `email`    VARCHAR(100)
+             CHARACTER SET utf8
+             COLLATE utf8_general_ci NOT NULL,
+  `url`      VARCHAR(100)
+             CHARACTER SET utf8
+             COLLATE utf8_general_ci NOT NULL,
+  `role`     VARCHAR(20)
+             CHARACTER SET utf8
+             COLLATE utf8_general_ci NOT NULL,
+  `status`   INT(11) UNSIGNED        NOT NULL,
+  `created`  DATETIME                NOT NULL,
+  `modified` DATETIME                NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `$[prefix]users_username_unique` (`username`),
+  UNIQUE KEY `$[prefix]users_email_unique` (`email`))
+  DEFAULT CHARSET =utf8,
+  COLLATE =utf8_general_ci,
+  ENGINE =InnoDB;
 
