@@ -16,48 +16,93 @@
 
 /**
  * Class HuradRole
- *
- * @todo Complete phpDoc
  */
 class HuradRole
 {
-    public static $roles = array();
-    public static $caps = array();
+    /**
+     * Roles
+     *
+     * @var array
+     */
+    protected static $roles = [];
 
-    public static function addRole($slug, $name, $capabilities = array())
+    /**
+     * Capabilities
+     *
+     * @var array
+     */
+    protected static $caps = [];
+
+    /**
+     * Add role
+     *
+     * @param string $slug         Role slug
+     * @param string $name         Role name
+     * @param array  $capabilities Role capabilities
+     */
+    public static function addRole($slug, $name, array $capabilities = [])
     {
         if (!self::roleExists($slug)) {
-            self::$roles[$slug] = array(
+            self::$roles[$slug] = [
                 'name' => $name,
                 'capabilities' => $capabilities
-            );
+            ];
             Configure::write('Hurad.roles', self::$roles);
         }
     }
 
+    /**
+     * Check exist role or not
+     *
+     * @param string $roleSlug Role slug
+     *
+     * @return bool
+     */
     public static function roleExists($roleSlug)
     {
         return Hash::check(self::$roles, $roleSlug);
     }
 
+    /**
+     * Get role
+     *
+     * @param string $roleSlug Role slug
+     *
+     * @return null If role not exist return null otherwise return role
+     */
     public static function getRole($roleSlug)
     {
         if (self::roleExists($roleSlug)) {
             return self::$roles[$roleSlug];
         } else {
-            return false;
+            return null;
         }
     }
 
+    /**
+     * Remove role
+     *
+     * @param string $roleSlug Role slug
+     *
+     * @return bool
+     */
     public static function removeRole($roleSlug)
     {
         if (self::roleExists($roleSlug)) {
             unset(self::$roles[$roleSlug]);
+
+            return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * Add capability to role
+     *
+     * @param string $roleSlug Role slug
+     * @param string $cap      Role Capability
+     */
     public static function addCap($roleSlug, $cap)
     {
         if (self::roleExists($roleSlug)) {
@@ -71,6 +116,14 @@ class HuradRole
         }
     }
 
+    /**
+     * Check capability exist or not
+     *
+     * @param string $roleSlug Role slug
+     * @param string $cap      Role capability
+     *
+     * @return bool
+     */
     public static function capExists($roleSlug, $cap)
     {
         if (count(self::$caps) > 0 && isset(self::$caps[$roleSlug])) {
