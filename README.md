@@ -1,6 +1,6 @@
 # Hurad [![Build Status](https://secure.travis-ci.org/hurad/hurad.png)](http://travis-ci.org/hurad/hurad) [![Dependency Status](https://www.versioneye.com/user/projects/52bda689ec13750b1c00007e/badge.png)](https://www.versioneye.com/user/projects/52bda689ec13750b1c00007e) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hurad/hurad/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 Hurad is a free and opensource content managment which is base on [CakePHP](http://cakephp.org) framework under
-the [GPL2 License](https://github.com/hurad/hurad/blob/master/LICENSE.txt). Some parts of this system are similar to [WordPress](http://wordpress.org) and some of them got from it.
+the [MIT License](https://github.com/hurad/hurad/blob/master/LICENSE). Some parts of this system are similar to [WordPress](http://wordpress.org) and some of them got from it.
 
 ## Requirements ##
 
@@ -20,8 +20,9 @@ in one of two ways:
 
 ### Manual installation
 
-1. Clone [CakePHP](https://github.com/cakephp/cakephp) into `/Vendor/pear-pear.cakephp.org/CakePHP`.
+1. Clone [CakePHP](https://github.com/cakephp/cakephp) into `/Vendor/cakephp/cakephp`.
 2. Clone [Utils](https://github.com/CakeDC/utils) into `/Plugin/Utils`.
+3. Hurad uses the `tmp/` directory for a number of different operations. As such, make sure the directory `tmp/` and all its subdirectories in your Hurad installation are writable by the web server user.
 
 You should now be able to visit the path to where you installed Hurad and see the
 setup traffic lights.
