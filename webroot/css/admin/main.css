@@ -230,3 +230,8 @@ th a.desc:after {
 .ui-helper-hidden-accessible {
     display: none;
 }
+
+.sub-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
