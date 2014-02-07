@@ -325,6 +325,7 @@ class PostsController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Posts'));
         $this->Post->recursive = 1;
+
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
@@ -336,8 +337,10 @@ class PostsController extends AppController
                     )
                 )
             );
+        } else {
+            $this->Paginator->settings = $this->paginate;
         }
-        $this->Paginator->settings = $this->paginate;
+
         $this->set('posts', $this->Paginator->paginate('Post'));
     }
 

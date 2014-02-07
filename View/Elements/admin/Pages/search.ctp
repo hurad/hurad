@@ -26,7 +26,7 @@ echo $this->Form->input(
 echo $this->Html->tag('span', null, array('class' => 'input-group-btn'));
 echo $this->Form->button(
     __d('hurad', 'Search'),
-    array('type' => 'button', 'class' => 'btn btn-primary', 'div' => false)
+    array('type' => 'submit', 'class' => 'btn btn-primary', 'div' => false)
 );
 echo '</span>';
 echo '</div>';

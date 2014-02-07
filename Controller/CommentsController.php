@@ -153,6 +153,40 @@ class CommentsController extends AppController
         $this->set('title_for_layout', __d('hurad', 'Comments'));
         $this->Comment->recursive = 0;
 
+        switch ($action) {
+            case 'approved':
+                $this->set('title_for_layout', __d('hurad', 'Approved comments'));
+                $status = Comment::STATUS_APPROVED;
+                break;
+
+            case 'pending':
+                $this->set('title_for_layout', __d('hurad', 'Pending comments'));
+                $status = Comment::STATUS_PENDING;
+                break;
+
+            case 'spam':
+                $this->set('title_for_layout', __d('hurad', 'Spams'));
+                $status = Comment::STATUS_SPAM;
+                break;
+
+            case 'trash':
+                $this->set('title_for_layout', __d('hurad', 'Trashes'));
+                $status = Comment::STATUS_TRASH;
+                break;
+
+            default:
+                $status = [Comment::STATUS_APPROVED, Comment::STATUS_PENDING];
+                break;
+        }
+
+        $count['all'] = $this->Comment->counter();
+        $count['pending'] = $this->Comment->counter('pending');
+        $count['approved'] = $this->Comment->counter('approved');
+        $count['spam'] = $this->Comment->counter('spam');
+        $count['trash'] = $this->Comment->counter('trash');
+
+        $this->set(compact('count'));
+
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
@@ -167,38 +201,6 @@ class CommentsController extends AppController
                 )
             );
         } else {
-            switch ($action) {
-                case 'approved':
-                    $this->set('title_for_layout', __d('hurad', 'Approved comments'));
-                    $status = Comment::STATUS_APPROVED;
-                    break;
-
-                case 'pending':
-                    $this->set('title_for_layout', __d('hurad', 'Pending comments'));
-                    $status = Comment::STATUS_PENDING;
-                    break;
-
-                case 'spam':
-                    $this->set('title_for_layout', __d('hurad', 'Spams'));
-                    $status = Comment::STATUS_SPAM;
-                    break;
-
-                case 'trash':
-                    $this->set('title_for_layout', __d('hurad', 'Trashes'));
-                    $status = Comment::STATUS_TRASH;
-                    break;
-
-                default:
-                    $status = [Comment::STATUS_APPROVED, Comment::STATUS_PENDING];
-                    break;
-            }
-
-            $count['all'] = $this->Comment->counter();
-            $count['pending'] = $this->Comment->counter('pending');
-            $count['approved'] = $this->Comment->counter('approved');
-            $count['spam'] = $this->Comment->counter('spam');
-            $count['trash'] = $this->Comment->counter('trash');
-
             $this->Paginator->settings = Hash::merge(
                 [
                     'Comment' => [
@@ -209,8 +211,6 @@ class CommentsController extends AppController
                 ],
                 $this->paginate
             );
-
-            $this->set(compact('count'));
         }
 
         $this->set('comments', $this->Paginator->paginate('Comment'));

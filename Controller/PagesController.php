@@ -136,6 +136,7 @@ class PagesController extends AppController
     {
         $this->set('title_for_layout', __d('hurad', 'Pages'));
         $this->Page->recursive = 0;
+
         if (isset($this->request->params['named']['q'])) {
             App::uses('Sanitize', 'Utility');
             $q = Sanitize::clean($this->request->params['named']['q']);
@@ -149,8 +150,10 @@ class PagesController extends AppController
                     )
                 )
             );
+        } else {
+            $this->Paginator->settings = $this->paginate;
         }
-        $this->Paginator->settings = $this->paginate;
+
         $this->set('pages', $this->Paginator->paginate('Page'));
     }
 
