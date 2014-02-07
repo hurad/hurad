@@ -64,4 +64,56 @@ class Hurad
             $subject->getEventManager()->dispatch($event);
         }
     }
+
+    /**
+     * Deny authorization
+     *
+     * @param null|array|string $methods
+     *
+     * @return bool
+     */
+    public static function denyAuth($methods = null)
+    {
+        if (is_null($methods)) {
+            return false;
+        }
+
+        $methods = array($methods);
+
+        if (is_array($methods)) {
+            if (in_array(Router::getParam("action"), $methods)) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Allow authorization
+     *
+     * @param null|array|string $methods
+     *
+     * @return bool
+     */
+    public static function allowAuth($methods = null)
+    {
+        if (is_null($methods)) {
+            return true;
+        }
+
+        $methods = array($methods);
+
+        if (is_array($methods)) {
+            if (in_array(Router::getParam("action"), $methods)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
