@@ -16,7 +16,7 @@
                 <?php echo $this->Session->flash('flash'); ?>
                 <div class="login-logo well">
                     <?php echo $this->Html->image('hurad.png', array('width' => '80px')); ?>
-                    <h1 class="text-muted">Hurad
+                    <h1 class="text-muted clearfix">Hurad
                         <small>(alpha)</small>
                     </h1>
                     <?php echo $this->fetch('content'); ?>
