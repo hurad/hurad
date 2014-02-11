@@ -73,6 +73,7 @@ echo $this->Form->create(
                         'class' => 'help-block'
                     ]
                 ],
+				'type' => 'password',
                 'placeholder' => __d('hurad', 'Password'),
                 'class' => 'form-control',
                 'required' => false
