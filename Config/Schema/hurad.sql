@@ -34,7 +34,7 @@ CREATE TABLE `$[prefix]categories` (
   `created`     DATETIME                NOT NULL,
   `modified`    DATETIME                NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]categories_slug_unique` (`slug`))
+  UNIQUE KEY `CATEGORIES_SLUG_UNIQUE` (`slug`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
@@ -150,7 +150,7 @@ CREATE TABLE `$[prefix]menus` (
   `created`     DATETIME                NOT NULL,
   `modified`    DATETIME                NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]menus_slug_unique` (`slug`))
+  UNIQUE KEY `MENUS_SLUG_UNIQUE` (`slug`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
@@ -164,7 +164,7 @@ CREATE TABLE `$[prefix]options` (
           CHARACTER SET utf8
           COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]options_name_unique` (`name`))
+  UNIQUE KEY `OPTIONS_NAME_UNIQUE` (`name`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
@@ -179,7 +179,7 @@ CREATE TABLE `$[prefix]post_meta` (
                CHARACTER SET utf8
                COLLATE utf8_general_ci       NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]post_meta_post_id_meta_key_unique` (`post_id`, `meta_key`))
+  UNIQUE KEY `POST_META_POST_ID_META_KEY_UNIQUE` (`post_id`, `meta_key`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
@@ -214,7 +214,7 @@ CREATE TABLE `$[prefix]posts` (
   `created`        DATETIME                NOT NULL,
   `modified`       DATETIME                NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]posts_slug_unique` (`slug`))
+  UNIQUE KEY `POSTS_SLUG_UNIQUE` (`slug`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
@@ -242,7 +242,7 @@ CREATE TABLE `$[prefix]tags` (
   `created`     DATETIME                NOT NULL,
   `modified`    DATETIME                NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]tags_slug_unique` (`slug`))
+  UNIQUE KEY `TAGS_SLUG_UNIQUE` (`slug`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
@@ -257,7 +257,7 @@ CREATE TABLE `$[prefix]user_meta` (
                CHARACTER SET utf8
                COLLATE utf8_general_ci       NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]user_meta_user_id_meta_key_unique` (`user_id`, `meta_key`))
+  UNIQUE KEY `USER_META_USER_ID_META_KEY_UNIQUE` (`user_id`, `meta_key`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE = InnoDB;
@@ -283,9 +283,8 @@ CREATE TABLE `$[prefix]users` (
   `created`  DATETIME                NOT NULL,
   `modified` DATETIME                NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `$[prefix]users_username_unique` (`username`),
-  UNIQUE KEY `$[prefix]users_email_unique` (`email`))
+  UNIQUE KEY `USERS_USERNAME_UNIQUE` (`username`),
+  UNIQUE KEY `USERS_EMAIL_UNIQUE` (`email`))
   DEFAULT CHARSET =utf8,
   COLLATE =utf8_general_ci,
   ENGINE =InnoDB;
-
