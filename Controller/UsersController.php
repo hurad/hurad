@@ -452,8 +452,12 @@ class UsersController extends AppController
         if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
             $user = $this->User->findByUsername($this->request->data['User']['username']);
             if (!isset($user['User']['id'])) {
-                $this->Session->setFlash(__d('hurad', 'Invalid username.'));
-                $this->redirect(array('action' => 'login'));
+                $this->Session->setFlash(
+                    __d('hurad', 'Invalid username.'),
+                    'flash_message',
+                    ['class' => 'danger']
+                );
+                $this->redirect(['action' => 'login']);
             }
 
             $this->User->id = $user['User']['id'];
@@ -465,18 +469,18 @@ class UsersController extends AppController
                 __d('hurad', 'Reset Password'),
                 'forgot_password',
                 null,
-                array(
+                [
                     'reset_key' => $resetKey,
                     'username' => $user['User']['username']
-                )
+                ]
             );
 
             $this->Session->setFlash(
                 __d('hurad', 'An email has been sent with instructions for resetting your password.'),
                 'flash_message',
-                array('class' => 'success')
+                ['class' => 'success']
             );
-            $this->redirect(array('action' => 'login'));
+            $this->redirect(['action' => 'login']);
         }
     }
 

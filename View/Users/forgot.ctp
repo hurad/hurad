@@ -10,7 +10,7 @@ echo $this->Form->create(
 );
 ?>
 
-    <div class="control-group <?php echo $this->Form->isFieldError('username') ? 'error' : ''; ?>">
+    <div class="form-group <?php echo $this->Form->isFieldError('username') ? 'error' : ''; ?>">
         <?php
         echo $this->Form->input(
             'username',
@@ -18,7 +18,7 @@ echo $this->Form->create(
                 'error' => false,
                 'required' => false, //For disable HTML5 validation
                 'type' => 'text',
-                'class' => 'input-block-level',
+                'class' => 'form-control',
                 'placeholder' => __d('hurad', 'Username')
             )
         );
