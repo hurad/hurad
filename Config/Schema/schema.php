@@ -44,7 +44,7 @@ class HuradSchema extends CakeSchema
             'type' => 'string',
             'null' => false,
             'default' => null,
-            'length' => 200,
+            'length' => 100,
             'key' => 'unique',
             'collate' => 'utf8_general_ci',
             'charset' => 'utf8'
@@ -288,6 +288,7 @@ class HuradSchema extends CakeSchema
             'type' => 'string',
             'null' => false,
             'default' => null,
+            'length' => 100,
             'key' => 'unique',
             'collate' => 'utf8_general_ci',
             'charset' => 'utf8'

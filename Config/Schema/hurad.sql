@@ -19,7 +19,7 @@ CREATE TABLE `$[prefix]categories` (
   `name`        VARCHAR(200)
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci NOT NULL,
-  `slug`        VARCHAR(200)
+  `slug`        VARCHAR(100)
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci NOT NULL,
   `lft`         BIGINT(20) UNSIGNED     NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE `$[prefix]menus` (
   `name`        VARCHAR(255)
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci NOT NULL,
-  `slug`        VARCHAR(255)
+  `slug`        VARCHAR(100)
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci NOT NULL,
   `description` TEXT
