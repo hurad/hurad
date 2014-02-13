@@ -43,13 +43,14 @@ class AdminLayoutHelper extends AppHelper
 
     public function linkVisible($value)
     {
-        if ($value == 'Y') {
+        if ($value == 1) {
             $output = __d('hurad', 'Yes');
-        } elseif ($value == 'N') {
+        } elseif ($value == 0) {
             $output = __d('hurad', 'No');
         } else {
             $output = __d('hurad', 'Unknown');
         }
+
         return $output;
     }
 

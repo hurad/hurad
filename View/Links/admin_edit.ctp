@@ -128,8 +128,8 @@ echo $this->Form->create(
             'visible',
             array(
                 'options' => array(
-                    'Y' => __d('hurad', 'Yes'),
-                    'N' => __d('hurad', 'No'),
+                    1 => __d('hurad', 'Yes'),
+                    0 => __d('hurad', 'No'),
                 ),
                 'class' => 'form-control'
             )

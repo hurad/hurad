@@ -100,9 +100,7 @@ CREATE TABLE `$[prefix]links` (
   `rel`         VARCHAR(255)
                 CHARACTER SET utf8
                 COLLATE utf8_general_ci NOT NULL,
-  `visible`     VARCHAR(20)
-                CHARACTER SET utf8
-                COLLATE utf8_general_ci NOT NULL,
+  `visible`     TINYINT(1) UNSIGNED     NOT NULL DEFAULT '1',
   `rating`      INT(11) UNSIGNED        NULL DEFAULT NULL,
   `lft`         BIGINT(20) UNSIGNED     NOT NULL,
   `rght`        BIGINT(20) UNSIGNED     NOT NULL,

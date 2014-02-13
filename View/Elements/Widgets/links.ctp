@@ -10,7 +10,7 @@
         );
 
         foreach ($links as $link) {
-            if ($link['Link']['visible'] == 'Y') {
+            if ($link['Link']['visible'] == 1) {
                 echo $this->Html->tag(
                     'li',
                     $this->Html->link(
