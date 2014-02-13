@@ -56,54 +56,66 @@
     ?>
     </thead>
     <tbody>
-    <?php foreach ($linkcats as $linkcat): ?>
-        <?php
-        echo $this->Html->tableCells(
-            array(
+    <?php
+    if ($linkcats) {
+        foreach ($linkcats as $linkcat):
+            echo $this->Html->tableCells(
                 array(
                     array(
-                        $this->Html->link(
-                            h($linkcat['Linkcat']['name']),
+                        array(
+                            $this->Html->link(
+                                h($linkcat['Linkcat']['name']),
+                                array(
+                                    'admin' => true,
+                                    'controller' => 'linkcats',
+                                    'action' => 'edit',
+                                    $linkcat['Linkcat']['id']
+                                )
+                            ) . $this->element('admin/Linkcats/row_actions', array('linkcat' => $linkcat)),
                             array(
-                                'admin' => true,
-                                'controller' => 'linkcats',
-                                'action' => 'edit',
-                                $linkcat['Linkcat']['id']
+                                'class' => 'column-path'
                             )
-                        ) . $this->element('admin/Linkcats/row_actions', array('linkcat' => $linkcat)),
+                        ),
                         array(
-                            'class' => 'column-path'
+                            h($linkcat['Linkcat']['slug']),
+                            array(
+                                'class' => 'column-slug'
+                            )
+                        ),
+                        array(
+                            h($linkcat['Linkcat']['description']),
+                            array(
+                                'class' => 'column-description'
+                            )
+                        ),
+                        array(
+                            h($linkcat['Linkcat']['link_count']),
+                            array(
+                                'class' => 'column-link_count'
+                            )
                         )
                     ),
-                    array(
-                        h($linkcat['Linkcat']['slug']),
-                        array(
-                            'class' => 'column-slug'
-                        )
-                    ),
-                    array(
-                        h($linkcat['Linkcat']['description']),
-                        array(
-                            'class' => 'column-description'
-                        )
-                    ),
-                    array(
-                        h($linkcat['Linkcat']['link_count']),
-                        array(
-                            'class' => 'column-link_count'
-                        )
-                    )
                 ),
+                array(
+                    'id' => 'linkcat-' . $linkcat['Linkcat']['id']
+                ),
+                array(
+                    'id' => 'linkcat-' . $linkcat['Linkcat']['id']
+                )
+            );
+        endforeach;
+    } else {
+        echo $this->Html->tag(
+            'tr',
+            $this->Html->tag(
+                'td',
+                __d('hurad', 'No link category were found.'),
+                ['colspan' => '4', 'style' => 'text-align:center;']
             ),
-            array(
-                'id' => 'linkcat-' . $linkcat['Linkcat']['id']
-            ),
-            array(
-                'id' => 'linkcat-' . $linkcat['Linkcat']['id']
-            )
+            ['id' => 'linkcat-0']
         );
-        ?>
-    <?php endforeach; ?>
+    }
+    ?>
     </tbody>
     <tfoot>
     <?php

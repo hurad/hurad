@@ -121,9 +121,9 @@
             $this->Html->tag(
                 'td',
                 __d('hurad', 'No pages were found'),
-                array('colspan' => '5', 'style' => 'text-align:center;')
+                ['colspan' => '4', 'style' => 'text-align:center;']
             ),
-            array('id' => 'post-0')
+            ['id' => 'page-0']
         );
     }
     ?>

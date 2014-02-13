@@ -47,56 +47,68 @@
     ?>
     </thead>
     <tbody>
-    <?php foreach ($media AS $file): ?>
-        <?php
-        echo $this->Html->tableCells(
-            array(
+    <?php
+    if ($media) {
+        foreach ($media AS $file) {
+            echo $this->Html->tableCells(
                 array(
                     array(
-                        $this->Html->link(
-                            '<strong>' . h($file['Media']['original_name']) . '</strong>',
+                        array(
+                            $this->Html->link(
+                                '<strong>' . h($file['Media']['original_name']) . '</strong>',
+                                array(
+                                    'action' => 'edit',
+                                    $file['Media']['id']
+                                ),
+                                array(
+                                    'title' => __d('hurad', 'Edit “%s”', $file['Media']['original_name']),
+                                    'escape' => false
+                                )
+                            ) . $this->element('admin/Media/row_actions', array('file' => $file)),
                             array(
-                                'action' => 'edit',
-                                $file['Media']['id']
-                            ),
-                            array(
-                                'title' => __d('hurad', 'Edit “%s”', $file['Media']['original_name']),
-                                'escape' => false
+                                'class' => 'column-name'
                             )
-                        ) . $this->element('admin/Media/row_actions', array('file' => $file)),
+                        ),
                         array(
-                            'class' => 'column-name'
+                            h($file['Media']['description']),
+                            array(
+                                'class' => 'column-description'
+                            )
+                        ),
+                        array(
+                            $file['User']['username'],
+                            array(
+                                'class' => 'column-user'
+                            )
+                        ),
+                        array(
+                            $file['Media']['created'],
+                            array(
+                                'class' => 'column-date'
+                            )
                         )
                     ),
-                    array(
-                        h($file['Media']['description']),
-                        array(
-                            'class' => 'column-description'
-                        )
-                    ),
-                    array(
-                        $file['User']['username'],
-                        array(
-                            'class' => 'column-user'
-                        )
-                    ),
-                    array(
-                        $file['Media']['created'],
-                        array(
-                            'class' => 'column-date'
-                        )
-                    )
                 ),
+                array(
+                    'id' => 'file-' . $file['Media']['id']
+                ),
+                array(
+                    'id' => 'file-' . $file['Media']['id']
+                )
+            );
+        }
+    } else {
+        echo $this->Html->tag(
+            'tr',
+            $this->Html->tag(
+                'td',
+                __d('hurad', 'No media were found.'),
+                ['colspan' => '4', 'style' => 'text-align:center;']
             ),
-            array(
-                'id' => 'file-' . $file['Media']['id']
-            ),
-            array(
-                'id' => 'file-' . $file['Media']['id']
-            )
+            ['id' => 'file-0']
         );
-        ?>
-    <?php endforeach; ?>
+    }
+    ?>
     </tbody>
     <tfoot>
     <?php

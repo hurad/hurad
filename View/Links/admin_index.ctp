@@ -58,68 +58,80 @@
     </thead>
     <tbody>
     <?php global $link; ?>
-    <?php foreach ($links as $link): ?>
-        <?php
-        echo $this->Html->tableCells(
-            array(
+    <?php
+    if ($links) {
+        foreach ($links as $link) {
+            echo $this->Html->tableCells(
                 array(
                     array(
-                        $this->Html->link(
-                            '<strong>' . h($link['Link']['name']) . '</strong>',
-                            array('action' => 'edit', $link['Link']['id']),
-                            array('title' => __d('hurad', 'Edit “%s”', $link['Link']['name']), 'escape' => false)
-                        ) . $this->element('admin/Links/row_actions', array('link' => $link)),
                         array(
-                            'class' => 'column-name'
-                        )
-                    ),
-                    array(
-                        $this->Html->link(
-                            $this->AdminLayout->linkUrl($link['Link']['url']),
-                            $link['Link']['url'],
-                            array('target' => '_blank', 'title' => __d('hurad', 'Visit %s', $link['Link']['name']))
-                        ),
-                        array(
-                            'class' => 'column-url'
-                        )
-                    ),
-                    array(
-                        $this->Html->link(
-                            h($link['Menu']['name']),
+                            $this->Html->link(
+                                '<strong>' . h($link['Link']['name']) . '</strong>',
+                                array('action' => 'edit', $link['Link']['id']),
+                                array('title' => __d('hurad', 'Edit “%s”', $link['Link']['name']), 'escape' => false)
+                            ) . $this->element('admin/Links/row_actions', array('link' => $link)),
                             array(
-                                'admin' => true,
-                                'controller' => 'links',
-                                'action' => 'indexBymenu',
-                                $link['Menu']['id']
+                                'class' => 'column-name'
                             )
                         ),
                         array(
-                            'class' => 'column-menu'
+                            $this->Html->link(
+                                $this->AdminLayout->linkUrl($link['Link']['url']),
+                                $link['Link']['url'],
+                                array('target' => '_blank', 'title' => __d('hurad', 'Visit %s', $link['Link']['name']))
+                            ),
+                            array(
+                                'class' => 'column-url'
+                            )
+                        ),
+                        array(
+                            $this->Html->link(
+                                h($link['Menu']['name']),
+                                array(
+                                    'admin' => true,
+                                    'controller' => 'links',
+                                    'action' => 'indexBymenu',
+                                    $link['Menu']['id']
+                                )
+                            ),
+                            array(
+                                'class' => 'column-menu'
+                            )
+                        ),
+                        array(
+                            $this->AdminLayout->linkVisible($link['Link']['visible']),
+                            array(
+                                'class' => 'column-visible'
+                            )
+                        ),
+                        array(
+                            $link['Link']['rating'],
+                            array(
+                                'class' => 'column-rating'
+                            )
                         )
                     ),
-                    array(
-                        $this->AdminLayout->linkVisible($link['Link']['visible']),
-                        array(
-                            'class' => 'column-visible'
-                        )
-                    ),
-                    array(
-                        $link['Link']['rating'],
-                        array(
-                            'class' => 'column-rating'
-                        )
-                    )
                 ),
+                array(
+                    'id' => 'link-' . $link['Link']['id']
+                ),
+                array(
+                    'id' => 'link-' . $link['Link']['id']
+                )
+            );
+        }
+    } else {
+        echo $this->Html->tag(
+            'tr',
+            $this->Html->tag(
+                'td',
+                __d('hurad', 'No links were found.'),
+                ['colspan' => '5', 'style' => 'text-align:center;']
             ),
-            array(
-                'id' => 'link-' . $link['Link']['id']
-            ),
-            array(
-                'id' => 'link-' . $link['Link']['id']
-            )
+            ['id' => 'link-0']
         );
-        ?>
-    <?php endforeach; ?>
+    }
+    ?>
     </tbody>
     <tfoot>
     <?php
