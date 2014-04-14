@@ -186,7 +186,7 @@ function isInstalled()
 
 function isConnected()
 {
-    if (is_file(CONFIG . 'database.php')) {
+    if (file_exists(CONFIG . 'database.php')) {
         try {
             App::uses('ConnectionManager', 'Model');
             ConnectionManager::getDataSource('default');
